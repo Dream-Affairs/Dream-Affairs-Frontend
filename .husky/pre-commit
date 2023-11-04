@@ -1,17 +1,30 @@
 #!/bin/sh
+
+# Define the name of the branch you want to protect
+protected_branch="dev"
+
+# Get the current branch name
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+# Check if committing to the protected branch and reject if true, unless the "--force" flag is used
+if [ "$current_branch" = "$protected_branch" ] && [ "$1" != "--force" ]; then
+    echo "Committing directly to the '$protected_branch' branch is not allowed."
+    echo "Create a separate branch with 'git checkout -b {branchname}' and try again."
+    exit 1
+fi
+
 . "$(dirname "$0")/_/husky.sh"
- 
+
 echo 'Checking your code for errors...'
 echo 'Please be patient, this may take a while...'
- 
+
 # Check ESLint Standards
-npm run lint ||
-(
+npm run lint || (
     echo '⚠️ ❌ You have a problem in your code. Fix the error and try again ❌⚠️
-          you can run "npm run lint" to see the error';
-    false;
+          you can run "npm run lint" to see the error'
+    false
 )
- 
+
 echo 'Committing...'
- 
+
 npx lint-staged
