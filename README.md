@@ -1,5 +1,5 @@
-## Do not commit to the "dev" branch
-## Do not push to the "dev" branch
+# Do not commit to the "dev" branch
+# Do not push to the "dev" branch
 
 
 ## Getting Started
