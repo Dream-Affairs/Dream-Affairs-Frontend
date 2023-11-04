@@ -6,8 +6,8 @@ protected_branch="dev"
 # Get the current branch name
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 
-# Check if committing to the protected branch and reject if true, unless the "--force" flag is used
-if [ "$current_branch" = "$protected_branch" ] && [ "$1" != "--force" ]; then
+# Check if committing to the protected branch and reject if true, unless the "--no-verify" flag is used
+if [ "$current_branch" = "$protected_branch" ] && [ "$1" != "--no-verify" ]; then
     echo "Committing directly to the '$protected_branch' branch is not allowed."
     echo "Create a separate branch with 'git checkout -b {branchname}' and try again."
     exit 1
