@@ -45,10 +45,11 @@ const Login = () => {
   return (
     <Wrapper
       bg={bg}
+      bgColor="bg-[#371345] bg-opacity-20"
       bgText="Sign in to your account and continue planning your dream wedding with ease."
       bgTitle="Welcome Back to Dream Affairs Project!"
-      sectionText="Sign in"
-      sectionTitle="Sign in to your account and continue planning your dream wedding with ease."
+      sectionTitle="Sign in"
+      sectionText="Sign in to your account and continue planning your dream wedding with ease."
       showBgText={true}
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-8">
@@ -93,9 +94,13 @@ const Login = () => {
         </div>
 
         <div className="flex flex-col gap-3">
-          <button type="button" className="max-w-fit self-end cursor-pointer font-semibold text-sm text-primary">
+          <Link
+            href="/auth/forgot-password"
+            type="button"
+            className="max-w-fit self-end cursor-pointer font-semibold text-sm text-primary"
+          >
             Forgot Password?
-          </button>
+          </Link>
 
           <Button
             variant={isSubmitting ? 'disabled' : 'secondary'}

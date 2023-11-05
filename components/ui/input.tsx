@@ -17,7 +17,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           type={type}
           className={cn(
-            `flex h-full w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-black disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0  focus:border-muted transition-colors duration-200 ease-in-out
+            `flex h-full w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0  focus:border-muted transition-colors duration-200 ease-in-out hover:bg-accent hover:text-primary hover:border-accent hover:placeholder-primary
              ${error && 'border-red-500 bg-red-50 text-red-500 placeholder:text-red-500 focus:border-red-500'}
             
             ${
@@ -37,7 +37,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           </div>
         ) : null}
 
-        {error ? <p className="text-sm text-red-500">{errorMessage}</p> : null}
+        {error ? <p className="text-xs tracking-wide text-red-500">{errorMessage}</p> : null}
       </div>
     );
   },

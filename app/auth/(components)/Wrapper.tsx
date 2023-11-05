@@ -5,6 +5,7 @@ import da from '../(assets)/da.svg';
 
 interface AuthWrapperProps {
   bg: string;
+  bgColor?: string;
   bgTitle?: string;
   bgText?: string;
   sectionTitle: string;
@@ -13,12 +14,21 @@ interface AuthWrapperProps {
   children?: React.ReactNode;
 }
 
-const Wrapper = ({ bg, bgTitle, bgText, sectionText, sectionTitle, showBgText, children }: AuthWrapperProps) => {
+const Wrapper = ({
+  bg,
+  bgColor,
+  bgTitle,
+  bgText,
+  sectionText,
+  sectionTitle,
+  showBgText,
+  children,
+}: AuthWrapperProps) => {
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <div className="h-full flex-1 relative">
+      <div className="h-full flex-1 relative transition-all duration-200 ease-in-out">
         <Image width={0} height={0} src={bg} alt="bg" className="w-full h-full object-cover object-center" />
-        <div className="absolute bg-[#371345] top-0 left-0 z-10 w-full h-full bg-opacity-0"></div>
+        <div className={`absolute top-0 left-0 z-10 w-full h-full ${bgColor}`}></div>
         {showBgText && (
           <div className="absolute w-[70%] max-w-[400px] min-h-[50%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-[#FCF7F9] bg-opacity-50 text-[#371345] rounded-lg p-5">
             <h1 className="font-extrabold text-3xl leading-10 tracking-wider mb-10">{bgTitle}</h1>
@@ -35,8 +45,8 @@ const Wrapper = ({ bg, bgTitle, bgText, sectionText, sectionTitle, showBgText, c
           <div className="min-h-full min-w-full">
             <div>
               <div className="flex flex-col gap-3 mb-10">
-                <h2 className="font-semibold text-4xl">{sectionText}</h2>
-                <p className="tracking-wide">{sectionTitle}</p>
+                <h2 className="font-semibold text-4xl">{sectionTitle}</h2>
+                <p className="tracking-wide">{sectionText}</p>
               </div>
 
               {children}
