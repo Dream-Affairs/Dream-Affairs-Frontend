@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { DatePicker } from '../../(components)/DatePicker';
 import { Checkbox } from '@/components/ui/checkbox';
-import Link from 'next/link';
 
 interface FormTwoProps {
   formOne: {
@@ -83,7 +82,7 @@ const Two = ({ formOne, setFormOne, date, setDate, formTwo, setFormTwo, setFormT
     }, 2000);
   };
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
         <Label htmlFor="yourFirstName">Your First Name</Label>
         <Input
