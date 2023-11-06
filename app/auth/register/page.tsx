@@ -42,7 +42,7 @@ const Register = () => {
           bgText="Create your account to start planning, organizing, and sharing your special day with our comprehensive wedding planning and management application. Your dream wedding journey begins here."
           bgTitle="Join Dream Affairs and Make Your Event a Reality!"
           sectionText="Sign up"
-          sectionTitle="Let’s get you Started"
+          sectionTitle="Let's get you Started"
           showBgText={true}
         >
           <form onSubmit={handleSubmit}>
