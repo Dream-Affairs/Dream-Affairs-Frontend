@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Work_Sans } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const workSans = Work_Sans({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Dream Affairs',
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={workSans.className}>{children}</body>
     </html>
   );
 }

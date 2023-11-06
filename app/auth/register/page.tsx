@@ -41,7 +41,7 @@ const Register = () => {
           bgColor={formOne.valid === false ? 'bg-[#371345] bg-opacity-20' : 'bg-[#013440] bg-opacity-50'}
           bgText="Create your account to start planning, organizing, and sharing your special day with our comprehensive wedding planning and management application. Your dream wedding journey begins here."
           bgTitle="Join Dream Affairs and Make Your Event a Reality!"
-          sectionText="Sign up"
+          sectionText={formOne.valid ? 'We will require some additional details' : 'Sign up'}
           sectionTitle="Let's get you Started"
           showBgText={true}
         >
