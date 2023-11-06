@@ -26,8 +26,8 @@ const page = () => {
       <div className="max-w-[700px]">
         <h1 className="text-lg font-semibold mb-3">
           Before building your component from scratch check{' '}
-          <a href="https://ui.shadcn.com/docs/components/accordion" className="font-bold text-primary">
-            Here
+          <a target="_blank" href="https://ui.shadcn.com/docs/components/accordion" className="font-bold text-primary">
+            Here (ui library shadcn)
           </a>{' '}
           they probably have what you need, everything is fully customizable, just add classname and style accordingly.
           <br />
