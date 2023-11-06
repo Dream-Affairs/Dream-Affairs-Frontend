@@ -1,6 +1,6 @@
 # Do not commit to the "dev" branch
 # Do not push to the "dev" branch
-#Dream-Affairs - Frontend
+# Dream-Affairs - Frontend
 
 This is a `Nextjs, Typescript and Tailwindcss` project.
 
