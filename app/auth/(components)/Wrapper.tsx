@@ -30,9 +30,9 @@ const Wrapper = ({
         <Image width={0} height={0} src={bg} alt="bg" className="w-full h-full object-cover object-center" />
         <div className={`absolute top-0 left-0 z-10 w-full h-full ${bgColor}`}></div>
         {showBgText && (
-          <div className="absolute w-[70%] max-w-[400px] min-h-[50%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-[#FCF7F9] bg-opacity-50 text-[#371345] rounded-lg p-5">
-            <h1 className="font-extrabold text-3xl leading-10 tracking-wider mb-10">{bgTitle}</h1>
-            <p className="text-lg tracking-wide">{bgText}</p>
+          <div className="absolute w-[70%] max-w-[400px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-[#FCF7F9] bg-opacity-50 text-[#371345] rounded-3xl  p-5 py-10">
+            <h1 className="font-extrabold text-3xl leading-10 mb-10">{bgTitle}</h1>
+            <p className="text-sm leading-5">{bgText}</p>
           </div>
         )}
       </div>
