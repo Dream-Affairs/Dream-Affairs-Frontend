@@ -1,17 +1,15 @@
-import React from 'react'
-import Sidebar from './(components)/Sidebar'
+import React from 'react';
+import Sidebar from './(components)/Sidebar';
 
-type Props = {}
+type Props = {};
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-      <main className='flex w-full transition-all duration-1000'>
+    <main className="flex w-full transition-all duration-[2000]">
       <Sidebar />
-      <>
-          {children}
-      </>
-      </main>
-  )
-}
+      <>{children}</>
+    </main>
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;
