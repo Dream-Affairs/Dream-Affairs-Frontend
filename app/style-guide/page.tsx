@@ -1,5 +1,6 @@
 'use client';
 import * as React from 'react';
+import { PiWarningLight } from 'react-icons/pi';
 
 import {
   Select,
@@ -93,24 +94,64 @@ export default page;
 
 const SelectDemo = () => {
   return (
-    <div className="flex flex-col gap-3">
-      <Label>Dropdown default State</Label>
-      <Select>
-        <SelectTrigger className="w-[180px] h-[55px]">
-          <SelectValue placeholder="Select a fruit" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Fruits</SelectLabel>
-            <SelectItem value="apple">Apple</SelectItem>
-            <SelectItem value="banana">Banana</SelectItem>
-            <SelectItem value="blueberry">Blueberry</SelectItem>
-            <SelectItem value="grapes">Grapes</SelectItem>
-            <SelectItem value="pineapple">Pineapple</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </div>
+    <>
+      <div className="flex flex-col">
+        <Label className="mb-3">Dropdown default State</Label>
+        <Select>
+          <SelectTrigger className="w-full h-[55px]">
+            <SelectValue placeholder="Select a fruit" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Fruits</SelectLabel>
+              <SelectItem value="apple">Apple</SelectItem>
+              <SelectItem value="banana">Banana</SelectItem>
+              <SelectItem value="blueberry">Blueberry</SelectItem>
+              <SelectItem value="grapes">Grapes</SelectItem>
+              <SelectItem value="pineapple">Pineapple</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="flex flex-col relative">
+        <Label className="mb-3">Dropdown error State</Label>
+        <Select>
+          <SelectTrigger className="w-full h-[55px] border-red-500">
+            <SelectValue placeholder="Select a fruit" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Fruits</SelectLabel>
+              <SelectItem value="apple">Apple</SelectItem>
+              <SelectItem value="banana">Banana</SelectItem>
+              <SelectItem value="blueberry">Blueberry</SelectItem>
+              <SelectItem value="grapes">Grapes</SelectItem>
+              <SelectItem value="pineapple">Pineapple</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        {true && <p className="text-xs text-red-500">Error</p>}
+      </div>
+      <div className="flex flex-col">
+        <Label className="mb-3">Dropdown hover State</Label>
+        <Select>
+          <SelectTrigger className="w-full h-[55px]">
+            <SelectValue placeholder="Select a fruit">Banana</SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Fruits</SelectLabel>
+              <SelectItem value="apple">Apple</SelectItem>
+              <SelectItem value="banana">Banana</SelectItem>
+              <SelectItem value="blueberry">Blueberry</SelectItem>
+              <SelectItem value="grapes">Grapes</SelectItem>
+              <SelectItem value="pineapple">Pineapple</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        {false && <p className="text-xs text-red-500">Error</p>}
+      </div>
+    </>
   );
 };
 
@@ -163,7 +204,7 @@ const InputDemo = () => {
           error={false}
           hasValue={true}
           value={'Hover State'}
-          className="bg-accent text-primary border-accent placeholder-primary"
+          className="border-primary placeholder:text-gray-200"
         />
       </div>
     </>
@@ -202,140 +243,5 @@ const CalendarDemo = () => {
   const [date, setDate] = React.useState<Date | undefined>(undefined);
   const [pickedDate, setPickedDate] = React.useState<Date | undefined>(new Date());
   const error = false;
-  return (
-    <>
-      <div className="flex flex-col gap-3 min-w-[250px]">
-        <Label>Calendar Empty State</Label>
-        <Popover>
-          <PopoverTrigger
-            className={cn(
-              `flex h-[55px] w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out hover:border-accent
-         ${error && 'border-red-500 bg-red-50 text-red-500 placeholder:text-red-500 focus:border-red-500'}
-    
-        ${date && 'bg-[hsl(232,52%,94%,0.5)] text-black  focus:border-[hsl(232,52%,94%,0.5)]'}
-        `,
-            )}
-            asChild
-          >
-            <Button
-              variant={'outline'}
-              className={cn('w-full justify-start text-left font-normal', !date && 'text-muted-foreground')}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {date ? format(date, 'PPP') : <span>Pick a date</span>}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
-          </PopoverContent>
-        </Popover>
-      </div>
-      <div className="flex flex-col gap-3 min-w-[250px]">
-        <Label>Disabled State</Label>
-        <Popover>
-          <PopoverTrigger
-            disabled={true}
-            className={cn(
-              `flex h-[55px] w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out hover:border-accent
-         ${error && 'border-red-500 bg-red-50 text-red-500 placeholder:text-red-500 focus:border-red-500'}
-    
-        ${date && 'bg-[hsl(232,52%,94%,0.5)] text-black  focus:border-[hsl(232,52%,94%,0.5)]'}
-        `,
-            )}
-            asChild
-          >
-            <Button
-              variant={'outline'}
-              className={cn('w-full justify-start text-left font-normal', !date && 'text-muted-foreground')}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {date ? format(date, 'PPP') : <span>Pick a date</span>}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
-          </PopoverContent>
-        </Popover>
-      </div>
-      <div className="flex flex-col gap-3 min-w-[250px]">
-        <Label>Filled State</Label>
-        <Popover>
-          <PopoverTrigger
-            className={cn(
-              `flex h-[55px] w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out hover:border-accent
-         ${error && 'border-red-500 bg-red-50 text-red-500 placeholder:text-red-500 focus:border-red-500'}
-    
-        ${pickedDate && 'bg-[hsl(232,52%,94%,0.5)] text-black  focus:border-[hsl(232,52%,94%,0.5)]'}
-        `,
-            )}
-            asChild
-          >
-            <Button
-              variant={'outline'}
-              className={cn('w-full justify-start text-left font-normal', !date && 'text-muted-foreground')}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {pickedDate ? format(pickedDate, 'PPP') : <span>Pick a date</span>}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <Calendar mode="single" selected={pickedDate} onSelect={setPickedDate} initialFocus />
-          </PopoverContent>
-        </Popover>
-      </div>
-      <div className="flex flex-col gap-3 min-w-[250px]">
-        <Label>Error State</Label>
-        <Popover>
-          <PopoverTrigger
-            className={cn(
-              `flex h-[55px] w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out hover:border-accent
-         ${true && 'border-red-500 bg-red-50 text-red-500 placeholder:text-red-500 focus:border-red-500'}
-    
-        ${false && 'bg-[hsl(232,52%,94%,0.5)] text-black  focus:border-[hsl(232,52%,94%,0.5)]'}
-        `,
-            )}
-            asChild
-          >
-            <Button
-              variant={'outline'}
-              className={cn('w-full justify-start text-left font-normal', !date && 'text-muted-foreground')}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {pickedDate ? format(pickedDate, 'PPP') : <span>Pick a date</span>}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <Calendar mode="single" selected={pickedDate} onSelect={setPickedDate} initialFocus />
-          </PopoverContent>
-        </Popover>
-      </div>
-      <div className="flex flex-col gap-3 min-w-[250px]">
-        <Label>Hover State</Label>
-        <Popover>
-          <PopoverTrigger
-            className={cn(
-              `flex h-[55px] w-full rounded-lg border px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out
-              bg-accent text-primary border-accent placeholder:text-primary
-         ${false && 'border-red-500 bg-red-50 text-red-500 placeholder:text-red-500 focus:border-red-500'}
-    
-        ${false && 'bg-[hsl(232,52%,94%,0.5)] text-black  focus:border-[hsl(232,52%,94%,0.5)]'}
-        `,
-            )}
-            asChild
-          >
-            <Button
-              variant={'outline'}
-              className={cn('w-full justify-start text-left font-normal', !date && 'text-muted-foreground')}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {pickedDate ? format(pickedDate, 'PPP') : <span>Pick a date</span>}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <Calendar mode="single" selected={pickedDate} onSelect={setPickedDate} initialFocus />
-          </PopoverContent>
-        </Popover>
-      </div>
-    </>
-  );
+  return <></>;
 };
