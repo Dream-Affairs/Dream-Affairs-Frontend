@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface MyModalProps {
   isModalOpen: boolean;
@@ -12,7 +12,7 @@ interface MyModalProps {
 }
 
 const MyModal: React.FC<MyModalProps> = ({ handleOpenModal, handleCloseModal, isModalOpen, title, message }) => {
-  const modalRef = useRef(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
   const handleCancel = () => {
     handleCloseModal();
@@ -40,7 +40,7 @@ const MyModal: React.FC<MyModalProps> = ({ handleOpenModal, handleCloseModal, is
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, [isModalOpen]);
+  }, [isModalOpen, handleCloseModal]);
 
   return (
     <div className="flex items-center justify-center h-screen">

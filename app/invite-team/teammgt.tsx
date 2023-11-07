@@ -16,10 +16,10 @@ export default function Teammgt() {
   const [modalMessage, setModalMessage] = useState('');
 
   //   test mode
-  const [selectedMember, setSelectedMember] = useState(null);
+  const [selectedMember, setSelectedMember] = useState<number | null>(null);
   const [isActionsOpen, setIsActionsOpen] = useState(false);
 
-  const toggleMemberActions = (index: Number) => {
+  const toggleMemberActions = (index: number) => {
     if (selectedMember === index && isActionsOpen) {
       closeMemberActions();
     } else {
