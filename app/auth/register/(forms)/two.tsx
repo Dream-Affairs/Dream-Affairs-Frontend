@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { DatePicker } from '../../(components)/DatePicker';
 import { Checkbox } from '@/components/ui/checkbox';
-import { isEmpty } from '../../helpers';
+import { isEmpty } from '../../(helpers)/helpers';
 
 interface FormTwoProps {
   formOne: {
@@ -156,14 +156,15 @@ const Two = ({ formOne, setFormOne, date, setDate, formTwo, setFormTwo, setFormT
         />
       </div>
       <Button
-        variant="default"
-        className="flex items-center justify-center gap-2"
+        variant={isSubmitting ? 'disabled' : 'secondary'}
+        disabled={isSubmitting ? true : false}
+        className="flex gap-3"
         onClick={handleSubmit}
-        disabled={isSubmitting}
       >
         {isSubmitting ? <ImSpinner8 className="animate-spin" /> : null}
-        {isSubmitting ? 'Signing up' : 'Sign up'}
+        {isSubmitting ? 'Please wait' : 'Sign Up'}
       </Button>
+
       <p className="text-sm text-center">
         Not {formOne.email}?{' '}
         <span

@@ -26,7 +26,7 @@ const Wrapper = ({
 }: AuthWrapperProps) => {
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <div className="h-full flex-1 relative transition-all duration-200 ease-in-out">
+      <div className="hidden md:block h-full flex-1 relative transition-all duration-200 ease-in-out">
         <Image width={0} height={0} src={bg} alt="bg" className="w-full h-full object-cover object-center" />
         <div className={`absolute top-0 left-0 z-10 w-full h-full ${bgColor}`}></div>
         {showBgText && (
@@ -37,8 +37,8 @@ const Wrapper = ({
         )}
       </div>
       <div className="h-full flex-1 flex justify-center items-center">
-        <div className="min-h-full max-h-full overflow-y-auto w-full no-scrollbar max-w-[600px] mx-auto p-10 lg:p-20">
-          <div className="flex gap-5 mb-14">
+        <div className="min-h-full max-h-full overflow-y-auto w-full no-scrollbar max-w-[600px] mx-auto p-5 md:p-10 lg:p-20">
+          <div className="flex gap-5 mb-14 sm:w-auto w-[60%]">
             <Image width={0} height={0} src={logo} alt="logo" className="" />
             <Image width={0} height={0} src={da} alt="da" className="" />
           </div>
@@ -46,7 +46,7 @@ const Wrapper = ({
             <div>
               <div className="flex flex-col gap-3 mb-10">
                 <h2 className="font-semibold text-4xl">{sectionTitle}</h2>
-                <p className="tracking-wide">{sectionText}</p>
+                <p className="md:text-base text-sm">{sectionText}</p>
               </div>
 
               {children}
