@@ -107,6 +107,7 @@ const sidebarMenu: any[] = [
 
 const Sidebar = (props: Props) => {
   const [viewMenu, setViewMenu] = useState<boolean>(false);
+  const [mode, setMode] = useState<boolean>(false);
   const params = usePathname();
   console.log(params);
   return (
@@ -174,9 +175,9 @@ const Sidebar = (props: Props) => {
           )}
         </div>
 
-        <div>
-          <Image src={mode1} alt="mode" />
-        </div>
+        <button onClick={() => setMode((prev) => !prev)}>
+          <Image src={mode ? mode1 : mode2} alt="mode" />
+        </button>
       </div>
     </nav>
   );
