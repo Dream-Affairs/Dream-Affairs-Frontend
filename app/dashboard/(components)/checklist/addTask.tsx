@@ -35,7 +35,7 @@ const AddTask = ({ cancel }: { cancel: () => void }) => {
       if (searchedMember.length === 0) setMembers(['----']);
     }
     if (searchMember.length === 0) setMembers(Members);
-  }, [searchMember, Members]);
+  }, [searchMember]);
 
   const handleDone = () => {
     const task: task = {
@@ -117,7 +117,6 @@ const AddTask = ({ cancel }: { cancel: () => void }) => {
                     value={searchMember}
                     onChange={(e) => {
                       setSearchMember(e.target.value);
-                      // console.log(e.target.value);
                     }}
                     className="text-neutral-400 leading-tight p-3 border-b border-gray-200 w-full outline-none"
                   />
@@ -125,7 +124,7 @@ const AddTask = ({ cancel }: { cancel: () => void }) => {
                     <p
                       onClick={() => setAssignedMember(item)}
                       key={i + 1}
-                      className="text-neutral-800 hover:bg-blue-50 text-sm font-normal leading-tight p-3 w-full"
+                      className="text-neutral-800 hover:bg-blue-50 text-sm font-normal leading-tight cursor-pointer p-3 w-full"
                     >
                       {item}
                     </p>
