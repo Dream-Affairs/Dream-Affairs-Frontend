@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { DatePicker } from '../../(components)/DatePicker';
 import { Checkbox } from '@/components/ui/checkbox';
+import { isEmpty } from '../../helpers';
 
 interface FormTwoProps {
   formOne: {
@@ -58,19 +59,22 @@ const Two = ({ formOne, setFormOne, date, setDate, formTwo, setFormTwo, setFormT
 
   const handleSubmit = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
-    if (formTwo.yourFirstName === '') {
+    if (isEmpty(formTwo.yourFirstName)) {
       setFormError((prev) => ({ ...prev, yourFirstName: true }));
       return;
     }
-    if (formTwo.partnersFirstName === '') {
+
+    if (isEmpty(formTwo.partnersFirstName)) {
       setFormError((prev) => ({ ...prev, partnersFirstName: true }));
       return;
     }
-    if (formTwo.pickedADate === false && date === undefined) {
+
+    if (!formTwo.pickedADate && !date) {
       setFormError((prev) => ({ ...prev, eventDate: true }));
       return;
     }
-    if (formTwo.location === '') {
+
+    if (isEmpty(formTwo.location)) {
       setFormError((prev) => ({ ...prev, location: true }));
       return;
     }
@@ -81,6 +85,8 @@ const Two = ({ formOne, setFormOne, date, setDate, formTwo, setFormTwo, setFormT
       setFormThree(true);
     }, 2000);
   };
+
+  console.log(formError);
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
@@ -111,12 +117,15 @@ const Two = ({ formOne, setFormOne, date, setDate, formTwo, setFormTwo, setFormT
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="eventDate">Event Date</Label>
-        <DatePicker
-          disabled={formTwo.pickedADate ? true : false}
-          date={formTwo.pickedADate ? undefined : date}
-          setDate={setDate}
-          error={formError.eventDate}
-        />
+        <div>
+          <DatePicker
+            disabled={formTwo.pickedADate ? true : false}
+            date={formTwo.pickedADate ? undefined : date}
+            setDate={setDate}
+            error={formError.eventDate}
+          />
+          {!date && formError.eventDate && <p className="text-red-500 text-xs">Error</p>}
+        </div>
       </div>
       <div className="flex items-center gap-2">
         <Checkbox
@@ -147,14 +156,15 @@ const Two = ({ formOne, setFormOne, date, setDate, formTwo, setFormTwo, setFormT
         />
       </div>
       <Button
-        variant="default"
-        className="flex items-center justify-center gap-2"
+        variant={isSubmitting ? 'disabled' : 'secondary'}
+        disabled={isSubmitting ? true : false}
+        className="flex gap-3"
         onClick={handleSubmit}
-        disabled={isSubmitting}
       >
         {isSubmitting ? <ImSpinner8 className="animate-spin" /> : null}
-        {isSubmitting ? 'Signing up' : 'Sign up'}
+        {isSubmitting ? 'Please wait' : 'Sign Up'}
       </Button>
+
       <p className="text-sm text-center">
         Not {formOne.email}?{' '}
         <span

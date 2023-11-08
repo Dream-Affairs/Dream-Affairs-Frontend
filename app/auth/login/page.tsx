@@ -46,10 +46,10 @@ const Login = () => {
     <Wrapper
       bg={bg}
       bgColor="bg-[#371345] bg-opacity-20"
-      bgText="Sign in to your account and continue planning your dream wedding with ease."
+      bgText="Sign in to Continue using Dream Affairs"
       bgTitle="Welcome Back to Dream Affairs Project!"
       sectionTitle="Sign in"
-      sectionText="Sign in to your account and continue planning your dream wedding with ease."
+      sectionText="Sign in to Continue using Dream Affairs"
       showBgText={true}
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-8">
@@ -81,12 +81,12 @@ const Login = () => {
               passwordVisible ? (
                 <AiOutlineEye
                   onClick={() => setPasswordVisible((p) => !p)}
-                  className="cursor-pointer text-lg text-primary"
+                  className="cursor-pointer text-lg text-gray-500"
                 />
               ) : (
                 <PiEyeSlashLight
                   onClick={() => setPasswordVisible((p) => !p)}
-                  className="cursor-pointer text-lg text-primary"
+                  className="cursor-pointer text-lg text-gray-500"
                 />
               )
             }
