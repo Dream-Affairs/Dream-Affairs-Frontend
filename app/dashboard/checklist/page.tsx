@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Filter from '../(components)/checklist/Filter';
 import Search from '../(components)/checklist/Search';
-import Task from '../(components)/checklist/Task';
+import AddTask from '../(components)/checklist/addTask';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -19,6 +19,10 @@ const filter: string[] = ['All tasks', 'Assigned to me', 'Assigned by me', 'Comp
 const Checklist = () => {
   const [filterKey, setFilterKey] = useState('All tasks');
   const [addTask, setAddTask] = useState(false);
+
+  const CancelAddTask = () => {
+    setAddTask(false);
+  };
 
   return (
     <section className="w-full px-8">
@@ -53,13 +57,13 @@ const Checklist = () => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <Button variant="secondary" onClick={() => setAddTask((prev) => !prev)}>
+              <Button variant="secondary" onClick={() => setAddTask(true)}>
                 Add Task
               </Button>
             </aside>
           </div>
         </div>
-        <div className="w-full mt-8 border-t border-neutral-200">{addTask && <Task />}</div>
+        <div className="w-full mt-8 border-t border-neutral-200">{addTask && <AddTask cancel={CancelAddTask} />}</div>
       </aside>
     </section>
   );
