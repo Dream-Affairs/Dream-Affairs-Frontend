@@ -11,7 +11,7 @@ const withAuth = (WrappedComponent: any) => {
       const token = localStorage.getItem('daff');
       const isLoggedIn = isAuthenticated(token as string);
       if (!isLoggedIn) {
-        // router.replace('/auth/login');
+        router.replace('/auth/login');
         localStorage.removeItem('daff');
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
