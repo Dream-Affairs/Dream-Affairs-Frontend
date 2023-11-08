@@ -113,19 +113,21 @@ const Sidebar = (props: Props) => {
     <nav
       onMouseEnter={() => setViewMenu(true)}
       onMouseLeave={() => setViewMenu(false)}
-      className={`${viewMenu ? 'w-fit' : 'w-fit'} px-8 py-6 min-h-screen border-r`}
+      className={`${viewMenu ? 'w-fit' : 'w-fit'} px-8 py-6 min-h-screen border-r ${
+        viewMenu ? 'min-w-[325px]' : 'min-w-fit'
+      }`}
     >
       <Link href={`/`} className="flex items-center py-2 px-3 mb-4 gap-x-3">
         <Image src={logo} alt="logo" />
         {viewMenu && <h1 className="uppercase mt-1">Dream Affairs</h1>}
       </Link>
 
-      <div className="py-3 space-y-4">
+      <div className="py-3 space-y-4 mx-auto">
         {sidebarMenu.map((item) => (
           <Link
             href={`${item.route}`}
             key={item.id}
-            className={`flex items-center p-3 rounded text-base leading-6 font-semibold ${
+            className={`flex items-center p-3 rounded text-base leading-6 font-semibold h-fit ${
               viewMenu ? 'w-full' : 'w-fit'
             } ${
               params === item.route
@@ -146,7 +148,7 @@ const Sidebar = (props: Props) => {
         <hr />
       </div>
 
-      <div className="space-y-4 px-2">
+      <div className="flex flex-col gap-y-4 justify-center item-center">
         <Link
           href={`/dashboard/settings`}
           className={`${viewMenu ? 'w-full' : 'w-fit'} flex items-center p-3 text-sm font-normal rounded ${
