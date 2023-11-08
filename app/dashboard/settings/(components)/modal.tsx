@@ -93,7 +93,7 @@ const SettingsModal: React.FC<SetModalProps> = ({
   }, [isModalOpen, handleCloseModal]);
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className={`flex items-center justify-center ${isModalOpen ? 'h-screen' : 'h-0'}`}>
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-black opacity-40"></div>
