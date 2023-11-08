@@ -1,0 +1,13 @@
+name: Linter
+on: push
+jobs:
+  ESLint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: yarn
+    - name: Install ESLint
+      run: yarn global add eslint
+    - name: Run ESLint
+      run: eslint . --ext .js,.jsx,.ts,.tsx
