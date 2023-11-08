@@ -1,4 +1,5 @@
-export const isEmpty = (str: string) => !str || str.length === 0;
+export const isEmpty = (param: string | null | any) =>
+  param === null || typeof param === 'undefined' || param.length == 0;
 
 export const passwordChecker = (str: string) => {
   let message = '';
