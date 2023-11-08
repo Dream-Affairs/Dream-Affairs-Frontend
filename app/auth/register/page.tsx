@@ -31,6 +31,43 @@ const Register = () => {
     setFormThree(true);
   };
 
+  const array = [
+    {
+      expand: 'renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations',
+      id: '10001',
+      self: 'https://rafaelmiranda.atlassian.net/rest/api/2/issue/10001',
+      key: 'TES-1',
+      fields: {
+        priority: {
+          self: 'https://rafaelmiranda.atlassian.net/rest/api/2/priority/3',
+          iconUrl: 'https://rafaelmiranda.atlassian.net/images/icons/priorities/medium.svg',
+          name: 'Medium1',
+          id: '3',
+        },
+      },
+    },
+    {
+      expand: 'renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations',
+      id: '10002',
+      self: 'https://rafaelmiranda.atlassian.net/rest/api/2/issue/10001',
+      key: 'TES-2',
+      fields: {
+        priority: {
+          self: 'https://rafaelmiranda.atlassian.net/rest/api/2/priority/3',
+          iconUrl: 'https://rafaelmiranda.atlassian.net/images/icons/priorities/medium.svg',
+          name: 'Medium2',
+          id: '3',
+        },
+      },
+    },
+  ];
+
+  array.map((el) => {
+    if (el.fields.priority.name === 'Medium2') {
+      console.log(el.key);
+    }
+  });
+
   return (
     <>
       {formThree ? (
@@ -41,7 +78,7 @@ const Register = () => {
           bgColor={formOne.valid === false ? 'bg-[#371345] bg-opacity-20' : 'bg-[#013440] bg-opacity-50'}
           bgText="Create your account to start planning, organizing, and sharing your special day with our comprehensive wedding planning and management application. Your dream wedding journey begins here."
           bgTitle="Join Dream Affairs and Make Your Event a Reality!"
-          sectionText={formOne.valid ? 'We will require some additional details' : 'Sign up'}
+          sectionText={formOne.valid ? 'We will require some additional details' : 'Let’s get you Started '}
           sectionTitle={formOne.valid ? 'Lets get planning' : 'Sign up'}
           showBgText={true}
         >

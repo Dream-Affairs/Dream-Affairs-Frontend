@@ -4,7 +4,6 @@ import cpic from '../(assets)/cover-photo.jpg';
 import ppic from '../(assets)/profile-picture.jpg';
 import Image from 'next/image';
 import SettingsModal from './modal';
-import Webcam from 'react-webcam';
 
 const CoverPhoto = () => {
   const [selectedImage, setSelectedImage] = useState<string>('');

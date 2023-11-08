@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import RootLayout from '../layout';
-import gallery1 from './(assets)/gallery-1.png'
-import gallery2 from './(assets)/gallery-2.png'
-import gallery3 from './(assets)/gallery-3.png'
-import gallery4 from './(assets)/gallery-4.png'
-import gallery5 from './(assets)/gallery-5.png'
-import gallery6 from './(assets)/gallery-6.png'
-import gallery7 from './(assets)/gallery-7.png'
-import gallery8 from './(assets)/gallery-8.png'
+import gallery1 from './(assets)/gallery-1.png';
+import gallery2 from './(assets)/gallery-2.png';
+import gallery3 from './(assets)/gallery-3.png';
+import gallery4 from './(assets)/gallery-4.png';
+import gallery5 from './(assets)/gallery-5.png';
+import gallery6 from './(assets)/gallery-6.png';
+import gallery7 from './(assets)/gallery-7.png';
+import gallery8 from './(assets)/gallery-8.png';
 import Hero from './(components)/hero';
 import History from './(components)/history';
 import Team from './(components)/team';
@@ -54,21 +54,21 @@ const About = () => {
       bio: '[Team Member 4] adds [specific expertise or skill set] to our dynamic team. Their passion for [related passion or expertise] has been a valuable asset in [mention specific contributions].',
     },
   ];
-  const galleryImages = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery7, gallery8,]
+  const galleryImages = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery7, gallery8];
   return (
     <RootLayout>
       <Header />
       <main className="w-full relative">
         {/* Hero */}
-        <Hero/>
+        <Hero />
         {/* Our History */}
-        <History/>
+        <History />
         {/* Our Team */}
-        <Team teamMembers ={teamMembers}/>
+        <Team teamMembers={teamMembers} />
         {/* Gallery */}
-        <Gallery galleryImages = {galleryImages} />
+        <Gallery galleryImages={galleryImages} />
         {/* Contact us */}
-        <Contact/>
+        <Contact />
       </main>
     </RootLayout>
   );
