@@ -1,4 +1,6 @@
+'use client';
 import React from 'react';
+import withAuth from '../auth/(helpers)/withAuth';
 
 type Props = {};
 
@@ -10,4 +12,4 @@ const Dashboard = (props: Props) => {
   );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);
