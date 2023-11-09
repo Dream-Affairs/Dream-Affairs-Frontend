@@ -2,6 +2,7 @@ import Hero from "./(components)/hero"
 import Faq from "./(components)/faq"
 import Contact from "./(components)/contact"
 import Pricecards from "./(components)/pricecards"
+import Header from "../header/page"
 
 const Pricing = () => {
     const faqData = [
@@ -34,6 +35,7 @@ const Pricing = () => {
 
   return (
     <div>
+        <Header />
         <Hero />
         <Pricecards />
         <Faq faqData ={faqData} />
