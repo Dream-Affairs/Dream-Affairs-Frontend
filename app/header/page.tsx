@@ -13,7 +13,7 @@ const Header = () => {
 
   return (
     <header className="py-4 px-8 lg:px-15 border-b border-black/10 sticky top-0 z-30 bg-white">
-      <div className="flex justify-between max-w-[1200px] mx-auto">
+      <div className="flex justify-between max-w-[1440px] mx-auto">
         <Link href="/" className="lg:mt-3 z-10">
           <Image src={Logo} width={200} height={200} alt="Dream Affairs Logo" />
         </Link>
