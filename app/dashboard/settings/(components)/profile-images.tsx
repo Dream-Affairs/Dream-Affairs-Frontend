@@ -4,9 +4,11 @@ import cpic from '../(assets)/cover-photo.jpg';
 import ppic from '../(assets)/profile-picture.jpg';
 import Image from 'next/image';
 import SettingsModal from './modal';
+import { BiPencil } from 'react-icons/bi';
 
 const CoverPhoto = () => {
   const [selectedImage, setSelectedImage] = useState<string>('');
+  const [coverImage, setCoverImage] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,8 +17,18 @@ const CoverPhoto = () => {
       setSelectedImage(URL.createObjectURL(file));
     }
   };
+  const handleCoverUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      setCoverImage(URL.createObjectURL(file));
+    }
+  };
 
   const handleChooseImage = () => {
+    const fileInput = document.getElementById('imageInput') as HTMLInputElement;
+    fileInput.click();
+  };
+  const handleChooseCover = () => {
     const fileInput = document.getElementById('imageInput') as HTMLInputElement;
     fileInput.click();
   };
@@ -33,8 +45,23 @@ const CoverPhoto = () => {
   };
 
   return (
-    <div className="w-full h-[170px] md:h-[290px] bg-black">
-      <Image src={cpic} alt="cover image" className="w-full h-full object-cover opacity-75" />
+    <div className="w-full h-[170px] md:h-[290px]">
+      <div className="relative w-full h-full object-cover overflow-hidden bg-black">
+        <Image
+          src={coverImage === '' ? cpic : coverImage}
+          alt="cover image"
+          className="w-full h-full object-cover opacity-75"
+          width={0}
+          height={0}
+        />
+        <span
+          onClick={handleChooseCover}
+          className="inline-block p-2 rounded-full text-2xl absolute right-5 top-8 bg-white cursor-pointer"
+        >
+          <input type="file" hidden onChange={handleCoverUpload} accept="image/*" id="imageInput" />
+          <BiPencil className="text-[#7C7C7C]" />
+        </span>
+      </div>
       <div className="relative w-[140px] h-[140px] md:w-[180px] md:h-[180px] -mt-[4.5rem] mx-auto md:ms-[4.5rem]">
         <div className="profile-picture w-full h-full relative rounded-full overflow-hidden">
           <Image
