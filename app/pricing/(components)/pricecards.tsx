@@ -33,7 +33,7 @@ const Pricecards = () => {
                 </div>  
                 <div className='flex my-4'>
                 <Image src={arrowR} alt='' width={24} height={24} className='mr-2 self-baseline'/>
-                <p className=''><strong>Invitations:</strong>Basic templates for the main event and &quot;"Save the Date".</p>
+                <p className=''><strong>Invitations:</strong>Basic templates for the main event and &quot;Save the Date&quot;.</p>
                 </div>  
                 <div className='flex my-4'>
                 <Image src={arrowR} alt='' width={24} height={24} className='mr-2 self-baseline'/>
