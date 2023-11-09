@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import React from 'react'
-import Image from 'next/image'
+import React from 'react';
+import Image from 'next/image';
 import Logo from './assets/logo.svg';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
@@ -9,8 +9,7 @@ import { Button } from '@/components/ui/button';
 import { motion, useCycle, AnimatePresence, MotionConfig } from 'framer-motion';
 
 const Header = () => {
-
-    const [mobileNav, toggleMobileNav] = useCycle(false, true);
+  const [mobileNav, toggleMobileNav] = useCycle(false, true);
 
   return (
     <header className="py-4 px-8 lg:px-15 border-b border-black/10 sticky top-0 z-30 backdrop-blur-md">
@@ -34,9 +33,9 @@ const Header = () => {
             </Button>
           </Link>
           <Link href="/auth/register">
-          <Button variant="secondary" className="p-3 px-8 h-10">
-            Signup
-          </Button>
+            <Button variant="secondary" className="p-3 px-8 h-10">
+              Signup
+            </Button>
           </Link>
         </div>
 
@@ -153,6 +152,6 @@ const Header = () => {
       </div>
     </header>
   );
-}
+};
 
-export default Header
+export default Header;
