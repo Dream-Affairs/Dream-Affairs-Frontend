@@ -39,6 +39,7 @@
     "react-day-picker": "^8.9.1",
     "react-dom": "^18",
     "react-icons": "^4.11.0",
+    "react-responsive-carousel": "^3.2.23",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
     "webrtc-adapter": "^8.2.3"
