@@ -5,9 +5,9 @@ type Props = {};
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <main className="flex w-full transition-all duration-500 max-w-[1440px] mx-auto">
+    <main className="flex w-full transition-all duration-500">
       <Sidebar />
-      <>{children}</>
+      <div className="flex-[9]">{children}</div>
     </main>
   );
 };
