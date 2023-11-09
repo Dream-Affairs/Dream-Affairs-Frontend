@@ -35,7 +35,7 @@ const CoverPhoto = () => {
   return (
     <div className="w-full h-[170px] md:h-[290px] bg-black">
       <Image src={cpic} alt="cover image" className="w-full h-full object-cover opacity-75" />
-      <div className="relative w-[140px] h-[140px] md:w-[200px] md:h-[200px] -mt-16 mx-auto md:ms-16">
+      <div className="relative w-[140px] h-[140px] md:w-[180px] md:h-[180px] -mt-[4.5rem] mx-auto md:ms-[4.5rem]">
         <div className="profile-picture w-full h-full relative rounded-full overflow-hidden">
           <Image
             src={selectedImage === '' ? ppic : selectedImage}
