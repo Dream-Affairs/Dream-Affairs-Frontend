@@ -1,6 +1,5 @@
 'use client';
 
-import CoverPhoto from '../settings/(components)/profile-images';
 import Title from '../settings/(components)/title';
 import React, { useState } from 'react';
 import ProfileManagement from './(components)/profile';
@@ -67,7 +66,7 @@ const Settings = (props: Props) => {
   };
 
   return (
-    <div className=" box-border w-[90%] relative">
+    <div className=" box-border w-full relative pb-12">
       <div className="ps-10 border-b-[1px] py-7 ms-1 pb-4 fixed z-10 bg-white w-full">
         {settings.map((setting) => (
           <div key={setting.id}>{setting.active ? <Title text={setting.title} /> : null}</div>
