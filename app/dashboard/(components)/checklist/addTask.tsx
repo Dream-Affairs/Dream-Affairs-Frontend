@@ -47,7 +47,6 @@ const AddTask = ({ cancel }: { cancel: () => void }) => {
     cancel();
   };
 
-  // <div className="min-w-[20px] h-5 mt-1 border-[3px] border-[#9F7DB5] rounded-[50%]"> </div>
   return (
     <div className="w-full items-center pt-4 pb-2 border rounded-lg border-neutral-200 mt-5">
       <aside className="px-3">

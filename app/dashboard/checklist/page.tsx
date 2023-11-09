@@ -13,8 +13,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import Task from '../(components)/checklist/Task';
 
 const filter: string[] = ['All tasks', 'Assigned to me', 'Assigned by me', 'Completed'];
+
+type task = {
+  decription: string;
+  date: Date | undefined;
+  assignee: string;
+};
+
+const tasks: task[] = [
+  {
+    decription: 'Contact Vendor',
+    date: undefined,
+    assignee: 'John',
+  },
+  {
+    decription: 'Go to oshodi',
+    date: new Date(),
+    assignee: 'Victor',
+  },
+];
 
 const Checklist = () => {
   const [filterKey, setFilterKey] = useState('All tasks');
@@ -64,6 +84,13 @@ const Checklist = () => {
           </div>
         </div>
         <div className="w-full mt-8 border-t border-neutral-200">{addTask && <AddTask cancel={CancelAddTask} />}</div>
+        <ul className="mt-8 flex flex-col gap-6">
+          {tasks.map((item, i) => (
+            <li key={i + 1}>
+              <Task item={item} />
+            </li>
+          ))}
+        </ul>
       </aside>
     </section>
   );
