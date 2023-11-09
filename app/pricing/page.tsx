@@ -24,7 +24,7 @@ const Pricing = () => {
         {
             id: 4,
             question: "How can I make changes to my billing information?",
-            answer: "You can update your billing information in the Account Settings section of your profile."
+            answer: "You can update your billing information in the 'Account Settings' section of your profile."
         },
         {
             id: 5,
