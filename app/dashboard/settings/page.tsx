@@ -67,7 +67,7 @@ const Settings = (props: Props) => {
 
   return (
     <div className=" box-border w-full relative pb-12">
-      <div className="ps-10 border-b-[1px] py-7 ms-1 pb-4 fixed z-10 bg-white w-full">
+      <div className="ps-20 border-b-[1px] py-7 ms-1 fixed z-10 top-0 pb-4 bg-white w-full">
         {settings.map((setting) => (
           <div key={setting.id}>{setting.active ? <Title text={setting.title} /> : null}</div>
         ))}
