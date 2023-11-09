@@ -24,12 +24,12 @@ const Pricing = () => {
         {
             id: 4,
             question: "How can I make changes to my billing information?",
-            answer: 'You can update your billing information in the "Account Settings" section of your profile.'
+            answer: "You can update your billing information in the Account Settings section of your profile."
         },
         {
             id: 5,
             question: "What payment methods do you accept?",
-            answer: "We currently accept major credit and debit cards for payments"
+            answer: "We currently accept major credit and debit cards for payments"
         }
     ]
 
