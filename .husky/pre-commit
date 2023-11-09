@@ -20,7 +20,7 @@ echo 'Please be patient, this may take a while...'
 
 # Check ESLint Standards
 npm run lint || (
-    echo 'You have a problem in your code. Fix the error and try again.'
+    echo 'You have a problem in your code, please fix the error and try again.'
     echo 'You can run "npm run lint" to see the error'
     false
 )

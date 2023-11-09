@@ -43,14 +43,12 @@ const Wrapper = ({
             <Image width={0} height={0} src={da} alt="da" className="" />
           </div>
           <div className="min-h-full min-w-full">
-            <div>
-              <div className="flex flex-col gap-3 mb-10">
-                <h2 className="font-semibold text-4xl">{sectionTitle}</h2>
-                <p className="md:text-base text-sm">{sectionText}</p>
-              </div>
-
-              {children}
+            <div className="flex flex-col gap-3 mb-10">
+              <h2 className="font-semibold text-4xl">{sectionTitle}</h2>
+              <p className="md:text-base text-sm">{sectionText}</p>
             </div>
+
+            {children}
           </div>
         </div>
       </div>
