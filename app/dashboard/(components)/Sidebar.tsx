@@ -107,15 +107,13 @@ const sidebarMenu: any[] = [
 
 const Sidebar = (props: Props) => {
   const [viewMenu, setViewMenu] = useState<boolean>(false);
+  const [mode, setMode] = useState<boolean>(false);
   const params = usePathname();
-  console.log(params);
   return (
     <nav
       onMouseEnter={() => setViewMenu(true)}
       onMouseLeave={() => setViewMenu(false)}
-      className={`${viewMenu ? 'w-fit' : 'w-fit'} px-8 py-6 min-h-screen border-r ${
-        viewMenu ? 'min-w-[325px]' : 'min-w-fit'
-      }`}
+      className={`${viewMenu ? 'min-w-[325px] flex-[1]' : 'min-w-fit flex-[0]'} px-8 py-6 min-h-screen border-r  w-fit`}
     >
       <Link href={`/`} className="flex items-center py-2 px-3 mb-4 gap-x-3">
         <Image src={logo} alt="logo" />
@@ -174,9 +172,9 @@ const Sidebar = (props: Props) => {
           )}
         </div>
 
-        <div>
-          <Image src={mode1} alt="mode" />
-        </div>
+        <button onClick={() => setMode((prev) => !prev)}>
+          <Image src={mode ? mode1 : mode2} alt="mode" />
+        </button>
       </div>
     </nav>
   );

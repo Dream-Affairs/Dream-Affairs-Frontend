@@ -1,18 +1,28 @@
+'use client';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import add from './(assets)/add.svg';
-import guest from './(assets)/profile-add.svg';
 import calendar from './(assets)/calendar.svg';
 import location from './(assets)/location.svg';
 import clock from './(assets)/clock.svg';
+import { EmptyBudget, EmptyClock, EmptyRSVP } from './(components)/DashboardEmpty';
+import { checkList, giftList } from './data/dashboard-data';
+import { Checklist, Gifts } from './(components)/DashboardData';
 
 type Props = {};
 
-const Dashboard = (props: Props) => {
+const Dashboard = () => {
+  const [gifts, setGifts] = useState<any[] | null>(null);
+  const [tasks, setTasks] = useState<any[] | null>(null);
+
+  useEffect(() => {
+    setTasks(checkList);
+    setGifts(giftList);
+  }, []);
   return (
-    <section className="w-full py-6 px-[52px] space-y-8">
+    <section className="w-full h-full py-6 px-[52px] space-y-8">
       {/* Header, Add Guest and Upgrade Plan  */}
       <div className="flex justify-between items-center">
         {/* Header  */}
@@ -71,15 +81,7 @@ const Dashboard = (props: Props) => {
           <p className="text-lg leading-6 font-semibold text-[#282828]">Countdown Clock</p>
 
           <div className="flex gap-x-10 w-full h-full pl-10 text-sm">
-            <div className="flex justify-center items-center bg-[#9B57B6] w-[85px] h-[85px] rounded-full p-1.5">
-              <p className="bg-white rounded-full h-full w-full flex justify-center items-center">days</p>
-            </div>
-            <div className="flex justify-center items-center bg-[#9B57B6] w-[85px] h-[85px] rounded-full p-1.5">
-              <p className="bg-white rounded-full h-full w-full flex justify-center items-center">hours</p>
-            </div>
-            <div className="flex justify-center items-center bg-[#9B57B6] w-[85px] h-[85px] rounded-full p-1.5">
-              <p className="bg-white rounded-full h-full w-full flex justify-center items-center">minutes</p>
-            </div>
+            <EmptyClock />
           </div>
         </div>
       </div>
@@ -87,12 +89,11 @@ const Dashboard = (props: Props) => {
       {/* RSVP Overview and Financial Overview  */}
       <div className="flex gap-x-8 w-full">
         {/* RSVP Overview  */}
-        <div className="border border-[#E1E1E1] rounded-[5px] w-full h-[280px] p-4">
+        <div className="border border-[#E1E1E1] rounded-[5px] w-full h-full p-4">
           <p className="text-lg leading-6 font-semibold text-[#282828]">RSVP Overview</p>
-          <div className="text-[#822DA4] text-base leading-6 h-full w-full flex items-center justify-center font-medium">
-            <Button variant={'ghost'}>
-              <Image src={guest} alt="" /> Add Guests
-            </Button>
+
+          <div className="h-full w-full flex flex-col gap-y-7 mt-5 text-[#282828] text-sm">
+            <EmptyRSVP />
           </div>
         </div>
 
@@ -100,34 +101,68 @@ const Dashboard = (props: Props) => {
         <div className="border border-[#E1E1E1] rounded-[5px] w-full h-[280px] p-4">
           <p className="text-lg leading-6 font-semibold text-[#282828]">Financial Overview</p>
           <div className="text-[#822DA4] text-base leading-6 h-full w-full flex items-center justify-center font-medium">
-            <Button variant={'ghost'}>
-              <Image src={add} alt="" /> Add Budget
-            </Button>
+            <EmptyBudget />
           </div>
         </div>
       </div>
 
       {/* Checklist and Gifts  */}
-      <div className="flex gap-x-8 w-full">
+      <div className="flex gap-x-8 w-full h-full">
         {/* Checklist */}
-        <div className="border border-[#E1E1E1] rounded-[5px] w-full h-[380px] p-4 space-y-3">
-          <p className="text-lg leading-6 font-semibold text-[#282828]">Checklist</p>
+        <div className={`border border-[#E1E1E1] rounded-[5px] w-full ${tasks ? 'h-fit' : 'h-[380px]'} p-4 space-y-4`}>
+          <div className="flex justify-between items-center">
+            <p className="text-lg leading-6 font-semibold text-[#282828]">Checklist</p>
+            {tasks && (
+              <Link
+                href={`/dashboard/checklist`}
+                className="text-[#822DA4] text-sm font-normal underline leading-5 underline-offset-2"
+              >
+                View All
+              </Link>
+            )}
+          </div>
+
           <p className="flex justify-between w-full text-sm text-[#6F6F6F]">
             <span>Task</span>
             <span>Status</span>
           </p>
-          <div className="text-[#822DA4] text-base leading-6 h-full w-full flex items-center justify-center font-medium">
-            <Button variant={'ghost'}>
-              <Image src={add} alt="" /> Add Task
-            </Button>
+          <div
+            className={`w-full flex ${
+              tasks ? 'flex-col justify-center h-fit pb-3' : 'flex-row items-center justify-center h-full'
+            }  gap-y-3`}
+          >
+            {tasks ? (
+              <Checklist tasks={tasks} />
+            ) : (
+              <p className="text-[#822DA4] text-base leading-6 font-medium">No Task</p>
+            )}
           </div>
         </div>
 
         {/* Gifts  */}
-        <div className="border border-[#E1E1E1] rounded-[5px] w-full h-[380px] p-4">
-          <p className="text-lg leading-6 font-semibold text-[#282828]">Gifts</p>
-          <div className="text-[#822DA4] text-base leading-6 h-full w-full flex items-center justify-center font-medium">
-            No Gifts
+        <div className={`border border-[#E1E1E1] rounded-[5px] w-full ${tasks ? 'h-fit' : 'h-[380px]'} p-5 space-y-4`}>
+          <div className="flex justify-between items-center">
+            <p className="text-lg leading-6 font-semibold text-[#282828]">Gifts</p>
+            {tasks && (
+              <Link
+                href={`/dashboard/`}
+                className="text-[#822DA4] text-sm font-normal underline leading-5 underline-offset-2"
+              >
+                View All
+              </Link>
+            )}
+          </div>
+
+          <div
+            className={`h-full w-full flex ${
+              gifts ? 'flex-col justify-center h-fit' : 'flex-row items-center justify-center h-full'
+            }  gap-y-3`}
+          >
+            {gifts ? (
+              <Gifts gifts={gifts} />
+            ) : (
+              <p className="text-[#822DA4] text-base leading-6 font-medium">No Gift</p>
+            )}
           </div>
         </div>
       </div>
