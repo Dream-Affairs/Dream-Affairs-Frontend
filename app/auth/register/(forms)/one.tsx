@@ -7,7 +7,7 @@ import { ImSpinner8 } from 'react-icons/im';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { isEmpty, passwordChecker, isValidEmail } from '@/app/auth/helpers';
+import { isEmpty, passwordChecker, isValidEmail } from '@/app/auth/(helpers)/helpers';
 
 interface FormOneProps {
   formOne: {

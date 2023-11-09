@@ -39,14 +39,14 @@ const Login = () => {
       setFormError((prev) => ({ ...prev, password: true }));
       return;
     }
-    setIsSubmitting(true);
+    // setIsSubmitting(true);
   };
 
   return (
     <Wrapper
       bg={bg}
       bgColor="bg-[#371345] bg-opacity-20"
-      bgText="Sign in to Continue using Dream Affairs"
+      bgText="Sign in to your account and continue planning your dream wedding with ease."
       bgTitle="Welcome Back to Dream Affairs Project!"
       sectionTitle="Sign in"
       sectionText="Sign in to Continue using Dream Affairs"
