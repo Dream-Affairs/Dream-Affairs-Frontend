@@ -6,7 +6,7 @@ import fg from '../(assets)/fg.svg';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { isEmpty, passwordChecker } from '@/app/auth/helpers';
+import { isEmpty, passwordChecker } from '@/app/auth/(helpers)/helpers';
 import Link from 'next/link';
 import Image from 'next/image';
 import { AiOutlineEye } from 'react-icons/ai';

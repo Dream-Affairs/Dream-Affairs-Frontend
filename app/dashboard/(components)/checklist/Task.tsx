@@ -8,7 +8,7 @@ const Task = () => {
   useEffect(() => {
     taskText.length === 0 ? setTaskText('Create a New Task') : '';
     dateText.length === 0 ? setDateText('Set due date') : '';
-  }, []);
+  }, [taskText, dateText]);
   return (
     <div className="w-full items-center grid grid-cols-3 pt-4 pb-1 border-b border-neutral-200">
       <aside className="flex gap-3">

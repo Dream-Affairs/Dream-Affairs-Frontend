@@ -1,3 +1,22 @@
+import Link from 'next/link';
+import Header from './header/page';
+
 export default function Home() {
-  return <h1>Hello welcome to dream affairs</h1>;
+  return (
+    <>
+      <Header />
+      <ul>
+        Hello welcome to Dream Affairs
+        <li>
+          <Link href="/auth/login">Login</Link>
+        </li>
+        <li>
+          <Link href="/auth/reset-password">Reset password</Link>
+        </li>
+        <li>
+          <Link href="/auth/2fa">2fa</Link>
+        </li>
+      </ul>
+    </>
+  );
 }
