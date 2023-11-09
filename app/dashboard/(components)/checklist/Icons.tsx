@@ -56,14 +56,7 @@ export const AssignIcon = ({ stroke }: { stroke: string }) => {
 // DELETE
 export const DeleteIcon = () => {
   return (
-    <svg
-      className="justify-self-end"
-      xmlns="http://www.w3.org/2000/svg"
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      fill="none"
-    >
+    <svg className="" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
       <path
         d="M15.75 4.48499C13.2525 4.23749 10.74 4.10999 8.235 4.10999C6.75 4.10999 5.265 4.18499 3.78 4.33499L2.25 4.48499"
         stroke="#E80000"

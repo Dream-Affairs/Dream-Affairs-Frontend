@@ -23,25 +23,39 @@ type task = {
   assignee: string;
 };
 
-const tasks: task[] = [
+type addTask = (task: task) => void;
+type deleteTask = (index: number) => void;
+
+const Tasks: task[] = [
   {
     decription: 'Contact Vendor',
-    date: undefined,
+    date: new Date('01-04-23'),
     assignee: 'John',
   },
   {
-    decription: 'Go to oshodi',
+    decription: 'Buy Aso Ebi',
     date: new Date(),
-    assignee: 'Victor',
+    assignee: 'Nonye',
   },
 ];
 
 const Checklist = () => {
   const [filterKey, setFilterKey] = useState('All tasks');
   const [addTask, setAddTask] = useState(false);
+  const [tasks, setTasks] = useState(Tasks);
 
   const CancelAddTask = () => {
     setAddTask(false);
+  };
+
+  const handleAddTask: addTask = (task) => {
+    const newTasksArr = [task, ...tasks];
+    setTasks(newTasksArr);
+  };
+
+  const handleDelete: deleteTask = (index) => {
+    const newTasksArr = tasks.filter((_, i) => i !== index);
+    setTasks(newTasksArr);
   };
 
   return (
@@ -83,11 +97,13 @@ const Checklist = () => {
             </aside>
           </div>
         </div>
-        <div className="w-full mt-8 border-t border-neutral-200">{addTask && <AddTask cancel={CancelAddTask} />}</div>
+        <div className="w-full mt-8 border-t border-neutral-200">
+          {addTask && <AddTask addTask={handleAddTask} cancel={CancelAddTask} />}
+        </div>
         <ul className="mt-8 flex flex-col gap-6">
           {tasks.map((item, i) => (
             <li key={i + 1}>
-              <Task item={item} />
+              <Task index={i} deleteTask={handleDelete} item={item} />
             </li>
           ))}
         </ul>

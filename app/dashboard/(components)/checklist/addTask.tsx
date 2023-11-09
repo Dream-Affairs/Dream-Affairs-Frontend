@@ -16,9 +16,14 @@ type task = {
   assignee: string;
 };
 
+interface MyAddTasksProps {
+  addTask: (task: task) => void;
+  cancel: () => void;
+}
+
 const Members: string[] = ['You', 'John', 'Nonye'];
 
-const AddTask = ({ cancel }: { cancel: () => void }) => {
+const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
   const [date, setDate] = React.useState<Date | undefined>(undefined);
   const error = false;
   const [taskText, setTaskText] = useState('');
@@ -41,8 +46,10 @@ const AddTask = ({ cancel }: { cancel: () => void }) => {
     const task: task = {
       decription: taskText,
       date: date,
-      assignee: assignedMember,
+      assignee: assignedMember === 'Assign Task' ? 'Not assaigned' : assignedMember,
     };
+
+    addTask(task);
 
     cancel();
   };

@@ -9,15 +9,13 @@ type task = {
   assignee: string;
 };
 
-// const tasks: task[] = [
-//   {
-//     decription: 'Contact Vendor',
-//     date: undefined,
-//     assignee: 'John',
-//   },
-// ];
+interface MyTasksProps {
+  deleteTask: (index: number) => void;
+  item: task;
+  index: number;
+}
 
-export const Task = ({ item }: { item: task }) => {
+export const Task = ({ deleteTask, item, index }: MyTasksProps) => {
   return (
     <div className="w-full pr-9 pb-2 border-b border-neutral-100 flex-col justify-center items-start gap-2 inline-flex">
       <div className="self-stretch justify-start items-start gap-2 inline-flex">
@@ -34,8 +32,10 @@ export const Task = ({ item }: { item: task }) => {
 
           {/* Assignee */}
           <p className="text-slate-600 justify-self-center leading-snug">{item.assignee}</p>
-
-          <DeleteIcon />
+          {/* Delete */}
+          <aside onClick={() => deleteTask(index)} className="justify-self-end cursor-pointer">
+            <DeleteIcon />
+          </aside>
         </div>
       </div>
     </div>
