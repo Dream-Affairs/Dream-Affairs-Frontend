@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Work_Sans } from 'next/font/google';
 import './globals.css';
+import { Toaster } from '@/components/ui/toaster';
 
 const workSans = Work_Sans({ subsets: ['latin'] });
 
@@ -12,7 +13,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={workSans.className}>{children}</body>
+      <body className={workSans.className}>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

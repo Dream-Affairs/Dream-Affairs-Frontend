@@ -10,6 +10,7 @@ import { ImSpinner8 } from 'react-icons/im';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { toast, useToast } from '@/components/ui/use-toast';
 
 const Login = () => {
   const [form, setForm] = React.useState({
@@ -22,6 +23,7 @@ const Login = () => {
     email: false,
     password: false,
   });
+  const [toastify, setToastify] = React.useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormError((prev) => ({ ...prev, [e.target.id]: false }));
@@ -29,17 +31,28 @@ const Login = () => {
     setForm((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (form.email === '') {
-      setFormError((prev) => ({ ...prev, email: true }));
-      return;
-    }
-    if (form.password === '') {
-      setFormError((prev) => ({ ...prev, password: true }));
-      return;
-    }
-    // setIsSubmitting(true);
+    // if (form.email === '') {
+    //   setFormError((prev) => ({ ...prev, email: true }));
+    //   return;
+    // }
+    // if (form.password === '') {
+    //   setFormError((prev) => ({ ...prev, password: true }));
+    //   return;
+    // }
+
+    setIsSubmitting(true);
+    toast({
+      title: 'Scheduled: Catch up',
+      // description: 'Friday, February 10, 2023 at 5:57 PM',
+      // action: (
+      //   <Button variant="outline" size="sm">
+      //     Undo
+      //   </Button>
+      // ),
+    });
+    setIsSubmitting(false);
   };
 
   return (
