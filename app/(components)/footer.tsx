@@ -12,8 +12,8 @@ import linkedin from '../auth/(assets)/linkedin.svg';
 
 const Footer = () => {
   const links = [
-    { id: 1, name: 'About', path: '/' },
-    { id: 2, name: 'Product Overview', path: '/about-us' },
+    { id: 1, name: 'About', path: '/about-us' },
+    { id: 2, name: 'Product Overview', path: '/' },
     { id: 3, name: 'Customer Support', path: '/' },
     { id: 4, name: 'FAQ', path: '/' },
     { id: 5, name: 'Contact us', path: '/' },
