@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
-import Logo from './(assets)/logo.svg';
+import Logo from '../auth/(assets)/logo.svg';
+import da from '../auth/(assets)/da.svg';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -12,10 +13,11 @@ const Header = () => {
   const [mobileNav, toggleMobileNav] = useCycle(false, true);
 
   return (
-    <header className="py-4 px-8 lg:px-15 border-b border-black/10 sticky top-0 z-30 bg-white">
-      <div className="flex justify-between max-w-[1440px] mx-auto">
-        <Link href="/" className="lg:mt-3 z-10">
-          <Image src={Logo} width={200} height={200} alt="Dream Affairs Logo" />
+    <header className="py-4 border-b border-black/10 sticky top-0 z-30 bg-white">
+      <div className="flex justify-between max-w-[1440px] mx-auto px-8 lg:px-10">
+        <Link href="/" className="z-10 flex gap-5 sm:w-auto w-[60%]">
+          <Image src={Logo} width={0} height={0} alt="Dream Affairs Logo" />
+          <Image width={0} height={0} src={da} alt="da" className="" />
         </Link>
         <div className="lg:space-x-8 mt-5 hidden lg:flex">
           <Link href="/">
@@ -134,12 +136,12 @@ const Header = () => {
 
                   <div className="flex mt-2">
                     <Link href="/auth/login">
-                      <Button variant="outline" className="p-3 px-4 h-10 mr-6">
+                      <Button variant="outline" className="w-[114px] h-[58px] mr-6 ">
                         Log In
                       </Button>
                     </Link>
                     <Link href="/auth/register">
-                      <Button variant="secondary" className="p-3 px-8 h-10">
+                      <Button variant="secondary" className="w-[154px] h-[56px]">
                         Signup
                       </Button>
                     </Link>
