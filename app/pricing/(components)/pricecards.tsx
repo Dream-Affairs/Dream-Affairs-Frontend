@@ -9,8 +9,8 @@ import { Button } from '@/components/ui/button'
 
 const Pricecards = () => {
   return (
-    <section className='w-[80%] mx-auto flex items-center justify-between mt-[-150px]'>
-        <div className='w-[325px] h-[700px] rounded-[20px] px-4 py-6 border-[#EBEBEB] border text-[14px] flex flex-col bg-white'>
+    <section className='w-[80%] mx-auto flex lg:flex-row flex-col items-center justify-between lg:mt-[-100px] mt-[40px] mb-[40px] lg:mb-[139px]'>
+        <div className='lg:w-[325px] w-[327px] h-[700px] rounded-[20px] px-4 py-6 border-[#EBEBEB] border text-[14px] flex flex-col bg-white mb-[20px]'>
             <div className='h-[215px] border-b border-[#BCBCBC]'>
             <Image 
             src={freemium}
@@ -46,7 +46,7 @@ const Pricecards = () => {
             </div>
             <Button size='lg' variant='outline' className='w-[100%] mt-auto'>Choose Plan</Button>
         </div>
-        <div className='w-[395px] h-[814px] rounded-[20px] px-4 py-6 border-[#EBEBEB] border text-[14px] flex flex-col bg-[#F5E7FF]'>
+        <div className='lg:w-[395px] w-[327px] h-[814px] rounded-[20px] px-4 py-6 border-[#EBEBEB] border text-[14px] flex flex-col bg-[#F5E7FF] mb-[20px]'>
         <p className='text-[#008D36] text-[16px] font-[500] bg-[#E6F4EB] w-[134px] h-[30px] rounded-[8px]   self-end text-center mb-2'>Recommended</p>
             <div className='h-[215px] border-b border-[#BCBCBC]'>
             <Image 
@@ -83,7 +83,7 @@ const Pricecards = () => {
             <Button size='lg' variant='secondary' className='w-[100%] mt-20'>Choose Plan</Button>
         </div>
         </div>
-        <div className='w-[325px] h-[700px] rounded-[20px] px-4 py-6 border-[#EBEBEB] border text-[14px] flex flex-col bg-white'>
+        <div className='lg:w-[325px] w-[327px] h-[700px] rounded-[20px] px-4 py-6 border-[#EBEBEB] border text-[14px] flex flex-col bg-white'>
             <div className='h-[215px] border-b border-[#BCBCBC]'>
             <Image 
             src={coreIcon}
