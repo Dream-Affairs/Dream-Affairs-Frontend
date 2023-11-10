@@ -13,7 +13,6 @@ import History from './(components)/history';
 import Team from './(components)/team';
 import Contact from './(components)/contact';
 import Gallery from './(components)/gallery';
-import Header from '../header/page';
 
 const About = () => {
   const teamMembers = [
@@ -57,7 +56,6 @@ const About = () => {
   const galleryImages = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery7, gallery8];
   return (
     <RootLayout>
-      <Header />
       <main className="w-full relative">
         {/* Hero */}
         <Hero />
