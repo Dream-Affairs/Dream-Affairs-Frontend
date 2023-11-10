@@ -46,7 +46,7 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
     const task: task = {
       decription: taskText,
       date: date,
-      assignee: assignedMember === 'Assign Task' ? 'Not assaigned' : assignedMember,
+      assignee: assignedMember,
     };
 
     addTask(task);
@@ -73,12 +73,12 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
             }}
           />
 
-          {/* Add Date */}
           <div className="flex gap-5 w-full">
+            {/* Add Date */}
             <Popover>
               <PopoverTrigger
                 className={cn(
-                  ` text-sm  file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out border-0 hover:!bg-none
+                  ` text-sm  file:text-sm file:font-medium placeholder:text-gray-400 w-[115px]  disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out border-0 hover:!bg-none
            ${error && ' text-red-500 placeholder:text-red-500'}
       
           ${date && ' text-black'}`,
@@ -88,7 +88,7 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
                 <p
                   className={cn(
                     'flex items-center justify-start  text-left font-normal cursor-pointer',
-                    !date && 'text-neutral-400',
+                    !date && 'text-neutral-400 ',
                   )}
                 >
                   <CalenderIcon className="mr-2 h-4 w-4" />
