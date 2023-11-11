@@ -2,26 +2,6 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import logo from '../(assets)/logo.svg';
-import dashboard1 from '../(assets)/category1.svg';
-import dashboard2 from '../(assets)/category2.svg';
-import event1 from '../(assets)/calendar-add1.svg';
-import event2 from '../(assets)/calendar-add2.svg';
-import guest1 from '../(assets)/user-tick1.svg';
-import guest2 from '../(assets)/user-tick2.svg';
-import invite1 from '../(assets)/directbox-notif1.svg';
-import invite2 from '../(assets)/directbox-notif2.svg';
-import meal1 from '../(assets)/cake1.svg';
-import meal2 from '../(assets)/cake2.svg';
-import people1 from '../(assets)/people1.svg';
-import people2 from '../(assets)/people2.svg';
-import notification1 from '../(assets)/notification1.svg';
-import notification2 from '../(assets)/notification2.svg';
-import registry1 from '../(assets)/gift1.svg';
-import registry2 from '../(assets)/gift2.svg';
-import budgeting1 from '../(assets)/wallet-money1.svg';
-import budgeting2 from '../(assets)/wallet-money2.svg';
-import checklist1 from '../(assets)/tick-square1.svg';
-import checklist2 from '../(assets)/tick-square2.svg';
 import settings1 from '../(assets)/setting-21.svg';
 import settings2 from '../(assets)/setting-22.svg';
 import mode1 from '../(assets)/lightmode1.svg';
@@ -29,81 +9,9 @@ import mode2 from '../(assets)/lightmode2.svg';
 import avatar from '../(assets)/avatar.png';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { sidebarMenu } from '../data/dashboard-data';
 
 type Props = {};
-
-const sidebarMenu: any[] = [
-  {
-    id: 1,
-    iconActive: dashboard1,
-    iconInactive: dashboard2,
-    name: 'Dashboard',
-    route: '/dashboard',
-  },
-  {
-    id: 2,
-    iconActive: event1,
-    iconInactive: event2,
-    name: 'Event Management',
-    route: '/dashboard/event-management',
-  },
-  {
-    id: 3,
-    iconActive: guest1,
-    iconInactive: guest2,
-    name: 'Guest Management',
-    route: '/dashboard/guest-management',
-  },
-  {
-    id: 4,
-    iconActive: invite1,
-    iconInactive: invite2,
-    name: 'Invitation',
-    route: '/dashboard/invitation',
-  },
-  {
-    id: 5,
-    iconActive: meal1,
-    iconInactive: meal2,
-    name: 'Meal Management',
-    route: '/dashboard/meal-management',
-  },
-  {
-    id: 6,
-    iconActive: people1,
-    iconInactive: people2,
-    name: 'Invite Team',
-    route: '/dashboard/invite-team',
-  },
-  {
-    id: 7,
-    iconActive: notification1,
-    iconInactive: notification2,
-    name: 'Notification',
-    route: '/dashboard/notification',
-  },
-  {
-    id: 8,
-    iconActive: registry1,
-    iconInactive: registry2,
-    name: 'Registry',
-    route: '/dashboard/registry',
-  },
-  {
-    id: 9,
-    iconActive: budgeting1,
-    iconInactive: budgeting2,
-    name: 'Budgeting',
-    route: '/dashboard/budgeting',
-  },
-  {
-    id: 10,
-    iconActive: checklist1,
-    iconInactive: checklist2,
-    name: 'Checklist',
-    route: '/dashboard/checklist',
-  },
-];
 
 const Sidebar = (props: Props) => {
   const [viewMenu, setViewMenu] = useState<boolean>(false);
@@ -113,7 +21,9 @@ const Sidebar = (props: Props) => {
     <nav
       onMouseEnter={() => setViewMenu(true)}
       onMouseLeave={() => setViewMenu(false)}
-      className={`${viewMenu ? 'min-w-[325px] flex-[1]' : 'min-w-fit flex-[0]'} px-8 py-6 min-h-screen border-r  w-fit`}
+      className={`${
+        viewMenu ? 'min-w-[325px] lg:flex-[1] flex-[0]' : 'min-w-fit flex-[0]'
+      } px-8 py-6 min-h-screen h-full w-fit xl:block hidden`}
     >
       <Link href={`/`} className="flex items-center py-2 px-3 mb-4 gap-x-3">
         <Image src={logo} alt="logo" />
