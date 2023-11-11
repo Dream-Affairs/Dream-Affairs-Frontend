@@ -1,22 +1,11 @@
-import Link from 'next/link';
-import Header from './header/page';
+import ExternalLayout from './(components)/External-Layout';
 
 export default function Home() {
   return (
     <>
-      <Header />
-      <ul>
-        Hello welcome to Dream Affairs
-        <li>
-          <Link href="/auth/login">Login</Link>
-        </li>
-        <li>
-          <Link href="/auth/reset-password">Reset password</Link>
-        </li>
-        <li>
-          <Link href="/auth/2fa">2fa</Link>
-        </li>
-      </ul>
+      <ExternalLayout>
+        <div className="max-w-[1440px] mx-auto px-8 lg:px-10 border">Body</div>
+      </ExternalLayout>
     </>
   );
 }
