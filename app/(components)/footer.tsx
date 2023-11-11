@@ -46,7 +46,7 @@ const Footer = () => {
 
   return (
     <div className="bg-[hsla(278,100%,98%,1)]">
-      <div className="max-w-[1440px] min-h-[300px] mx-auto px-8 lg:px-10 py-10">
+      <div className="max-w-[1440px] min-h-[300px] mx-auto px-8 lg:px-10 lg:py-28 py-14">
         <div className="mb-10">
           <Image src={logo} alt="logo" />
         </div>
