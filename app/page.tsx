@@ -11,9 +11,11 @@ import Frame4 from '../app/(components)/(assets)/frame4.svg';
 import Frame5 from '../app/(components)/(assets)/frame5.svg';
 import Frame6 from '../app/(components)/(assets)/frame6.svg';
 import Frame7 from '../app/(components)/(assets)/frame7.svg';
+import Frame8 from '../app/(components)/(assets)/frame4.svg';
+import Faq from './(components)/faq';
 
 export default function Home() {
-  const betterHalfImages = [Frame1, Frame2, Frame3, Frame4, Frame5, Frame6, Frame7];
+  const betterHalfImages = [Frame1, Frame2, Frame3, Frame4, Frame5, Frame6, Frame7, Frame8];
 
   return (
     <>
@@ -24,6 +26,7 @@ export default function Home() {
         <Importance />
         <Care />
         <Betterhalf betterHalfImages={betterHalfImages} />
+        <Faq />
       </ExternalLayout>
     </>
   );
