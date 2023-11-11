@@ -39,10 +39,6 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
     setEditedTask({ decription: description, date: date, assignee: assignedMember });
   }, [date, assignedMember, description]);
 
-  // useEffect(() => {
-  //   if (!isAssigning) return;
-  // }, [isAssigning]);
-
   const handleAssignBlur = useCallback(() => {
     setTimeout(() => {
       setIsAssigning(false);

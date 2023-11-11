@@ -9,6 +9,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { AssignIcon } from './Icons';
+import AssignPopover from './AssignPopover';
 
 type task = {
   decription: string;
@@ -52,6 +53,12 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
     addTask(task);
 
     cancel();
+  };
+
+  const handleAssignBlur = () => {
+    setTimeout(() => {
+      setIsAssigning(false);
+    }, 300);
   };
 
   return (
