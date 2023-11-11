@@ -1,4 +1,5 @@
 import { Search, Sidebar } from 'lucide-react';
+import Image from 'next/image';
 import React from 'react';
 import clock from '../(assets)/timer.svg';
 import cancel from '../(assets)/cross.svg'
@@ -24,145 +25,144 @@ const Notification = (props: Props) => {
 
       <div className='flex flex-col gap-8 py-[2em] border-t-2 border-gray-200'>
 
-        <div className='flex items-center shadow-md rounded-lg bg-white'>
-          <div className='flex items-center justify-between p-5'>
+        <div className='flex items-center justify-between shadow-sm border border-slate-200 rounded-lg bg-white'>
+          <div className='flex justify-evenly p-5'>
 
-            <img className='px-2' src={clock} alt='clock'></img>
+          <Image src={clock} alt='clock'/>
             
-            <div className='flex flex-col justify-center'>
+            <div className='px-[1em] flex flex-col justify-center'>
               <h2 className='text-[.875rem] text-[#090909] font-medium'>Maintenance schedule</h2> 
-              <p className='text-ellipsis overflow-hidden text-[#576672] text-[.8rem]'>We plan for a scheduled maintenance for Wednesday 8th November 2023. We apologize fo inconvenience this would cause.</p>
+              <p className='text-[#576672] text-[.8rem]'>We plan for a scheduled maintenance for Wednesday 8th November 2023. We apologize fo inconvenience this would cause.</p>
             </div>
 
           </div>
           <div className='px-2 flex items-center justify-between'>
-            <p className='text-[#9B57B6] cursor-pointer'>view</p>
-            <img src={cancel} alt='Cancel'></img>
-            
+            <p className='px-3 text-[#9B57B6] cursor-pointer'>view</p>
+            <Image className='cursor-pointer' src={cancel} alt='Cancel'/>
           </div>
 
         </div>
 
-        <div className='flex items-center justify-between shadow-md rounded-lg bg-white'>
+        <div className='flex items-center justify-between shadow-sm border border-slate-200 rounded-lg bg-white'>
           <div className='flex justify-evenly p-5'>
 
-            <img className='px-2' src={clock} alt='clock'></img>
+            <Image src={clock} alt='clock'/>
             
-            <div className='flex flex-col justify-center'>
+            <div className='px-[1em] flex flex-col justify-center'>
               <h2 className='text-[.875rem] text-[#090909] font-medium'>Upcoming Task</h2> 
               <p className='text-[#576672] text-[.8rem]'>Wedding Reminder for Naza wedding is loading here</p>
             </div>
           </div>
           <div className='px-2 flex items-center justify-between'>
-            <p className='text-[#9B57B6] cursor-pointer'>view</p>
-            <img src={cancel} alt='Cancel'></img>
+            <p className='px-3 text-[#9B57B6] cursor-pointer'>view</p>
+            <Image className='cursor-pointer' src={cancel} alt='Cancel'/>
           </div>
 
         </div>
-        <div className='flex items-center justify-between shadow-md rounded-lg bg-white'>
+        <div className='flex items-center justify-between shadow-sm border border-slate-200 rounded-lg bg-white'>
           <div className='flex items-center justify-between p-5'>
 
-            <img className='px-2' src={clock} alt='clock'></img>
+            <Image src={clock} alt='clock'/>
             
-            <div className='flex flex-col justify-center'>
+            <div className='px-[1em] flex flex-col justify-center'>
               <h2 className='text-[.875rem] text-[#090909] font-medium'>Profile Update</h2> 
               <p className='text-[#576672] text-[.8rem]'>Wedding Reminder for Naza wedding is loading here</p>
             </div>
 
           </div>
           <div className='px-2 flex items-center justify-between'>
-            <p className='text-[#9B57B6] cursor-pointer'>view</p>
-            <img className='px-3' src={cancel} alt='Cancel'></img>
+            <p className='px-3 text-[#9B57B6] cursor-pointer'>view</p>
+            <Image className='cursor-pointer' src={cancel} alt='Cancel'/>
             
           </div>
 
         </div>
-        <div className='flex items-center justify-between shadow-md rounded-lg bg-white'>
+        <div className='flex items-center justify-between shadow-sm border border-slate-200 rounded-lg bg-white'>
           <div className='flex items-center justify-between p-5'>
 
-            <img className='px-2' src={clock} alt='clock'></img>
+          <Image src={clock} alt='clock'/>
             
-            <div className='flex flex-col justify-center'>
+            <div className='px-[1em] flex flex-col justify-center'>
               <h2 className='text-[.875rem] text-[#090909] font-medium'>Meal Preference</h2> 
               <p className='text-[#576672] text-[.8rem]'>Wedding Reminder for Naza wedding is loading here</p>
             </div>
 
           </div>
           <div className='px-2 flex items-center justify-between'>
-            <p className='text-[#9B57B6] cursor-pointer'>view</p>
-            <img src={cancel} alt='Cancel'></img>
+            <p className='px-3 text-[#9B57B6] cursor-pointer'>view</p>
+            <Image className='cursor-pointer' src={cancel} alt='Cancel'/>
             
           </div>
 
         </div>
-        <div className='flex items-center justify-between shadow-md rounded-lg bg-white'>
+        <div className='flex items-center justify-between shadow-sm border border-slate-200 rounded-lg bg-white'>
           <div className='flex items-center justify-between p-5'>
 
-            <img className='px-2' src={clock} alt='clock'></img>
+          <Image src={clock} alt='clock'/>
             
-            <div className='flex flex-col justify-center'>
+            <div className='px-[1em] flex flex-col justify-center'>
               <h2 className='text-[.875rem] text-[#090909] font-medium'>Profile Update</h2> 
               <p className='text-[#576672] text-[.8rem]'>Wedding Reminder for Naza wedding is loading here</p>
             </div>
 
           </div>
           <div className='px-2 flex items-center justify-between'>
-            <p className='text-[#9B57B6] cursor-pointer'>view</p>
-            <img className='px-3' src={cancel} alt='Cancel'></img>
+            <p className='px-3 text-[#9B57B6] cursor-pointer'>view</p>
+            <Image className='cursor-pointer' src={cancel} alt='Cancel'/>
             
           </div>
 
         </div>
-        <div className='flex items-center justify-between shadow-md rounded-lg bg-white'>
+        <div className='flex items-center justify-between shadow-sm border border-slate-200 rounded-lg bg-white'>
           <div className='flex items-center justify-between p-5'>
 
-            <img className='px-2' src={clock} alt='clock'></img>
+          <Image src={clock} alt='clock'/>
             
-            <div className='flex flex-col justify-center'>
+            <div className='px-[1em] flex flex-col justify-center'>
               <h2 className='text-[.875rem] text-[#090909] font-medium'>Profile Update</h2> 
               <p className='text-[#576672] text-[.8rem]'>Wedding Reminder for Naza wedding is loading here</p>
             </div>
 
           </div>
           <div className='px-2 flex items-center justify-between'>
-            <p className='text-[#9B57B6] cursor-pointer'>view</p>
-            <img className='px-3' src={cancel} alt='Cancel'></img>
+            <p className='px-3 text-[#9B57B6] cursor-pointer'>view</p>
+            <Image className='cursor-pointer' src={cancel} alt='Cancel'/>
             
           </div>
 
         </div>
-        <div className='flex items-center justify-between shadow-md rounded-lg bg-white'>
+        <div className='flex items-center justify-between shadow-sm border border-slate-200 rounded-lg bg-white'>
           <div className='flex items-center justify-between p-5'>
 
-            <img className='px-2' src={clock} alt='clock'></img>
+          <Image src={clock} alt='clock'/>
             
-            <div className='flex flex-col justify-center'>
+            <div className='px-[1em] flex flex-col justify-center'>
               <h2 className='text-[.875rem] text-[#090909] font-medium'>Profile Update</h2> 
               <p className='text-[#576672] text-[.8rem]'>Wedding Reminder for Naza wedding is loading here</p>
             </div>
 
           </div>
           <div className='px-2 flex items-center justify-between'>
-            <p className='text-[#9B57B6] cursor-pointer'>view</p>
-            <img className='px-3' src={cancel} alt='Cancel'></img>
+            <p className='px-3 text-[#9B57B6] cursor-pointer'>view</p>
+            <Image className='cursor-pointer' src={cancel} alt='Cancel'/>
             
           </div>
 
         </div>
-        <div className='flex items-center justify-between shadow-md rounded-lg bg-white'>
+        <div className='flex items-center justify-between shadow-sm border border-slate-200 rounded-lg bg-white'>
           <div className='flex items-center justify-between p-5'>
 
-            <img className='px-2' src={clock} alt='clock'></img>
+          <Image src={clock} alt='clock'/>
             
-            <div className='flex flex-col justify-center'>
+            <div className='px-[1em] flex flex-col justify-center'>
               <h2 className='text-[.875rem] text-[#090909] font-medium'>Profile Update</h2> 
               <p className='text-[#576672] text-[.8rem]'>Wedding Reminder for Naza wedding is loading here</p>
             </div>
 
           </div>
           <div className='px-2 flex items-center justify-between'>
-            <p className='text-[#9B57B6] cursor-pointer'>view</p>
-            <img className='px-3' src={cancel} alt='Cancel'></img>
+            <p className='px-3 text-[#9B57B6] cursor-pointer'>view</p>
+            <Image className='cursor-pointer' src={cancel} alt='Cancel'/>
             
           </div>
 
