@@ -1,17 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
 import Preview from 'app/dashboard/(assets)/export.svg';
 import Add from 'app/dashboard/(assets)/add.svg';
 import Copy from 'app/dashboard/(assets)/copy.svg';
-import AddGift from 'app/dashboard/(assets)/add_gift.svg';
-import GiftType from './Modals/GiftType';
-import FirstModal from './FirstModal';
-import Forms from './Modals/ModalContent';
+import Gift from 'app/dashboard/(assets)/giftTrack.svg';
 
-const Board = () => {
+const Tracker = () => {
   return (
     <div className="pl-9 pt-9 pr-9 flex flex-col gap-5">
       {/* Navbar section  */}
@@ -29,30 +24,18 @@ const Board = () => {
         </div>
 
         <div className="flex gap-6 ">
-          <div className="flex gap-3 items-center">
-            <p className="font-medium text-base">Filter by</p>
-            <Select>
-              <SelectTrigger className="w-[185px] h-[55px] text-sm font-normal">
-                <SelectValue placeholder="All Gifts" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup className="text-sm font-normal">
-                  <SelectItem value="apple">All Gifts</SelectItem>
-                  <SelectItem value="banana">Availaible Gifts</SelectItem>
-                  <SelectItem value="blueberry">Purchased Gifts</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <Button variant="secondary" className="font-medium text-base w-[185px] flex gap-2">
-            <span>
-              <Image src={Add} alt="" />
-            </span>
-            <span>Add Gift</span>
-          </Button>
-
-          <Forms />
+          <Select>
+            <SelectTrigger className="w-[185px] h-[55px] text-sm font-normal">
+              <SelectValue placeholder="All Purchases" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup className="text-sm font-normal">
+                <SelectItem value="apple">All Purchases</SelectItem>
+                <SelectItem value="banana">Last 7 days</SelectItem>
+                <SelectItem value="blueberry">Past month</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       </div>
       {/* Navbar section ends here  */}
@@ -77,13 +60,13 @@ const Board = () => {
         </div>
         {/* Side 2 starts here  */}
         <div className="flex flex-col gap-5 w-auto flex-1">
-          <p className="text-base font-medium">Ouch! Looks like your registry is empty, Let’s help you change that!</p>
-
-          <div className="h-[175px] border-2 border-dashed flex  items-center rounded-lg">
-            <div className="flex flex-col gap-2 text-center items-center justify-center w-full">
-              <Image src={AddGift} alt="" />
-
-              <p className="text-base font-medium">Click to start adding your desired gifts to your registry</p>
+          <div className="h-[214px] border-2 border-dashed flex  items-center rounded-lg">
+            <div className="flex flex-col gap-2 text-center items-center justify-center w-[549px] m-auto gap-7">
+              <Image src={Gift} alt="" className="m-auto  stroke-1" />
+              <p className="text-base font-medium">
+                looks like no one has purchased a gift for you yet, your gifts will appear here as soon as they are
+                purchased
+              </p>
             </div>
           </div>
         </div>
@@ -93,4 +76,4 @@ const Board = () => {
   );
 };
 
-export default Board;
+export default Tracker;
