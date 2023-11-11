@@ -1,11 +1,12 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AssignIcon, DeleteIcon } from './Icons';
 import { format } from 'date-fns';
 import { Calendar as CalenderIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
+import AssignPopover from './AssignPopover';
 
 type task = {
   decription: string;
@@ -20,28 +21,13 @@ interface MyTasksProps {
   index: number;
 }
 
-const Members: string[] = ['You', 'John', 'Nonye'];
-
 export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
   const [date, setDate] = React.useState<Date | undefined>(undefined);
   const [isAssigning, setIsAssigning] = useState(false);
-  const [members, setMembers] = useState(Members);
-  const [searchMember, setSearchMember] = useState('');
   const [description, setDescription] = useState('');
   const [editedTask, setEditedTask] = React.useState<task>(item);
-  const [updateComplete, setUpdateComplete] = useState(false);
   const [assignedMember, setAssignedMember] = useState('');
   const error = false;
-
-  useEffect(() => {
-    if (searchMember.length > 0) {
-      const searchedMember = Members.filter((item) => item.toLowerCase().includes(searchMember.toLowerCase()));
-
-      setMembers(searchedMember);
-      if (searchedMember.length === 0) setMembers(['----']);
-    }
-    if (searchMember.length === 0) setMembers(Members);
-  }, [searchMember]);
 
   useEffect(() => {
     setDate(item.date);
@@ -53,14 +39,33 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
     setEditedTask({ decription: description, date: date, assignee: assignedMember });
   }, [date, assignedMember, description]);
 
-  useEffect(() => {
-    if (updateComplete) return;
+  // useEffect(() => {
+  //   if (!isAssigning) return;
+  // }, [isAssigning]);
+
+  const handleAssignBlur = useCallback(() => {
+    setTimeout(() => {
+      setIsAssigning(false);
+    }, 300);
+  }, []);
+
+  const updateAssignMember = (item: string) => {
+    setAssignedMember(item);
+  };
+
+  const handleEditAssignee = useCallback(() => {
     editItem(index, editedTask);
-    setUpdateComplete(false);
-  }, [updateComplete]);
+  }, [index, editedTask, editItem]);
 
   return (
-    <div className="w-full pr-9 pb-2 border-b border-neutral-100 flex-col justify-center items-start gap-2 inline-flex">
+    <div
+      onBlur={() => {
+        setTimeout(() => {
+          handleAssignBlur();
+        }, 1000);
+      }}
+      className="w-full pr-9 pb-2 border-b border-neutral-100 flex-col justify-center items-start gap-2 inline-flex"
+    >
       <div className="self-stretch justify-start items-start gap-2 inline-flex">
         {/* Check */}
         <div className="min-w-[16px] h-4 mt-1 border-[2px] border-[#9F7DB5] rounded-[50%] hover:bg-primary-foreground cursor-pointer">
@@ -118,41 +123,14 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
               <AssignIcon stroke="#898C8F" />
             )}
             {isAssigning && (
-              <div
-                onBlur={() => {
-                  setTimeout(() => {
-                    setIsAssigning(false);
-                  }, 300);
-                }}
-                className="absolute top-5 w-44 bg-white rounded-lg shadow border border-zinc-100 flex-col justify-start items-center gap-2 flex z-30"
-              >
-                <input
-                  type="text"
-                  placeholder="Assign to..."
-                  autoFocus
-                  value={searchMember}
-                  onChange={(e) => {
-                    setSearchMember(e.target.value);
-                  }}
-                  className="text-neutral-400 leading-tight p-3 border-b border-gray-200 w-full outline-none"
-                />
-                {members.map((item, i) => (
-                  <p
-                    onClick={() => {
-                      setAssignedMember(item);
-                      setTimeout(() => {
-                        setUpdateComplete(true);
-                      }, 1000);
-                    }}
-                    key={i + 1}
-                    className="text-neutral-800 hover:bg-blue-50 text-sm font-normal leading-tight cursor-pointer p-3 w-full"
-                  >
-                    {item}
-                  </p>
-                ))}
-              </div>
+              <AssignPopover
+                handleBlur={handleAssignBlur}
+                updateAssignMember={updateAssignMember}
+                editAssignee={handleEditAssignee}
+              />
             )}
           </div>
+
           {/* Delete */}
           <aside onClick={() => deleteTask(index)} className="justify-self-end cursor-pointer">
             <DeleteIcon />
