@@ -1,21 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
 import Preview from 'app/dashboard/(assets)/export.svg';
 import Add from 'app/dashboard/(assets)/add.svg';
 import Copy from 'app/dashboard/(assets)/copy.svg';
 import AddGift from 'app/dashboard/(assets)/add_gift.svg';
+import ModalContent from './Modals/ModalContent';
 
 const Board = () => {
+  const [modal, setModal] = useState<boolean>(false); // To close and open the Modal box
   return (
     <div className="pl-9 pt-9 pr-9 flex flex-col gap-5">
       {/* Navbar section  */}
@@ -48,12 +43,19 @@ const Board = () => {
               </SelectContent>
             </Select>
           </div>
-          <Button variant="secondary" className="font-medium text-base w-[185px] flex gap-2">
+
+          <Button
+            onClick={() => setModal(true)}
+            variant="secondary"
+            className="font-medium text-base w-[185px] flex gap-2"
+          >
             <span>
               <Image src={Add} alt="" />
-            </span>{' '}
+            </span>
             <span>Add Gift</span>
           </Button>
+
+          <ModalContent modal={modal} setModal={setModal} />
         </div>
       </div>
       {/* Navbar section ends here  */}
@@ -61,6 +63,7 @@ const Board = () => {
 
       {/* Registry main board starts here  */}
       <div className="flex gap-12">
+        {/* side 1 starts here  */}
         <div className="flex flex-col gap-8 flex-none">
           <div className="w-[219px] h-[218px] rounded-lg flex flex-col items-center border border-border justify-center">
             <div className="w-[154px] flex flex-col gap-2 text-center">
@@ -75,10 +78,14 @@ const Board = () => {
             </div>
           </div>
         </div>
-
+        {/* Side 2 starts here  */}
         <div className="flex flex-col gap-5 w-auto flex-1">
           <p className="text-base font-medium">Ouch! Looks like your registry is empty, Let’s help you change that!</p>
-          <div className="h-[175px] border-2 border-dashed flex  items-center">
+
+          <div
+            onClick={() => setModal(true)}
+            className="h-[175px] border-2 border-dashed flex  items-center rounded-lg cursor-pointer"
+          >
             <div className="flex flex-col gap-2 text-center items-center justify-center w-full">
               <Image src={AddGift} alt="" />
 
@@ -86,6 +93,7 @@ const Board = () => {
             </div>
           </div>
         </div>
+        {/* Side 2 ends here  */}
       </div>
     </div>
   );
