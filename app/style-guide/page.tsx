@@ -20,7 +20,6 @@ import { cn } from '@/lib/utils';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { toast } from '@/components/ui/use-toast';
-import { Switch } from '@/components/ui/switch';
 
 const page = () => {
   return (
@@ -69,14 +68,6 @@ const page = () => {
         <h1 className="text-2xl font-bold">Toasts</h1>
         <div className="flex gap-3 flex-wrap">
           <ToastDemo />
-        </div>
-      </div>
-
-      {/* toggle */}
-      <div className="flex flex-col gap-3 flex-wrap">
-        <h1 className="text-2xl font-bold">Toggle</h1>
-        <div className="flex gap-3 flex-wrap">
-          <ToggleDemo />
         </div>
       </div>
 
@@ -232,7 +223,6 @@ const InputDemo = () => {
           errorMessage="Please fill out this field"
           error={false}
           hasValue={false}
-          value={''}
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -244,31 +234,28 @@ const InputDemo = () => {
           errorMessage="{customizable error message}"
           error={true}
           hasValue={false}
-          value={''}
         />
       </div>
       <div className="flex flex-col gap-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">Filled State</Label>
         <Input
           id="email"
           type="text"
-          placeholder="Email"
+          placeholder="Filled State"
           errorMessage="Please fill out this field"
           error={false}
           hasValue={true}
-          value={'Filled State'}
         />
       </div>
       <div className="flex flex-col gap-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">Hover State</Label>
         <Input
           id="email"
           type="text"
-          placeholder="Email"
+          placeholder="Hover State"
           errorMessage="Please fill out this field"
           error={false}
           hasValue={true}
-          value={'Hover State'}
           className="border-primary placeholder:text-gray-200"
         />
       </div>
@@ -314,10 +301,10 @@ const CalendarDemo = () => {
           disabled={true}
           className={cn(
             `flex h-[55px] rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out hover:border-accent
-         ${error && 'border-red-500'}
-    
-        ${date && 'border-green-200'}
-        `,
+   ${error && 'border-red-500'}
+
+  ${date && 'border-green-200'}
+  `,
           )}
           asChild
         >
@@ -340,10 +327,10 @@ const CalendarDemo = () => {
           disabled={false}
           className={cn(
             `flex h-[55px] rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out hover:border-accent
-         ${error && 'border-red-500'}
-    
-        ${date && 'border-green-200'}
-        `,
+   ${error && 'border-red-500'}
+
+  ${date && 'border-green-200'}
+  `,
           )}
           asChild
         >
@@ -366,10 +353,10 @@ const CalendarDemo = () => {
           disabled={false}
           className={cn(
             `flex h-[55px] rounded-lg border border-primary bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out hover:border-accent
-         ${error && 'border-red-500'}
-    
-        ${date && 'border-green-200'}
-        `,
+   ${error && 'border-red-500'}
+
+  ${date && 'border-green-200'}
+  `,
           )}
           asChild
         >
@@ -392,10 +379,10 @@ const CalendarDemo = () => {
           disabled={false}
           className={cn(
             `flex h-[55px] rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out hover:border-accent
-         ${error && 'border-red-500'}
-    
-        ${true && 'border-green-200'}
-        `,
+   ${error && 'border-red-500'}
+
+  ${true && 'border-green-200'}
+  `,
           )}
           asChild
         >
@@ -418,10 +405,10 @@ const CalendarDemo = () => {
           disabled={false}
           className={cn(
             `flex h-[55px] rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out hover:border-accent
-         ${true && 'border-red-500'}
-    
-        ${false && 'border-green-200'}
-        `,
+   ${true && 'border-red-500'}
+
+  ${false && 'border-green-200'}
+  `,
           )}
           asChild
         >
@@ -439,6 +426,47 @@ const CalendarDemo = () => {
           <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
         </PopoverContent>
       </Popover>
+    </>
+  );
+};
+
+const ToastDemo = () => {
+  return (
+    <>
+      <Button
+        onClick={() =>
+          toast({
+            title: 'Scheduled: Catch up',
+          })
+        }
+      >
+        Show Toast with Title
+      </Button>
+      <Button
+        onClick={() =>
+          toast({
+            title: 'Scheduled: Catch up',
+            description: 'Friday, February 10, 2023 at 5:57 PM',
+          })
+        }
+      >
+        Show Toast with Description
+      </Button>
+      <Button
+        onClick={() =>
+          toast({
+            title: 'Scheduled: Catch up',
+            description: 'Friday, February 10, 2023 at 5:57 PM',
+            action: (
+              <Button variant="outline" size="sm">
+                Undo
+              </Button>
+            ),
+          })
+        }
+      >
+        Show Toast with Action Button
+      </Button>
     </>
   );
 };

@@ -14,8 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={workSans.className}>
-        {children}
-        <Toaster />
+        {children} <Toaster />
       </body>
     </html>
   );
