@@ -1,6 +1,5 @@
 'use client';
 import * as React from 'react';
-import { PiWarningLight } from 'react-icons/pi';
 
 import {
   Select,
@@ -20,6 +19,7 @@ import { Calendar as CalendarIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { toast } from '@/components/ui/use-toast';
 
 const page = () => {
   return (
@@ -62,16 +62,31 @@ const page = () => {
           <InputDemo />
         </div>
       </div>
+
+      {/* toast */}
+      <div className="flex flex-col gap-3 flex-wrap">
+        <h1 className="text-2xl font-bold">Toasts</h1>
+        <div className="flex gap-3 flex-wrap">
+          <ToastDemo />
+        </div>
+      </div>
+
       {/* selects */}
       <div className="flex flex-col gap-3 flex-wrap">
         <h1 className="text-2xl font-bold">Dropdowns</h1>
         <div className="flex gap-3 flex-wrap">
-          <div className="flex gap-3 flex-wrap">
-            <SelectDemo />
-          </div>
+          <SelectDemo />
+        </div>
+      </div>
+
+      {/* Calendar */}
+      <div className="flex flex-col gap-3 flex-wrap">
+        <h1 className="text-2xl font-bold">Calendar</h1>
+        <div className="flex gap-3">
           <CalendarDemo />
         </div>
       </div>
+
       {/* btns */}
       <div className="flex flex-col gap-3 flex-wrap">
         <h1 className="text-2xl font-bold">Buttons</h1>
@@ -167,7 +182,6 @@ const InputDemo = () => {
           errorMessage="Please fill out this field"
           error={false}
           hasValue={false}
-          value={''}
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -179,31 +193,28 @@ const InputDemo = () => {
           errorMessage="{customizable error message}"
           error={true}
           hasValue={false}
-          value={''}
         />
       </div>
       <div className="flex flex-col gap-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">Filled State</Label>
         <Input
           id="email"
           type="text"
-          placeholder="Email"
+          placeholder="Filled State"
           errorMessage="Please fill out this field"
           error={false}
           hasValue={true}
-          value={'Filled State'}
         />
       </div>
       <div className="flex flex-col gap-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">Hover State</Label>
         <Input
           id="email"
           type="text"
-          placeholder="Email"
+          placeholder="Hover State"
           errorMessage="Please fill out this field"
           error={false}
           hasValue={true}
-          value={'Hover State'}
           className="border-primary placeholder:text-gray-200"
         />
       </div>
@@ -241,7 +252,180 @@ const CheckboxDemo = () => {
 
 const CalendarDemo = () => {
   const [date, setDate] = React.useState<Date | undefined>(undefined);
-  const [pickedDate, setPickedDate] = React.useState<Date | undefined>(new Date());
   const error = false;
-  return <></>;
+  return (
+    <>
+      <Popover>
+        <PopoverTrigger
+          disabled={true}
+          className={cn(
+            `flex h-[55px] rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out hover:border-accent
+   ${error && 'border-red-500'}
+
+  ${date && 'border-green-200'}
+  `,
+          )}
+          asChild
+        >
+          <Button
+            className={cn(
+              'w-full justify-start text-left font-normal text-gray-500 hover:bg-background hover:border-primary',
+              !date && 'text-muted-foreground',
+            )}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {date ? format(date, 'PPP') : <span>Disabled</span>}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0">
+          <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+        </PopoverContent>
+      </Popover>
+      <Popover>
+        <PopoverTrigger
+          disabled={false}
+          className={cn(
+            `flex h-[55px] rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out hover:border-accent
+   ${error && 'border-red-500'}
+
+  ${date && 'border-green-200'}
+  `,
+          )}
+          asChild
+        >
+          <Button
+            className={cn(
+              'w-full justify-start text-left font-normal text-gray-500 hover:bg-background hover:border-primary',
+              !date && 'text-muted-foreground',
+            )}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {date ? format(date, 'PPP') : <span>Pick a date</span>}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0">
+          <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+        </PopoverContent>
+      </Popover>
+      <Popover>
+        <PopoverTrigger
+          disabled={false}
+          className={cn(
+            `flex h-[55px] rounded-lg border border-primary bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out hover:border-accent
+   ${error && 'border-red-500'}
+
+  ${date && 'border-green-200'}
+  `,
+          )}
+          asChild
+        >
+          <Button
+            className={cn(
+              'w-full justify-start text-left font-normal text-gray-500 hover:bg-background hover:border-primary',
+              !date && 'text-muted-foreground',
+            )}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {date ? format(date, 'PPP') : <span>Hover state</span>}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0">
+          <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+        </PopoverContent>
+      </Popover>
+      <Popover>
+        <PopoverTrigger
+          disabled={false}
+          className={cn(
+            `flex h-[55px] rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out hover:border-accent
+   ${error && 'border-red-500'}
+
+  ${true && 'border-green-200'}
+  `,
+          )}
+          asChild
+        >
+          <Button
+            className={cn(
+              'w-full justify-start text-left font-normal text-gray-500 hover:bg-background hover:border-primary',
+              !date && 'text-muted-foreground',
+            )}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {date ? format(date, 'PPP') : <span>Filled state</span>}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0">
+          <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+        </PopoverContent>
+      </Popover>
+      <Popover>
+        <PopoverTrigger
+          disabled={false}
+          className={cn(
+            `flex h-[55px] rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out hover:border-accent
+   ${true && 'border-red-500'}
+
+  ${false && 'border-green-200'}
+  `,
+          )}
+          asChild
+        >
+          <Button
+            className={cn(
+              'w-full justify-start text-left font-normal text-gray-500 hover:bg-background hover:border-primary',
+              !date && 'text-muted-foreground',
+            )}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {date ? format(date, 'PPP') : <span>Error state</span>}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0">
+          <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+        </PopoverContent>
+      </Popover>
+    </>
+  );
+};
+
+const ToastDemo = () => {
+  return (
+    <>
+      <Button
+        onClick={() =>
+          toast({
+            title: 'Scheduled: Catch up',
+          })
+        }
+      >
+        Show Toast with Title
+      </Button>
+      <Button
+        onClick={() =>
+          toast({
+            title: 'Scheduled: Catch up',
+            description: 'Friday, February 10, 2023 at 5:57 PM',
+          })
+        }
+      >
+        Show Toast with Description
+      </Button>
+      <Button
+        onClick={() =>
+          toast({
+            title: 'Scheduled: Catch up',
+            description: 'Friday, February 10, 2023 at 5:57 PM',
+            action: (
+              <Button variant="outline" size="sm">
+                Undo
+              </Button>
+            ),
+          })
+        }
+      >
+        Show Toast with Action Button
+      </Button>
+    </>
+  );
 };
