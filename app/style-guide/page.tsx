@@ -20,7 +20,6 @@ import { cn } from '@/lib/utils';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { toast } from '@/components/ui/use-toast';
-import { Switch } from '@/components/ui/switch';
 
 const page = () => {
   return (
@@ -67,7 +66,7 @@ const page = () => {
 
       {/* toggles */}
       <div className="flex flex-col gap-3 flex-wrap">
-        <h1 className="text-2xl font-bold">Inputs</h1>
+        <h1 className="text-2xl font-bold">Toggle</h1>
         <div className="flex gap-3 flex-wrap">
           <ToggleDemo />
         </div>
@@ -84,7 +83,7 @@ const page = () => {
       {/* selects */}
       <div className="flex flex-col gap-3 flex-wrap">
         <h1 className="text-2xl font-bold">Dropdowns</h1>
-        <div className="flex gap-3 flex-wrap">
+        <div className="flex gap-3 w-full">
           <SelectDemo />
         </div>
       </div>
@@ -483,16 +482,7 @@ const ToastDemo = () => {
 };
 
 export function ToggleDemo() {
-  return (
-    <>
-      <div className="flex items-center space-x-2">
-        <Switch id="toggle" />
-        <Label htmlFor="toggle">Toggle</Label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Switch disabled={true} id="" />
-        <Label htmlFor="">Disabled toggle</Label>
-      </div>
-    </>
-  );
+  const [checked, setChecked] = React.useState(false);
+
+  return <></>;
 }
