@@ -4,7 +4,7 @@ import Care from './(components)/care';
 import Carousel from './(components)/carousel';
 import Herosection from './(components)/herosection';
 import Importance from './(components)/importance';
-import Frame1 from "../app/(components)/(assets)/frame1.svg"
+import Frame1 from '../app/(components)/(assets)/frame1.svg';
 import Frame2 from '../app/(components)/(assets)/frame2.svg';
 import Frame3 from '../app/(components)/(assets)/frame3.svg';
 import Frame4 from '../app/(components)/(assets)/frame4.svg';
@@ -18,7 +18,6 @@ export default function Home() {
   return (
     <>
       <ExternalLayout>
-        {/* <div className="max-w-[1440px] min-h-[80vh] mx-auto px-8 lg:px-10">Body</div> */}
         <Herosection />
         <Carousel />
         <Importance />
