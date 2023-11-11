@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -7,11 +7,10 @@ import Preview from 'app/dashboard/(assets)/export.svg';
 import Add from 'app/dashboard/(assets)/add.svg';
 import Copy from 'app/dashboard/(assets)/copy.svg';
 import AddGift from 'app/dashboard/(assets)/add_gift.svg';
-import GiftType from './Modals/GiftType';
-import FirstModal from './FirstModal';
-import Forms from './Modals/ModalContent';
+import ModalContent from './Modals/ModalContent';
 
 const Board = () => {
+  const [modal, setModal] = useState<boolean>(false); // To close and open the Modal box
   return (
     <div className="pl-9 pt-9 pr-9 flex flex-col gap-5">
       {/* Navbar section  */}
@@ -45,14 +44,18 @@ const Board = () => {
             </Select>
           </div>
 
-          <Button variant="secondary" className="font-medium text-base w-[185px] flex gap-2">
+          <Button
+            onClick={() => setModal(true)}
+            variant="secondary"
+            className="font-medium text-base w-[185px] flex gap-2"
+          >
             <span>
               <Image src={Add} alt="" />
             </span>
             <span>Add Gift</span>
           </Button>
 
-          <Forms />
+          <ModalContent modal={modal} setModal={setModal} />
         </div>
       </div>
       {/* Navbar section ends here  */}
@@ -79,7 +82,10 @@ const Board = () => {
         <div className="flex flex-col gap-5 w-auto flex-1">
           <p className="text-base font-medium">Ouch! Looks like your registry is empty, Let’s help you change that!</p>
 
-          <div className="h-[175px] border-2 border-dashed flex  items-center rounded-lg">
+          <div
+            onClick={() => setModal(true)}
+            className="h-[175px] border-2 border-dashed flex  items-center rounded-lg cursor-pointer"
+          >
             <div className="flex flex-col gap-2 text-center items-center justify-center w-full">
               <Image src={AddGift} alt="" />
 
