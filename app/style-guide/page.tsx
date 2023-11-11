@@ -20,11 +20,12 @@ import { cn } from '@/lib/utils';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { toast } from '@/components/ui/use-toast';
+import { Switch } from '@/components/ui/switch';
 
 const page = () => {
   return (
-    <div className="flex flex-col justify-center items-start w-full gap-10 p-20">
-      <div className="max-w-[700px]">
+    <div className="flex flex-col justify-center items-start w-full gap-10 md:p-20 p-5">
+      <div className="md:max-w-[700px]">
         <h1 className="text-lg font-semibold mb-3">
           Before building your component from scratch check{' '}
           <a target="_blank" href="https://ui.shadcn.com/docs/components/accordion" className="font-bold text-primary">
@@ -55,11 +56,20 @@ const page = () => {
           <p className="text-muted font-bold">Muted</p>
         </div>
       </div>
+
       {/* inputs */}
       <div className="flex flex-col gap-3 flex-wrap">
         <h1 className="text-2xl font-bold">Inputs</h1>
-        <div className="flex gap-3 flex-wrap">
+        <div className="flex gap-5 md:gap-3 flex-wrap">
           <InputDemo />
+        </div>
+      </div>
+
+      {/* toggles */}
+      <div className="flex flex-col gap-3 flex-wrap">
+        <h1 className="text-2xl font-bold">Inputs</h1>
+        <div className="flex gap-3 flex-wrap">
+          <ToggleDemo />
         </div>
       </div>
 
@@ -82,7 +92,7 @@ const page = () => {
       {/* Calendar */}
       <div className="flex flex-col gap-3 flex-wrap">
         <h1 className="text-2xl font-bold">Calendar</h1>
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap md:flex-nowrap">
           <CalendarDemo />
         </div>
       </div>
@@ -94,6 +104,7 @@ const page = () => {
           <ButtonDemo />
         </div>
       </div>
+
       {/* checkbox */}
       <div className="flex flex-col gap-3 flex-wrap">
         <h1 className="text-2xl font-bold">Checkbox</h1>
@@ -108,6 +119,28 @@ const page = () => {
 export default page;
 
 const SelectDemo = () => {
+  const overflow = [
+    { name: 'Apple', value: 'apple' },
+    { name: 'Banana', value: 'banana' },
+    { name: 'Orange', value: 'orange' },
+    { name: 'Mango', value: 'mango' },
+    { name: 'Grapes', value: 'grapes' },
+    { name: 'Strawberry', value: 'strawberry' },
+    { name: 'Pineapple', value: 'pineapple' },
+    { name: 'Cherry', value: 'cherry' },
+    { name: 'Kiwi', value: 'kiwi' },
+    { name: 'Watermelon', value: 'watermelon' },
+    { name: 'Blueberry', value: 'blueberry' },
+    { name: 'Peach', value: 'peach' },
+    { name: 'Pear', value: 'pear' },
+    { name: 'Raspberry', value: 'raspberry' },
+    { name: 'Avocado', value: 'avocado' },
+    { name: 'Lemon', value: 'lemon' },
+    { name: 'Pomegranate', value: 'pomegranate' },
+    { name: 'Plum', value: 'plum' },
+    { name: 'Cantaloupe', value: 'cantaloupe' },
+    { name: 'Apricot', value: 'apricot' },
+  ];
   return (
     <>
       <div className="flex flex-col">
@@ -166,47 +199,25 @@ const SelectDemo = () => {
         </Select>
         {false && <p className="text-xs text-red-500">Error</p>}
       </div>
-    </>
-  );
-};
-
-const ToastDemo = () => {
-  return (
-    <>
-      <Button
-        onClick={() =>
-          toast({
-            title: 'Scheduled: Catch up',
-          })
-        }
-      >
-        Show Toast with Title
-      </Button>
-      <Button
-        onClick={() =>
-          toast({
-            title: 'Scheduled: Catch up',
-            description: 'Friday, February 10, 2023 at 5:57 PM',
-          })
-        }
-      >
-        Show Toast with Description
-      </Button>
-      <Button
-        onClick={() =>
-          toast({
-            title: 'Scheduled: Catch up',
-            description: 'Friday, February 10, 2023 at 5:57 PM',
-            action: (
-              <Button variant="outline" size="sm">
-                Undo
-              </Button>
-            ),
-          })
-        }
-      >
-        Show Toast with Action Button
-      </Button>
+      <div className="flex flex-col">
+        <Label className="mb-3">Dropdown with scroll</Label>
+        <Select>
+          <SelectTrigger className="w-full h-[55px]">
+            <SelectValue placeholder="Select a fruit"></SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Fruits</SelectLabel>
+              {overflow.map((item, i) => (
+                <SelectItem key={i} value={item.value}>
+                  {item.name}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        {false && <p className="text-xs text-red-500">Error</p>}
+      </div>
     </>
   );
 };
@@ -475,8 +486,12 @@ export function ToggleDemo() {
   return (
     <>
       <div className="flex items-center space-x-2">
-        <Switch id="airplane-mode" />
-        <Label htmlFor="airplane-mode">Toggle</Label>
+        <Switch id="toggle" />
+        <Label htmlFor="toggle">Toggle</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Switch disabled={true} id="" />
+        <Label htmlFor="">Disabled toggle</Label>
       </div>
     </>
   );
