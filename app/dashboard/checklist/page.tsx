@@ -100,12 +100,12 @@ const Checklist = () => {
       <Search />
       {/* Task side */}
       <aside className="mt-20">
-        <div className="w-full h-14 flex justify-between items-center ">
-          <h3 className="text-zinc-800 text-2xl font-semibold font-['Work Sans'] leading-loose">Tasks</h3>
+        <div className="w-full h-14 flex flex-col gap-3 md:gap-0 md:flex-row md:justify-between md:items-center">
+          <h3 className="text-zinc-800 text-2xl font-semibold leading-loose">Tasks</h3>
           <div className="justify-center items-center gap-3 flex">
-            <p className="text-zinc-800 leading-snug">Filter By</p>
+            <p className="text-zinc-800 leading-snug hidden md:block">Filter By</p>
 
-            <aside className="grid grid-cols-2 gap-3">
+            <aside className="grid grid-cols-2 gap-14 md:gap-3 ">
               {/* <Filter /> */}
               <Select>
                 <SelectTrigger className="w-[180px] h-[55px]">
@@ -127,7 +127,7 @@ const Checklist = () => {
             </aside>
           </div>
         </div>
-        <div className="w-full mt-8 border-t border-neutral-200">
+        <div className="w-full mt-24 md:mt-8 border-t border-neutral-200">
           {addTask && <AddTask addTask={handleAddTask} cancel={CancelAddTask} />}
         </div>
         <ul className="mt-8 flex flex-col gap-6">
