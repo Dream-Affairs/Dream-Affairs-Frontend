@@ -1,16 +1,14 @@
-import Curly from "./(assets)/curly.svg";
-import Mgt1 from "./(assets)/mgt1.svg";
-import Mgt2 from "./(assets)/mgt2.svg";
-import Mgt3 from "./(assets)/mgt3.svg";
-import Image from "next/image";
+import Curly from './(assets)/curly.svg';
+import Mgt1 from './(assets)/mgt1.svg';
+import Mgt2 from './(assets)/mgt2.svg';
+import Mgt3 from './(assets)/mgt3.svg';
+import Image from 'next/image';
 
 const Care = () => {
   return (
     <section className="max-w-[1440px] mx-auto px-8 lg-px-10">
       <div className="m-auto text-center flex flex-col items-center py-16 md:pt-0">
-        <h1 className="text-[30px] lg:text-[40px] text-[#48195A] font-semibold">
-          We take care of everything
-        </h1>
+        <h1 className="text-[30px] lg:text-[40px] text-[#48195A] font-semibold">We take care of everything</h1>
         <Image src={Curly} width={0} alt="Curly" className="w-[240px] lg:w-[400px]" />
       </div>
 
@@ -40,6 +38,6 @@ const Care = () => {
       </section>
     </section>
   );
-}
+};
 
-export default Care
+export default Care;

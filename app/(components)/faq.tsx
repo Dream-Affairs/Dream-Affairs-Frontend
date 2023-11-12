@@ -1,47 +1,46 @@
-'use client'
+'use client';
 
-import {useState} from 'react'
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronDown } from 'lucide-react';
-import Curly from "../(components)/(assets)/curly.svg";
+import Curly from '../(components)/(assets)/curly.svg';
 import Image from 'next/image';
 
 const Faq = () => {
+  const [activeQuestion, setActiveQuestion] = useState<number | null>(null);
 
-    const [activeQuestion, setActiveQuestion] = useState<number | null>(null);
-
-    const questions = [
-      {
-        id: 1,
-        question: 'What is DreamAffairs?',
-        answer:
-          'Dream Affairs is a comprehensive wedding planning and management application designed to help couples effortlessly plan, organize, and share their special day with family and friends. It provides tools for managing guest lists, seating arrangements, meal preferences, and gift Wishlist.',
-      },
-      {
-        id: 2,
-        question: 'Is Dream Affairs a free service?',
-        answer:
-          'Dream Affairs is a comprehensive wedding planning and management application designed to help couples effortlessly plan, organize, and share their special day with family and friends. It provides tools for managing guest lists, seating arrangements, meal preferences, and gift Wishlist.',
-      },
-      {
-        id: 3,
-        question: 'How do I sign up for Dream Affairs?',
-        answer:
-          'Dream Affairs is a comprehensive wedding planning and management application designed to help couples effortlessly plan, organize, and share their special day with family and friends. It provides tools for managing guest lists, seating arrangements, meal preferences, and gift Wishlist.',
-      },
-      {
-        id: 4,
-        question: 'Can I use Dream Affairs on Mobile devices?',
-        answer:
-          'Dream Affairs is a comprehensive wedding planning and management application designed to help couples effortlessly plan, organize, and share their special day with family and friends. It provides tools for managing guest lists, seating arrangements, meal preferences, and gift Wishlist.',
-      },
-      {
-        id: 5,
-        question: "How can I contact Dream Affair's technical team?" ,
-        answer:
-          'Dream Affairs is a comprehensive wedding planning and management application designed to help couples effortlessly plan, organize, and share their special day with family and friends. It provides tools for managing guest lists, seating arrangements, meal preferences, and gift Wishlist.',
-      },
-    ];
+  const questions = [
+    {
+      id: 1,
+      question: 'What is DreamAffairs?',
+      answer:
+        'Dream Affairs is a comprehensive wedding planning and management application designed to help couples effortlessly plan, organize, and share their special day with family and friends. It provides tools for managing guest lists, seating arrangements, meal preferences, and gift Wishlist.',
+    },
+    {
+      id: 2,
+      question: 'Is Dream Affairs a free service?',
+      answer:
+        'Dream Affairs is a comprehensive wedding planning and management application designed to help couples effortlessly plan, organize, and share their special day with family and friends. It provides tools for managing guest lists, seating arrangements, meal preferences, and gift Wishlist.',
+    },
+    {
+      id: 3,
+      question: 'How do I sign up for Dream Affairs?',
+      answer:
+        'Dream Affairs is a comprehensive wedding planning and management application designed to help couples effortlessly plan, organize, and share their special day with family and friends. It provides tools for managing guest lists, seating arrangements, meal preferences, and gift Wishlist.',
+    },
+    {
+      id: 4,
+      question: 'Can I use Dream Affairs on Mobile devices?',
+      answer:
+        'Dream Affairs is a comprehensive wedding planning and management application designed to help couples effortlessly plan, organize, and share their special day with family and friends. It provides tools for managing guest lists, seating arrangements, meal preferences, and gift Wishlist.',
+    },
+    {
+      id: 5,
+      question: "How can I contact Dream Affair's technical team?",
+      answer:
+        'Dream Affairs is a comprehensive wedding planning and management application designed to help couples effortlessly plan, organize, and share their special day with family and friends. It provides tools for managing guest lists, seating arrangements, meal preferences, and gift Wishlist.',
+    },
+  ];
 
   return (
     <div className="max-w-[1440px] mx-auto px-8 lg:px-10">
@@ -75,6 +74,6 @@ const Faq = () => {
       ))}
     </div>
   );
-}
+};
 
-export default Faq
+export default Faq;

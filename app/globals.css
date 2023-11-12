@@ -100,17 +100,17 @@
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 6px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background: #b3b3b3;
+  background: #cacaca;
 }
 ::-webkit-scrollbar-track {
   background: #ffffff;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #a4a3a3;
+  background: #cacaca;
 }

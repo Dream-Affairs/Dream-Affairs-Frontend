@@ -20,6 +20,8 @@ import { cn } from '@/lib/utils';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { toast } from '@/components/ui/use-toast';
+import AccordionComponent from '../faq/(components)/Accordion';
+import { general } from '../faq/(components)/data';
 
 const page = () => {
   return (
@@ -64,14 +66,6 @@ const page = () => {
         </div>
       </div>
 
-      {/* toggles */}
-      <div className="flex flex-col gap-3 flex-wrap">
-        <h1 className="text-2xl font-bold">Toggle</h1>
-        <div className="flex gap-3 flex-wrap">
-          <ToggleDemo />
-        </div>
-      </div>
-
       {/* toast */}
       <div className="flex flex-col gap-3 flex-wrap">
         <h1 className="text-2xl font-bold">Toasts</h1>
@@ -109,6 +103,14 @@ const page = () => {
         <h1 className="text-2xl font-bold">Checkbox</h1>
         <div className="flex gap-3 flex-wrap">
           <CheckboxDemo />
+        </div>
+      </div>
+
+      {/* acoordion */}
+      <div className="flex flex-col gap-3 flex-wrap">
+        <h1 className="text-2xl font-bold">Accordion</h1>
+        <div className="flex gap-3 flex-wrap">
+          <AccordionDemo />
         </div>
       </div>
     </div>
@@ -153,9 +155,6 @@ const SelectDemo = () => {
               <SelectLabel>Fruits</SelectLabel>
               <SelectItem value="apple">Apple</SelectItem>
               <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -481,8 +480,10 @@ const ToastDemo = () => {
   );
 };
 
-function ToggleDemo() {
-  const [checked, setChecked] = React.useState(false);
-
-  return <div></div>;
+function AccordionDemo() {
+  return (
+    <>
+      <AccordionComponent questions={general} />
+    </>
+  );
 }

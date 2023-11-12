@@ -37,7 +37,13 @@ const Importance = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-y-0 mb-[80px]">
         {boxes.map((box, index) => (
           <div key={box.id} data-aos="flip-right" data-aos-duration="700" className="">
-              <Image src={RoseBox} width={0} height={700} alt="Rose Box" className="relative h-[320px] lg:h-[400px] mb-[-120px] sm:mb-0" />
+            <Image
+              src={RoseBox}
+              width={0}
+              height={700}
+              alt="Rose Box"
+              className="relative h-[320px] lg:h-[400px] mb-[-120px] sm:mb-0"
+            />
             <p className="absolute text-center lg:text-left text-[11px] sm:text-[14px] w-[220px] md:w-[400px] lg:w-[450px] m-auto top-[55%] md:top-[35%] left-6 right-0">
               {box.content}
             </p>

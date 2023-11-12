@@ -12,7 +12,7 @@ const Betterhalf = (props: ImagesProp) => {
       <h1 className="text-center py-[60px] text-[25px] lg:text-[30px] text-[#48195A] font-semibold">
         Creating a beautiful experience for you and your better half
       </h1>
-      <div className='flex justify-center items-center m-auto mb-16'>
+      <div className="flex justify-center items-center m-auto mb-16">
         <div className="w-full mt-[56px] grid grid-cols-2 m-auto md:grid-cols-4 gap-5 md:gap-x-[32px]">
           {props.betterHalfImages.map((img, index) => (
             <Image
@@ -28,7 +28,7 @@ const Betterhalf = (props: ImagesProp) => {
           ))}
         </div>
       </div>
-      <Button variant="secondary" className='flex items-center m-auto w-[200px] h-[40px]'>
+      <Button variant="secondary" className="flex items-center m-auto w-[200px] h-[40px]">
         Start Planning
       </Button>
     </div>
