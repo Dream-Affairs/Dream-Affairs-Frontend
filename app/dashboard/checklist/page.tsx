@@ -14,12 +14,19 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import Task from '../(components)/checklist/Task';
+import { json } from 'stream/consumers';
 
 const filter: string[] = ['All tasks', 'Assigned to me', 'Assigned by me', 'Completed'];
 
 type task = {
   decription: string;
   date: Date | undefined;
+  assignee: string;
+};
+
+type ts = {
+  decription: string;
+  date: Date | string;
   assignee: string;
 };
 
@@ -43,7 +50,23 @@ const Tasks: task[] = [
 const Checklist = () => {
   const [filterKey, setFilterKey] = useState('All tasks');
   const [addTask, setAddTask] = useState(false);
-  const [tasks, setTasks] = useState(Tasks);
+  const [tasks, setTasks] = useState<task[]>([]);
+
+  useEffect(() => {
+    const response: any = localStorage.getItem('Tasks');
+    const storedTasks: ts[] = JSON.parse(response);
+    console.log(storedTasks);
+
+    const updatedTask: task[] = storedTasks?.map((item) => {
+      return {
+        decription: item.decription,
+        date: new Date(item.date),
+        assignee: item.assignee,
+      };
+    });
+
+    if (storedTasks) setTasks(updatedTask);
+  }, []);
 
   const CancelAddTask = () => {
     setAddTask(false);
@@ -52,11 +75,15 @@ const Checklist = () => {
   const handleAddTask: addTask = (task) => {
     const newTasksArr = [task, ...tasks];
     setTasks(newTasksArr);
+    localStorage.removeItem('Tasks');
+    localStorage.setItem('Tasks', JSON.stringify(newTasksArr));
   };
 
   const handleDelete: deleteTask = (index) => {
-    const newTasksArr = tasks.filter((_, i) => i !== index);
+    const newTasksArr = tasks?.filter((_, i) => i !== index);
     setTasks(newTasksArr);
+    localStorage.removeItem('Tasks');
+    localStorage.setItem('Tasks', JSON.stringify(newTasksArr));
   };
 
   const handleEditTask = (index: number, item: task) => {
@@ -109,11 +136,13 @@ const Checklist = () => {
           {addTask && <AddTask addTask={handleAddTask} cancel={CancelAddTask} />}
         </div>
         <ul className="mt-8 flex flex-col gap-6">
-          {tasks.map((item, i) => (
-            <li key={i + 1}>
-              <Task editItem={handleEditTask} index={i} deleteTask={handleDelete} item={item} />
-            </li>
-          ))}
+          {tasks?.length > 0
+            ? tasks.map((item, i) => (
+                <li key={i + 1}>
+                  <Task editItem={handleEditTask} index={i} deleteTask={handleDelete} item={item} />
+                </li>
+              ))
+            : ''}
         </ul>
       </aside>
     </section>
