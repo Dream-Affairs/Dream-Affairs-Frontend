@@ -15,6 +15,7 @@ type task = {
   decription: string;
   date: Date | undefined;
   assignee: string;
+  done: boolean;
 };
 
 interface MyAddTasksProps {
@@ -48,6 +49,7 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
       decription: taskText,
       date: date,
       assignee: assignedMember,
+      done: false,
     };
 
     addTask(task);

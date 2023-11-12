@@ -22,30 +22,19 @@ type task = {
   decription: string;
   date: Date | undefined;
   assignee: string;
+  done: boolean;
 };
 
 type ts = {
   decription: string;
   date: Date | string;
   assignee: string;
+  done: boolean;
 };
 
 type addTask = (task: task) => void;
 type deleteTask = (index: number) => void;
 type editItem = (index: number, item: task) => void;
-
-const Tasks: task[] = [
-  {
-    decription: 'Contact Vendor',
-    date: new Date('01-04-23'),
-    assignee: 'John',
-  },
-  {
-    decription: 'Buy Aso Ebi',
-    date: new Date(),
-    assignee: 'Nonye',
-  },
-];
 
 const Checklist = () => {
   const [filterKey, setFilterKey] = useState('All tasks');
@@ -60,11 +49,11 @@ const Checklist = () => {
     const updatedTask: task[] = storedTasks?.map((item) => {
       return {
         decription: item.decription,
-        date: new Date(item.date),
+        date: item.date ? new Date(item.date) : undefined,
         assignee: item.assignee,
+        done: item.done,
       };
     });
-
     if (storedTasks) setTasks(updatedTask);
   }, []);
 

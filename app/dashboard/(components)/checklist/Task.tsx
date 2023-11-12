@@ -1,6 +1,6 @@
 'use client';
 import React, { useCallback, useEffect, useState } from 'react';
-import { AssignIcon, DeleteIcon } from './Icons';
+import { AssignIcon, DeleteIcon, DoneIcon } from './Icons';
 import { format } from 'date-fns';
 import { Calendar as CalenderIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
@@ -12,6 +12,7 @@ type task = {
   decription: string;
   date: Date | undefined;
   assignee: string;
+  done: boolean;
 };
 
 interface MyTasksProps {
@@ -22,22 +23,24 @@ interface MyTasksProps {
 }
 
 export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
-  const [date, setDate] = React.useState<Date | undefined>(undefined);
   const [isAssigning, setIsAssigning] = useState(false);
+  const [date, setDate] = React.useState<Date | undefined>(undefined);
   const [description, setDescription] = useState('');
-  const [editedTask, setEditedTask] = React.useState<task>(item);
   const [assignedMember, setAssignedMember] = useState('');
+  const [done, setDone] = useState(false);
+  const [editedTask, setEditedTask] = React.useState<task>(item);
   const error = false;
 
   useEffect(() => {
     setDate(item.date);
     setAssignedMember(item.assignee);
     setDescription(item.decription);
+    setDone(item.done);
   }, [item]);
 
   useEffect(() => {
-    setEditedTask({ decription: description, date: date, assignee: assignedMember });
-  }, [date, assignedMember, description]);
+    setEditedTask({ decription: description, date: date, assignee: assignedMember, done: done });
+  }, [date, assignedMember, description, done]);
 
   const handleAssignBlur = useCallback(() => {
     setTimeout(() => {
@@ -64,8 +67,16 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
     >
       <div className="self-stretch justify-start items-start gap-2 inline-flex">
         {/* Check */}
-        <div className="min-w-[16px] h-4 mt-1 border-[2px] border-[#9F7DB5] rounded-[50%] hover:bg-primary-foreground cursor-pointer">
-          {' '}
+        <div
+          onClick={() => {
+            setDone((prev) => !prev);
+            editItem(index, { decription: description, date: date, assignee: assignedMember, done: !done });
+          }}
+          className={`min-w-[16px] h-[16px] mt-1 border-[2px] ${
+            done ? 'border-transparent' : 'border-[#9F7DB5]'
+          } rounded-[50%] hover:bg-primary-foreground cursor-pointer flex items-center justify-evenly`}
+        >
+          {done && <DoneIcon />}
         </div>
         <div className="w-full items-start grid grid-cols-3">
           {/* Description */}
@@ -82,7 +93,7 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
                   return description.length === 0 ? '' : editItem(index, editedTask);
                 }
               }}
-              className="text-neutral-800 outline-none leading-snug"
+              className={`${done && 'line-through'} text-neutral-800 outline-none leading-snug`}
             />
             {/* Date */}
             <Popover>
@@ -98,14 +109,21 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
                 <p
                   className={cn(
                     'flex items-center justify-start  text-left text-zinc-500 text-xs leading-none ',
-                    !date && 'text-neutral-400 ',
+                    !date && 'text-neutral-400',
+                    done && 'line-through',
                   )}
                 >
                   {date ? format(date, 'MMM dd') : <CalenderIcon className="mr-2 h-4 w-4" />}
                 </p>
                 {/* )} */}
               </PopoverTrigger>
-              <PopoverContent onBlur={() => editItem(index, editedTask)} className="w-auto translate-x-1/4 p-0">
+              <PopoverContent
+                onBlur={() => {
+                  if (done) return;
+                  editItem(index, { decription: description, date: date, assignee: assignedMember, done: done });
+                }}
+                className="w-auto translate-x-1/4 p-0"
+              >
                 <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
               </PopoverContent>
             </Popover>
@@ -114,7 +132,7 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
           {/* Assignee */}
           <div onClick={() => setIsAssigning(true)} className="justify-self-center relative">
             {assignedMember !== 'Assign Task' ? (
-              <p className="text-slate-600 leading-snug cursor-pointer">{assignedMember}</p>
+              <p className={`${done && 'line-through'} text-slate-600 leading-snug cursor-pointer`}>{assignedMember}</p>
             ) : (
               <AssignIcon stroke="#898C8F" />
             )}
