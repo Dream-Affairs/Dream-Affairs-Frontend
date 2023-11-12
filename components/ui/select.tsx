@@ -56,7 +56,7 @@ const SelectContent = React.forwardRef<
             'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
         )}
       >
-        <ScrollArea className="h-24 w-full">{children}</ScrollArea>
+        <ScrollArea className="max-h-44 w-full overflow-auto">{children}</ScrollArea>
       </SelectPrimitive.Viewport>
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
