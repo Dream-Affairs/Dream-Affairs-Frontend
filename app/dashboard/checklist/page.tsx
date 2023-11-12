@@ -68,6 +68,10 @@ const Checklist = () => {
     if (storedTasks) setTasks(updatedTask);
   }, []);
 
+  useEffect(() => {
+    tasks.length === 0 ? setAddTask(true) : setAddTask(false);
+  }, [tasks]);
+
   const CancelAddTask = () => {
     setAddTask(false);
   };
