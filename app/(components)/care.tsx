@@ -7,14 +7,14 @@ import Image from "next/image";
 const Care = () => {
   return (
     <section className="max-w-[1440px] mx-auto px-8 lg-px-10">
-      <div className="m-auto text-center flex flex-col items-center pb-20">
-        <h1 className="text-[20px] md:text-[30px] lg:text-[40px] text-[#48195A] font-semibold">
+      <div className="m-auto text-center flex flex-col items-center py-16 md:pt-0">
+        <h1 className="text-[30px] lg:text-[40px] text-[#48195A] font-semibold">
           We take care of everything
         </h1>
         <Image src={Curly} width={0} alt="Curly" className="w-[240px] lg:w-[400px]" />
       </div>
 
-      <section className="text-[#48195A] font-semibold">
+      <section className="text-[#48195A] font-semibold text-[16px]">
         <div className="lg:relative lg:mb-[-90px] flex flex-col-reverse lg:flex-row">
           <Image data-aos="flip-left" data-aos-duration="700" src={Mgt1} width={0} alt="Event Management" />
           <p

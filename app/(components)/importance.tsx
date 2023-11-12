@@ -29,23 +29,20 @@ const Importance = () => {
 
   return (
     <div className="max-w-[1440px] mx-auto px-8 lg:px-10">
-      <div className="m-auto text-center flex flex-col items-center pt-20">
+      <div className="m-auto text-center flex flex-col items-center pt-20 md:pb-20">
         <h1 className="text-[30px] md:text-[40px] text-[#48195A] font-semibold">Why do you need DreamAffairs</h1>
         <Image src={Curly} width={0} alt="Curly" className="w-[240px] sm:w-[400px]" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-20 mb-[80px]">
-      {boxes.map((box, index) => (
-          <div
-            key={box.id}
-            data-aos="flip-right"
-            data-aos-duration="700"
-            className=""
-          >
-            <Image src={RoseBox} width={0} height={700} alt="Rose Box" className="relative object-cover" />
-            <p className="absolute text-[10px] sm:text-[14px] w-[220px] sm:w-[400px] md:w-[450px] m-auto top-[30%] md:top-[35%] left-6 right-0">{box.content}</p>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-y-0 mb-[80px]">
+        {boxes.map((box, index) => (
+          <div key={box.id} data-aos="flip-right" data-aos-duration="700" className="">
+              <Image src={RoseBox} width={0} height={700} alt="Rose Box" className="relative h-[320px] lg:h-[400px] mb-[-120px] sm:mb-0" />
+            <p className="absolute text-center lg:text-left text-[11px] sm:text-[14px] w-[220px] md:w-[400px] lg:w-[450px] m-auto top-[55%] md:top-[35%] left-6 right-0">
+              {box.content}
+            </p>
           </div>
-      ))}
+        ))}
       </div>
     </div>
   );
