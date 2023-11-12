@@ -18,7 +18,7 @@ const Footer = () => {
     { id: 3, name: 'Customer Support', path: '/' },
     { id: 2, name: 'Product Overview', path: '/' },
     { id: 1, name: 'About', path: '/about-us' },
-    { id: 4, name: 'FAQ', path: '/' },
+    { id: 4, name: 'FAQ', path: '/faq' },
     { id: 5, name: 'Contact us', path: '/' },
   ];
 
