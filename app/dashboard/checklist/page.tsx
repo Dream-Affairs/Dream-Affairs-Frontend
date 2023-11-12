@@ -91,6 +91,8 @@ const Checklist = () => {
     newTasksArr.splice(index, 1);
     newTasksArr.splice(index, 0, item);
     setTasks(newTasksArr);
+    localStorage.removeItem('Tasks');
+    localStorage.setItem('Tasks', JSON.stringify(newTasksArr));
   };
 
   return (
