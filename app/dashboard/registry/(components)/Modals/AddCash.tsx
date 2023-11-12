@@ -4,11 +4,20 @@ import Minus from '../../../(assets)/minus-square.svg';
 import Add from '../../../(assets)/add-square.svg';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectLabel,
+} from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import useLimitedTextInput from '../hooks/textarea';
+import currencies from '../../../settings/(components)/currency';
 
 const AddCash: React.FC = () => {
   const inputNumberStyle: React.CSSProperties = {
@@ -17,6 +26,7 @@ const AddCash: React.FC = () => {
     appearance: 'textfield',
   };
 
+  const [currency, setCurrency] = useState<string>('Dollar ($)');
   const { text, handleChange } = useLimitedTextInput('', 1000);
   // This section control increment of quantity
   const [value, setValue] = useState<number>(1);
@@ -70,11 +80,16 @@ const AddCash: React.FC = () => {
                   <SelectTrigger className=" h-[55px] text-sm font-normal">
                     <SelectValue className="placeholder-gray-400" placeholder="Select currency" />
                   </SelectTrigger>
-                  <SelectContent id="country">
+                  <SelectContent id="currency">
                     <SelectGroup className="text-sm font-normal">
-                      <SelectItem value="pounds">Pounds</SelectItem>
-                      <SelectItem value="naira">Naira</SelectItem>
-                      <SelectItem value="dollar">Dollar</SelectItem>
+                      <SelectLabel>Currency</SelectLabel>
+                      {currencies.map((currency) => (
+                        <div key={currency}>
+                          <SelectItem onClick={() => setCurrency(currency)} value={currency}>
+                            {currency}
+                          </SelectItem>
+                        </div>
+                      ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>
