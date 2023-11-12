@@ -81,6 +81,24 @@
   }
 }
 
+@layer utilities {
+  .guest-btn {
+    @apply bg-[#FFEBEE] text-[#282828] text-sm gap-2;
+  }
+  .guest-spacing {
+    @apply pl-[50px] pr-[50px];
+  }
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
