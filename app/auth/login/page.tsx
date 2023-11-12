@@ -10,6 +10,8 @@ import { ImSpinner8 } from 'react-icons/im';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { toast } from '@/components/ui/use-toast';
+import { isEmpty } from '../(helpers)/isAuthenticated';
 
 const Login = () => {
   const [form, setForm] = React.useState({
@@ -31,15 +33,23 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (form.email === '') {
+    if (isEmpty(form.email)) {
       setFormError((prev) => ({ ...prev, email: true }));
       return;
     }
-    if (form.password === '') {
+    if (isEmpty(form.password)) {
       setFormError((prev) => ({ ...prev, password: true }));
       return;
     }
-    // setIsSubmitting(true);
+
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      toast({
+        title: 'Error Occured',
+        description: 'Server error occured. Please try again later.',
+      });
+    }, 3000);
   };
 
   return (
