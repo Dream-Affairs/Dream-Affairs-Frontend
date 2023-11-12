@@ -1,18 +1,11 @@
-import Image from 'next/image';
 import RootLayout from '../layout';
-import gallery1 from './(assets)/gallery-1.png';
-import gallery2 from './(assets)/gallery-2.png';
-import gallery3 from './(assets)/gallery-3.png';
-import gallery4 from './(assets)/gallery-4.png';
-import gallery5 from './(assets)/gallery-5.png';
-import gallery6 from './(assets)/gallery-6.png';
-import gallery7 from './(assets)/gallery-7.png';
-import gallery8 from './(assets)/gallery-8.png';
 import Hero from './(components)/hero';
-import History from './(components)/history';
 import Team from './(components)/team';
-import Contact from './(components)/contact';
-import Gallery from './(components)/gallery';
+import ExternalLayout from '../(components)/External-Layout';
+import Section2 from './(components)/section-2';
+import Section3 from './(components)/about';
+import Section4 from './(components)/values';
+import Contact from '../pricing/(components)/contact';
 
 const About = () => {
   const teamMembers = [
@@ -53,21 +46,19 @@ const About = () => {
       bio: '[Team Member 4] adds [specific expertise or skill set] to our dynamic team. Their passion for [related passion or expertise] has been a valuable asset in [mention specific contributions].',
     },
   ];
-  const galleryImages = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery7, gallery8];
   return (
     <RootLayout>
-      <main className="w-full relative">
+      <ExternalLayout>
+      <main className="w-full relative mb-[113px]">
         {/* Hero */}
         <Hero />
-        {/* Our History */}
-        <History />
-        {/* Our Team */}
-        <Team teamMembers={teamMembers} />
-        {/* Gallery */}
-        <Gallery galleryImages={galleryImages} />
-        {/* Contact us */}
-        <Contact />
+        <Section2/>
+        <Section3/>
+        <Section4/>
+        <Team/>
+        {/* <Contact/>  */}
       </main>
+      </ExternalLayout>
     </RootLayout>
   );
 };
