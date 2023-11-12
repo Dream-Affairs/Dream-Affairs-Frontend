@@ -12,7 +12,7 @@ import ModalContent from './Modals/ModalContent';
 const Board = () => {
   const [modal, setModal] = useState<boolean>(false); // To close and open the Modal box
   return (
-    <div className="pl-9 pt-9 pr-9 flex flex-col gap-5">
+    <div className="pl-9 pt-9 pr-9 flex flex-col gap-5 mb-9">
       {/* Navbar section  */}
       <div className="flex justify-between">
         <div className="flex gap-10">

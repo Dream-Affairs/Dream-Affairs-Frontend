@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import useLimitedTextInput from '../hooks/textarea';
 
 const AddProduct: React.FC = () => {
   const inputNumberStyle: React.CSSProperties = {
@@ -13,18 +14,11 @@ const AddProduct: React.FC = () => {
     MozAppearance: 'textfield',
     appearance: 'textfield',
   };
+
+  const { text, handleChange } = useLimitedTextInput('', 1000);
+
   // This section control increment of quantity
   const [value, setValue] = useState<number>(1);
-  const [text, setText] = useState<string>('');
-
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const inputText = event.target.value;
-
-    // Limit the input to 1000 characters
-    const limitedText = inputText.slice(0, 1000);
-
-    setText(limitedText);
-  };
 
   const increment = () => {
     setValue((prevValue) => Math.min(prevValue + 1, 100));
@@ -79,7 +73,7 @@ const AddProduct: React.FC = () => {
                   <SelectTrigger className=" h-[55px] text-sm font-normal">
                     <SelectValue className="placeholder-gray-400" placeholder="Select currency" />
                   </SelectTrigger>
-                  <SelectContent id="country">
+                  <SelectContent id="country" className="h-auto">
                     <SelectGroup className="text-sm font-normal">
                       <SelectItem value="pounds">Pounds</SelectItem>
                       <SelectItem value="naira">Naira</SelectItem>
@@ -121,19 +115,19 @@ const AddProduct: React.FC = () => {
                     />
 
                     <div className="flex gap-1 items-center ">
-                      <button
+                      <div
                         onClick={decrement}
                         className=" rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 "
                       >
                         {' '}
                         <Image src={Minus} alt="" />{' '}
-                      </button>
-                      <button
+                      </div>
+                      <div
                         onClick={increment}
                         className=" rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 "
                       >
                         <Image src={Add} alt="" />
-                      </button>
+                      </div>
                     </div>
                   </div>
                 </div>
