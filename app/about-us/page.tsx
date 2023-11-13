@@ -8,16 +8,16 @@ import Contact from '../pricing/(components)/contact';
 
 const About = () => {
   return (
-      <ExternalLayout>
+    <ExternalLayout>
       <main className="w-full relative mb-[113px]">
         <Hero />
-        <Section2/>
-        <AboutUs/>
-        <Values/>
-        <Team/>
-        <Contact/> 
+        <Section2 />
+        <AboutUs />
+        <Values />
+        <Team />
+        <Contact />
       </main>
-      </ExternalLayout>
+    </ExternalLayout>
   );
 };
 
