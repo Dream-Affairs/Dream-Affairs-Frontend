@@ -22,14 +22,14 @@ const Invitation = (props: Props) => {
 
     <h3 className="font-semibold px-[45px] mt-[60px] text-2xl pb-2 cursor-pointer" >Email Templates</h3>
 
-    <div className='w-full flex pt-[60px] gap-x-[40px] gap-y-8 px-[4%] mb-[90px] flex-wrap'>
+    <div className="w-full flex pt-[60px] gap-x-[40px] gap-y-8 px-[4%] mb-[90px] flex-wrap">
       <div className="shrink-0 basis-[23%]">
-        <EmailTemplate title='RSVP Invitation' description='This the email you send to guests, for them to
-            get access code, view website and RSVP' image='/assets/email_template.png' />
+        <EmailTemplate title="RSVP Invitation" description="This the email you send to guests, for them to
+            get access code, view website and RSVP" image="/assets/email_template.png" />
       </div>
       <div className="shrink-0 basis-[23%]">
-        <EmailTemplate title='Thank you Email' description='This the email you send to guests, for them to
-            get access code, view website and RSVP' image='/assets/email_template.png' />
+        <EmailTemplate title="Thank you Email" description="This the email you send to guests, for them to
+            get access code, view website and RSVP" image="/assets/email_template.png" />
       </div>
       
     </div>

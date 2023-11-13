@@ -52,7 +52,7 @@ export default function Preview({}: Props) {
                         </div>
                         <div className="text-center text-[#48195A] mt-8">
                             <h3 className="text-[40px] font-semibold">CHINONYE & JOHN</h3>
-                            <h5 className="text-2xl">We're getting married!</h5>
+                            <h5 className="text-2xl">We&apos;re getting married!</h5>
                         </div>
                         <div className="text-center font-normal pt-8">
                             <p>Hello [Guest Name] </p>
