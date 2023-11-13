@@ -6,7 +6,7 @@ import banner from "../pricing/(assets)/contactbg.svg"
 
 type Props = {}
 
-export default function page({}: Props) {
+export default function Faq({}: Props) {
   return (
     <>
     <div className="faq_banner_image w-full h-[55vh] relative ">
@@ -102,7 +102,7 @@ export default function page({}: Props) {
         </div>
     </div>
     <div className="w-full h-[50vh] bg-slate-600 relative">
-        <div className="w-full h-full">
+        <div className="w-full">
             <Image src={banner} alt='banner_image' width={0} height={0} sizes='100vw' className='object-cover w-[100%] h-[100%] '/>
         </div>
         <div className="text-white text-center absolute w-[85%] top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">

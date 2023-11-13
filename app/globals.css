@@ -64,17 +64,24 @@
     --input: 215 27.9% 16.9%;
     --ring: 216 12.2% 83.9%;
   }
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
 }
 
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
+<<<<<<< HEAD
 #save_email_button:hover #svg path{
   stroke: #fff;
 }
@@ -88,3 +95,40 @@
 .faq_container:not(:last-child) {
   border-bottom: 1px solid rgb(233, 230, 230);
 }
+=======
+@layer utilities {
+  .guest-btn {
+    @apply bg-[#FFEBEE] text-[#282828] text-sm gap-2;
+  }
+  .guest-spacing {
+    @apply pl-[50px] pr-[50px];
+  }
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #cacaca;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #cacaca;
+}
+>>>>>>> aff63b917af960bdb16d9bad1f0d9dc8bd598e3c

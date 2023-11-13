@@ -3,6 +3,8 @@ import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import Manage from './(components)/Manage';
+import Shipping from './(components)/Shipping';
+import Tracker from './(components)/Tracker';
 
 type Props = {};
 
@@ -26,8 +28,13 @@ const Registry = (props: Props) => {
           <TabsContent value="manage">
             <Manage />
           </TabsContent>
-          <TabsContent value="tracker">Track your Gift here</TabsContent>
-          <TabsContent value="shipping">Check your preferences here</TabsContent>
+          <TabsContent value="tracker">
+            {' '}
+            <Tracker />
+          </TabsContent>
+          <TabsContent value="shipping">
+            <Shipping />{' '}
+          </TabsContent>
         </Tabs>
       </div>
     </div>
