@@ -511,7 +511,7 @@ const ModalDemo = () => {
   return (
     <>
       <Modal
-        width="300"
+        width="200"
         showXIcon={true}
         btnTiggerText="Modal with x icon"
         btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
@@ -633,10 +633,11 @@ const ModalDemo = () => {
 };
 
 const ToggleDemo = () => {
+  const [toggle, setToggle] = React.useState(false);
   return (
     <>
       <div className="flex items-center space-x-2">
-        <Switch id="toggle1" />
+        <Switch id="toggle1" checked={toggle} onCheckedChange={() => setToggle((p) => !p)} />
         <Label htmlFor="toggle1">Toggle</Label>
       </div>
       <div className="flex items-center space-x-2">
