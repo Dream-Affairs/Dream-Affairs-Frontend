@@ -513,7 +513,7 @@ const ModalDemo = () => {
       <Modal
         width="300"
         showXIcon={true}
-        btnTiggerText="Modal with x icon"
+        btnTiggerText={'Modal with x icon width' + '300'}
         btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
       >
         <div className="flex justify-center items-center gap-2 flex-col">
@@ -529,8 +529,8 @@ const ModalDemo = () => {
       <Modal
         width="400"
         showXIcon={true}
-        btnTiggerText="Wider Modal"
-        btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
+        btnTiggerText={'Wider Modal with x icon width' + '400'}
+        btnTriggerStyle="bg-muted text-white p-4 rounded-md text-sm font-medium"
       >
         <div className="flex justify-center items-center gap-2 flex-col">
           <h1 className="font-bold text-lg">Save The Date</h1>
@@ -545,8 +545,8 @@ const ModalDemo = () => {
       <Modal
         width="500"
         showXIcon={true}
-        btnTiggerText="Modal with close button"
-        btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
+        btnTiggerText={'Modal with close button width' + '500'}
+        btnTriggerStyle="bg-red-500 text-white p-4 rounded-md text-sm font-medium"
         showCloseBtn={true}
         closeBtnText="Close"
         closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
@@ -564,8 +564,8 @@ const ModalDemo = () => {
       <Modal
         width="600"
         showXIcon={false}
-        btnTiggerText="Modal without x icon"
-        btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
+        btnTiggerText={'Modal without x icon width' + '600'}
+        btnTriggerStyle="bg-green-500 p-4 rounded-md text-sm font-medium"
         showCloseBtn={true}
         closeBtnText="Close"
         closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
@@ -583,8 +583,8 @@ const ModalDemo = () => {
       <Modal
         width="700"
         showXIcon={false}
-        btnTiggerText="Modal with another button"
-        btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
+        btnTiggerText={'Modal with another button width' + '700'}
+        btnTriggerStyle="bg-accent p-4 rounded-md text-sm font-medium"
         showCloseBtn={true}
         closeBtnText="Close"
         closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
@@ -607,7 +607,8 @@ const ModalDemo = () => {
       <Modal
         width="800"
         showXIcon={false}
-        btnTiggerText="Styled trigger button"
+        btnTiggerText="This is a button lol;
+        Overflow Modal, you can give it any width you want, max width is 90vw, max height is 90vh and it will always be centered"
         btnTriggerStyle="bg-primary text-white p-4 rounded-md text-sm font-medium"
         showCloseBtn={true}
         closeBtnText="Close"
@@ -618,17 +619,19 @@ const ModalDemo = () => {
           </Button>
         }
       >
-        {[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1].map((el:any, i:any) => (
-        <div key={i} className="flex justify-center items-center gap-2 flex-col">
-          <h1 className="font-bold text-lg">Save The Date</h1>
-          <span className="bg-secondary p-2 rounded-full">
-            <BsCalendar2Date className="text-lg" />
-          </span>
-          <p className="text-center text-sm text-gray-400">
-            You have successfully sent out 1050 save the date wedding reminder to your guest list.
-          </p>
-        </div>
-        ))}
+        {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map(
+          (el: any, i: any) => (
+            <div key={i} className="flex justify-center items-center gap-2 flex-col">
+              <h1 className="font-bold text-lg">Save The Date</h1>
+              <span className="bg-secondary p-2 rounded-full">
+                <BsCalendar2Date className="text-lg" />
+              </span>
+              <p className="text-center text-sm text-gray-400">
+                You have successfully sent out 1050 save the date wedding reminder to your guest list.
+              </p>
+            </div>
+          ),
+        )}
       </Modal>
     </>
   );
