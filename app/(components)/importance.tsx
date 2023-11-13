@@ -1,5 +1,6 @@
-import RoseBox from './(assets)/rosebox.svg';
+import Rose from './(assets)/rose.svg';
 import Curly from './(assets)/curly.svg';
+import Rec from './(assets)/rec.svg';
 import Image from 'next/image';
 import { url } from 'inspector';
 
@@ -29,24 +30,26 @@ const Importance = () => {
 
   return (
     <div className="max-w-[1440px] mx-auto px-8 lg:px-10">
-      <div className="m-auto text-center flex flex-col items-center pt-20 md:pb-20">
-        <h1 className="text-[30px] md:text-[40px] text-[#48195A] font-semibold">Why do you need DreamAffairs</h1>
+      <div className="m-auto text-center flex flex-col items-center py-16 md:pb-20">
+        <h1 className="text-[30px] lg:text-[40px] text-[#48195A] font-semibold">Why do you need DreamAffairs</h1>
         <Image src={Curly} width={0} alt="Curly" className="w-[240px] sm:w-[400px]" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-y-0 mb-[80px]">
-        {boxes.map((box, index) => (
-          <div key={box.id} data-aos="flip-right" data-aos-duration="700" className="">
-            <Image
-              src={RoseBox}
-              width={0}
-              height={700}
-              alt="Rose Box"
-              className="relative h-[320px] lg:h-[400px] mb-[-120px] sm:mb-0"
-            />
-            <p className="absolute text-center lg:text-left text-[11px] sm:text-[14px] w-[220px] md:w-[400px] lg:w-[450px] m-auto top-[55%] md:top-[35%] left-6 right-0">
-              {box.content}
-            </p>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb">
+        {boxes.map((box) => (
+          <div
+            style={{ backgroundImage: `url(${Rec.src})` }}
+            key={box.id}
+            data-aos="fade-up"
+            data-aos-duration="800"
+            className=""
+          >
+            <div className=" border-2 m-4 sm:m-10 border-[#E8ACB6] w[4x] lg:h-[300px] p-20 rounded-md relative rounded-bl-[50px]">
+              <Image src={Rose} width={0} alt="Rose" className="absolute -left-6 bottom-[-20px] z-10" />
+              <p className="text-center lg:text-left text-[10px] sm:text-[18px] font-semibold z-5 text-black">
+                {box.content}
+              </p>
+            </div>
           </div>
         ))}
       </div>
