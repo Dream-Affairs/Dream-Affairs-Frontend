@@ -618,7 +618,7 @@ const ModalDemo = () => {
           </Button>
         }
       >
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1].map((el:any, i:any) => (
+        {[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1].map((el:any, i:any) => (
         <div key={i} className="flex justify-center items-center gap-2 flex-col">
           <h1 className="font-bold text-lg">Save The Date</h1>
           <span className="bg-secondary p-2 rounded-full">
@@ -628,7 +628,7 @@ const ModalDemo = () => {
             You have successfully sent out 1050 save the date wedding reminder to your guest list.
           </p>
         </div>
-        ))
+        ))}
       </Modal>
     </>
   );
