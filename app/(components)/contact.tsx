@@ -33,7 +33,7 @@ const Contact = () => {
           </label>
           <textarea className="border rounded-lg p-2 mt-3 mb-0 h-full overflow-scroll resize-none" placeholder="Message"></textarea>
           <p className='text-right mb-6 text-[10px]'>0/1000</p>
-          <Button variant="secondary" type="submit" className='h-24'>
+          <Button variant="secondary" type="submit" className='lg:h-24'>
             Send message
           </Button>
         </form>
