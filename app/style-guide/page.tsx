@@ -511,7 +511,7 @@ const ModalDemo = () => {
   return (
     <>
       <Modal
-        width="200"
+        width="300"
         showXIcon={true}
         btnTiggerText="Modal with x icon"
         btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
