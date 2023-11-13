@@ -618,7 +618,8 @@ const ModalDemo = () => {
           </Button>
         }
       >
-        <div className="flex justify-center items-center gap-2 flex-col">
+        {[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1].map((el:any, i:any) => (
+        <div key={i} className="flex justify-center items-center gap-2 flex-col">
           <h1 className="font-bold text-lg">Save The Date</h1>
           <span className="bg-secondary p-2 rounded-full">
             <BsCalendar2Date className="text-lg" />
@@ -627,6 +628,7 @@ const ModalDemo = () => {
             You have successfully sent out 1050 save the date wedding reminder to your guest list.
           </p>
         </div>
+        ))}
       </Modal>
     </>
   );
