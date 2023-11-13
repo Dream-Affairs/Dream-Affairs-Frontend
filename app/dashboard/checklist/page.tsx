@@ -121,7 +121,11 @@ const Checklist = () => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <Button variant="secondary" onClick={() => setAddTask(true)}>
+              <Button
+                className={addTask ? 'cursor-not-allowed' : ''}
+                variant={addTask ? 'disabled' : 'secondary'}
+                onClick={() => setAddTask(true)}
+              >
                 Add Task
               </Button>
             </aside>
