@@ -5,7 +5,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 type Props = {
   width: string;
-  btnTiggerText: string;
+  btnTiggerText: string | React.ReactNode;
   btnTriggerStyle: string;
   showXIcon: boolean;
   showCloseBtn?: boolean;

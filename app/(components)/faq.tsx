@@ -44,14 +44,21 @@ const Faq = () => {
 
   return (
     <div className="max-w-[1440px] mx-auto px-8 lg:px-10">
-      <div className="m-auto text-center flex flex-col items-center pt-20 md:pb-20 mb-16 lg:mb-[-10px]">
-        <h1 className="text-[30px] md:text-[40px] text-[#48195A] font-semibold">Frequently asked questions</h1>
+      <div data-aos="zoom-in" data-aos-duration="700" className="m-auto text-center flex flex-col items-center py-16">
+        <h1 className="text-[30px] lg:text-[40px] text-[#48195A] font-semibold">Frequently asked questions</h1>
         <Image src={Curly} width={0} alt="Curly" className="w-[240px] sm:w-[400px]" />
       </div>
 
       {questions.map((quest) => (
-        <div key={quest.id} className="md:w-[700px] md:m-auto border-b-2 border-white/ ">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="800"
+          key={quest.id}
+          className="md:w-[700px] md:m-auto last:border-0 border-b-2 border-white/ "
+        >
           <button
+            data-aos="fade-up"
+            data-aos-duration="600"
             onClick={() => setActiveQuestion(activeQuestion === quest.id ? null : quest.id)}
             className="flex justify-between font-bold w-full text-[14px] sm:text-[16px] py-5 text-left focus:outline-none"
           >

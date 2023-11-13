@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Curly from './(assets)/curly.svg';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Dot } from 'lucide-react';
@@ -59,6 +59,14 @@ const Carousel = () => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const totalImages = 7;
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % totalImages);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [currentIndex]);
 
   const prevSlide = () => {
     if (currentIndex > 0) {
@@ -77,27 +85,27 @@ const Carousel = () => {
   return (
     <div>
       <div className="max-w-[1440px] mx-auto px-8 lg:px-10">
-        <div className="m-auto text-center flex flex-col items-center pt-10">
-          <h1 className="text-[40px] sm:text-[56px] text-[#48195A] font-semibold">What we offer</h1>
+        <div className="m-auto text-center flex flex-col items-center py-16">
+          <h1 className="text-[30px] sm:text-[40px] text-[#48195A] font-semibold">What we offer</h1>
           <Image src={Curly} width={0} alt="Curly" className="w-[240px] sm:w-[400px]" />
         </div>
         <div
           data-aos="zoom-in"
           data-aos-duration=""
           style={{ backgroundImage: `url(${slides[currentIndex]?.url})` }}
-          className="w-full max-w-[1270px] mx-auto mt-20 px-8 lg:px-10 relative h-[400px] lg:h-[629px] rounded-2xl bg-center bg-cover"
+          className="w-full max-w-[1270px] mx-auto px-8 lg:px-10 relative h-[400px] lg:h-[629px] rounded-2xl bg-center bg-cover"
         >
           <div style={linearGradient} className="absolute w-full h-[400px] lg:h-[629px] inset-0 rounded-2xl"></div>
-          <div className="absolute bottom-[34%] lg:bottom-[40%] -translate-y-[50%] left-2 lg:left-5 text-2xl rounded-full p-1 border-2 border-white text-white cursor-pointer">
+          <div className="absolute top-1/2 left-2 lg:left-5 text-2xl rounded-full p-1 border-2 border-white text-white cursor-pointer">
             <ChevronLeft size={30} onClick={prevSlide} />
           </div>
-          <div className="absolute bottom-[34%] lg:bottom-[40%] -translate-y-[50%] right-2 lg:right-5 text-2xl rounded-full p-1 border-2 border-white text-white cursor-pointer">
+          <div className="absolute top-1/2 right-2 lg:right-5 text-2xl rounded-full p-1 border-2 border-white text-white cursor-pointer">
             <ChevronRight size={30} onClick={nextSlide} />
           </div>
 
-          <div className="absolute bottom-[28%] lg:bottom-[30%] left-11 sm:left-[14%] lg:left-[32%] m-auto text-center text-white mt-10">
-            <h3 className="text-[16px] sm:text-[56px] font-semibold m-auto">{slides[currentIndex]?.title}</h3>
-            <p className="text-[11px]  sm:text-[16px] w-[237px] sm:w-[400px] m-auto sm:leading-7">
+          <div className="absolute top-[85%] sm:top-2/3 lg:top-[80%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full m-auto text-center text-white mt-10">
+            <h3 className="text-[16px] sm:text-[60px] font-semibold m-auto">{slides[currentIndex]?.title}</h3>
+            <p className="text-[11px]  sm:text-[18px] w-[237px] sm:w-[400px] m-auto sm:leading-7">
               {slides[currentIndex]?.description}
             </p>
           </div>
