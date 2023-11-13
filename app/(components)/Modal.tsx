@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -30,7 +31,7 @@ export function Modal({
       <DialogTrigger asChild>
         <button className={btnTriggerStyle}>{btnTiggerText}</button>
       </DialogTrigger>
-      <DialogContent className={`w-[${width}px] max-w-[90vw] max-h-[90svh] rounded-lg overflow-auto`}>
+      <DialogContent style={{ width: `${width}px` }} className={`max-w-[90vw] max-h-[svh] rounded-lg overflow-auto`}>
         {showXIcon && (
           <DialogClose className="w-0 h-0">
             <span className="rounded-[10px] p-1 border absolute top-3 right-3 border-gray-400 hover:border-primary transition-all duration-200 ease-in-out hover:text-primary scale-75">
