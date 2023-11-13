@@ -48,7 +48,7 @@ const Team = () => {
       <div className='w-full grid grid-cols-2 lg:grid-cols-3 mt-[24px] lg:mt-[23px] lg:gap-x-[37px] gap-y-[40px] gap-x-[15px]'>
         {
           teams.map((team, index)=>(
-            <div data-aos= 'fade-down'  key={index} className='lg:w-[392px] lg:h-[469px]  rounded-[12px] bg-[#FFF8FA] flex flex-col items-center pt-[6px] '>
+            <div data-aos= 'fade-up'  key={index} className='lg:w-[392px] lg:h-[469px]  rounded-[12px] bg-[#FFF8FA] flex flex-col items-center pt-[6px] '>
               <Image src={team.image} alt="" width={379} height={304} className='h-[127px] lg:w-[379px] lg:h-[304px] rounded-[12px] object-cover'/>
               <div className='flex flex-col items-center
                lg:px-[24px] mt-[15px] lg:mt-[24px] lg:gap-y-[15px]'>
