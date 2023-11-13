@@ -22,6 +22,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { toast } from '@/components/ui/use-toast';
 import AccordionComponent from '../faq/(components)/Accordion';
 import { general } from '../faq/(components)/data';
+import { Modal } from '../(components)/Modal';
+import { BsCalendar2Date } from 'react-icons/bs';
 
 const page = () => {
   return (
@@ -111,6 +113,14 @@ const page = () => {
         <h1 className="text-2xl font-bold">Accordion</h1>
         <div className="flex gap-3 flex-wrap">
           <AccordionDemo />
+        </div>
+      </div>
+
+      {/* modal */}
+      <div className="flex flex-col gap-3 flex-wrap">
+        <h1 className="text-2xl font-bold">Modals</h1>
+        <div className="flex gap-3 flex-wrap">
+          <ModalDemo />
         </div>
       </div>
     </div>
@@ -484,6 +494,131 @@ function AccordionDemo() {
   return (
     <>
       <AccordionComponent questions={general} />
+    </>
+  );
+}
+
+function ModalDemo() {
+  return (
+    <>
+      <Modal
+        maxWidth="xs"
+        showXIcon={true}
+        btnTiggerText="Modal with x icon"
+        btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
+      >
+        <div className="flex justify-center items-center gap-2 flex-col">
+          <h1 className="font-bold text-lg">Save The Date</h1>
+          <span className="bg-secondary p-2 rounded-full">
+            <BsCalendar2Date className="text-lg" />
+          </span>
+          <p className="text-center text-sm text-gray-400">
+            You have successfully sent out 1050 save the date wedding reminder to your guest list.
+          </p>
+        </div>
+      </Modal>
+      <Modal
+        maxWidth="sm"
+        showXIcon={true}
+        btnTiggerText="Wider Modal"
+        btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
+      >
+        <div className="flex justify-center items-center gap-2 flex-col">
+          <h1 className="font-bold text-lg">Save The Date</h1>
+          <span className="bg-secondary p-2 rounded-full">
+            <BsCalendar2Date className="text-lg" />
+          </span>
+          <p className="text-center text-sm text-gray-400">
+            You have successfully sent out 1050 save the date wedding reminder to your guest list.
+          </p>
+        </div>
+      </Modal>
+      <Modal
+        maxWidth="md"
+        showXIcon={true}
+        btnTiggerText="Modal with close button"
+        btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
+        showCloseBtn={true}
+        closeBtnText="Close"
+        closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
+      >
+        <div className="flex justify-center items-center gap-2 flex-col">
+          <h1 className="font-bold text-lg">Save The Date</h1>
+          <span className="bg-secondary p-2 rounded-full">
+            <BsCalendar2Date className="text-lg" />
+          </span>
+          <p className="text-center text-sm text-gray-400">
+            You have successfully sent out 1050 save the date wedding reminder to your guest list.
+          </p>
+        </div>
+      </Modal>
+      <Modal
+        maxWidth="lg"
+        showXIcon={false}
+        btnTiggerText="Modal without x icon"
+        btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
+        showCloseBtn={true}
+        closeBtnText="Close"
+        closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
+      >
+        <div className="flex justify-center items-center gap-2 flex-col">
+          <h1 className="font-bold text-lg">Save The Date</h1>
+          <span className="bg-secondary p-2 rounded-full">
+            <BsCalendar2Date className="text-lg" />
+          </span>
+          <p className="text-center text-sm text-gray-400">
+            You have successfully sent out 1050 save the date wedding reminder to your guest list.
+          </p>
+        </div>
+      </Modal>
+      <Modal
+        maxWidth="xl"
+        showXIcon={false}
+        btnTiggerText="Modal with another button"
+        btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
+        showCloseBtn={true}
+        closeBtnText="Close"
+        closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
+        otherBtn={
+          <Button variant="destructive" className="w-full mt-5">
+            Another button
+          </Button>
+        }
+      >
+        <div className="flex justify-center items-center gap-2 flex-col">
+          <h1 className="font-bold text-lg">Save The Date</h1>
+          <span className="bg-secondary p-2 rounded-full">
+            <BsCalendar2Date className="text-lg" />
+          </span>
+          <p className="text-center text-sm text-gray-400">
+            You have successfully sent out 1050 save the date wedding reminder to your guest list.
+          </p>
+        </div>
+      </Modal>
+      <Modal
+        maxWidth="2xl"
+        showXIcon={false}
+        btnTiggerText="Styled trigger button"
+        btnTriggerStyle="bg-primary text-white p-4 rounded-md text-sm font-medium"
+        showCloseBtn={true}
+        closeBtnText="Close"
+        closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
+        otherBtn={
+          <Button variant="destructive" className="w-full mt-5">
+            Another button
+          </Button>
+        }
+      >
+        <div className="flex justify-center items-center gap-2 flex-col">
+          <h1 className="font-bold text-lg">Save The Date</h1>
+          <span className="bg-secondary p-2 rounded-full">
+            <BsCalendar2Date className="text-lg" />
+          </span>
+          <p className="text-center text-sm text-gray-400">
+            You have successfully sent out 1050 save the date wedding reminder to your guest list.
+          </p>
+        </div>
+      </Modal>
     </>
   );
 }
