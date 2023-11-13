@@ -22,6 +22,9 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { toast } from '@/components/ui/use-toast';
 import AccordionComponent from '../faq/(components)/Accordion';
 import { general } from '../faq/(components)/data';
+import { Modal } from '../(components)/Modal';
+import { BsCalendar2Date } from 'react-icons/bs';
+import { Switch } from '@/components/ui/switch';
 
 const page = () => {
   return (
@@ -74,6 +77,14 @@ const page = () => {
         </div>
       </div>
 
+      {/* toggle */}
+      <div className="flex flex-col gap-3 flex-wrap">
+        <h1 className="text-2xl font-bold">Toggle</h1>
+        <div className="flex gap-3 flex-wrap">
+          <ToggleDemo />
+        </div>
+      </div>
+
       {/* selects */}
       <div className="flex flex-col gap-3 flex-wrap">
         <h1 className="text-2xl font-bold">Dropdowns</h1>
@@ -111,6 +122,14 @@ const page = () => {
         <h1 className="text-2xl font-bold">Accordion</h1>
         <div className="flex gap-3 flex-wrap">
           <AccordionDemo />
+        </div>
+      </div>
+
+      {/* modal */}
+      <div className="flex flex-col gap-3 flex-wrap">
+        <h1 className="text-2xl font-bold">Modals</h1>
+        <div className="flex gap-3 flex-wrap">
+          <ModalDemo />
         </div>
       </div>
     </div>
@@ -480,10 +499,175 @@ const ToastDemo = () => {
   );
 };
 
-function AccordionDemo() {
+const AccordionDemo = () => {
   return (
     <>
       <AccordionComponent questions={general} />
     </>
   );
-}
+};
+
+const ModalDemo = () => {
+  return (
+    <>
+      <Modal
+        width="300"
+        showXIcon={true}
+        btnTiggerText={'Modal with x icon width' + '300'}
+        btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
+      >
+        <div className="flex justify-center items-center gap-2 flex-col">
+          <h1 className="font-bold text-lg">Save The Date</h1>
+          <span className="bg-secondary p-2 rounded-full">
+            <BsCalendar2Date className="text-lg" />
+          </span>
+          <p className="text-center text-sm text-gray-400">
+            You have successfully sent out 1050 save the date wedding reminder to your guest list.
+          </p>
+        </div>
+      </Modal>
+      <Modal
+        width="400"
+        showXIcon={true}
+        btnTiggerText={'Wider Modal with x icon width' + '400'}
+        btnTriggerStyle="bg-muted text-white p-4 rounded-md text-sm font-medium"
+      >
+        <div className="flex justify-center items-center gap-2 flex-col">
+          <h1 className="font-bold text-lg">Save The Date</h1>
+          <span className="bg-secondary p-2 rounded-full">
+            <BsCalendar2Date className="text-lg" />
+          </span>
+          <p className="text-center text-sm text-gray-400">
+            You have successfully sent out 1050 save the date wedding reminder to your guest list.
+          </p>
+        </div>
+      </Modal>
+      <Modal
+        width="500"
+        showXIcon={true}
+        btnTiggerText={'Modal with close button width' + '500'}
+        btnTriggerStyle="bg-red-500 text-white p-4 rounded-md text-sm font-medium"
+        showCloseBtn={true}
+        closeBtnText="Close"
+        closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
+      >
+        <div className="flex justify-center items-center gap-2 flex-col">
+          <h1 className="font-bold text-lg">Save The Date</h1>
+          <span className="bg-secondary p-2 rounded-full">
+            <BsCalendar2Date className="text-lg" />
+          </span>
+          <p className="text-center text-sm text-gray-400">
+            You have successfully sent out 1050 save the date wedding reminder to your guest list.
+          </p>
+        </div>
+      </Modal>
+      <Modal
+        width="600"
+        showXIcon={false}
+        btnTiggerText={'Modal without x icon width' + '600'}
+        btnTriggerStyle="bg-green-500 p-4 rounded-md text-sm font-medium"
+        showCloseBtn={true}
+        closeBtnText="Close"
+        closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
+      >
+        <div className="flex justify-center items-center gap-2 flex-col">
+          <h1 className="font-bold text-lg">Save The Date</h1>
+          <span className="bg-secondary p-2 rounded-full">
+            <BsCalendar2Date className="text-lg" />
+          </span>
+          <p className="text-center text-sm text-gray-400">
+            You have successfully sent out 1050 save the date wedding reminder to your guest list.
+          </p>
+        </div>
+      </Modal>
+      <Modal
+        width="600"
+        showXIcon={false}
+        btnTiggerText={<BsCalendar2Date className="text-lg" />}
+        btnTriggerStyle="py-2 px-4 bg-secondary rounded-full"
+        showCloseBtn={true}
+        closeBtnText="Close"
+        closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
+      >
+        <div className="flex justify-center items-center gap-2 flex-col">
+          <h1 className="font-bold text-lg">Save The Date</h1>
+          <span className="bg-secondary p-2 rounded-full">
+            <BsCalendar2Date className="text-lg" />
+          </span>
+          <p className="text-center text-sm text-gray-400">
+            You have successfully sent out 1050 save the date wedding reminder to your guest list.
+          </p>
+        </div>
+      </Modal>
+      <Modal
+        width="700"
+        showXIcon={false}
+        btnTiggerText={'Modal with another button width' + '700'}
+        btnTriggerStyle="bg-accent p-4 rounded-md text-sm font-medium"
+        showCloseBtn={true}
+        closeBtnText="Close"
+        closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
+        otherBtn={
+          <Button variant="destructive" className="w-full mt-5">
+            Another button
+          </Button>
+        }
+      >
+        <div className="flex justify-center items-center gap-2 flex-col">
+          <h1 className="font-bold text-lg">Save The Date</h1>
+          <span className="bg-secondary p-2 rounded-full">
+            <BsCalendar2Date className="text-lg" />
+          </span>
+          <p className="text-center text-sm text-gray-400">
+            You have successfully sent out 1050 save the date wedding reminder to your guest list.
+          </p>
+        </div>
+      </Modal>
+      <Modal
+        width="800"
+        showXIcon={false}
+        btnTiggerText="This is a button lol;
+        Overflow Modal, you can give it any width you want, max width is 90vw, max height is 90vh and it will always be centered"
+        btnTriggerStyle="bg-primary text-white p-4 rounded-md text-sm font-medium"
+        showCloseBtn={true}
+        closeBtnText="Close"
+        closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
+        otherBtn={
+          <Button variant="destructive" className="w-full mt-5">
+            Another button
+          </Button>
+        }
+      >
+        {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map(
+          (el: any, i: any) => (
+            <div key={i} className="flex justify-center items-center gap-2 flex-col">
+              <h1 className="font-bold text-lg">Save The Date</h1>
+              <span className="bg-secondary p-2 rounded-full">
+                <BsCalendar2Date className="text-lg" />
+              </span>
+              <p className="text-center text-sm text-gray-400">
+                You have successfully sent out 1050 save the date wedding reminder to your guest list.
+              </p>
+            </div>
+          ),
+        )}
+      </Modal>
+    </>
+  );
+};
+
+const ToggleDemo = () => {
+  const [toggle, setToggle] = React.useState(false);
+  return (
+    <>
+      <div className="flex items-center space-x-2">
+        <Switch id="toggle1" checked={toggle} onCheckedChange={() => setToggle((p) => !p)} />
+        <Label htmlFor="toggle1">Toggle</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Switch id="toggle2" disabled={true} />
+        <Label htmlFor="toggle2">Disabled</Label>
+      </div>
+    </>
+  );
+};

@@ -64,7 +64,7 @@ const MainWrapper = () => {
             </li>
           ))}
         </ul>
-        <div className="w-full md:w-[70%] min-h-[450px] md:min-h-[500px] flex justify-center items-start md:items-center mt-10 md:mt-0">
+        <div className="w-full md:w-[70%] min-h-[300px] md:min-h-[400px] flex justify-center items-start md:items-center mt-10 md:mt-0">
           <AccordionComponent questions={questions} />
         </div>
       </div>

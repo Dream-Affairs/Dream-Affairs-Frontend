@@ -4,8 +4,7 @@ import mobileBg from '../(assets)/mobileBg.svg'
 
 
 const Hero = () => {
-    console.log(mobileBg.src)
-
+    
   return (
     <section>
        <div className="lg:bg-black lg:bg-opacity-[50%] lg:bg-blend-overlay lg:bg-cover lg:bg-center lg:h-[493px] lg:flex justify-center hidden" style={{ backgroundImage:  `url(${bgLogo.src})`}}> 
