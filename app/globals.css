@@ -78,3 +78,13 @@
 #save_email_button:hover #svg path{
   stroke: #fff;
 }
+
+.active_faq_nav {
+  color: #000;
+  text-decoration: underline;
+  text-decoration-color: #822DA4;
+}
+
+.faq_container:not(:last-child) {
+  border-bottom: 1px solid rgb(233, 230, 230);
+}
