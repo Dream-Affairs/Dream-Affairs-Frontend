@@ -13,6 +13,7 @@ import Frame6 from '../app/(components)/(assets)/frame6.svg';
 import Frame7 from '../app/(components)/(assets)/frame7.svg';
 import Frame8 from '../app/(components)/(assets)/frame4.svg';
 import Faq from './(components)/faq';
+import Contact from './(components)/contact';
 
 export default function Home() {
   const betterHalfImages = [Frame1, Frame2, Frame3, Frame4, Frame5, Frame6, Frame7, Frame8];
@@ -26,6 +27,7 @@ export default function Home() {
         <Care />
         <Betterhalf betterHalfImages={betterHalfImages} />
         <Faq />
+        <Contact />
       </ExternalLayout>
     </>
   );
