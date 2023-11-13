@@ -37,7 +37,7 @@ const Values = () => {
   return (
     <section className="w-full px-[24px] lg:px-[80px] mt-[44px] lg:mt-[36px] flex flex-col items-center">
       <SubHeading title="Our Value" />
-      <div className="w-full mt-[24px] lg:mt-[56px] grid grid-cols-1 lg:grid-cols-3 gap-y-[20px] lg:gap-[44px]">
+      <div className="w-full mt-[24px] lg:mt-[56px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-[20px] sm:gap-[24px] lg:gap-[44px]">
         {values.map((value, index) => (
           <div
             data-aos="fade-up"
