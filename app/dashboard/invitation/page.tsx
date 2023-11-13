@@ -9,7 +9,7 @@ type Props = {};
 
 const Invitation = (props: Props) => {
 
-  return <div>
+  return (<div>
     <h3 className='text-3xl font-semibold p-8'>Invitation</h3>
     {/* Top Banner */}
     <div className='w-full h-[280px] bg-red-500'>
@@ -33,7 +33,7 @@ const Invitation = (props: Props) => {
       </div>
       
     </div>
-  </div>;
+  </div>);
 };
 
 export default Invitation;

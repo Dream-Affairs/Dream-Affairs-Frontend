@@ -1,16 +1,23 @@
+"use client";
+
 import Image from "next/image";
-import uploadIcon from "../../../(assets)/upload_image.png"
+import uploadIcon from "../../(assets)/upload_image.png"
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import tags from '../../../(assets)/tags.svg'
-import envelope from '../../../(assets)/mail.svg'
-import bannerimage from '../../../(assets)/image_banner.png'
+import tags from '../../(assets)/tags.svg'
+import envelope from '../../(assets)/mail.svg'
+import bannerimage from '../../(assets)/image_banner.png'
+import TestInvitationModal from "../../(components)/invitation/TestInvitationModal";
+import { useState } from "react";
+import MergeTagsModal from "../../(components)/invitation/MergeTagsModal";
 
 
-export default function page() {
+export default function EditInvitation() {
+    const [showModal, setShowModal] = useState<boolean>(false)
+    const [showMergeModal, setShowMergeModal] = useState<boolean>(false)
   return (
     <>
         <h3 className="p-8 pb-6 text-3xl font-semibold">Invitation</h3>
@@ -88,11 +95,11 @@ export default function page() {
                 <div className="flex justify-end gap-8 mb-4">
                     <div className="flex gap-2">
                         <Image src={tags} alt="tag" />
-                        <span className="text-xl text-primary font-medium">Merge tags</span>
+                        <span role="button" onClick={() => {setShowMergeModal(true)}} className="text-xl text-primary font-medium">Merge tags</span>
                     </div>
                     <div className="flex gap-2">
                         <Image src={envelope} alt="envelope" />
-                        <span className="text-xl text-primary font-medium">Send test</span>
+                        <span role="button" onClick={() => setShowModal(true)} className="text-xl text-primary font-medium cursor-pointer">Send test</span>
                     </div>
                 </div>
 
@@ -127,9 +134,11 @@ export default function page() {
 
                     </div>
                     <div className="flex justify-center mt-8">
-                    <Button id="save_email_button" className="w-2/5 border border-[#E6C0FF] bg-[#F5E7FF] text-black hover:text-[#fff]">
-                        View Website</Button>
+                        <Button id="save_email_button" className="w-2/5 border border-[#E6C0FF] bg-[#F5E7FF] text-black hover:text-[#fff]">
+                            View Website</Button>
                     </div>
+                    <TestInvitationModal modalStatus={showModal} modalManager={setShowModal} />
+                    <MergeTagsModal modalStatus={showMergeModal} modalManager={setShowMergeModal} />
                 </div>
             </div>
         </div>

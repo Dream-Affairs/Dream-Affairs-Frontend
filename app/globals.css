@@ -81,7 +81,6 @@
   }
 }
 
-<<<<<<< HEAD
 #save_email_button:hover #svg path{
   stroke: #fff;
 }
@@ -95,7 +94,6 @@
 .faq_container:not(:last-child) {
   border-bottom: 1px solid rgb(233, 230, 230);
 }
-=======
 @layer utilities {
   .guest-btn {
     @apply bg-[#FFEBEE] text-[#282828] text-sm gap-2;
@@ -131,4 +129,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #cacaca;
 }
->>>>>>> aff63b917af960bdb16d9bad1f0d9dc8bd598e3c
