@@ -24,6 +24,7 @@ import AccordionComponent from '../faq/(components)/Accordion';
 import { general } from '../faq/(components)/data';
 import { Modal } from '../(components)/Modal';
 import { BsCalendar2Date } from 'react-icons/bs';
+import { Switch } from '@/components/ui/switch';
 
 const page = () => {
   return (
@@ -73,6 +74,14 @@ const page = () => {
         <h1 className="text-2xl font-bold">Toasts</h1>
         <div className="flex gap-3 flex-wrap">
           <ToastDemo />
+        </div>
+      </div>
+
+      {/* toggle */}
+      <div className="flex flex-col gap-3 flex-wrap">
+        <h1 className="text-2xl font-bold">Toggle</h1>
+        <div className="flex gap-3 flex-wrap">
+          <ToggleDemo />
         </div>
       </div>
 
@@ -490,19 +499,19 @@ const ToastDemo = () => {
   );
 };
 
-function AccordionDemo() {
+const AccordionDemo = () => {
   return (
     <>
       <AccordionComponent questions={general} />
     </>
   );
-}
+};
 
-function ModalDemo() {
+const ModalDemo = () => {
   return (
     <>
       <Modal
-        maxWidth="xs"
+        width="300"
         showXIcon={true}
         btnTiggerText="Modal with x icon"
         btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
@@ -518,7 +527,7 @@ function ModalDemo() {
         </div>
       </Modal>
       <Modal
-        maxWidth="sm"
+        width="400"
         showXIcon={true}
         btnTiggerText="Wider Modal"
         btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
@@ -534,7 +543,7 @@ function ModalDemo() {
         </div>
       </Modal>
       <Modal
-        maxWidth="md"
+        width="500"
         showXIcon={true}
         btnTiggerText="Modal with close button"
         btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
@@ -553,7 +562,7 @@ function ModalDemo() {
         </div>
       </Modal>
       <Modal
-        maxWidth="lg"
+        width="600"
         showXIcon={false}
         btnTiggerText="Modal without x icon"
         btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
@@ -572,7 +581,7 @@ function ModalDemo() {
         </div>
       </Modal>
       <Modal
-        maxWidth="xl"
+        width="700"
         showXIcon={false}
         btnTiggerText="Modal with another button"
         btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
@@ -596,7 +605,7 @@ function ModalDemo() {
         </div>
       </Modal>
       <Modal
-        maxWidth="2xl"
+        width="800"
         showXIcon={false}
         btnTiggerText="Styled trigger button"
         btnTriggerStyle="bg-primary text-white p-4 rounded-md text-sm font-medium"
@@ -621,4 +630,19 @@ function ModalDemo() {
       </Modal>
     </>
   );
-}
+};
+
+const ToggleDemo = () => {
+  return (
+    <>
+      <div className="flex items-center space-x-2">
+        <Switch id="toggle1" />
+        <Label htmlFor="toggle1">Toggle</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Switch id="toggle2" disabled={true} />
+        <Label htmlFor="toggle2">Disabled</Label>
+      </div>
+    </>
+  );
+};
