@@ -7,7 +7,7 @@ import monitor from '../../(assets)/monitor.svg'
 import phone from '../../(assets)/phone.svg'
 import applestore from '../../(assets)/applestore.svg'
 import playstore from '../../(assets)/playstore.svg'
-import dream_logo from '../../(assets)/dream_logo.svg'
+import dream_logo from '../../(assets)/logo.svg'
 import { useEffect, useState } from 'react';
 import TestInvitationModal from '../../(components)/invitation/TestInvitationModal';
 import Link from 'next/link';
