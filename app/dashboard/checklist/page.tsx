@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/select';
 import Task from '../(components)/checklist/Task';
 import { Arrow } from '../(components)/checklist/Icons';
-import ChecklistPagination from '../(components)/checklist/ChecklistPagination';
 
 const filter: string[] = ['All tasks', 'Assigned to me', 'Assigned by me', 'Completed'];
 
@@ -41,11 +40,17 @@ const Checklist = () => {
   const [filterKey, setFilterKey] = useState('All tasks');
   const [addTask, setAddTask] = useState(false);
   const [tasks, setTasks] = useState<task[]>([]);
+  const [tasksPerPage, setTasksPerPage] = useState<task[]>([]);
+  const [pageNum, setPageNum] = useState(1);
+  const [PaginationArr, setPaginstionArr] = useState<number[]>([]);
+  const [showPrevBtn, setShowPrevBtn] = useState(false);
+  const [showNextBtn, setShowNextBtn] = useState(false);
+
+  const searchResultsPerPage = 6;
 
   useEffect(() => {
     const response: any = localStorage.getItem('Tasks');
     const storedTasks: ts[] = JSON.parse(response);
-    console.log(storedTasks);
 
     const updatedTask: task[] = storedTasks?.map((item) => {
       return {
@@ -57,6 +62,48 @@ const Checklist = () => {
     });
     if (storedTasks) setTasks(updatedTask);
   }, []);
+
+  useEffect(() => {
+    const getTasksPage = function (page: number) {
+      const start = (page - 1) * searchResultsPerPage;
+      const end = page * searchResultsPerPage;
+
+      return tasks.slice(start, end);
+    };
+    setTasksPerPage(getTasksPage(pageNum));
+
+    const numPages = Math.ceil(tasks.length / searchResultsPerPage);
+
+    // //
+    function getIntegersUpToN(n: number) {
+      let integers = [];
+
+      for (var i = 1; i <= n; i++) {
+        integers.push(i);
+      }
+
+      return integers;
+    }
+    setPaginstionArr(getIntegersUpToN(numPages));
+
+    // Page 1, and there are other pages
+    if (pageNum === 1 && numPages > 1) {
+      setShowPrevBtn(false);
+      setShowNextBtn(true);
+    }
+
+    // Other Pages
+    if (pageNum < numPages && pageNum > 1) {
+      setShowNextBtn(true);
+      setShowPrevBtn(true);
+    }
+
+    // Last page
+    if (pageNum === numPages) {
+      setShowNextBtn(false);
+      setShowPrevBtn(true);
+    }
+  }, [pageNum, searchResultsPerPage, tasks]);
 
   useEffect(() => {
     tasks.length === 0 ? setAddTask(true) : setAddTask(false);
@@ -138,8 +185,8 @@ const Checklist = () => {
         </div>
         {/* Tasks */}
         <ul className="mt-8 flex flex-col gap-5">
-          {tasks?.length > 0
-            ? tasks.map((item, i) => (
+          {tasksPerPage?.length > 0
+            ? tasksPerPage.map((item, i) => (
                 <li key={i + 1}>
                   <Task editItem={handleEditTask} index={i} deleteTask={handleDelete} item={item} />
                 </li>
@@ -147,7 +194,50 @@ const Checklist = () => {
             : ''}
         </ul>
         {/* Pagination */}
-        {tasks?.length > 5 && <ChecklistPagination />}
+        {tasks?.length >= 5 && (
+          <div className="w-full h-8 mt-8 rounded flex justify-end items-center pr-14">
+            {showPrevBtn && (
+              <p
+                onClick={() => {
+                  if (pageNum === 1) return;
+                  setPageNum((prev) => prev - 1);
+                }}
+                className="px-3 py-1.5 bg-transparent hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500"
+              >
+                <span>
+                  <Arrow />
+                </span>
+                Previous
+              </p>
+            )}
+            {PaginationArr.map((item) => (
+              <p
+                onClick={() => setPageNum(item)}
+                key={item}
+                className={`px-3 py-1.5 ${
+                  pageNum === item ? 'bg-purple-200' : 'bg-transparent'
+                } hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-gray-300 cursor-pointer transition-all duration-500`}
+              >
+                {item}
+              </p>
+            ))}
+
+            {showNextBtn && (
+              <p
+                onClick={() => {
+                  if (PaginationArr.length === pageNum) return;
+                  setPageNum((prev) => prev + 1);
+                }}
+                className="px-3 py-1.5 bg-transparent hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500"
+              >
+                Next
+                <span className="rotate-180">
+                  <Arrow />
+                </span>
+              </p>
+            )}
+          </div>
+        )}
       </aside>
     </section>
   );
