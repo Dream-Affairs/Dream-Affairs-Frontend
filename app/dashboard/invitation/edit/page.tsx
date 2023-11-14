@@ -30,6 +30,7 @@ export default function EditInvitation() {
     const [salutation,setSalutation] = useState("");
     const [body,setBody] = useState("");
     const [button,setButton] = useState("");
+    const [error,setError] = useState("")
     
     const formStateManager: HandlersType = {
         "subject":setSubject,
@@ -44,6 +45,20 @@ export default function EditInvitation() {
         const handler = formStateManager[e.currentTarget.id as string]
         handler(e.target.value)
       };
+
+    const handlePreview = () => {
+        if(title && salutation && subject && coupleName && body && button) {
+            console.log("passed")
+            const invitationPreview = {
+                subject,coupleName,title,salutation,body,button
+            }
+            localStorage.setItem("invitationData",JSON.stringify(invitationPreview))
+            window.location.href = "/dashboard/invitation/preview"
+        }else {
+            console.log('failed')
+            setError("* All fields are required");
+        }
+    }
     
     
   return (
@@ -103,8 +118,11 @@ export default function EditInvitation() {
                             </Select>
                         </div>
                     </div>
+                    
+                    <span className="text-primary font-semibold">{error}</span>
+
                     <div className="flex items-center gap-8 px-6 pt-[80px]">
-                        <span className="font-semibold text-primary cursor-pointer" role="button">Preview</span>
+                        <span className="font-semibold text-primary cursor-pointer" role="button" onClick={handlePreview}>Preview</span>
                         <Button className="bg-transparent text-primary border rounded-md border-primary w-1/3 hover:text-[#fff]" >Cancel</Button>
                         <Button id="save_email_button" className="w-3/5 bg-[#E0B0FF] text-black hover:text-[#fff]">
                         <svg className="pr-2" id="svg" width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

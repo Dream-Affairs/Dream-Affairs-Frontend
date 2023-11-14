@@ -8,14 +8,34 @@ import phone from '../../(assets)/phone.svg'
 import applestore from '../../(assets)/applestore.svg'
 import playstore from '../../(assets)/playstore.svg'
 import dream_logo from '../../(assets)/dream_logo.svg'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TestInvitationModal from '../../(components)/invitation/TestInvitationModal';
 import Link from 'next/link';
 
-type Props = {}
+type invitationProp = {
+    subject: string;
+    coupleName: string;
+    title: string;
+    salutation: string;
+    body: string;
+    button: string;
+}
 
-export default function Preview({}: Props) {
+
+export default function Preview({dangerouslySetInnerHTML}:{dangerouslySetInnerHTML?: {__html: string}}) {
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [data,setData] = useState<invitationProp>()
+    const body = (data?.body as string).replace(/\n/g, '<br />');
+    dangerouslySetInnerHTML = {__html: `<p className="mt-4">${body || ""}</p>` }
+    
+    useEffect(() => {
+        if (typeof window != 'undefined' && window.localStorage) {
+            const data = localStorage.getItem("invitationData") as string;
+            setData(JSON.parse(data));
+        }
+    },[])
+    
+    
   return (
     <>
     <div className="py-4 border-b border-b-slate-200">
@@ -51,23 +71,16 @@ export default function Preview({}: Props) {
                             height={0} width={0} />
                         </div>
                         <div className="text-center text-[#48195A] mt-8">
-                            <h3 className="text-[40px] font-semibold">CHINONYE & JOHN</h3>
-                            <h5 className="text-2xl">We&apos;re getting married!</h5>
+                            <h3 className="text-[40px] font-semibold">{data?.coupleName || ""}</h3>
+                            <h5 className="text-2xl">{data?.title || ""}</h5>
                         </div>
                         <div className="text-center font-normal pt-8">
-                            <p>Hello [Guest Name] </p>
-                            <p className="mt-4">We hope this message finds you well. We are delighted to invite you to our
-                                wedding and share this special moment with us.</p>
-                            <p className="mt-4">Wedding Date: 30th October, 2024</p>
-                            <p className="mt-4">Location: Eko Hotel, Lekki Phase 1, Lagos Nigeria</p>
-                            <p className="mt-4">Church Wedding Time: 9:00am</p>
-                            <p className="mt-4">Reception Time: 11:00am</p>
-                            <p className="mt-4 font-semibold">RSVP ACCESS CODE: </p>
-                            <p className="mt-4">To view more details and stay updated on the wedding, please visit our wedding website</p>
+                            <p>{data?.salutation} [Guest Name] </p>
+                            <div dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
                         </div>
                         <div className="flex justify-center my-8">
                             <Button id="save_email_button" className="w-2/5 border border-[#E6C0FF] bg-[#F5E7FF] text-black hover:text-[#fff]">
-                                View our website</Button>
+                                {data?.button || ""}</Button>
                         </div>
                         <hr className='bg-[#000]' />
                         <div className="w-full flex justify-center mt-6 mb-8">
