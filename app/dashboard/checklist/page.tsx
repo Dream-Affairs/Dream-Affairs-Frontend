@@ -188,7 +188,7 @@ const Checklist = () => {
             : ''}
         </ul>
         {/* Pagination */}
-        {tasks?.length >= 5 && (
+        {tasks?.length > 6 && (
           <div className="w-full h-8 mt-8 rounded flex justify-end items-center pr-14">
             {showPrevBtn && (
               <p
