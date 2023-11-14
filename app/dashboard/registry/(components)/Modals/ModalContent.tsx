@@ -1,5 +1,5 @@
 'use client';
-import Modal from '@/components/ui/Modal';
+import Modal from '@/app/dashboard/registry/(components)/Modals/Modal';
 import React, { useEffect, useState } from 'react';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import AddProduct from './AddProduct';
