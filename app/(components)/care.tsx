@@ -7,12 +7,16 @@ import Image from 'next/image';
 const Care = () => {
   return (
     <section className="max-w-[1440px] mx-auto px-8 lg-px-10">
-      <div data-aos="zoom-in" data-aos-duration="700" className="m-auto text-center flex flex-col items-center py-16">
-        <h1 className="text-[30px] lg:text-[40px] text-[#48195A] font-semibold">We take care of everything</h1>
-        <Image src={Curly} width={0} alt="Curly" className="w-[240px] lg:w-[400px]" />
+      <div
+        data-aos="zoom-in"
+        data-aos-duration="700"
+        className="m-auto text-center flex flex-col items-center pt-[36px] pb-[24px]"
+      >
+        <h1 className="text-[24px] sm:text-[56px] text-[#48195A] font-semibold">We take care of everything</h1>
+        <Image src={Curly} width={0} alt="Curly" className="w-[108px] lg:w-[400px]" />
       </div>
 
-      <section className="text-[#48195A] font-semibold text-[16px] lg:text-[18px]">
+      <section className="text-[#48195A] font-[500] text-[14px] lg:text-[32px]">
         <div className="lg:relative lg:mb-[-90px] flex flex-col-reverse lg:flex-row">
           <Image
             data-aos="fade-up"
