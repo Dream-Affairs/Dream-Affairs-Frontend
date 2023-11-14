@@ -11,13 +11,41 @@ import tags from '../../(assets)/tags.svg'
 import envelope from '../../(assets)/mail.svg'
 import bannerimage from '../../(assets)/image_banner.png'
 import TestInvitationModal from "../../(components)/invitation/TestInvitationModal";
-import { useState } from "react";
+import { FormEvent, ReactEventHandler, SetStateAction, useState } from "react";
 import MergeTagsModal from "../../(components)/invitation/MergeTagsModal";
+import MergeTagsFullModal from "../../(components)/invitation/MergeTagsFullModal";
+import EmailEditPreview from "../../(components)/invitation/EmailEditPreview";
 
+
+type HandlersType = {
+    [key: string]: React.Dispatch<SetStateAction<string>>
+}
 
 export default function EditInvitation() {
     const [showModal, setShowModal] = useState<boolean>(false)
     const [showMergeModal, setShowMergeModal] = useState<boolean>(false)
+    const [subject,setSubject] = useState("");
+    const [coupleName,setCoupleName] = useState("");
+    const [title,setTitle] = useState("");
+    const [salutation,setSalutation] = useState("");
+    const [body,setBody] = useState("");
+    const [button,setButton] = useState("");
+    
+    const formStateManager: HandlersType = {
+        "subject":setSubject,
+        "couple":setCoupleName,
+        "title": setTitle,
+        "salutation": setSalutation,
+        "body": setBody,
+        "button": setButton
+    }
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
+        const handler = formStateManager[e.currentTarget.id as string]
+        handler(e.target.value)
+      };
+    
+    
   return (
     <>
         <h3 className="p-8 pb-6 text-3xl font-semibold">Invitation</h3>
@@ -32,38 +60,37 @@ export default function EditInvitation() {
                             <Image src={uploadIcon} alt="upload icon" width={0} height={0} style={{width: "100vw", height: "100%"}} />                            
                         </label>
                         <span className="pt-4 text-slate-400">Click here to select an image</span>
-                        <input type="file" name="image" id="image_upload" className="hidden" />                    
+                        <Input type="file" name="image" id="image_upload" className="hidden"/>              
                     </div>
                     <div className="flex flex-col mb-4">
-                        <Label htmlFor="email_subject_id" className="font-semibold mb-4 text-md">Email Subject</Label>
-                        <Input type="text" name="email_subject" id="email_subject_id" />
+                        <Label htmlFor="subject" className="font-semibold mb-4 text-md">Email Subject</Label>
+                        <Input type="text" value={subject} onChange={handleInputChange} name="email_subject" id="subject" />
                     </div>
                     <div className="flex flex-col mb-4">
-                        <Label htmlFor="couple_name_id" className="font-semibold mb-4 text-md">Couple Name</Label>
-                        <Input type="text" name="couple_name" id="couple_name_id" />
+                        <Label htmlFor="couple" className="font-semibold mb-4 text-md">Couple Name</Label>
+                        <Input type="text" value={coupleName} onChange={handleInputChange} name="couple_name" id="couple" />
                     </div>
                     <div className="flex flex-col mb-4">                        
-                        <Label htmlFor="title_id" className="font-semibold mb-4 text-md">Title</Label>
-                        <Input type="text" name="title" id="title_id" />
+                        <Label htmlFor="title" className="font-semibold mb-4 text-md">Title</Label>
+                        <Input type="text" value={title} onChange={handleInputChange} name="title" id="title" />
                     </div>
                     <div className="flex flex-col mb-4">
-                        <Label htmlFor="salutation_id" className="font-semibold mb-4 text-md">Salutation</Label>
-                        <Input type="text" name="salutation" id="salutation_id" />
+                        <Label htmlFor="salutation" className="font-semibold mb-4 text-md">Salutation</Label>
+                        <Input type="text" value={salutation} onChange={handleInputChange} name="salutation" id="salutation" />
                     </div>
                     <div className="flex items-center">
                         <Checkbox name="guest_checkbox" id="guest_checkbox_id" />
-                        <Label className="ml-2 text-md font-light" htmlFor="guest_checkbox_id">Include guest name</Label>
-                        {/* <label className="ml-2 text-md font-light" htmlFor="guest_checkbox_id">Include guest name</label> */}
+                        <Label className="ml-2 text-md font-light" htmlFor="guest_checkbox_id">Include guest name</Label>                        
                     </div>
                     <div className="flex flex-col mb-4 mt-4">
-                        <Label htmlFor="body_id" className="font-semibold mb-4 text-md">Body Message</Label>
-                        <textarea className="border rounded-md resize-none border-input px-3 py-2 focus:border-muted transition-colors duration-200 ease-in-out outline-none hover:border-primary" rows={10} name="body" defaultValue={" "} id="body_id" />
+                        <Label htmlFor="body" className="font-semibold mb-4 text-md">Body Message</Label>
+                        <textarea value={body} onChange={handleInputChange} className="border rounded-md resize-none border-input px-3 py-2 focus:border-muted transition-colors duration-200 ease-in-out outline-none hover:border-primary" rows={10} name="body" id="body" />
                     </div>
                     <div className="flex flex-col">
-                        <Label htmlFor="salutation_id" className="font-semibold mb-4 text-md">Button Text</Label>
+                        <Label htmlFor="button_text_id" className="font-semibold mb-4 text-md">Button Text</Label>
                         <div className="flex gap-[25px]">
                             <div className="w-3/5">
-                                <Input className="" type="text" name="button_text" id="button_text_id" />
+                                <Input className="" value={button} onChange={handleInputChange} type="text" name="button_text" id="button" />
                             </div>
                             <Select>
                                 <SelectTrigger className="h-[55px] w-2/5">
@@ -71,7 +98,7 @@ export default function EditInvitation() {
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="website">Home</SelectItem>
-                                    <SelectItem value="website">Laundry</SelectItem>
+                                    <SelectItem value="laundry">Laundry</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
@@ -91,7 +118,6 @@ export default function EditInvitation() {
                 </form>
             </div>
             <div className="w-1/2 px-[5%] ]">
-
                 <div className="flex justify-end gap-8 mb-4">
                     <div className="flex gap-2">
                         <Image src={tags} alt="tag" />
@@ -103,43 +129,10 @@ export default function EditInvitation() {
                     </div>
                 </div>
 
-                <div className="w-full bg-[#FFF8FA] flex flex-col rounded-xl p-8">
-                    <div className="w-full h-[250px]">
-                        <Image src="/assets/image_banner.png" alt="image" sizes="100vw" style={{width: "100vw", height: "100%"}} 
-                        height={0} width={0} />
-                    </div>
-                    <div className="text-center text-[#48195A] mt-8">
-                        <h3 className="text-[40px] font-semibold">CHINONYE & JOHN</h3>
-                        <h5 className="text-2xl">We&apos;re getting married!</h5>
-                    </div>
-                    
-                    <div className="text-center font-normal pt-8">
-                        <p>Hello [Guest Name] </p>
+                <EmailEditPreview title={title} body={body} salutation={salutation} button={button} couple={coupleName} />
 
-                        <p className="mt-4">We hope this message finds you well. We are delighted to invite you to our 
-                            wedding and share this special moment with us.</p>
-
-                        <p className="mt-4">Wedding Date: 30th October, 2024</p>
-
-                        <p className="mt-4">Location: Eko Hotel, Lekki Phase 1, Lagos Nigeria</p>
-
-                        <p className="mt-4">Church Wedding Time: 9:00am</p>
-
-                        <p className="mt-4">Reception Time: 11:00am</p>
-
-                        <p className="mt-4 font-semibold">RSVP ACCESS CODE: </p>
-                        
-                        <p className="mt-4">To view more details and stay updated on the wedding, please visit our wedding website</p>
-
-
-                    </div>
-                    <div className="flex justify-center mt-8">
-                        <Button id="save_email_button" className="w-2/5 border border-[#E6C0FF] bg-[#F5E7FF] text-black hover:text-[#fff]">
-                            View Website</Button>
-                    </div>
-                    <TestInvitationModal modalStatus={showModal} modalManager={setShowModal} />
-                    <MergeTagsModal modalStatus={showMergeModal} modalManager={setShowMergeModal} />
-                </div>
+                <TestInvitationModal modalStatus={showModal} modalManager={setShowModal} />
+                <MergeTagsFullModal modalStatus={showMergeModal} modalManager={setShowMergeModal} />
             </div>
         </div>
     </>
