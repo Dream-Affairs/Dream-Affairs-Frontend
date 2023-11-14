@@ -11,6 +11,7 @@ import dream_logo from '../../(assets)/dream_logo.svg'
 import { useEffect, useState } from 'react';
 import TestInvitationModal from '../../(components)/invitation/TestInvitationModal';
 import Link from 'next/link';
+import PreviewPage from '../../(components)/invitation/PreviewPage';
 
 type invitationProp = {
     subject: string;
@@ -22,11 +23,10 @@ type invitationProp = {
 }
 
 
-export default function Preview({dangerouslySetInnerHTML}:{dangerouslySetInnerHTML?: {__html: string}}) {
+export default function Preview() {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [data,setData] = useState<invitationProp>()
-    const body = (data?.body as string).replace(/\n/g, '<br />');
-    dangerouslySetInnerHTML = {__html: `<p className="mt-4">${body || ""}</p>` }
+   
     
     useEffect(() => {
         if (typeof window != 'undefined' && window.localStorage) {
@@ -66,22 +66,11 @@ export default function Preview({dangerouslySetInnerHTML}:{dangerouslySetInnerHT
                 <div className=" flex flex-col border-[#A8394C] border">
 
                     <div className="mx-8 mt-8">
-                        <div className="w-full h-[250px]">
-                            <Image src="/assets/image_banner.png" alt="image" sizes="100vw" style={{width: "100vw", height: "100%"}}
-                            height={0} width={0} />
-                        </div>
-                        <div className="text-center text-[#48195A] mt-8">
-                            <h3 className="text-[40px] font-semibold">{data?.coupleName || ""}</h3>
-                            <h5 className="text-2xl">{data?.title || ""}</h5>
-                        </div>
-                        <div className="text-center font-normal pt-8">
-                            <p>{data?.salutation} [Guest Name] </p>
-                            <div dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
-                        </div>
-                        <div className="flex justify-center my-8">
-                            <Button id="save_email_button" className="w-2/5 border border-[#E6C0FF] bg-[#F5E7FF] text-black hover:text-[#fff]">
-                                {data?.button || ""}</Button>
-                        </div>
+                        
+                        <PreviewPage title={data?.title as string} couple={data?.coupleName as string} 
+                        salutation={data?.salutation as string} body={data?.body as string} subject={data?.subject as string} 
+                        button={data?.button as string}/>
+
                         <hr className='bg-[#000]' />
                         <div className="w-full flex justify-center mt-6 mb-8">
                             <div className="flex flex-col items-center mt-8 w-[70%]">
