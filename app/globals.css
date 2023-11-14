@@ -81,6 +81,10 @@
   }
 }
 
+#save_email_button:hover #svg path{
+  stroke: #fff;
+}
+
 @layer utilities {
   .guest-btn {
     @apply bg-[#FFEBEE] text-[#282828] text-sm gap-2;
