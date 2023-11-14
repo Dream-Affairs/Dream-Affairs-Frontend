@@ -4,14 +4,13 @@ import Pricecards from './(components)/pricecards';
 import ExternalLayout from '../(components)/External-Layout';
 
 const Pricing = () => {
-
   return (
-    <div className='max-w-[1440px] mx-auto'>
-    <ExternalLayout>
-      <Hero />
-      <Pricecards />
-      <Contact />
-    </ExternalLayout>
+    <div className="max-w-[1440px] mx-auto">
+      <ExternalLayout>
+        <Hero />
+        <Pricecards />
+        <Contact />
+      </ExternalLayout>
     </div>
   );
 };

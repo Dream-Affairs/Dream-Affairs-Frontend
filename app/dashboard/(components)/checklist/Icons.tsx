@@ -95,3 +95,20 @@ export const DeleteIcon = () => {
     </svg>
   );
 };
+
+export const DoneIcon = () => {
+  return (
+    <svg className="" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path
+        d="M8.00065 14.6667C11.6673 14.6667 14.6673 11.6667 14.6673 8.00001C14.6673 4.33334 11.6673 1.33334 8.00065 1.33334C4.33398 1.33334 1.33398 4.33334 1.33398 8.00001C1.33398 11.6667 4.33398 14.6667 8.00065 14.6667Z"
+        fill="#918E8E"
+      />
+      <path
+        d="M5.16602 8.00001L7.05268 9.88668L10.8327 6.11334"
+        stroke="white"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
