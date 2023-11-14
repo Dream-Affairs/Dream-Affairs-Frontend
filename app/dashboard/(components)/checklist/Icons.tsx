@@ -112,3 +112,26 @@ export const DoneIcon = () => {
     </svg>
   );
 };
+
+export const Arrow = () => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path
+        d="M5.58203 3.45917L2.0412 7L5.58203 10.5408"
+        stroke="#98A2B3"
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M11.959 7H2.14148"
+        stroke="#98A2B3"
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};

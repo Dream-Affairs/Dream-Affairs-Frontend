@@ -14,7 +14,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import Task from '../(components)/checklist/Task';
-import { json } from 'stream/consumers';
+import { Arrow } from '../(components)/checklist/Icons';
+import ChecklistPagination from '../(components)/checklist/ChecklistPagination';
 
 const filter: string[] = ['All tasks', 'Assigned to me', 'Assigned by me', 'Completed'];
 
@@ -98,7 +99,7 @@ const Checklist = () => {
       </aside>
       {/* Search */}
       <Search />
-      {/* Task side */}
+      {/* Tasks side */}
       <aside className="mt-20">
         <div className="w-full h-14 flex flex-col gap-3 md:gap-0 md:flex-row md:justify-between md:items-center">
           <h3 className="text-zinc-800 text-2xl font-semibold leading-loose">Tasks</h3>
@@ -131,10 +132,12 @@ const Checklist = () => {
             </aside>
           </div>
         </div>
+        {/* Add Tasks */}
         <div className="w-full mt-24 md:mt-8 border-t border-neutral-200">
           {addTask && <AddTask addTask={handleAddTask} cancel={CancelAddTask} />}
         </div>
-        <ul className="mt-8 flex flex-col gap-6">
+        {/* Tasks */}
+        <ul className="mt-8 flex flex-col gap-5">
           {tasks?.length > 0
             ? tasks.map((item, i) => (
                 <li key={i + 1}>
@@ -143,6 +146,8 @@ const Checklist = () => {
               ))
             : ''}
         </ul>
+        {/* Pagination */}
+        {tasks?.length > 5 && <ChecklistPagination />}
       </aside>
     </section>
   );
