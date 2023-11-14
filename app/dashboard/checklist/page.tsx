@@ -45,6 +45,7 @@ const Checklist = () => {
   const [PaginationArr, setPaginstionArr] = useState<number[]>([]);
   const [showPrevBtn, setShowPrevBtn] = useState(false);
   const [showNextBtn, setShowNextBtn] = useState(false);
+  const [numPages, setNumPages] = useState(1);
 
   const searchResultsPerPage = 6;
 
@@ -64,6 +65,10 @@ const Checklist = () => {
   }, []);
 
   useEffect(() => {
+    setNumPages(Math.ceil(tasks.length / searchResultsPerPage));
+  }, [tasks, searchResultsPerPage]);
+
+  useEffect(() => {
     const getTasksPage = function (page: number) {
       const start = (page - 1) * searchResultsPerPage;
       const end = page * searchResultsPerPage;
@@ -72,19 +77,8 @@ const Checklist = () => {
     };
     setTasksPerPage(getTasksPage(pageNum));
 
-    const numPages = Math.ceil(tasks.length / searchResultsPerPage);
-
-    // //
-    function getIntegersUpToN(n: number) {
-      let integers = [];
-
-      for (var i = 1; i <= n; i++) {
-        integers.push(i);
-      }
-
-      return integers;
-    }
-    setPaginstionArr(getIntegersUpToN(numPages));
+    // Page numbers
+    setPaginstionArr([pageNum - 1, pageNum, pageNum + 1]);
 
     // Page 1, and there are other pages
     if (pageNum === 1 && numPages > 1) {
@@ -103,7 +97,7 @@ const Checklist = () => {
       setShowNextBtn(false);
       setShowPrevBtn(true);
     }
-  }, [pageNum, searchResultsPerPage, tasks]);
+  }, [pageNum, searchResultsPerPage, tasks, numPages]);
 
   useEffect(() => {
     tasks.length === 0 ? setAddTask(true) : setAddTask(false);
@@ -210,7 +204,7 @@ const Checklist = () => {
                 Previous
               </p>
             )}
-            {PaginationArr.map((item) => (
+            {PaginationArr?.filter((item) => item !== 0 && item <= numPages).map((item) => (
               <p
                 onClick={() => setPageNum(item)}
                 key={item}
@@ -225,7 +219,7 @@ const Checklist = () => {
             {showNextBtn && (
               <p
                 onClick={() => {
-                  if (PaginationArr.length === pageNum) return;
+                  if (PaginationArr?.length === numPages) return;
                   setPageNum((prev) => prev + 1);
                 }}
                 className="px-3 py-1.5 bg-transparent hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500"
