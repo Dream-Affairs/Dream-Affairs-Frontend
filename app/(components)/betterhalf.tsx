@@ -23,7 +23,7 @@ const Betterhalf = (props: ImagesProp) => {
               width={0}
               data-aos="fade-up"
               data-aos-duration="700"
-              className="md:even:mt-[117px] rounded-[20px] object-cover w-[100%] h-[200px]"
+              className="md:even:mt-[117px] rounded-[8px] object-cover w-[100%] h-[200px]"
             />
           ))}
         </div>
