@@ -1,3 +1,4 @@
+'use client';
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -5,7 +6,7 @@ import cancel from '../(assets)/cross.svg';
 import bing from '../(assets)/notification-bing.svg'
 import directbox from '../(assets)/directbox-notif.svg'
 
-const NotificationList = () => {
+const NotificationList = ({search}) => {
 
 const notifications = [
     {  
@@ -63,7 +64,7 @@ const notifications = [
 return (
     <div>
        {
-          notifications.map((item) => (
+          notifications.filter(item => item.heading.includes(search)).map((item) => (
             <div key={item.id} className="flex items-center justify-between shadow-sm border border-slate-300 rounded-lg bg-white mb-[2em]">
               <div className="flex items-center justify-between p-5">
                 <Image src={item.bing === 'bing' ? bing : directbox } alt="Notification Icon" width="20" height="20"  />
