@@ -16,7 +16,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import useLimitedTextInput from '../hooks/textarea';
+import {useLimitedTextInput} from '../hooks/RegistryForm';
 import currencies from '../../../settings/(components)/currency';
 
 const AddCash: React.FC = () => {
@@ -59,6 +59,7 @@ const AddCash: React.FC = () => {
               </p>
             </div>
           </div>
+
           <aside className="flex flex-col gap-3">
             <p className="text-base font-medium text-foreground ">
               By creating your cash funds, your guest can send you cash to cater for your cash needs

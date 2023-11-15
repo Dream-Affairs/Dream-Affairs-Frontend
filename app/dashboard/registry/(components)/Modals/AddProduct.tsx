@@ -14,7 +14,8 @@ import {
   SelectLabel,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import useLimitedTextInput from '../hooks/textarea';
+import { useLimitedTextInput, useImageUpload } from '../hooks/RegistryForm';
+// import useLimitedTextInput from '../hooks/RegistryForm';
 import currencies from '../../../settings/(components)/currency';
 
 const AddProduct: React.FC = () => {
@@ -26,6 +27,7 @@ const AddProduct: React.FC = () => {
 
   const [currency, setCurrency] = useState<string>('Dollar ($)');
   const { text, handleChange } = useLimitedTextInput('', 1000);
+  const { image, error, clearImage, handleImageChange } = useImageUpload();
 
   // This section control increment of quantity
   const [value, setValue] = useState<number>(1);
@@ -45,7 +47,7 @@ const AddProduct: React.FC = () => {
           Add product to registry
         </p>
         <div className="h-[1px] bg-border w-full"></div>
-        <section className="flex justify-center gap-11 px-16 mt-12">
+        <form action="" className="flex justify-center gap-11 px-16 mt-12">
           <div>
             <div className="bg-[#E8E8E8] w-[310px] h-[362px] rounded-[8px] flex flex-col items-center gap-4 text-center ">
               <Image src={Camera} alt="" className="mt-[157px]" />
@@ -60,7 +62,7 @@ const AddProduct: React.FC = () => {
               Dream Affairs let’s you add gifts from anywhere, Just paste a link and enter your gift info!
             </p>
 
-            <form action="">
+            <div>
               <div className="flex flex-col gap-2 mb-9">
                 <label htmlFor="link" className="text-base font-semibold ">
                   Link
@@ -172,9 +174,9 @@ const AddProduct: React.FC = () => {
                   Add gift
                 </Button>
               </div>
-            </form>
+            </div>
           </aside>
-        </section>
+        </form>
       </div>
     </>
   );
