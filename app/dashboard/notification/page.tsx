@@ -1,12 +1,11 @@
 import { Search, Sidebar } from 'lucide-react';
-import React, { useState } from 'react';
+import React from 'react';
 import NotificationList from './NotificationList';
 
 type Props = {};
 
 const Notification = (props: Props) => {
 
-  const [search, setSearch] = useState('')
 
   return (
     <section className="w-full overflow-x-hidden py-[1em] px-[5em]">
@@ -21,7 +20,7 @@ const Notification = (props: Props) => {
 
       <div className="flex items-center w-[92%] p-3 mx-[3em] my-[2em] bg-[#F8F8F8] rounded-lg">
         <Search />
-        <input className="bg-transparent text-[.875rem] w-[100%] px-3 py-1 outline-none" placeholder="Search for a notification..." onChange={(e) => setSearch(e.target.value)} />
+        <input className="bg-transparent text-[.875rem] w-[100%] px-3 py-1 outline-none" placeholder="Search for a notification..." />
       </div>
 
       {/* Line */}
