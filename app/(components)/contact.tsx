@@ -23,15 +23,15 @@ const Contact = () => {
           <label className="" htmlFor="">
             Your name
           </label>
-          <input type="text" className="border rounded-lg p-2 mt-3 text" placeholder="Name" />
+          <input type="text" className="border rounded-[8px] p-2 mt-3 text" placeholder="Name" />
           <label className="pt-6" htmlFor="">
             Your email
           </label>
-          <input type="email" className="border rounded-lg p-2 mb-6 mt-3 text" placeholder="Email" />
+          <input type="email" className="border rounded-[8px] p-2 mb-6 mt-3 text" placeholder="Email" />
           <label className="" htmlFor="">
             Your message
           </label>
-          <textarea className="border rounded-lg p-2 mt-3 mb-0 h-full overflow-scroll resize-none" placeholder="Message"></textarea>
+          <textarea className="border rounded-[5px] p-2 mt-3 mb-0 h-full overflow-scroll resize-none" placeholder="Message"></textarea>
           <p className='text-right mb-6 text-[10px]'>0/1000</p>
           <Button variant="secondary" type="submit" className='lg:h-24'>
             Send message

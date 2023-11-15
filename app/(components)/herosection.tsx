@@ -17,7 +17,7 @@ const Herosection = () => {
 
   return (
     <div
-      className="max-w-[1440px] mx-auto px-8 lg:px-10 bg-cover bg-center h-[618px] text-center text-white flex flex-col justify-center items-center"
+      className="max-w-[1440px] mx-auto px-8 lg:px-10 bg-cover bg-center h-screen text-center text-white flex flex-col justify-center items-center"
       style={{ backgroundImage: `url(${couples.src})` }}
     >
       <h1 data-aos="zoom-in" className="text-[40px] lg:text-[64px] font-semibold">
