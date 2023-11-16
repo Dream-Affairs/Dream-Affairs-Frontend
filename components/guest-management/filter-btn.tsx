@@ -4,20 +4,21 @@ interface Props {
   count: number;
   activeBtn: string;
   setFunc: Dispatch<SetStateAction<string>>;
+  statusFilter: string;
 }
 
-function FilterBtn({ name, count, activeBtn, setFunc }: Props) {
+function FilterBtn({ name, count, activeBtn, setFunc, statusFilter }: Props) {
   return (
     <button
-      onClick={() => setFunc(name)}
-      className={`font-medium text-base pb-2 flex items-center gap-1 border-b-4 ${
-        activeBtn === name ? 'text-[#7832A6]  border-[#7832A6]' : 'text-[#6F6F6F] border-[#FFF]'
+      onClick={() => setFunc(statusFilter)}
+      className={`font-medium text-sm pb-2 flex items-center gap-1 border-b-4 ${
+        activeBtn === statusFilter ? 'text-[#7832A6]  border-[#7832A6]' : 'text-[#6F6F6F] border-[#FFF]'
       }`}
     >
       {name}
       <span
-        className={`rounded-[1.25rem] text-sm grid place-content-center py-0.5 px-1 ${
-          activeBtn === name ? 'bg-[#F1DBFF]' : 'bg-[#EAEAEA]'
+        className={`rounded-[1.25rem] text-xs grid place-content-center py-0.5 px-1 ${
+          activeBtn === statusFilter ? 'bg-[#F1DBFF]' : 'bg-[#EAEAEA]'
         }`}
       >
         {count}

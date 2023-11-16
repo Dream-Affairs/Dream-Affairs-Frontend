@@ -12,6 +12,7 @@ import Meal from './(assets)/meal.svg';
 import Budget from './(assets)/budget.svg';
 import { ChevronLeft, ChevronRight, Dot } from 'lucide-react';
 import { Comment } from 'postcss';
+import currencies from '../dashboard/settings/(components)/currency';
 
 const Carousel = () => {
   const slides = [
@@ -76,26 +77,24 @@ const Carousel = () => {
     return () => clearInterval(interval);
   }, [currentIndex]);
 
-  const prevSlide = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
-  const nextSlide = () => {
-    if (currentIndex < slides.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
+   const prevSlide = () => {
+    const isFirstSlide = currentIndex === 0;
+    const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
+     setCurrentIndex(newIndex);
+   };
 
-  const linearGradient = {
-    backgroundImage: 'linear-gradient(180deg, rgba(0, 0, 0, 0.34) 0%, rgba(0, 0, 0, 0.90) 100%)',
-  };
+   const nextSlide = () => {
+    const isLastSlide = currentIndex === slides.length - 1;
+    const newIndex = isLastSlide? 0 : currentIndex + 1;
+     setCurrentIndex(newIndex);
+   };
+ 
   return (
     <div>
       <div className="max-w-[1440px] mx-auto px-8 lg:px-10">
         <div className="m-auto text-center flex flex-col items-center pt-[32px] pb-[24px]">
           <h1 className="text-[24px] sm:text-[56px] text-[#48195A] font-semibold">What we offer</h1>
-          <Image src={Curly} width={0} alt="Curly" className="w-[108px] sm:w-[400px]" />
+          <Image src={Curly} width={0} alt="Curly" className="w-[127px] sm:w-[400px]" />
         </div>
         <div data-aos="zoom-in" data-aos-duration="">
           <Image
@@ -104,13 +103,17 @@ const Carousel = () => {
             alt="Curly"
             className="h-[178px] sm:h-[400px] lg:h-[629px] rounded-[8px] lg:w-[1270px] mx-auto"
           />
-          <div className="absolute sm:top-[50%] top-[40%] left-2 md:left-14 text-2xl rounded-full p-1 border-2 border-white text-white cursor-pointer">
-            <ChevronLeft size={20} onClick={prevSlide} />
-          </div>
-          <div className="absolute sm:top-[50%] top-[40%] right-2 md:right-14 text-2xl rounded-full p-1 border-2 border-white text-white cursor-pointer">
-            <ChevronRight size={20} onClick={nextSlide} />
-          </div>
-
+          <ChevronLeft
+            size={26}
+            onClick={prevSlide}
+            className="absolute z-20 sm:top-[50%] top-[40%] left-2 md:left-14 text-2xl rounded-full p-1 border-2 border-white text-white cursor-pointer"
+          />
+           <ChevronRight
+              size={26}
+              onClick={nextSlide}
+              className="absolute z-20 sm:top-[50%] top-[40%] right-2 md:right-14 text-2xl rounded-full p-1 border-2 border-white text-white cursor-pointer"
+            />
+          
           <div className="absolute top-[50%] lg:top-[80%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full m-auto text-center text-white mt-10">
             <h3 className="text-[16px] sm:text-[60px] font-semibold m-auto">{slides[currentIndex]?.title}</h3>
             <p className="text-[11px]  sm:text-[18px] w-[237px] sm:w-[400px] m-auto sm:leading-7">

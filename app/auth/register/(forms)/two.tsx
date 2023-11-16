@@ -115,7 +115,7 @@ const Two = ({
 
     try {
       setIsSubmitting(true);
-      const { data } = await axios.post(`${url}/auth/signup`, {
+      await axios.post(`${url}/auth/signup`, {
         email: formOne.email,
         password: formOne.password,
         confirm_password: formOne.confirmPassword,
@@ -194,7 +194,9 @@ const Two = ({
         />
       </div>
       <div className="flex flex-col gap-2">
-        <Label htmlFor="eventDate">Event Date</Label>
+        <p className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+          Event Date
+        </p>
         <div>
           <DatePicker
             disabled={formTwo.pickedADate ? true : false}
@@ -208,17 +210,18 @@ const Two = ({
       <div className="flex items-center gap-2">
         <Checkbox
           id="pickedADate"
+          name="pickedADate"
           onCheckedChange={() => {
             setFormError((prev) => ({ ...prev, eventDate: false }));
             setFormTwo((prev) => ({ ...prev, pickedADate: !prev.pickedADate }));
           }}
         />
-        <label
+        <Label
           htmlFor="pickedADate"
           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           We&rsquo;ve not picked a date
-        </label>
+        </Label>
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="location">Location</Label>
@@ -231,7 +234,7 @@ const Two = ({
           hasValue={formTwo.location !== '' ? true : false}
           value={formTwo.location}
           onChange={handleInputChange}
-          autoComplete="street-country"
+          autoComplete="country"
         />
       </div>
       <Button

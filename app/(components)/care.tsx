@@ -13,10 +13,10 @@ const Care = () => {
         className="m-auto text-center flex flex-col items-center pt-[36px] pb-[24px]"
       >
         <h1 className="text-[24px] sm:text-[56px] text-[#48195A] font-semibold">We take care of everything</h1>
-        <Image src={Curly} width={0} alt="Curly" className="w-[108px] lg:w-[400px]" />
+        <Image src={Curly} width={0} alt="Curly" className="w-[127px] lg:w-[400px]" />
       </div>
 
-      <section className="text-[#48195A] font-[500] text-[14px] lg:text-[32px]">
+      <section>
         <div className="lg:relative lg:mb-[-90px] flex flex-col-reverse lg:flex-row">
           <Image
             data-aos="fade-up"
@@ -26,19 +26,27 @@ const Care = () => {
             alt="Event Management"
             className="w-full lg:w-auto"
           />
-          <p
-            data-aos="zoom-in"
-            data-aos-duration="700"
-            className="pb-6 text-center lg:text-left m-auto w-[300px] lg:w-[330px]"
-          >
-            From managing your events and giving you a customised wedding website{' '}
-          </p>
+          <div data-aos="zoom-in" data-aos-duration="700" className="pb-6 lg:pl-20 ">
+            <h1 className="text-[#48195A] text-[14px] lg:text-[32px] text-center lg:text-left lg:mt-[40%] lg:m-0 m-auto">
+              Manage your events
+            </h1>
+            <p className="text-[12px] lg:text-[18px] text-center lg:text-left pt-4 text-[#65676A]">
+              From managing your events and giving you a customised wedding website that suits for desired dream
+              wedding.
+            </p>
+          </div>
         </div>
         <div className="relative flex flex-col lg:flex-row">
-          <p data-aos="zoom-in" className="py-6 text-center lg:text-left m-auto w-[300px] lg:w-[330px]">
-            To managing your guest list, invites and guest sitting arrangements
-          </p>
-          <Image data-aos="fade-up" data-aos-duration="700" src={Mgt2} width={0} alt="Guest Management" />
+          <div data-aos="zoom-in" data-aos-duration="700" className="py-8 lg:pb-6 lg:pr-20 ">
+            <h1 className="text-[#48195A] text-[14px] lg:text-[32px] text-center lg:text-left lg:mt-[45%] lg:m-0 m-auto">
+              Manage your guestlist
+            </h1>
+            <p className="text-[12px] lg:text-[18px] text-center lg:text-left pt-4 text-[#65676A]">
+              To managing your guest list, invites and guest sitting arrangements. Giving you the flexibility to
+              organise your wedding guest plans.
+            </p>
+          </div>
+          <Image data-aos="fade-up" data-aos-duration="700" src={Mgt1} width={0} alt="Guest Management" />
         </div>
         <div className="lg:relative lg:mt-[-90px] flex flex-col-reverse lg:flex-row">
           <Image
@@ -49,9 +57,15 @@ const Care = () => {
             alt="Plenty Meals"
             className="w-full lg:w-auto"
           />
-          <p data-aos="zoom-in" className="py-6 text-center lg:text-left m-auto w-[300px] lg:w-[330px]">
-            To managing your meals, giving you the flexibility to choose what kind of meals you want on your special day
-          </p>
+          <div data-aos="zoom-in" data-aos-duration="700" className="py-8 lg:pb-6 lg:pl-20 ">
+            <h1 className="text-[#48195A] text-[14px] lg:text-[32px] text-center lg:text-left lg:mt-[50%] lg:m-0 m-auto">
+              Manage your meals
+            </h1>
+            <p className="text-[12px] lg:text-[18px] text-center lg:text-left pt-4 text-[#65676A]">
+              To managing your meals, giving you the flexibility to choose what kind of meals you want on your special
+              day.
+            </p>
+          </div>
         </div>
       </section>
     </section>

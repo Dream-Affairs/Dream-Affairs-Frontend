@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Work_Sans } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
+import Providers from './Providers';
 
 const workSans = Work_Sans({ subsets: ['latin'] });
 
@@ -14,7 +15,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={workSans.className}>
-        {children} <Toaster />
+        <Providers>
+          {children} <Toaster />
+        </Providers>
       </body>
     </html>
   );
