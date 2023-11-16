@@ -5,7 +5,7 @@ type Props = {};
 
 const InviteTeam = (props: Props) => {
   return (
-    <div className="w-full max-w-[1112px]">
+    <div className="w-full">
       <InviteTeamImport />
     </div>
   );

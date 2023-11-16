@@ -24,22 +24,35 @@ interface FormOneProps {
       valid: boolean;
     }>
   >;
+  formOneError: {
+    email: boolean;
+    password: boolean;
+    confirmPassword: boolean;
+  };
+  setFormOneError: React.Dispatch<
+    React.SetStateAction<{
+      email: boolean;
+      password: boolean;
+      confirmPassword: boolean;
+    }>
+  >;
+  errorMessages: {
+    email: string;
+    password: string;
+    confirmPassword: string;
+  };
+  setErrorMessages: React.Dispatch<
+    React.SetStateAction<{
+      email: string;
+      password: string;
+      confirmPassword: string;
+    }>
+  >;
 }
 
-const One = ({ formOne, setFormOne }: FormOneProps) => {
+const One = ({ formOne, setFormOne, formOneError, setFormOneError, errorMessages, setErrorMessages }: FormOneProps) => {
   const [passwordVisible, setPasswordVisible] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [formError, setFormOneError] = React.useState({
-    email: false,
-    password: false,
-    confirmPassword: false,
-  });
-
-  const [errorMessages, setErrorMessages] = React.useState({
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormOneError((prev) => ({ ...prev, [e.target.id]: false }));
@@ -79,14 +92,15 @@ const One = ({ formOne, setFormOne }: FormOneProps) => {
       return;
     }
 
-    if (formOne.password !== formOne.confirmPassword) {
-      setFormOneError((prev) => ({ ...prev, confirmPassword: true }));
-      setErrorMessages((prev) => ({ ...prev, confirmPassword: 'Passwords do not match' }));
-      return;
-    }
+    // if (formOne.password !== formOne.confirmPassword) {
+    //   setFormOneError((prev) => ({ ...prev, confirmPassword: true }));
+    //   setErrorMessages((prev) => ({ ...prev, confirmPassword: 'Passwords do not match' }));
+    //   return;
+    // }
 
     setIsSubmitting(true);
     setFormOne((prev) => ({ ...prev, valid: true }));
+    setFormOneError((prev) => ({ ...prev, email: false, password: false, confirmPassword: false }));
   };
   return (
     <div className="flex flex-col gap-8">
@@ -97,10 +111,11 @@ const One = ({ formOne, setFormOne }: FormOneProps) => {
           type="text"
           placeholder="johndoe@email.com"
           errorMessage={errorMessages.email}
-          error={formError.email}
+          error={formOneError.email}
           hasValue={formOne.email !== '' ? true : false}
           value={formOne.email}
           onChange={handleInputChange}
+          autoComplete="email"
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -110,10 +125,11 @@ const One = ({ formOne, setFormOne }: FormOneProps) => {
           type={passwordVisible ? 'text' : 'password'}
           placeholder="********"
           errorMessage={errorMessages.password}
-          error={formError.password}
+          error={formOneError.password}
           hasValue={formOne.password !== '' ? true : false}
           value={formOne.password}
           onChange={handleInputChange}
+          autoComplete="new-password"
           icon={
             passwordVisible ? (
               <AiOutlineEye
@@ -136,10 +152,11 @@ const One = ({ formOne, setFormOne }: FormOneProps) => {
           type={passwordVisible ? 'text' : 'password'}
           placeholder="********"
           errorMessage={errorMessages.confirmPassword}
-          error={formError.confirmPassword}
+          error={formOneError.confirmPassword}
           hasValue={formOne.confirmPassword !== '' ? true : false}
           value={formOne.confirmPassword}
           onChange={handleInputChange}
+          autoComplete="new-password"
           icon={
             passwordVisible ? (
               <AiOutlineEye

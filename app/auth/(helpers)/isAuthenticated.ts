@@ -3,9 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 export const isEmpty = (param: string | null | any) =>
   param === null || typeof param === 'undefined' || param.length == 0;
 
-const clearLocalStorage = () => {
-  localStorage.removeItem('zpt');
-};
+const clearSessionStorage = () => sessionStorage.removeItem('zpt');
 
 function isAuthenticated(token: string) {
   if (!token || isEmpty(token)) {
@@ -16,13 +14,13 @@ function isAuthenticated(token: string) {
     const expirationTime = (decodedToken as any).exp * 1000; // convert to milliseconds
 
     if (Date.now() >= expirationTime) {
-      clearLocalStorage();
+      clearSessionStorage();
       return false;
     }
 
     return true;
   } catch (error) {
-    clearLocalStorage();
+    clearSessionStorage();
     return false;
   }
 }
