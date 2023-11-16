@@ -22,7 +22,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { toast } from '@/components/ui/use-toast';
 import AccordionComponent from '../faq/(components)/Accordion';
 import { general } from '../faq/(components)/data';
-import { Modal } from '../(components)/Modal';
+import { Modal } from '../../components/ui/ModalTwo';
 import { BsCalendar2Date } from 'react-icons/bs';
 import { Switch } from '@/components/ui/switch';
 
