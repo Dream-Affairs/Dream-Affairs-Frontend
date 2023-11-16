@@ -32,7 +32,6 @@ const AddProduct: React.FC = () => {
 
   const [currency, setCurrency] = useState<string>('Dollar ($)');
   const { text, handleChange } = useLimitedTextInput('', 1000);
-  // const { image, error, clearImage, handleImageChange } = useImageUpload();
 
   // This section control increment of quantity
   const [value, setValue] = useState<number>(1);
@@ -48,17 +47,20 @@ const AddProduct: React.FC = () => {
   return (
     <>
       <div className="mb-16">
-        <p className="text-[32px] font-medium leading-none tracking-tight pl-[79px] pt-12 mb-[14px]">
+        <p className="text-base md:text-[32px] font-medium leading-none tracking-tight pl-6 md:pl-[79px] pt-7 md:pt-12 mb-[14px]">
           Add product to registry
         </p>
         <div className="h-[1px] bg-border w-full"></div>
-        <form action="" className="flex justify-center gap-11 px-16 mt-12">
+        <form action="" className="flex flex-col lg:flex-row justify-center gap-11 px-4 md:px-16 mt-6 md:mt-12">
           <div>
+            <p className="md:hidden text-sm text-center font-medium text-foreground mb-8">
+              Dream Affairs let’s you add gifts from anywhere, Just paste a link and enter your gift info!
+            </p>
             {/* Product image section starts here  */}
 
             <div
               id="ProductImage"
-              className="bg-[#E8E8E8] w-[310px] h-[362px] rounded-[8px] flex flex-col items-center gap-4 text-center cursor-pointer"
+              className="bg-[#E8E8E8] w-[200px] md:w-[310px] h-[250px] md:h-[362px] rounded-[8px] flex flex-col items-center gap-4 text-center cursor-pointer mx-auto"
               onClick={handleImageClick}
             >
               {image ? (
@@ -71,8 +73,8 @@ const AddProduct: React.FC = () => {
                 />
               ) : (
                 <>
-                  <Image src={Camera} alt="" className="mt-[157px]" />
-                  <p className="w-[246px] text-sm font-normal text-[#6F6F6F]">
+                  <Image src={Camera} alt="" className="mt-16 md:mt-[157px]" />
+                  <p className="w-[168px] md:w-[246px] text-sm font-normal text-[#6F6F6F]">
                     Upload a photo of the product you want to add to your registry
                   </p>
                 </>
@@ -89,8 +91,9 @@ const AddProduct: React.FC = () => {
             {error && <p className="text-xs text-red-500">{error}</p>}
             {/* Product image section ends here  */}
           </div>
-          <aside className="flex flex-col gap-3">
-            <p className="text-base font-medium text-foreground ">
+
+          <aside className="flex flex-col gap-3 px-4">
+            <p className="hidden md:block text-base font-medium text-foreground ">
               Dream Affairs let’s you add gifts from anywhere, Just paste a link and enter your gift info!
             </p>
 
