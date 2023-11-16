@@ -45,8 +45,8 @@ const Faq = () => {
   return (
     <div className="max-w-[1440px] mx-auto px-8 lg:px-10">
       <div data-aos="zoom-in" data-aos-duration="700" className="m-auto text-center flex flex-col items-center py-16">
-        <h1 className="text-[30px] lg:text-[40px] text-[#48195A] font-semibold">Frequently asked questions</h1>
-        <Image src={Curly} width={0} alt="Curly" className="w-[240px] sm:w-[400px]" />
+        <h1 className="text-[18px] lg:text-[40px] text-[#48195A] font-semibold">Frequently asked questions</h1>
+        <Image src={Curly} width={0} alt="Curly" className="w-[127px] sm:w-[400px]" />
       </div>
 
       {questions.map((quest) => (
