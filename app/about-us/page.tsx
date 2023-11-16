@@ -1,17 +1,15 @@
 import Hero from './(components)/hero';
 import Team from './(components)/team';
 import ExternalLayout from '../(components)/External-Layout';
-import Section2 from './(components)/section-2';
-import AboutUs from './(components)/about';
 import Values from './(components)/values';
 import Contact from '../pricing/(components)/contact';
+import AboutUs from './(components)/about';
 
 const About = () => {
   return (
     <ExternalLayout>
-      <main className="w-full relative mb-[113px]">
+      <main className="w-full relative mb-[113px] flex flex-col justify-center">
         <Hero />
-        <Section2 />
         <AboutUs />
         <Values />
         <Team />
