@@ -9,13 +9,14 @@ import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { AssignIcon } from './Icons';
-import AssignPopover from './AssignPopover';
+import { v4 as uuidv4 } from 'uuid';
 
 type task = {
   decription: string;
   date: Date | undefined;
   assignee: string;
   done: boolean;
+  id: string;
 };
 
 interface MyAddTasksProps {
@@ -50,6 +51,7 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
       date: date,
       assignee: assignedMember,
       done: false,
+      id: uuidv4(),
     };
 
     addTask(task);

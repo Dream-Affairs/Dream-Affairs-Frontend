@@ -33,6 +33,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@tanstack/react-query": "^5.8.4",
     "@tanstack/react-query-devtools": "^5.8.4",
+    "@types/uuid": "^9.0.7",
     "aos": "^2.3.4",
     "axios": "^1.6.0",
     "class-variance-authority": "^0.7.0",

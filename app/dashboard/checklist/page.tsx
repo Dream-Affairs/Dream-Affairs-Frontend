@@ -23,6 +23,7 @@ type task = {
   date: Date | undefined;
   assignee: string;
   done: boolean;
+  id: string;
 };
 
 type ts = {
@@ -30,6 +31,7 @@ type ts = {
   date: Date | string;
   assignee: string;
   done: boolean;
+  id: string;
 };
 
 type addTask = (task: task) => void;
@@ -59,6 +61,7 @@ const Checklist = () => {
         date: item.date ? new Date(item.date) : undefined,
         assignee: item.assignee,
         done: item.done,
+        id: item.id,
       };
     });
     if (storedTasks) setTasks(updatedTask);

@@ -16,6 +16,7 @@ type task = {
   date: Date | undefined;
   assignee: string;
   done: boolean;
+  id: string;
 };
 
 interface MyTasksProps {
@@ -30,20 +31,23 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
   const [date, setDate] = React.useState<Date | undefined>(undefined);
   const [description, setDescription] = useState('');
   const [assignedMember, setAssignedMember] = useState('');
+  const [id, setId] = useState('');
   const [done, setDone] = useState(false);
   const [editedTask, setEditedTask] = React.useState<task>(item);
   const error = false;
 
   useEffect(() => {
+    console.log(item);
     setDate(item.date);
     setAssignedMember(item.assignee);
     setDescription(item.decription);
     setDone(item.done);
+    setId(item.id);
   }, [item]);
 
   useEffect(() => {
-    setEditedTask({ decription: description, date: date, assignee: assignedMember, done: done });
-  }, [date, assignedMember, description, done]);
+    setEditedTask({ decription: description, date: date, assignee: assignedMember, done: done, id: id });
+  }, [date, assignedMember, description, done, id]);
 
   const handleAssignBlur = useCallback(() => {
     setTimeout(() => {
@@ -73,7 +77,13 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
         <div
           onClick={() => {
             setDone((prev) => !prev);
-            editItem(index, { decription: description, date: date, assignee: assignedMember, done: !done });
+            editItem(index, {
+              decription: description,
+              date: date,
+              assignee: assignedMember,
+              done: !done,
+              id: item.id,
+            });
           }}
           className={`min-w-[16px] h-[16px] mt-1 border-[2px] ${
             done ? 'border-transparent' : 'border-[#9F7DB5]'
@@ -128,7 +138,13 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
               <PopoverContent
                 onBlur={() => {
                   if (done) return;
-                  editItem(index, { decription: description, date: date, assignee: assignedMember, done: done });
+                  editItem(index, {
+                    decription: description,
+                    date: date,
+                    assignee: assignedMember,
+                    done: done,
+                    id: item.id,
+                  });
                 }}
                 className="w-auto translate-x-1/4 p-0"
               >
