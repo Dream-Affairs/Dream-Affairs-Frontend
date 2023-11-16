@@ -8,8 +8,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { cn } from '@/lib/utils';
 import AssignPopover from './AssignPopover';
 import { Button } from '@/components/ui/button';
-import { Modal } from '@/app/(components)/Modal';
 import { DialogClose } from '@/components/ui/dialog';
+import { Modal } from '@/components/ui/ModalTwo';
 
 type task = {
   decription: string;

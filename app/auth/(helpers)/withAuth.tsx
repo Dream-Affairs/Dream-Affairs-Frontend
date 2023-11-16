@@ -8,11 +8,11 @@ const withAuth = (WrappedComponent: any) => {
     const router = useRouter();
 
     useEffect(() => {
-      const token = localStorage.getItem('daff');
+      const token = sessionStorage.getItem('daff');
       const isLoggedIn = isAuthenticated(token as string);
       if (!isLoggedIn) {
         router.replace('/auth/login');
-        localStorage.removeItem('daff');
+        sessionStorage.removeItem('daff');
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

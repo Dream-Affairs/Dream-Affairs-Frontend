@@ -54,7 +54,7 @@ const Faq = () => {
           data-aos="fade-up"
           data-aos-duration="800"
           key={quest.id}
-          className="md:w-[700p] md:m-auto last:border-0 border-b-2 border-white/ "
+          className="md:m-auto last:border-0 border-b-2 border-white/ "
         >
           <button
             data-aos="fade-up"

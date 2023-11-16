@@ -3,20 +3,28 @@ import Image from 'next/image';
 import React from 'react';
 
 type Props = {
-    subject?: string,
-    title: string,
-    couple: string,
-    salutation: string,
-    body: string,
-    button: string
-    dangerouslySetInnerHTML?: {
-        __html: string}
-}
+  subject?: string;
+  title: string;
+  couple: string;
+  salutation: string;
+  body: string;
+  button: string;
+  dangerouslySetInnerHTML?: {
+    __html: string;
+  };
+};
 
-
-export default function PreviewPage({title, salutation, subject, couple, body, button,dangerouslySetInnerHTML}: Props) {
-    const bodyText = ((body as string) || "").replace(/\n/g, '<br />');
-    dangerouslySetInnerHTML = {__html: `<p className="mt-4">${bodyText}</p>` }
+export default function PreviewPage({
+  title,
+  salutation,
+  subject,
+  couple,
+  body,
+  button,
+  dangerouslySetInnerHTML,
+}: Props) {
+  const bodyText = ((body as string) || '').replace(/\n/g, '<br />');
+  dangerouslySetInnerHTML = { __html: `<p className="mt-4">${bodyText}</p>` };
   return (
     <>
       <div className="w-full h-[250px]">

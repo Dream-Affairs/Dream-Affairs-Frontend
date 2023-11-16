@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import Curly from './(assets)/curly.svg';
 import Image from 'next/image';
-import Web from './(assets)/web.svg'
+import Web from './(assets)/web.svg';
 import Gift from './(assets)/gift.svg';
-import Event from './(assets)/event.svg'
-import Guest from './(assets)/guest.svg'
+import Event from './(assets)/event.svg';
+import Guest from './(assets)/guest.svg';
 import Comm from './(assets)/comm.svg';
 import Meal from './(assets)/meal.svg';
 import Budget from './(assets)/budget.svg';
@@ -71,7 +71,7 @@ const Carousel = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % totalImages);
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [currentIndex]);
@@ -97,10 +97,7 @@ const Carousel = () => {
           <h1 className="text-[24px] sm:text-[56px] text-[#48195A] font-semibold">What we offer</h1>
           <Image src={Curly} width={0} alt="Curly" className="w-[108px] sm:w-[400px]" />
         </div>
-        <div
-          data-aos="zoom-in"
-          data-aos-duration=""
-        >
+        <div data-aos="zoom-in" data-aos-duration="">
           <Image
             src={slides[currentIndex]?.url}
             width={0}

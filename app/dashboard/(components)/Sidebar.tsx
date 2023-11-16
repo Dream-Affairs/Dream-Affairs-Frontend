@@ -10,6 +10,7 @@ import avatar from '../(assets)/avatar.png';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { sidebarMenu } from '../data/dashboard-data';
+import { Button } from '@/components/ui/button';
 
 type Props = {};
 
@@ -85,6 +86,16 @@ const Sidebar = (props: Props) => {
         <button onClick={() => setMode((prev) => !prev)}>
           <Image src={mode ? mode1 : mode2} alt="mode" />
         </button>
+
+        <Button
+          className="h-auto w-auto text-white"
+          onClick={() => {
+            sessionStorage.removeItem('daff');
+            window.location.href = '/auth/login';
+          }}
+        >
+          Logout
+        </Button>
       </div>
     </nav>
   );
