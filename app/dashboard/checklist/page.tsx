@@ -162,7 +162,7 @@ const Checklist = () => {
             <aside className="flex sm:grid sm:grid-cols-2 gap-3  ">
               {/* <Filter /> */}
               <Select>
-                <SelectTrigger className="w-full h-[55px] text-lg">
+                <SelectTrigger className="w-full sm:w-[180px] h-[55px] text-lg">
                   <SelectValue placeholder={filterKey} />
                 </SelectTrigger>
                 <SelectContent className="w-full">
