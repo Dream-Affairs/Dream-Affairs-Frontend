@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Camera from '../../../(assets)/camera2.svg';
 import Minus from '../../../(assets)/minus-square.svg';
 import Add from '../../../(assets)/add-square.svg';
@@ -14,7 +14,8 @@ import {
   SelectLabel,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import useLimitedTextInput from '../hooks/textarea';
+import { useLimitedTextInput, useImageUpload } from '../hooks/RegistryForm';
+// import useLimitedTextInput from '../hooks/RegistryForm';
 import currencies from '../../../settings/(components)/currency';
 
 const AddProduct: React.FC = () => {
@@ -24,8 +25,14 @@ const AddProduct: React.FC = () => {
     appearance: 'textfield',
   };
 
+  // Image Upload function starts here
+  const { image, error, fileInputRef, handleImageClick, handleFileChange } = useImageUpload();
+
+  // Image Upload functiom ends here
+
   const [currency, setCurrency] = useState<string>('Dollar ($)');
   const { text, handleChange } = useLimitedTextInput('', 1000);
+  // const { image, error, clearImage, handleImageChange } = useImageUpload();
 
   // This section control increment of quantity
   const [value, setValue] = useState<number>(1);
@@ -45,22 +52,49 @@ const AddProduct: React.FC = () => {
           Add product to registry
         </p>
         <div className="h-[1px] bg-border w-full"></div>
-        <section className="flex justify-center gap-11 px-16 mt-12">
+        <form action="" className="flex justify-center gap-11 px-16 mt-12">
           <div>
-            <div className="bg-[#E8E8E8] w-[310px] h-[362px] rounded-[8px] flex flex-col items-center gap-4 text-center ">
-              <Image src={Camera} alt="" className="mt-[157px]" />
-              <p className="w-[246px] text-sm font-normal text-[#6F6F6F]">
-                {' '}
-                Upload photo of the product you want to add to your registry
-              </p>
+            {/* Product image section starts here  */}
+
+            <div
+              id="ProductImage"
+              className="bg-[#E8E8E8] w-[310px] h-[362px] rounded-[8px] flex flex-col items-center gap-4 text-center cursor-pointer"
+              onClick={handleImageClick}
+            >
+              {image ? (
+                <Image
+                  src={image}
+                  alt="Uploaded"
+                  width={310}
+                  height={362}
+                  className="w-full h-full object-cover rounded-[8px]"
+                />
+              ) : (
+                <>
+                  <Image src={Camera} alt="" className="mt-[157px]" />
+                  <p className="w-[246px] text-sm font-normal text-[#6F6F6F]">
+                    Upload a photo of the product you want to add to your registry
+                  </p>
+                </>
+              )}
+              <input
+                ref={fileInputRef}
+                id="profile-image-upload"
+                className="hidden"
+                type="file"
+                accept=".jpg, .jpeg, .png"
+                onChange={handleFileChange}
+              />
             </div>
+            {error && <p className="text-xs text-red-500">{error}</p>}
+            {/* Product image section ends here  */}
           </div>
           <aside className="flex flex-col gap-3">
             <p className="text-base font-medium text-foreground ">
               Dream Affairs let’s you add gifts from anywhere, Just paste a link and enter your gift info!
             </p>
 
-            <form action="">
+            <div>
               <div className="flex flex-col gap-2 mb-9">
                 <label htmlFor="link" className="text-base font-semibold ">
                   Link
@@ -172,9 +206,9 @@ const AddProduct: React.FC = () => {
                   Add gift
                 </Button>
               </div>
-            </form>
+            </div>
           </aside>
-        </section>
+        </form>
       </div>
     </>
   );

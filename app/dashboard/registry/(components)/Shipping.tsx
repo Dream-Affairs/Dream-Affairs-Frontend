@@ -5,21 +5,21 @@ import { Button } from '@/components/ui/button';
 
 const Shipping = () => {
   return (
-    <div className="mx-9 mt-5 border rounded-md px-16 py-9 flex flex-col gap-11 ">
-      <h2 className="text-2xl font-medium text-foreground ">
+    <div className="mx-5 md:mx-9 mt-5 border rounded-md px-4 md:px-16 py-4 md:py-9 flex flex-col gap-11 ">
+      <h2 className="text-sm md:text-2xl font-medium text-foreground ">
         Add your shipping details to let gift givers know where to send their gifts
       </h2>
       <div>
         <form action="">
-          <div className="flex flex-col gap-2 mb-12">
-            <label htmlFor="name" className="text-base font-semibold ">
+          <div className="flex flex-col gap-2 mb-6 md:mb-12">
+            <label htmlFor="name" className="text-sm md:text-base font-semibold ">
               Name
             </label>
             <Input type="text" placeholder="Enter name" id="name" className="text-sm font-normal" />
           </div>
 
-          <div className="flex flex-col gap-2 mb-12 ">
-            <label htmlFor="phone" className="text-base font-semibold ">
+          <div className="flex flex-col gap-2 mb-6 md:mb-12">
+            <label htmlFor="phone" className="text-sm md:text-base font-semibold ">
               Phone number
             </label>
             <Input
@@ -30,12 +30,12 @@ const Shipping = () => {
             />
           </div>
 
-          <div className="flex flex-col gap-2 mb-12">
-            <label htmlFor="country" className="text-base font-semibold ">
+          <div className="flex flex-col gap-2 mb-6 md:mb-12">
+            <label htmlFor="country" className="text-sm md:text-base font-semibold ">
               Country
             </label>
             <Select>
-              <SelectTrigger className=" h-[55px] text-sm font-normal">
+              <SelectTrigger className=" h-11 md:h-[55px] text-sm font-normal">
                 <SelectValue className="placeholder-gray-400" placeholder="Select" />
               </SelectTrigger>
               <SelectContent id="country">
@@ -48,8 +48,8 @@ const Shipping = () => {
             </Select>
           </div>
 
-          <div className="flex flex-col gap-2 mb-12 ">
-            <label htmlFor="address1" className="text-base font-semibold ">
+          <div className="flex flex-col gap-2 mb-6 md:mb-12">
+            <label htmlFor="address1" className="text-sm md:text-base font-semibold ">
               Address1
             </label>
             <Input
@@ -60,8 +60,8 @@ const Shipping = () => {
             />
           </div>
 
-          <div className="flex flex-col gap-2 mb-12 ">
-            <label htmlFor="address2" className="text-base font-semibold ">
+          <div className="flex flex-col gap-2 mb-6 md:mb-12 ">
+            <label htmlFor="address2" className="text-sm md:text-base font-semibold ">
               Address2
             </label>
             <Input
@@ -72,9 +72,9 @@ const Shipping = () => {
             />
           </div>
 
-          <div className="flex gap-12">
-            <div className="flex flex-col gap-2 mb-12 flex-1">
-              <label htmlFor="city" className="text-base font-semibold ">
+          <div className="flex gap-6 md:gap-12 mb-6 md:mb-12">
+            <div className="flex flex-col gap-2 flex-1">
+              <label htmlFor="city" className="text-sm md:text-base font-semibold ">
                 City
               </label>
               <Input
@@ -85,8 +85,8 @@ const Shipping = () => {
               />
             </div>
 
-            <div className="flex flex-col gap-2 mb-12 flex-1">
-              <label htmlFor="state" className="text-base font-semibold ">
+            <div className="flex flex-col gap-2 flex-1">
+              <label htmlFor="state" className="text-sm md:text-base font-semibold ">
                 State/Province
               </label>
               <Input
@@ -98,8 +98,8 @@ const Shipping = () => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 mb-12 ">
-            <label htmlFor="zip" className="text-base font-semibold ">
+          <div className="flex flex-col gap-2 mb-6 md:mb-12 ">
+            <label htmlFor="zip" className="text-sm md:text-base font-semibold ">
               Zip Code
             </label>
             <Input
@@ -111,7 +111,11 @@ const Shipping = () => {
           </div>
 
           <div className="flex justify-end">
-            <Button variant="secondary" type="submit" className="font-medium text-base w-[185px] flex gap-2">
+            <Button
+              variant="secondary"
+              type="submit"
+              className="font-medium text-sm md:text-base w-[185px] flex gap-2 h-11 md:h-[52px]"
+            >
               Update
             </Button>
           </div>

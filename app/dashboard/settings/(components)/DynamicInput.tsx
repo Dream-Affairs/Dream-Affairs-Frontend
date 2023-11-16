@@ -40,7 +40,7 @@ const DynamicInput: React.FC<DynamicInputProps> = ({
 }) => {
   return (
     <div className="w-full">
-      <label htmlFor={labelFor} className="block mb-2 font-[500] text-[#1C1C1C]">
+      <label htmlFor={labelFor} className="block text-sm md:text-base mb-2 font-[500] text-[#1C1C1C]">
         {label} {required && <span className="text-[#FF0000] font-[500]">*</span>}
       </label>
       <div className="relative">
@@ -53,11 +53,11 @@ const DynamicInput: React.FC<DynamicInputProps> = ({
           error={error}
           hasValue={hasValue}
           value={value}
-          className={className}
+          className={`text-sm md:text-base ${className}`}
           name={name}
           disabled={disabled}
         />
-        <span className="absolute top-4 right-4">{rightIcon}</span>
+        <span className="absolute top-4 right-[14%] md:right-[4%]">{rightIcon}</span>
       </div>
     </div>
   );

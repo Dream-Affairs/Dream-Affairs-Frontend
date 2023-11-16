@@ -9,7 +9,7 @@ interface ImagesProp {
 const Betterhalf = (props: ImagesProp) => {
   return (
     <div data-aos="zoom-in" data-aos-duration="700" className="max-w-[1440px] mx-auto px-8 lg:px-10">
-      <h1 className="text-center py-16 text-[25px] lg:text-[30px] text-[#48195A] font-semibold">
+      <h1 className="text-center pt-[36px] pb-[24px] text-[14px] lg:text-[30px] text-[#48195A] font-semibold">
         Creating a beautiful experience for you and your better half
       </h1>
       <div className="flex justify-center items-center m-auto mb-16">
@@ -23,12 +23,12 @@ const Betterhalf = (props: ImagesProp) => {
               width={0}
               data-aos="fade-up"
               data-aos-duration="700"
-              className="md:even:mt-[117px] rounded-[20px] object-cover w-[100%] h-[200px]"
+              className="md:even:mt-[117px] rounded-[8px] object-cover w-[100%] h-[200px]"
             />
           ))}
         </div>
       </div>
-      <Button variant="secondary" className="flex items-center m-auto w-[200px] h-[40px]">
+      <Button variant="secondary" className="flex items-center m-auto w-[200px] h-[48px]">
         Start Planning
       </Button>
     </div>

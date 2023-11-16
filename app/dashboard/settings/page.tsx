@@ -67,21 +67,21 @@ const Settings = (props: Props) => {
 
   return (
     <div className=" box-border w-full relative pb-12">
-      <div className="ps-20 border-b-[1px] py-7 ms-1 fixed z-10 top-0 pb-4 bg-white w-full">
+      <div className="ps-5 xl:ps-20 border-b-[1px] py-7 ms-1 fixed z-10 top-10 xl:top-0 pb-4 bg-white w-full">
         {settings.map((setting) => (
           <div key={setting.id}>{setting.active ? <Title text={setting.title} /> : null}</div>
         ))}
-        <div className="flex gap-0 gap-x-5 gap-y-3 md:gap-20 mt-6 flex-wrap">
+        <div className="flex gap-0 gap-x-8 gap-y-3 md:gap-20 mt-3 md:mt-6 overflow-scroll scroll-smooth scrollbar-hidex w-full">
           {settings.map((setting) => (
             <p
               key={setting.id}
               onClick={() => {
                 handleActive(setting.id);
               }}
-              className={`capitalize font-medium cursor-pointer border-b-[3.2px]  hover:text-purple-700 ${
+              className={`whitespace-nowrap capitalize text-sm md:text-base font-medium cursor-pointer border-b-[3.2px]  hover:text-purple-700 ${
                 setting.active
                   ? 'border-b-[3.2px] border-purple-700 text-purple-700 transition-all duration-300'
-                  : 'text-[#242424] border-b-white'
+                  : 'text-[#242424] border-b-transparent'
               }`}
             >
               {setting.name}
@@ -89,7 +89,7 @@ const Settings = (props: Props) => {
           ))}
         </div>
       </div>
-      <div className="w-full h-auto mt-[8.65rem] ps-1">
+      <div className="w-full h-auto mt-[6.3rem] xl:mt-[8.65rem] ps-1">
         {settings.map((setting) => (
           <div key={setting.id}>{setting.active ? setting.render : null}</div>
         ))}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Curly from './(assets)/curly.svg';
 import Phone from './(assets)/phone.svg';
 import Image from 'next/image';
@@ -11,7 +11,7 @@ const Contact = () => {
         <div className="lg:w-[500px]">
           <div className=" text-center m-auto flex flex-col justify-center items-center lg:justify-start lg:items-start lg:text-left">
             <h1 className="text-[30px] text-[#48195A] font-semibold lg:text-[40px]">Contact us</h1>
-            <Image src={Curly} width={200} alt="Curly" />
+            <Image src={Curly} width={0} alt="Curly" className='w-[118px] sm:w-[187px]' />
             <p className="w-[300x] text-[12px] sm:text-[15px] py-4">
               Questions or visions to share? Reach out and let&apos;s start creating your dream day together. Contact
               us, and let the journey to your perfect wedding begin
@@ -23,24 +23,26 @@ const Contact = () => {
           <label className="" htmlFor="">
             Your name
           </label>
-          <input type="text" className="border rounded-lg p-2 mt-3 text" placeholder="Name" />
+          <input type="text" className="border rounded-[8px] p-2 mt-3 text" placeholder="Name" />
           <label className="pt-6" htmlFor="">
             Your email
           </label>
-          <input type="email" className="border rounded-lg p-2 mb-6 mt-3 text" placeholder="Email" />
+          <input type="email" className="border rounded-[8px] p-2 mb-6 mt-3 text" placeholder="Email" />
           <label className="" htmlFor="">
             Your message
           </label>
-          <textarea className="border rounded-lg p-2 mt-3 mb-0 h-full overflow-scroll resize-none" placeholder="Message"></textarea>
-          <p className='text-right mb-6 text-[10px]'>0/1000</p>
-          <Button variant="secondary" type="submit" className='lg:h-24'>
+          <textarea
+            className="border rounded-[5px] p-2 mt-3 mb-0 h-full overflow-scroll resize-none"
+            placeholder="Message"
+          ></textarea>
+          <p className="text-right mb-6 text-[10px]">0/1000</p>
+          <Button variant="secondary" type="submit" className="lg:h-24">
             Send message
           </Button>
         </form>
       </section>
     </section>
   );
-}
+};
 
-
-export default Contact
+export default Contact;
