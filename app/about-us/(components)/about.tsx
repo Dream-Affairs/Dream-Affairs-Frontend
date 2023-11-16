@@ -62,7 +62,7 @@ const AboutUs = () => {
                 Introducing DreamAffiars, where we aim to transform your wedding dreams into reality. Our intuitive
                 platform offers customisable templates, effortless guest management, and integrated gift registry.
                 Coordinate events, manage meals, and budget wisely, all in one place. Our goal is to provide a
-                stress-free, intuitive experience, ensuring your journey to 'I do' is as joyful and memorable as the
+                stress-free, intuitive experience, ensuring your journey to &apos;I do&apos; is as joyful and memorable as the
                 celebration itself. Join us in creating the perfect beginning to your forever
               </p>
             </div>
