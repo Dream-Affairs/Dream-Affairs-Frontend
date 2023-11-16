@@ -69,6 +69,14 @@ const page = () => {
         </div>
       </div>
 
+      {/* toggles */}
+      <div className="flex flex-col gap-3 flex-wrap">
+        <h1 className="text-2xl font-bold">Toggle</h1>
+        <div className="flex gap-3 flex-wrap">
+          <ToggleDemo />
+        </div>
+      </div>
+
       {/* toast */}
       <div className="flex flex-col gap-3 flex-wrap">
         <h1 className="text-2xl font-bold">Toasts</h1>

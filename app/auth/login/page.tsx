@@ -34,6 +34,7 @@ const Login = () => {
     email: { status: false, message: '' },
     password: { status: false, message: '' },
   });
+  const [toastify, setToastify] = React.useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormError((prev) => ({ ...prev, [e.target.id]: false }));
@@ -54,6 +55,7 @@ const Login = () => {
     }
 
     try {
+      setIsSubmitting(true);
       const formData = new FormData();
       formData.append('username', form.email);
       formData.append('password', form.password);

@@ -46,9 +46,7 @@ const Importance = () => {
           >
             <div className=" border-2 m-6 sm:m-10 border-[#E8ACB6] h-[200px] md:h-[300px] p-6 px-7 sm:p-10 md:pt-20 py-10 rounded-md relative rounded-bl-[50px]">
               <Image src={Rose} width={0} alt="Rose" className="absolute -left-6 bottom-[-20px] z-10" />
-              <p className="text-[11px] sm:text-[14px] md:text-[18px] font-[500] z-5 text-black">
-                {box.content}
-              </p>
+              <p className="text-[11px] sm:text-[14px] md:text-[18px] font-[500] z-5 text-black">{box.content}</p>
             </div>
           </div>
         ))}
