@@ -55,6 +55,7 @@ const Login = () => {
     }
 
     try {
+      setIsSubmitting(true);
       const formData = new FormData();
       formData.append('username', form.email);
       formData.append('password', form.password);
