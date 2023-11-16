@@ -20,8 +20,8 @@ type task = {
 };
 
 interface MyTasksProps {
-  deleteTask: (index: number) => void;
-  editItem: (index: number, item: task) => void;
+  deleteTask: (id: string) => void;
+  editItem: (id: string, item: task) => void;
   item: task;
   index: number;
 }
@@ -31,23 +31,21 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
   const [date, setDate] = React.useState<Date | undefined>(undefined);
   const [description, setDescription] = useState('');
   const [assignedMember, setAssignedMember] = useState('');
-  const [id, setId] = useState('');
+  // const [id, setId] = useState('');
   const [done, setDone] = useState(false);
   const [editedTask, setEditedTask] = React.useState<task>(item);
   const error = false;
 
   useEffect(() => {
-    console.log(item);
     setDate(item.date);
     setAssignedMember(item.assignee);
     setDescription(item.decription);
     setDone(item.done);
-    setId(item.id);
   }, [item]);
 
   useEffect(() => {
-    setEditedTask({ decription: description, date: date, assignee: assignedMember, done: done, id: id });
-  }, [date, assignedMember, description, done, id]);
+    setEditedTask({ decription: description, date: date, assignee: assignedMember, done: done, id: item.id });
+  }, [date, assignedMember, description, done, item]);
 
   const handleAssignBlur = useCallback(() => {
     setTimeout(() => {
@@ -60,8 +58,8 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
   };
 
   const handleEditAssignee = useCallback(() => {
-    editItem(index, editedTask);
-  }, [index, editedTask, editItem]);
+    editItem(item.id, editedTask);
+  }, [item, editedTask, editItem]);
 
   return (
     <div
@@ -77,7 +75,7 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
         <div
           onClick={() => {
             setDone((prev) => !prev);
-            editItem(index, {
+            editItem(item.id, {
               decription: description,
               date: date,
               assignee: assignedMember,
@@ -103,15 +101,15 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
                 if (e.target.value.length === 60) return;
                 setDescription(e.target.value);
               }}
-              onBlur={() => (description.length === 0 ? setDescription(item.decription) : editItem(index, editedTask))}
+              onBlur={() =>
+                description.length === 0 ? setDescription(item.decription) : editItem(item.id, editedTask)
+              }
               onKeyDown={(e) => {
                 if (e.key == 'Enter') {
-                  return description.length === 0 ? setDescription(item.decription) : editItem(index, editedTask);
+                  return description.length === 0 ? setDescription(item.decription) : editItem(item.id, editedTask);
                 }
               }}
-              className={`${
-                done && 'line-through'
-              } text-neutral-800 outline-none leading-snug w-full bg-transparent -z-50`}
+              className={`${done && 'line-through'} text-neutral-800 outline-none leading-snug w-full bg-transparent `}
             />
             {/* Date */}
             <Popover>
@@ -138,7 +136,7 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
               <PopoverContent
                 onBlur={() => {
                   if (done) return;
-                  editItem(index, {
+                  editItem(item.id, {
                     decription: description,
                     date: date,
                     assignee: assignedMember,
@@ -188,7 +186,7 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
               closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
               otherBtn={
                 <DialogClose asChild>
-                  <Button onClick={() => deleteTask(index)} variant="destructive" className="w-full mt-5">
+                  <Button onClick={() => deleteTask(item.id)} variant="destructive" className="w-full mt-5">
                     Delete
                   </Button>
                 </DialogClose>

@@ -35,7 +35,7 @@ type ts = {
 };
 
 type addTask = (task: task) => void;
-type deleteTask = (index: number) => void;
+type deleteTask = (id: string) => void;
 type editItem = (index: number, item: task) => void;
 
 const Checklist = () => {
@@ -51,6 +51,7 @@ const Checklist = () => {
 
   const searchResultsPerPage = 6;
 
+  // GET TASKS
   useEffect(() => {
     const response: any = localStorage.getItem('Tasks');
     const storedTasks: ts[] = JSON.parse(response);
@@ -67,11 +68,13 @@ const Checklist = () => {
     if (storedTasks) setTasks(updatedTask);
   }, []);
 
+  // GET NUMBER OF PAGES
   useEffect(() => {
     setNumPages(Math.ceil(tasks.length / searchResultsPerPage));
   }, [tasks, searchResultsPerPage]);
 
   useEffect(() => {
+    // SPLIT TASKS TO 6 PER PAGE
     const getTasksPage = function (page: number) {
       const start = (page - 1) * searchResultsPerPage;
       const end = page * searchResultsPerPage;
@@ -102,14 +105,17 @@ const Checklist = () => {
     }
   }, [pageNum, searchResultsPerPage, tasks, numPages]);
 
+  //  SHOW FORM IF NO TASK
   useEffect(() => {
     tasks.length === 0 ? setAddTask(true) : setAddTask(false);
   }, [tasks]);
 
+  // CANCLE ADD TASK FORM
   const CancelAddTask = () => {
     setAddTask(false);
   };
 
+  //  ADD TASK
   const handleAddTask: addTask = (task) => {
     const newTasksArr = [task, ...tasks];
     setTasks(newTasksArr);
@@ -117,14 +123,17 @@ const Checklist = () => {
     localStorage.setItem('Tasks', JSON.stringify(newTasksArr));
   };
 
-  const handleDelete: deleteTask = (index) => {
-    const newTasksArr = tasks?.filter((_, i) => i !== index);
+  // DELETE TASK
+  const handleDelete: deleteTask = (id) => {
+    const newTasksArr = tasks?.filter((item) => item.id !== id);
     setTasks(newTasksArr);
     localStorage.removeItem('Tasks');
     localStorage.setItem('Tasks', JSON.stringify(newTasksArr));
   };
 
-  const handleEditTask = (index: number, item: task) => {
+  // EDIT TASK
+  const handleEditTask = (id: string, item: task) => {
+    const index = tasks?.findIndex((item) => item.id === id);
     const newTasksArr = [...tasks];
     newTasksArr.splice(index, 1);
     newTasksArr.splice(index, 0, item);
@@ -185,8 +194,8 @@ const Checklist = () => {
         </div>
         {/* Tasks */}
         <ul className="mt-8 flex flex-col gap-5 z-0">
-          {tasks.length > 0
-            ? tasks.slice((pageNum - 1) * searchResultsPerPage, pageNum * searchResultsPerPage).map((item, i) => (
+          {tasksPerPage.length > 0
+            ? tasksPerPage?.map((item, i) => (
                 <li key={i + 1} className="">
                   <Task editItem={handleEditTask} index={i} deleteTask={handleDelete} item={item} />
                 </li>
@@ -225,7 +234,7 @@ const Checklist = () => {
 
             <p
               onClick={() => {
-                if (PaginationArr?.length > numPages) return;
+                if (pageNum === numPages) return;
                 setPageNum((prev) => prev + 1);
               }}
               className={`px-3 py-1.5 bg-transparent hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500 ${
