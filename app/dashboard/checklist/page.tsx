@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import Task from '../(components)/checklist/Task';
-import { Arrow } from '../(components)/checklist/Icons';
+import { Arrow, PlusIcon } from '../(components)/checklist/Icons';
 
 const filter: string[] = ['All tasks', 'Assigned to me', 'Assigned by me', 'Completed'];
 
@@ -132,7 +132,7 @@ const Checklist = () => {
 
   return (
     <section className="w-full px-8">
-      <aside className="pt-10 flex flex-col gap-2 justify-start items-start">
+      <aside className="hidden pt-10 sm:flex flex-col gap-2 justify-start items-start">
         <h1 className="text-black text-4xl font-bold  leading-10">Wedding Checklist</h1>
         <p className="text-neutral-400 text-base font-normal  leading-snug">
           Easily create and manage a to-do list of your wedding tasks
@@ -141,22 +141,22 @@ const Checklist = () => {
       {/* Search */}
       <Search />
       {/* Tasks side */}
-      <aside className="mt-20">
-        <div className="w-full h-14 flex flex-col gap-3 md:gap-0 md:flex-row md:justify-between md:items-center">
-          <h3 className="text-zinc-800 text-2xl font-semibold leading-loose">Tasks</h3>
-          <div className="justify-center items-center gap-3 flex">
-            <p className="text-zinc-800 leading-snug hidden md:block">Filter By</p>
+      <aside className="mt-8 sm:mt-20">
+        <div className="w-full h-14 flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between md:items-center">
+          <h3 className="text-zinc-800 text-xl font-semibold leading-loose">Tasks</h3>
+          <div className="justify-center items-center sm:gap-3 sm:flex">
+            <p className="text-zinc-800 leading-snug hidden sm:block">Filter By</p>
 
-            <aside className="grid grid-cols-2 gap-14 md:gap-3 ">
+            <aside className="flex sm:grid sm:grid-cols-2 gap-3  ">
               {/* <Filter /> */}
               <Select>
-                <SelectTrigger className="w-[180px] h-[55px]">
+                <SelectTrigger className="w-full h-[55px] text-lg">
                   <SelectValue placeholder={filterKey} />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="w-full">
                   <SelectGroup>
                     {filter.map((item, i) => (
-                      <SelectItem value={item} key={i + 1} onClick={() => setFilterKey(item)}>
+                      <SelectItem className="text-lg" value={item} key={i + 1} onClick={() => setFilterKey(item)}>
                         {item}
                       </SelectItem>
                     ))}
@@ -164,24 +164,27 @@ const Checklist = () => {
                 </SelectContent>
               </Select>
               <Button
-                className={addTask ? 'cursor-not-allowed' : ''}
+                className={`${addTask ? 'cursor-not-allowed' : ''} `}
                 variant={addTask ? 'disabled' : 'secondary'}
                 onClick={() => setAddTask(true)}
               >
-                Add Task
+                <span className="hidden sm:block">Add Task</span>
+                <span className="sm:hidden">
+                  <PlusIcon />
+                </span>
               </Button>
             </aside>
           </div>
         </div>
         {/* Add Tasks */}
-        <div className="w-full mt-24 md:mt-8 border-t border-neutral-200">
+        <div className="w-full mt-14 sm:mt-8 border-t border-neutral-200">
           {addTask && <AddTask addTask={handleAddTask} cancel={CancelAddTask} />}
         </div>
         {/* Tasks */}
-        <ul className="mt-8 flex flex-col gap-5">
-          {tasksPerPage?.length > 0
-            ? tasksPerPage.map((item, i) => (
-                <li key={i + 1}>
+        <ul className="mt-8 flex flex-col gap-5 z-0">
+          {tasks.length > 0
+            ? tasks.slice((pageNum - 1) * searchResultsPerPage, pageNum * searchResultsPerPage).map((item, i) => (
+                <li key={i + 1} className="">
                   <Task editItem={handleEditTask} index={i} deleteTask={handleDelete} item={item} />
                 </li>
               ))
@@ -189,26 +192,27 @@ const Checklist = () => {
         </ul>
         {/* Pagination */}
         {tasks?.length > 6 && (
-          <div className="w-full h-8 mt-8 rounded flex justify-end items-center pr-14">
-            {showPrevBtn && (
-              <p
-                onClick={() => {
-                  if (pageNum === 1) return;
-                  setPageNum((prev) => prev - 1);
-                }}
-                className="px-3 py-1.5 bg-transparent hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500"
-              >
-                <span>
-                  <Arrow />
-                </span>
-                Previous
-              </p>
-            )}
+          <div className="w-full h-8 mt-8 rounded flex justify-between sm:justify-end items-center sm:pr-14">
+            <p
+              onClick={() => {
+                if (pageNum === 1) return;
+                setPageNum((prev) => prev - 1);
+              }}
+              className={`px-3 py-1.5 bg-transparent hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500 ${
+                showPrevBtn ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <span>
+                <Arrow />
+              </span>
+              Previous
+            </p>
+
             {PaginationArr?.filter((item) => item !== 0 && item <= numPages).map((item) => (
               <p
                 onClick={() => setPageNum(item)}
                 key={item}
-                className={`px-3 py-1.5 ${
+                className={`px-3 py-1.5 hidden sm:block ${
                   pageNum === item ? 'bg-purple-200' : 'bg-transparent'
                 } hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-gray-300 cursor-pointer transition-all duration-500`}
               >
@@ -216,20 +220,20 @@ const Checklist = () => {
               </p>
             ))}
 
-            {showNextBtn && (
-              <p
-                onClick={() => {
-                  if (PaginationArr?.length === numPages) return;
-                  setPageNum((prev) => prev + 1);
-                }}
-                className="px-3 py-1.5 bg-transparent hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500"
-              >
-                Next
-                <span className="rotate-180">
-                  <Arrow />
-                </span>
-              </p>
-            )}
+            <p
+              onClick={() => {
+                if (PaginationArr?.length > numPages) return;
+                setPageNum((prev) => prev + 1);
+              }}
+              className={`px-3 py-1.5 bg-transparent hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500 ${
+                showNextBtn ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              Next
+              <span className="rotate-180">
+                <Arrow />
+              </span>
+            </p>
           </div>
         )}
       </aside>

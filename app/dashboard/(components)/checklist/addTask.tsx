@@ -69,11 +69,14 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
         <div className="w-full flex-col justify-start items-start gap-8 flex">
           {/* Description Input */}
           <input
-            className={`relative outline-none placeholder:text-neutral-400`}
+            className={`relative outline-none placeholder:text-neutral-400 w-full py-2`}
             placeholder="Create a New Task"
             type="text"
             value={taskText}
-            onChange={(e) => setTaskText(e.target.value)}
+            onChange={(e) => {
+              if (e.target.value.length === 60) return;
+              setTaskText(e.target.value);
+            }}
             autoFocus
             onKeyDown={(e) => {
               if (e.key == 'Enter' && taskText.length > 0) {

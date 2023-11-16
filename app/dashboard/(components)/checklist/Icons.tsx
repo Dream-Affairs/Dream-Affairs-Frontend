@@ -129,3 +129,12 @@ export const Arrow = () => {
     </svg>
   );
 };
+
+export const PlusIcon = () => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 25" fill="none">
+      <path d="M6 12.5H18" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12 18.5V6.5" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+};

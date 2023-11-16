@@ -2,8 +2,8 @@ import React from 'react';
 const Search = () => {
   return (
     <aside className="w-full flex mt-8 justify-end">
-      <div className="w-[315px] h-[36px] rounded-md border border-gray-300 flex items-center gap-2 pl-3">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <div className="w-full md:w-[315px] overflow-hidden rounded-md border border-gray-300 flex items-center gap-2 pl-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 20 20" fill="none">
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -11,7 +11,11 @@ const Search = () => {
             fill="#8E8E8E"
           />
         </svg>
-        <input type="text" placeholder="Search for task" className="text-zinc-400 leading-tight focus:outline-none" />
+        <input
+          type="text"
+          placeholder="Search for task"
+          className="text-zinc-400 text-lg leading-tight focus:outline-none py-3 w-full"
+        />
       </div>
     </aside>
   );
