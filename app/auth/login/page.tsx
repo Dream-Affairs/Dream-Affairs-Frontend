@@ -34,7 +34,6 @@ const Login = () => {
     email: { status: false, message: '' },
     password: { status: false, message: '' },
   });
-  const [toastify, setToastify] = React.useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormError((prev) => ({ ...prev, [e.target.id]: false }));
