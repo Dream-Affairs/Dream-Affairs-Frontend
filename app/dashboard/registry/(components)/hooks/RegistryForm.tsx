@@ -1,53 +1,46 @@
-import { useState } from 'react';
-
-enum ImageFileType {
-  JPEG = 'image/jpeg',
-  PNG = 'image/png',
-}
+import { ChangeEvent, useRef, useState } from 'react';
 
 export interface ImageUploadResult {
   image: string | null;
   error: string | null;
-  clearImage: () => void;
-  handleImageChange: React.ChangeEventHandler<HTMLInputElement>;
+  fileInputRef: React.RefObject<HTMLInputElement>;
+  handleImageClick: () => void;
+  handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const useImageUpload = (): ImageUploadResult => {
   const [image, setImage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const clearImage = () => {
-    setImage(null);
-    setError(null);
-  };
-
-  const handleImageChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const file = e.target.files?.[0];
-
-    if (file) {
-      // Check file type using enum
-      const validTypes = [ImageFileType.JPEG, ImageFileType.PNG];
-      if (!validTypes.includes(file.type as ImageFileType)) {
-        setError('Invalid file type. Please upload a JPEG or PNG image.');
-        clearImage();
-        return;
-      }
-
-      // Clear previous errors
-      setError(null);
-
-      // Read and display the selected image
-      const reader = new FileReader();
-      reader.onload = () => {
-        // Ensure the result is a string
-        const result = reader.result as string;
-        setImage(result);
-      };
-      reader.readAsDataURL(file);
+  const handleImageClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
     }
   };
 
-  return { image, error, clearImage, handleImageChange };
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      // Check file type
+      if (!file.type.startsWith('image/jpeg') && !file.type.startsWith('image/png')) {
+        // Invalid file type
+        setError('Invalid file type. Please upload a JPEG or PNG image.');
+      } else {
+        // Clear previous errors
+        setError(null);
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          setImage(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  };
+
+  return { image, error, fileInputRef, handleImageClick, handleFileChange };
 };
 
 export const useLimitedTextInput = (initialValue: string, maxLength: number) => {
