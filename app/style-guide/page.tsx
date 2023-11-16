@@ -682,7 +682,7 @@ const ToggleDemo = () => {
   );
 };
 
-export function TooltipDemo() {
+function TooltipDemo() {
   return (
     <>
       <TooltipProvider>
