@@ -13,19 +13,18 @@ const Header = () => {
   const [mobileNav, toggleMobileNav] = useCycle(false, true);
   const [isDropDownVisible, setIsDropDownVisible] = useState(false);
 
-  const onMouseEnter = () => {
-    setIsDropDownVisible(!isDropDownVisible);
-  }
-
   return (
     <header className="py-4 border-b border-[#E1E1E1] sticky top-0 z-30 bg-white">
       <div className="flex justify-between max-w-[1440px] mx-auto px-8 lg:px-10">
-        <Link href="/" className="flex gap-5 sm:w-auto w-[60%]">
-          <Image src={Logo} width={0} height={0} alt="Dream Affairs Logo" />
-          <Image width={0} height={0} src={da} alt="da" className="" />
+        <Link href="/" className="flex sm:gap-5 gap-3">
+          <Image src={Logo} width={0} height={0} alt="Dream Affairs Logo" className="w-[15%] sm:w-auto" />
+          <Image width={0} height={0} src={da} alt="da" className="w-[60%] sm:w-auto" />
         </Link>
         <div className="lg:space-x-8 mt-5 hidden lg:flex">
-          <p className="cursor-pointer" onMouseOver={onMouseEnter} onClick={() => setIsDropDownVisible(!isDropDownVisible)}>
+          <p
+            className="cursor-pointer"
+            onClick={() => setIsDropDownVisible(!isDropDownVisible)}
+          >
             Features
             {isDropDownVisible ? (
               <ChevronUp className="inline mb-[1px]" />
@@ -107,7 +106,7 @@ const Header = () => {
         <div className="relative z-10 content lg:hidden">
           <motion.button
             animate={mobileNav ? 'open' : 'closed'}
-            className="flex flex-col space-y-1 mt-5"
+            className="flex flex-col space-y-1 mt-4 sm:mt-5"
             onClick={() => toggleMobileNav()}
           >
             <motion.span
