@@ -29,6 +29,8 @@ const InviteTeam: React.FC = () => {
     setFullName(e.target.value);
     if (!e.target.value) {
       setFullNameError('Please fill out this field');
+    } else if (e.target.value.trim().length < 2) {
+      setFullNameError('Full Name must have at least two letters');
     } else {
       setFullNameError('');
     }
@@ -39,9 +41,17 @@ const InviteTeam: React.FC = () => {
     setEmail(e.target.value);
     if (!e.target.value) {
       setEmailError('Please fill out this field');
+    } else if (!isValidEmail(e.target.value)) {
+      setEmailError('Please enter a valid email address');
     } else {
       setEmailError('');
     }
+  };
+
+  const isValidEmail = (email: string) => {
+    // Regular expression for a simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
   //   change role dropdown
@@ -70,10 +80,10 @@ const InviteTeam: React.FC = () => {
       isValid = false;
     }
 
-    // if (!role) {
-    //   setRoleError('Please choose a role');
-    //   isValid = false;
-    // }
+    if (!role) {
+      setRoleError('Please choose a role');
+      isValid = false;
+    }
 
     if (isValid) {
       console.log('Full Name:', fullName);
@@ -92,10 +102,17 @@ const InviteTeam: React.FC = () => {
         </p>
       </div>
 
-      <div className="my-4 border border-border"></div>
+      {/* divider */}
+      <div className="my-4 border w-full border-border"></div>
 
       {/* invite team section */}
-      <section className="mx-6 flex flex-col gap-4 rounded-md px-2 py-8 border border-border">
+      <section
+        className="mx-6 flex flex-col gap-4 rounded-xl px-4 py-8 pb-20 border border-border"
+        style={{
+          backgroundColor: 'white',
+          boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.1)',
+        }}
+      >
         <h1 className="text-2xl font-medium">Invite Team form</h1>
 
         <div className="flex flex-col items-center justify-center lg:flex-row gap-2">
@@ -132,12 +149,16 @@ const InviteTeam: React.FC = () => {
           </div>
 
           {/* dropdown for roles */}
-          <div className="flex w-full flex-col gap-3">
-            <Label>
+          <div className="flex w-full flex-col relative">
+            <Label className="mb-2">
               Role <span className="text-red-600">*</span>
             </Label>
             <Select>
-              <SelectTrigger className="w-full h-[59px]">
+              <SelectTrigger
+                className={`w-full h-[55px] ${roleError ? 'border-red-500' : ''} ${
+                  !roleError ? 'hover:border-primary' : ''
+                }`}
+              >
                 <SelectValue placeholder="Choose Role" />
               </SelectTrigger>
               <SelectContent>
@@ -147,16 +168,16 @@ const InviteTeam: React.FC = () => {
                     Admin
                   </SelectItem>
 
-                  <SelectItem value="decorator" onSelect={() => handleRoleChange('Decorator')}>
-                    Decorator
+                  <SelectItem value="eventPlanner" onSelect={() => handleRoleChange('EventPlanner')}>
+                    Event Planner
                   </SelectItem>
-                  <SelectItem value="guest" onSelect={() => handleRoleChange('Guest')}>
-                    Guest
+                  <SelectItem value="guestManager" onSelect={() => handleRoleChange('GuestManager')}>
+                    Guest Manager
                   </SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
-            {roleError && <p className="text-red-600">{roleError}</p>}
+            {roleError && <p className="text-red-600 mt-1  text-xs">{roleError}</p>}
           </div>
         </div>
 
@@ -171,7 +192,13 @@ const InviteTeam: React.FC = () => {
       </section>
 
       {/* team management section */}
-      <section className="mx-6 my-6 flex flex-col gap-4 rounded-md px-2 pt-2 pb-6 border border-border">
+      <section
+        className="mx-6 my-6 flex flex-col gap-4 rounded-xl px-4 pt-4 pb-6 border border-border"
+        style={{
+          backgroundColor: 'white',
+          boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.1)',
+        }}
+      >
         <h1 className=" text-2xl font-medium">Team management</h1>
 
         <Teammgt />
