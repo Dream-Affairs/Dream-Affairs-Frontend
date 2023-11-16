@@ -13,12 +13,9 @@ const Header = () => {
   const [mobileNav, toggleMobileNav] = useCycle(false, true);
   const [isDropDownVisible, setIsDropDownVisible] = useState(false);
 
-  const handleMouseLeave = () => {
-    setIsDropDownVisible(false);
-  };
-  const handleMouseEnter = () => {
-    setIsDropDownVisible(true);
-  };
+  const onMouseEnter = () => {
+    setIsDropDownVisible(!isDropDownVisible);
+  }
 
   return (
     <header className="py-4 border-b border-[#E1E1E1] sticky top-0 z-30 bg-white">
@@ -28,7 +25,7 @@ const Header = () => {
           <Image width={0} height={0} src={da} alt="da" className="" />
         </Link>
         <div className="lg:space-x-8 mt-5 hidden lg:flex">
-          <p className="cursor-pointer" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+          <p className="cursor-pointer" onMouseOver={onMouseEnter} onClick={() => setIsDropDownVisible(!isDropDownVisible)}>
             Features
             {isDropDownVisible ? (
               <ChevronUp className="inline mb-[1px]" />
@@ -192,8 +189,7 @@ const Header = () => {
                 >
                   <p
                     className="cursor-pointer duration-700 text-black py-5"
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
+                    onClick={() => setIsDropDownVisible(!isDropDownVisible)}
                   >
                     Features
                     {isDropDownVisible ? (

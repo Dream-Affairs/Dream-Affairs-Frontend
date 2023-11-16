@@ -11,7 +11,7 @@ const Contact = () => {
         <div className="lg:w-[500px]">
           <div className=" text-center m-auto flex flex-col justify-center items-center lg:justify-start lg:items-start lg:text-left">
             <h1 className="text-[30px] text-[#48195A] font-semibold lg:text-[40px]">Contact us</h1>
-            <Image src={Curly} width={200} alt="Curly" />
+            <Image src={Curly} width={0} alt="Curly" className='w-[118px] sm:w-[187px]' />
             <p className="w-[300x] text-[12px] sm:text-[15px] py-4">
               Questions or visions to share? Reach out and let&apos;s start creating your dream day together. Contact
               us, and let the journey to your perfect wedding begin
