@@ -66,7 +66,7 @@ const Login = () => {
       });
       setTimeout(() => {
         router.push('/dashboard');
-      }, 2000);
+      }, 1000);
     } catch (error: any) {
       toast({
         title: 'Login Failed',
