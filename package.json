@@ -43,7 +43,6 @@
     "react": "^18",
     "react-day-picker": "^8.9.1",
     "react-dom": "^18",
-    "react-hook-form": "^7.48.2",
     "react-icons": "^4.11.0",
     "react-responsive-carousel": "^3.2.23",
     "sharp": "^0.32.6",
