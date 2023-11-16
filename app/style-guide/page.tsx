@@ -22,9 +22,11 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { toast } from '@/components/ui/use-toast';
 import AccordionComponent from '../faq/(components)/Accordion';
 import { general } from '../faq/(components)/data';
-import { Modal } from '../(components)/Modal';
+import { Modal } from '../../components/ui/ModalTwo';
 import { BsCalendar2Date } from 'react-icons/bs';
 import { Switch } from '@/components/ui/switch';
+
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const page = () => {
   return (
@@ -69,19 +71,19 @@ const page = () => {
         </div>
       </div>
 
+      {/* toggles */}
+      <div className="flex flex-col gap-3 flex-wrap">
+        <h1 className="text-2xl font-bold">Toggle</h1>
+        <div className="flex gap-3 flex-wrap">
+          <ToggleDemo />
+        </div>
+      </div>
+
       {/* toast */}
       <div className="flex flex-col gap-3 flex-wrap">
         <h1 className="text-2xl font-bold">Toasts</h1>
         <div className="flex gap-3 flex-wrap">
           <ToastDemo />
-        </div>
-      </div>
-
-      {/* toggle */}
-      <div className="flex flex-col gap-3 flex-wrap">
-        <h1 className="text-2xl font-bold">Toggle</h1>
-        <div className="flex gap-3 flex-wrap">
-          <ToggleDemo />
         </div>
       </div>
 
@@ -98,6 +100,14 @@ const page = () => {
         <h1 className="text-2xl font-bold">Calendar</h1>
         <div className="flex gap-3 flex-wrap md:flex-nowrap">
           <CalendarDemo />
+        </div>
+      </div>
+
+      {/* Tooltip */}
+      <div className="flex flex-col gap-3 flex-wrap">
+        <h1 className="text-2xl font-bold">Tooltip</h1>
+        <div className="flex gap-3 flex-wrap md:flex-nowrap">
+          <TooltipDemo />
         </div>
       </div>
 
@@ -671,3 +681,32 @@ const ToggleDemo = () => {
     </>
   );
 };
+
+function TooltipDemo() {
+  return (
+    <>
+      <TooltipProvider>
+        <Tooltip delayDuration={200}>
+          <TooltipTrigger asChild>
+            <Button>Hover for more info</Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Add to library</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <TooltipProvider>
+        <Tooltip delayDuration={700}>
+          <TooltipTrigger asChild>
+            <p className="">Hover for more info, Longer delay</p>
+          </TooltipTrigger>
+          <TooltipContent>
+            <div className="max-w-[50vw]> max-h-50vh overflow-auto">
+              <ToggleDemo />
+            </div>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </>
+  );
+}

@@ -81,6 +81,10 @@
   }
 }
 
+#save_email_button:hover #svg path {
+  stroke: #fff;
+}
+
 @layer utilities {
   .guest-btn {
     @apply bg-[#FFEBEE] text-[#282828] text-sm gap-2;
@@ -115,4 +119,9 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #cacaca;
+}
+
+::selection {
+  background: hsl(283 57% 37%);
+  color: hsl(276, 100%, 94%);
 }

@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import bg from '../(assets)/image1.svg';
 import Wrapper from '../(components)/Wrapper';
 import Link from 'next/link';
@@ -12,8 +12,18 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/use-toast';
 import { isEmpty } from '../(helpers)/isAuthenticated';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (sessionStorage.getItem('daff')) {
+      router.push('/dashboard');
+    }
+  }, [router]);
+
   const [form, setForm] = React.useState({
     email: '',
     password: '',
@@ -21,8 +31,8 @@ const Login = () => {
   const [passwordVisible, setPasswordVisible] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [formError, setFormError] = React.useState({
-    email: false,
-    password: false,
+    email: { status: false, message: '' },
+    password: { status: false, message: '' },
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,25 +41,45 @@ const Login = () => {
     setForm((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const url = process.env.NEXT_PUBLIC_API_URL;
     if (isEmpty(form.email)) {
-      setFormError((prev) => ({ ...prev, email: true }));
+      setFormError((prev) => ({ ...prev, email: { status: true, message: 'Please fill out this field' } }));
       return;
     }
     if (isEmpty(form.password)) {
-      setFormError((prev) => ({ ...prev, password: true }));
+      setFormError((prev) => ({ ...prev, password: { status: true, message: 'Please fill out this field' } }));
       return;
     }
 
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      setIsSubmitting(true);
+      const formData = new FormData();
+      formData.append('username', form.email);
+      formData.append('password', form.password);
+      const data = await axios.post(`${url}/auth/login`, formData);
+      sessionStorage.setItem('daff', data.data.data.access_token);
       toast({
-        title: 'Error Occured',
-        description: 'Server error occured. Please try again later.',
+        title: 'Login Successful',
+        description: 'You have successfully logged in',
       });
-    }, 3000);
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 1000);
+    } catch (error: any) {
+      toast({
+        title: 'Login Failed',
+        description: error.response.data.message,
+      });
+      setFormError((prev) => ({
+        ...prev,
+        email: { status: true, message: error.response.data.message },
+        password: { status: true, message: error.response.data.message },
+      }));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -69,8 +99,9 @@ const Login = () => {
             id="email"
             type="text"
             placeholder="Email"
-            errorMessage="Please fill out this field"
-            error={formError.email}
+            autoComplete="current-email"
+            errorMessage={formError.email.message}
+            error={formError.email.status}
             hasValue={form.email !== '' ? true : false}
             value={form.email}
             onChange={handleInputChange}
@@ -82,8 +113,9 @@ const Login = () => {
             id="password"
             type={passwordVisible ? 'text' : 'password'}
             placeholder="Password"
-            errorMessage="Please fill out this field"
-            error={formError.password}
+            autoComplete="current-password"
+            errorMessage={formError.password.message}
+            error={formError.password.status}
             hasValue={form.password !== '' ? true : false}
             value={form.password}
             onChange={handleInputChange}

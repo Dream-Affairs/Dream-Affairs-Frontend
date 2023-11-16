@@ -7,6 +7,9 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import AssignPopover from './AssignPopover';
+import { Button } from '@/components/ui/button';
+import { DialogClose } from '@/components/ui/dialog';
+import { Modal } from '@/components/ui/ModalTwo';
 
 type task = {
   decription: string;
@@ -146,8 +149,35 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
           </div>
 
           {/* Delete */}
-          <aside onClick={() => deleteTask(index)} className="justify-self-end cursor-pointer">
-            <DeleteIcon />
+          <aside
+            // onClick={() => deleteTask(index)}
+            className="justify-self-end cursor-pointer"
+          >
+            <Modal
+              width="700"
+              showXIcon={false}
+              btnTiggerText={<DeleteIcon />}
+              btnTriggerStyle=""
+              showCloseBtn={true}
+              closeBtnText="Close"
+              closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
+              otherBtn={
+                <DialogClose asChild>
+                  <Button onClick={() => deleteTask(index)} variant="destructive" className="w-full mt-5">
+                    Delete
+                  </Button>
+                </DialogClose>
+              }
+            >
+              <div className="w-full flex-col justify-start items-start gap-3.5 inline-flex border-b border-gray-200 pb-8">
+                <div className="flex flex-col justify-start items-start gap-4">
+                  <h3 className="w-80 text-neutral-900 text-base font-medium  leading-snug">Delete task</h3>
+                  <p className="self-stretch text-neutral-900 text-sm font-normal  leading-tight">
+                    Are you sure you want to delete create guest list from your tasks
+                  </p>
+                </div>
+              </div>
+            </Modal>
           </aside>
         </div>
       </div>

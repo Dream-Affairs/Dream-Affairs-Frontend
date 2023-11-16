@@ -30,9 +30,9 @@ const Importance = () => {
 
   return (
     <div className="max-w-[1440px] mx-auto px-8 lg:px-10">
-      <div className="m-auto text-center flex flex-col items-center py-16 md:pb-20">
-        <h1 className="text-[30px] lg:text-[40px] text-[#48195A] font-semibold">Why do you need DreamAffairs</h1>
-        <Image src={Curly} width={0} alt="Curly" className="w-[240px] sm:w-[400px]" />
+      <div className="m-auto text-center flex flex-col items-center pt-[32px] pb-[24px]">
+        <h1 className="text-[24px] sm:text-[56px] text-[#48195A] font-semibold">Why do you need DreamAffairs</h1>
+        <Image src={Curly} width={0} alt="Curly" className="w-[108px] sm:w-[400px]" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb">
@@ -44,11 +44,9 @@ const Importance = () => {
             data-aos-duration="800"
             className=""
           >
-            <div className=" border-2 m-4 sm:m-10 border-[#E8ACB6] w[4x] lg:h-[300px] p-20 rounded-md relative rounded-bl-[50px]">
+            <div className=" border-2 m-6 sm:m-10 border-[#E8ACB6] h-[200px] md:h-[300px] p-6 px-7 sm:p-10 md:pt-20 py-10 rounded-md relative rounded-bl-[50px]">
               <Image src={Rose} width={0} alt="Rose" className="absolute -left-6 bottom-[-20px] z-10" />
-              <p className="text-center lg:text-left text-[10px] sm:text-[18px] font-semibold z-5 text-black">
-                {box.content}
-              </p>
+              <p className="text-[11px] sm:text-[14px] md:text-[18px] font-[500] z-5 text-black">{box.content}</p>
             </div>
           </div>
         ))}

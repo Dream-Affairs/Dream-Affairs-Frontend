@@ -45,8 +45,8 @@ const Faq = () => {
   return (
     <div className="max-w-[1440px] mx-auto px-8 lg:px-10">
       <div data-aos="zoom-in" data-aos-duration="700" className="m-auto text-center flex flex-col items-center py-16">
-        <h1 className="text-[30px] lg:text-[40px] text-[#48195A] font-semibold">Frequently asked questions</h1>
-        <Image src={Curly} width={0} alt="Curly" className="w-[240px] sm:w-[400px]" />
+        <h1 className="text-[18px] lg:text-[40px] text-[#48195A] font-semibold">Frequently asked questions</h1>
+        <Image src={Curly} width={0} alt="Curly" className="w-[127px] sm:w-[400px]" />
       </div>
 
       {questions.map((quest) => (
@@ -54,13 +54,13 @@ const Faq = () => {
           data-aos="fade-up"
           data-aos-duration="800"
           key={quest.id}
-          className="md:w-[700px] md:m-auto last:border-0 border-b-2 border-white/ "
+          className="md:m-auto last:border-0 border-b-2 border-white/ "
         >
           <button
             data-aos="fade-up"
             data-aos-duration="600"
             onClick={() => setActiveQuestion(activeQuestion === quest.id ? null : quest.id)}
-            className="flex justify-between font-bold w-full text-[14px] sm:text-[16px] py-5 text-left focus:outline-none"
+            className="flex justify-between font-medium w-full text-[14px] sm:text-[24px] py-5 text-left focus:outline-none"
           >
             {quest.question}
             {activeQuestion === quest.id ? <ChevronDown className="inline" /> : <ChevronRight className="inline" />}
@@ -71,7 +71,7 @@ const Faq = () => {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="pb-3 mt-2 w-[90%] text-[12px] sm:text-[13px] text-gray-500"
+                className="pb-3 mt-2 w-[90%] text-[12px] sm:text-[20px] text-gray-500"
               >
                 <p>{quest.answer}</p>
               </motion.div>
