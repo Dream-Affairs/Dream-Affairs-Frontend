@@ -69,8 +69,8 @@ const AboutUs = () => {
             <div className="flex flex-col gap-y-[12px] lg:gap-y-[3px]">
               <h1 className="font-[600] text-[16px] leading-[22.4px]  lg:text-[40px] lg:leading-[56px] text-[#48195A]">Our Approach</h1>
               <ul className="flex flex-col sm:gap-y-[12px] gap-y-[16px] lg:gap-y-[24px]">
-                {ourApproach.map((approach) => (
-                  <li className="flex flex-row items-center gap-x-[4px]">
+                {ourApproach.map((approach, index) => (
+                  <li key={index} className="flex flex-row items-center gap-x-[4px]">
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
                         d="M8 12.44V19.56C8 23.9867 11.1333 25.7867 14.96 23.5867L16.6667 22.6C17.08 22.36 17.3333 21.92 17.3333 21.44V10.56C17.3333 10.08 17.08 9.64 16.6667 9.4L14.96 8.41334C11.1333 6.21334 8 8.01334 8 12.44Z"
