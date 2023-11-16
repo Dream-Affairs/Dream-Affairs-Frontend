@@ -6,6 +6,8 @@ import { Label } from '@/components/ui/label';
 import { DatePicker } from '../../(components)/DatePicker';
 import { Checkbox } from '@/components/ui/checkbox';
 import { isEmpty } from '../../(helpers)/helpers';
+import { toast } from '@/components/ui/use-toast';
+import axios from 'axios';
 
 interface FormTwoProps {
   formOne: {
@@ -20,6 +22,20 @@ interface FormTwoProps {
       password: string;
       confirmPassword: string;
       valid: boolean;
+    }>
+  >;
+  setFormOneError: React.Dispatch<
+    React.SetStateAction<{
+      email: boolean;
+      password: boolean;
+      confirmPassword: boolean;
+    }>
+  >;
+  setErrorMessages: React.Dispatch<
+    React.SetStateAction<{
+      email: string;
+      password: string;
+      confirmPassword: string;
     }>
   >;
   formTwo: {
@@ -41,7 +57,17 @@ interface FormTwoProps {
   setFormThree: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Two = ({ formOne, setFormOne, date, setDate, formTwo, setFormTwo, setFormThree }: FormTwoProps) => {
+const Two = ({
+  formOne,
+  setFormOne,
+  setFormOneError,
+  setErrorMessages,
+  date,
+  setDate,
+  formTwo,
+  setFormTwo,
+  setFormThree,
+}: FormTwoProps) => {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [formError, setFormError] = React.useState({
     yourFirstName: false,
@@ -57,8 +83,16 @@ const Two = ({ formOne, setFormOne, date, setDate, formTwo, setFormTwo, setFormT
     setFormTwo((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<EventTarget>) => {
+  const handleSubmit = async (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
+    setFormError({
+      yourFirstName: false,
+      partnersFirstName: false,
+      eventDate: false,
+      pickedADate: false,
+      location: false,
+    });
+    const url = process.env.NEXT_PUBLIC_API_URL;
     if (isEmpty(formTwo.yourFirstName)) {
       setFormError((prev) => ({ ...prev, yourFirstName: true }));
       return;
@@ -79,14 +113,56 @@ const Two = ({ formOne, setFormOne, date, setDate, formTwo, setFormTwo, setFormT
       return;
     }
 
-    setIsSubmitting(true);
-    setTimeout(() => {
+    try {
+      setIsSubmitting(true);
+      const { data } = await axios.post(`${url}/auth/signup`, {
+        email: formOne.email,
+        password: formOne.password,
+        confirm_password: formOne.confirmPassword,
+        first_name: formTwo.yourFirstName,
+        partner_name: formTwo.partnersFirstName,
+        event_date: formTwo.pickedADate ? null : date,
+        location: formTwo.location,
+      });
+
+      toast({
+        title: 'Account Created',
+        description: 'Please check your email for a verification link',
+      });
+      setTimeout(() => {
+        setFormThree(true);
+      }, 2000);
+    } catch (error: any) {
+      const response = error.response.data;
+      const status = error.response.status;
+      const loc = error.response.data.detail ? error.response?.data?.detail[0]?.loc[1] : '';
+      console.log(error.response.data);
+
+      if (loc === 'email') {
+        toast({ title: 'Validation Error', description: 'Please enter a valid email' });
+        setFormOne((prev) => ({ ...prev, valid: false }));
+        setFormOneError((prev) => ({ ...prev, email: true }));
+        setErrorMessages((prev) => ({ ...prev, email: 'Please enter a valid email address' }));
+        return;
+      }
+
+      if (status === 409 || 'Failed to create account') {
+        toast({ title: 'An error occured', description: 'Email already exists, please recover your password' });
+        setFormOne((prev) => ({ ...prev, valid: false }));
+        setFormOneError((prev) => ({ ...prev, email: true }));
+        setErrorMessages((prev) => ({ ...prev, email: 'Email already exists' }));
+        return;
+      }
+
+      toast({
+        title: 'Something went wrong',
+        description: response.message,
+      });
+    } finally {
       setIsSubmitting(false);
-      setFormThree(true);
-    }, 2000);
+    }
   };
 
-  console.log(formError);
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
@@ -100,6 +176,7 @@ const Two = ({ formOne, setFormOne, date, setDate, formTwo, setFormTwo, setFormT
           hasValue={formTwo.yourFirstName !== '' ? true : false}
           value={formTwo.yourFirstName}
           onChange={handleInputChange}
+          autoComplete="given-name"
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -113,6 +190,7 @@ const Two = ({ formOne, setFormOne, date, setDate, formTwo, setFormTwo, setFormT
           hasValue={formTwo.partnersFirstName !== '' ? true : false}
           value={formTwo.partnersFirstName}
           onChange={handleInputChange}
+          autoComplete="given-name"
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -124,7 +202,7 @@ const Two = ({ formOne, setFormOne, date, setDate, formTwo, setFormTwo, setFormT
             setDate={setDate}
             error={formError.eventDate}
           />
-          {!date && formError.eventDate && <p className="text-red-500 text-xs">Error</p>}
+          {!date && formError.eventDate && <p className="text-red-500 text-xs">Please fill out this field</p>}
         </div>
       </div>
       <div className="flex items-center gap-2">
@@ -153,6 +231,7 @@ const Two = ({ formOne, setFormOne, date, setDate, formTwo, setFormTwo, setFormT
           hasValue={formTwo.location !== '' ? true : false}
           value={formTwo.location}
           onChange={handleInputChange}
+          autoComplete="street-country"
         />
       </div>
       <Button
@@ -170,12 +249,10 @@ const Two = ({ formOne, setFormOne, date, setDate, formTwo, setFormTwo, setFormT
         <span
           className="text-primary cursor-pointer"
           onClick={() => {
-            setFormOne({
-              email: '',
-              password: '',
-              confirmPassword: '',
+            setFormOne((p) => ({
+              ...p,
               valid: false,
-            });
+            }));
             setFormTwo({
               yourFirstName: '',
               partnersFirstName: '',

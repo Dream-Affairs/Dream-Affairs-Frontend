@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Curly from './(assets)/curly.svg';
 import Phone from './(assets)/phone.svg';
 import Image from 'next/image';
@@ -31,16 +31,18 @@ const Contact = () => {
           <label className="" htmlFor="">
             Your message
           </label>
-          <textarea className="border rounded-[5px] p-2 mt-3 mb-0 h-full overflow-scroll resize-none" placeholder="Message"></textarea>
-          <p className='text-right mb-6 text-[10px]'>0/1000</p>
-          <Button variant="secondary" type="submit" className='lg:h-24'>
+          <textarea
+            className="border rounded-[5px] p-2 mt-3 mb-0 h-full overflow-scroll resize-none"
+            placeholder="Message"
+          ></textarea>
+          <p className="text-right mb-6 text-[10px]">0/1000</p>
+          <Button variant="secondary" type="submit" className="lg:h-24">
             Send message
           </Button>
         </form>
       </section>
     </section>
   );
-}
+};
 
-
-export default Contact
+export default Contact;

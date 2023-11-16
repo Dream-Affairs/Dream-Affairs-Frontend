@@ -15,6 +15,18 @@ const Register = () => {
     valid: false,
   });
 
+  const [formOneError, setFormOneError] = React.useState({
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
+
+  const [errorMessages, setErrorMessages] = React.useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
   const [date, setDate] = React.useState<Date>();
 
   const [formTwo, setFormTwo] = React.useState({
@@ -28,45 +40,8 @@ const Register = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setFormThree(true);
+    // setFormThree(true);
   };
-
-  const array = [
-    {
-      expand: 'renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations',
-      id: '10001',
-      self: 'https://rafaelmiranda.atlassian.net/rest/api/2/issue/10001',
-      key: 'TES-1',
-      fields: {
-        priority: {
-          self: 'https://rafaelmiranda.atlassian.net/rest/api/2/priority/3',
-          iconUrl: 'https://rafaelmiranda.atlassian.net/images/icons/priorities/medium.svg',
-          name: 'Medium1',
-          id: '3',
-        },
-      },
-    },
-    {
-      expand: 'renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations',
-      id: '10002',
-      self: 'https://rafaelmiranda.atlassian.net/rest/api/2/issue/10001',
-      key: 'TES-2',
-      fields: {
-        priority: {
-          self: 'https://rafaelmiranda.atlassian.net/rest/api/2/priority/3',
-          iconUrl: 'https://rafaelmiranda.atlassian.net/images/icons/priorities/medium.svg',
-          name: 'Medium2',
-          id: '3',
-        },
-      },
-    },
-  ];
-
-  array.map((el) => {
-    if (el.fields.priority.name === 'Medium2') {
-      console.log(el.key);
-    }
-  });
 
   return (
     <>
@@ -84,11 +59,20 @@ const Register = () => {
         >
           <form onSubmit={handleSubmit}>
             {formOne.valid === false ? (
-              <One formOne={formOne} setFormOne={setFormOne} />
+              <One
+                formOne={formOne}
+                setFormOne={setFormOne}
+                formOneError={formOneError}
+                setFormOneError={setFormOneError}
+                errorMessages={errorMessages}
+                setErrorMessages={setErrorMessages}
+              />
             ) : (
               <Two
                 formOne={formOne}
                 setFormOne={setFormOne}
+                setFormOneError={setFormOneError}
+                setErrorMessages={setErrorMessages}
                 formTwo={formTwo}
                 setFormTwo={setFormTwo}
                 date={date}

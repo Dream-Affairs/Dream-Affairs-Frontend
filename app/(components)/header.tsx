@@ -15,10 +15,10 @@ const Header = () => {
 
   const handleMouseLeave = () => {
     setIsDropDownVisible(false);
-  }
+  };
   const handleMouseEnter = () => {
     setIsDropDownVisible(true);
-  }
+  };
 
   return (
     <header className="py-4 border-b border-[#E1E1E1] sticky top-0 z-30 bg-white">
@@ -139,7 +139,9 @@ const Header = () => {
                 closed: { opacity: 0, rotate: 0, y: 0, borderRadius: '0%' },
                 open: { rotate: 360, borderRadius: '50%' },
               }}
-              className={`${mobileNav ? 'absolute' : 'hidden'} w-5 p-3 bottom-[10px] right-[-3.99px] h-px border border-black block`}
+              className={`${
+                mobileNav ? 'absolute' : 'hidden'
+              } w-5 p-3 bottom-[10px] right-[-3.99px] h-px border border-black block`}
             ></motion.span>
           </motion.button>
         </div>

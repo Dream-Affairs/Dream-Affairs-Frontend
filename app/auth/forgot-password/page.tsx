@@ -9,17 +9,21 @@ import { Button } from '@/components/ui/button';
 import { isEmpty, isValidEmail } from '@/app/auth/(helpers)/helpers';
 import Link from 'next/link';
 import Image from 'next/image';
+import { toast } from '@/components/ui/use-toast';
+import axios from 'axios';
 
 const ForgotPassword = () => {
   const [email, setEmail] = React.useState('');
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [error, setError] = React.useState({
     state: false,
     message: '',
   });
   const [isValid, setIsValid] = React.useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const url = process.env.NEXT_PUBLIC_API_URL;
     if (isEmpty(email)) {
       setError({ state: true, message: 'Please fill out this field' });
       return;
@@ -29,7 +33,23 @@ const ForgotPassword = () => {
       return;
     }
 
-    setIsValid(true);
+    try {
+      setIsSubmitting(true);
+      const data = await axios.post(`${url}/auth/forgot-password`, { email });
+      console.log(data);
+      // toast({
+      //   title: 'Login Successful',
+      //   description: 'You have successfully logged in',
+      // });
+      // setIsValid(true);
+    } catch (error: any) {
+      toast({
+        title: 'Verification link sent',
+        description: error.response.data.message,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
