@@ -14,6 +14,7 @@ export default function Teammgt() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalMessage, setModalMessage] = useState('');
+  const [actionName, setActionName] = useState('');
 
   //   test mode
   const [selectedMember, setSelectedMember] = useState<number | null>(null);
@@ -52,6 +53,7 @@ export default function Teammgt() {
     setModalMessage(
       'Are you sure you want to suspend the wedding planner from the collaboration team? This action will restrict their access to the shared dashboard and collaborative features.',
     );
+    setActionName('Suspend');
     handleOpenModal();
   };
 
@@ -60,6 +62,7 @@ export default function Teammgt() {
     setModalMessage(
       'Are you sure you want to remove the wedding planner from the collaboration team? This action will revoke their access to the shared dashboard and collaborative features.',
     );
+    setActionName('Remove');
     handleOpenModal();
   };
 
@@ -68,6 +71,7 @@ export default function Teammgt() {
     setModalMessage(
       'you are lifting the suspension, allowing the user to resume their normal activities on the platform. Ensure a smooth return to regular participation and collaboration.',
     );
+    setActionName('Reinstate');
     handleOpenModal();
   };
 
@@ -76,6 +80,7 @@ export default function Teammgt() {
     setModalMessage(
       `Give it another shot! Resend the invitation link to ensure they don't miss out on the exciting collaboration. Let's make sure they're part of the action!`,
     );
+    setActionName('Resend');
     handleOpenModal();
   };
 
@@ -95,10 +100,11 @@ export default function Teammgt() {
   // Sample data for members
   const members = [
     { fullName: 'John Doe', email: 'johndoe@example.com', role: 'Admin', status: 'Team Member' },
-    { fullName: 'Alice Smith', email: 'alicesmith@example.com', role: 'Decorator', status: 'Unverified' },
-    { fullName: 'Bob Johnson', email: 'bobjohnson@example.com', role: 'Guest', status: 'Suspended' },
+    { fullName: 'Alice Smith', email: 'alicesmith@example.com', role: 'Event Planner', status: 'Unverified' },
+    { fullName: 'Bob Johnson', email: 'bobjohnson@example.com', role: 'Guest Manager', status: 'Suspended' },
     { fullName: 'Eve Adams', email: 'eveadams@example.com', role: 'Admin', status: 'Team Member' },
-    { fullName: 'Charlie Brown', email: 'charliebrown@example.com', role: 'Guest', status: 'Suspended' },
+    { fullName: 'Charlie Brown', email: 'charliebrown@example.com', role: 'Guest Manager', status: 'Suspended' },
+    { fullName: 'Prosper Pii', email: 'prosperh@example.com', role: 'Event Planner', status: 'Team Member' },
   ];
 
   const filteredMembers = members.filter((member) => member.status === 'Team Member');
@@ -110,7 +116,9 @@ export default function Teammgt() {
       <div className="flex gap-4">
         <button
           className={`tab-button focus:outline-none ${
-            activeTab === 'teamMembers' ? 'text-primary font-medium border-b-2 pb-2 border-primary' : 'text-black pb-2'
+            activeTab === 'teamMembers'
+              ? 'text-primary font-medium border-b-[3px] pb-2 border-primary'
+              : 'text-black pb-2'
           }`}
           onClick={showTeamMembers}
         >
@@ -128,7 +136,7 @@ export default function Teammgt() {
         <button
           className={`tab-button focus:outline-none ${
             activeTab === 'unverifiedUsers'
-              ? 'text-primary font-medium border-b-2 border-primary pb-2'
+              ? 'text-primary font-medium border-b-[3px] border-primary pb-2'
               : 'text-black pb-2'
           }`}
           onClick={showUnverifiedUsers}
@@ -147,7 +155,7 @@ export default function Teammgt() {
         <button
           className={`tab-button focus:outline-none ${
             activeTab === 'suspendedUsers'
-              ? 'text-primary font-medium border-b-2 border-primary pb-2'
+              ? 'text-primary font-medium border-b-[3px] border-primary pb-2'
               : 'text-black pb-2'
           }`}
           onClick={showSuspendedUsers}
@@ -171,11 +179,10 @@ export default function Teammgt() {
               <thead className="border-b">
                 <tr>
                   <th className="px-4 py-2"></th>
-                  <th className="px-4 py-2">Full Name</th>
-                  <th className="px-4 py-2">Email</th>
-                  <th className="px-4 py-2">Role</th>
-                  <th className="px-4 py-2">Status</th>
-                  <th className="px-4 py-2">Action</th>
+                  <th className="px-4 py-2 text-left">Full Name</th>
+                  <th className="px-4 py-2 text-left">Email</th>
+                  <th className="px-4 py-2 text-left">Role</th>
+                  <th className="px-4 py-2 text-left">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -184,11 +191,10 @@ export default function Teammgt() {
                     <td className="px-4 py-2 text-center">
                       <Image src={sort} alt="sort" />
                     </td>
-                    <td className="px-4 py-2 text-center">{member.fullName}</td>
-                    <td className="px-4 py-2 text-center">{member.email}</td>
-                    <td className="px-4 py-2 text-center">{member.role}</td>
-                    <td className="px-4 py-2 text-center">{member.status}</td>
-                    <td className="px-4 py-2 text-center">
+                    <td className="px-4 py-2 text-left">{member.fullName}</td>
+                    <td className="px-4 py-2 text-left">{member.email}</td>
+                    <td className="px-4 py-2 text-left">{member.role}</td>
+                    <td className="px-4 py-2 text-end">
                       <ActionButton
                         selected={selectedMember === index}
                         toggleMemberActions={() => toggleMemberActions(index)}
@@ -216,7 +222,6 @@ export default function Teammgt() {
                   <th className="px-4 py-2">Full Name</th>
                   <th className="px-4 py-2">Email</th>
                   <th className="px-4 py-2">Role</th>
-                  <th className="px-4 py-2">Status</th>
                   <th className="px-4 py-2">Action</th>
                 </tr>
               </thead>
@@ -229,7 +234,6 @@ export default function Teammgt() {
                     <td className="px-4 py-2 text-center">{member.fullName}</td>
                     <td className="px-4 py-2 text-center">{member.email}</td>
                     <td className="px-4 py-2 text-center">{member.role}</td>
-                    <td className="px-4 py-2 text-center">{member.status}</td>
                     <td className="px-4 py-2 text-center">
                       <ActionButton
                         selected={selectedMember === index}
@@ -258,7 +262,6 @@ export default function Teammgt() {
                   <th className="px-4 py-2">Full Name</th>
                   <th className="px-4 py-2">Email</th>
                   <th className="px-4 py-2">Role</th>
-                  <th className="px-4 py-2">Status</th>
                   <th className="px-4 py-2">Action</th>
                 </tr>
               </thead>
@@ -276,9 +279,6 @@ export default function Teammgt() {
                     </td>
                     <td className="px-4 py-2 text-center" style={{ color: '#9C9C9C' }}>
                       {member.role}
-                    </td>
-                    <td className="px-4 py-2 text-center" style={{ color: '#9C9C9C' }}>
-                      {member.status}
                     </td>
                     <td className="px-4 py-2 text-center">
                       <ActionButton
@@ -309,6 +309,7 @@ export default function Teammgt() {
           handleOpenModal={handleOpenModal}
           title={modalTitle}
           message={modalMessage}
+          actionName={actionName}
         />
       )}
     </div>
@@ -366,7 +367,7 @@ function ActionButton(props: ActionButtonProps) {
       {selected && (
         <div ref={containerRef} className="actions-container">
           <div
-            className="absolute bottom-10 -left-[100px] mt-2 w-[150px] rounded-lg flex flex-col z-10"
+            className="absolute bottom-10 -left-[150px] mt-2 w-[190px] rounded-lg py-[6px] flex flex-col z-10"
             style={{
               backgroundColor: 'white',
               boxShadow: '0px 0px 8px rgba(0, 0, 0, 0.2)',
@@ -404,7 +405,7 @@ function ActionButton(props: ActionButtonProps) {
 function renderActionButton(imageSrc: string, label: string, onClick: () => void) {
   return (
     <button
-      className="hover:bg-gray-100 flex gap-1 h-8 items-center justify-start pl-2 text-base font-normal leading-[22.4px]"
+      className="hover:bg-gray-100 flex gap-1 h-[44px] items-center justify-start pl-4 text-base font-normal leading-[22.4px]"
       onClick={onClick}
     >
       <Image src={imageSrc} alt={label} width={24} height={24} />
