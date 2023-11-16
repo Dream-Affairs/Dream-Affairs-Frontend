@@ -29,13 +29,13 @@ const ProfileDetail = () => {
   };
 
   return (
-    <div className="mt-20">
+    <div className="md:mt-20">
       <form className="w-full">
-        <div className=" border rounded-xl px-5 py-8">
+        <div className="border rounded-xl px-5 py-8">
           <div className="w-full">
             <Subtitle text={'Personal Details'} />
-            <div className="mt-8 flex items-center gap-10">
-              <div className="flex items-center w-[68%] gap-10">
+            <div className="mt-6 md:mt-8 flex flex-wrap md:flex-nowrap items-center gap-8 md:gap-10">
+              <div className="flex flex-wrap md:flex-nowrap items-center w-full md:w-[68%] gap-8 md:gap-10">
                 <DynamicInput
                   onChange={() => {}}
                   type={'text'}
@@ -47,7 +47,7 @@ const ProfileDetail = () => {
                   name={'fname'}
                   required={true}
                   label="First Name"
-                  className="w-full"
+                  className="w-[90%] md:w-full"
                 />
                 <DynamicInput
                   onChange={() => {}}
@@ -59,9 +59,10 @@ const ProfileDetail = () => {
                   hasValue={false}
                   name={'email'}
                   label="Last Name"
+                  className="w-[90%] md:w-full"
                 />
               </div>
-              <div className="w-[28%]">
+              <div className="w-[90%] md:w-[28%]">
                 <p className="block mb-2 font-[500] text-[#1C1C1C]">Gender</p>
                 <div className="flex gap-5 w-full">
                   <div
@@ -94,11 +95,11 @@ const ProfileDetail = () => {
               </div>
             </div>
           </div>
-          <div className="w-full mt-14 flex items-center gap-10">
-            <div className="w-[68%]">
+          <div className="w-full mt-14 flex flex-wrap md:flex-nowrap items-center gap-10">
+            <div className="w-full md:w-[68%]">
               <Subtitle text={'Contact Information'} />
-              <div className="w-full mt-8 flex items-center gap-10">
-                <div className="w-full flex items-center gap-10">
+              <div className="w-full mt-6 md:mt-8 flex flex-wrap md:flex-nowrap items-center gap-8 md:gap-10">
+                <div className="w-full flex flex-wrap md:flex-nowrap items-center gap-8 md:gap-10">
                   <DynamicInput
                     onChange={() => {}}
                     type={'email'}
@@ -111,7 +112,7 @@ const ProfileDetail = () => {
                     name={'eml'}
                     required={true}
                     label="Email"
-                    className="w-full disabled:bg-secondary disabled:border-primary disabled:text-black"
+                    className="w-[90%] md:w-full disabled:bg-secondary disabled:border-primary disabled:text-black"
                     disabled={true}
                     rightIcon={
                       <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -149,13 +150,14 @@ const ProfileDetail = () => {
                     hasValue={false}
                     name={'phone'}
                     label="Phone"
+                    className="w-[90%] md:w-full"
                   />
                 </div>
               </div>
             </div>
-            <div className="w-[28%]">
+            <div className="w-[90%] md:w-[28%]">
               <Subtitle text={'Currency'} />
-              <div className="mt-8">
+              <div className="mt-6 md:mt-8">
                 <div className="flex flex-col">
                   <Label className="mb-3 text-base font-[500]">Select Currency</Label>
                   <Select>

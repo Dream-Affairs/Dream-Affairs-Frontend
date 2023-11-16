@@ -10,8 +10,7 @@ import clock from './(assets)/clock.svg';
 import { EmptyBudget, EmptyClock, EmptyRSVP } from './(components)/DashboardEmpty';
 import { checkList, giftList } from './data/dashboard-data';
 import { Checklist, Gifts } from './(components)/DashboardData';
-
-type Props = {};
+import withAuth from '../auth/(helpers)/withAuth';
 
 const Dashboard = () => {
   const [gifts, setGifts] = useState<any[] | null>(null);
@@ -22,7 +21,7 @@ const Dashboard = () => {
     setGifts(giftList);
   }, []);
   return (
-    <section className="w-full h-full py-6 px-[52px] space-y-8">
+    <section className="w-full h-fit py-6 lg:px-[52px] space-y-8 border-l">
       {/* Header, Add Guest and Upgrade Plan  */}
       <div className="flex justify-between items-center">
         {/* Header  */}
@@ -170,4 +169,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);
