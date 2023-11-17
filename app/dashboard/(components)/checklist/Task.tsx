@@ -89,10 +89,10 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
         >
           {done && <DoneIcon />}
         </div>
-        <div className="w-full items-start grid grid-cols-5 sm:grid-cols-3">
+        <div className="w-full items-start grid grid-cols-4 sm:grid-cols-3">
           {/* Description */}
 
-          <div className="col-span-3 sm:col-span-1 flex-col justify-start items-start gap-3 inline-flex mr-5 ">
+          <div className="col-span-2 sm:col-span-1 flex-col justify-start items-start gap-3 inline-flex mr-5 ">
             <input
               type="text"
               placeholder="Task description"
@@ -109,7 +109,9 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
                   return description.length === 0 ? setDescription(item.decription) : editItem(item.id, editedTask);
                 }
               }}
-              className={`${done && 'line-through'} text-neutral-800 outline-none leading-snug w-full bg-transparent `}
+              className={`${
+                done && 'line-through'
+              } text-neutral-800 outline-none leading-snug w-full bg-transparent text-sm sm:text-base`}
             />
             {/* Date */}
             <Popover>
@@ -153,7 +155,7 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
 
           {/* Assignee */}
           <aside onClick={() => setIsAssigning(true)} className="justify-self-center col-span-1 relative">
-            <p className="bg-gray-300 md:bg-transparent rounded-2xl -translate-y-[20%] sm:translate-y-0 py-1 px-2 -z-50">
+            <p className="bg-gray-300 md:bg-transparent rounded-2xl -translate-y-[20%] sm:translate-y-0 py-1 px-2 -z-50 text-sm sm:text-base">
               {assignedMember !== 'Assign Task' ? (
                 <span className={`${done && 'line-through'} text-slate-600 leading-snug cursor-pointer`}>
                   {assignedMember}

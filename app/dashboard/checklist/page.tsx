@@ -143,8 +143,8 @@ const Checklist = () => {
   };
 
   return (
-    <section className="w-full px-8">
-      <aside className="hidden pt-10 sm:flex flex-col gap-2 justify-start items-start">
+    <section className="w-full">
+      <aside className="hidden pt-10 sm:flex flex-col gap-2 justify-start items-start sm:px-8">
         <h1 className="text-black text-4xl font-bold  leading-10">Wedding Checklist</h1>
         <p className="text-neutral-400 text-base font-normal  leading-snug">
           Easily create and manage a to-do list of your wedding tasks
@@ -153,22 +153,22 @@ const Checklist = () => {
       {/* Search */}
       <Search />
       {/* Tasks side */}
-      <aside className="mt-8 sm:mt-20">
-        <div className="w-full h-14 flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between md:items-center">
-          <h3 className="text-zinc-800 text-xl font-semibold leading-loose">Tasks</h3>
+      <aside className="mt-8 sm:mt-20 ">
+        <div className="w-full h-14 flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between md:items-center px-6 sm:px-8">
+          <h3 className="text-zinc-800 text-lg sm:text-xl font-semibold leading-loose">Tasks</h3>
           <div className="justify-center items-center sm:gap-3 sm:flex">
             <p className="text-zinc-800 leading-snug hidden sm:block">Filter By</p>
 
             <aside className="flex sm:grid sm:grid-cols-2 gap-3  ">
               {/* <Filter /> */}
               <Select>
-                <SelectTrigger className="w-full sm:w-[180px] h-[55px] text-lg">
+                <SelectTrigger className="w-full sm:w-[180px] h-[45px]">
                   <SelectValue placeholder={filterKey} />
                 </SelectTrigger>
                 <SelectContent className="w-full">
                   <SelectGroup>
                     {filter.map((item, i) => (
-                      <SelectItem className="text-lg" value={item} key={i + 1} onClick={() => setFilterKey(item)}>
+                      <SelectItem className="" value={item} key={i + 1} onClick={() => setFilterKey(item)}>
                         {item}
                       </SelectItem>
                     ))}
@@ -176,7 +176,7 @@ const Checklist = () => {
                 </SelectContent>
               </Select>
               <Button
-                className={`${addTask ? 'cursor-not-allowed' : ''} `}
+                className={`${addTask ? 'cursor-not-allowed' : ''} h-[45px] px-3`}
                 variant={addTask ? 'disabled' : 'secondary'}
                 onClick={() => setAddTask(true)}
               >
@@ -189,11 +189,11 @@ const Checklist = () => {
           </div>
         </div>
         {/* Add Tasks */}
-        <div className="w-full mt-14 sm:mt-8 border-t border-neutral-200">
+        <div className="w-full mt-14 sm:mt-8 sm:border-t border-neutral-200 sm:px-8">
           {addTask && <AddTask addTask={handleAddTask} cancel={CancelAddTask} />}
         </div>
         {/* Tasks */}
-        <ul className="mt-8 flex flex-col gap-5 z-0">
+        <ul className="pt-5 sm:pt-8 flex flex-col gap-5 z-0 px-6 sm:px-8">
           {tasksPerPage.length > 0
             ? tasksPerPage?.map((item, i) => (
                 <li key={i + 1} className="">
@@ -204,7 +204,7 @@ const Checklist = () => {
         </ul>
         {/* Pagination */}
         {tasks?.length > 6 && (
-          <div className="w-full h-8 mt-8 rounded flex justify-between sm:justify-end items-center sm:pr-14">
+          <div className="w-full h-8 mt-8 rounded flex justify-between sm:justify-end items-center px-6 sm:px-8 pb-3">
             <p
               onClick={() => {
                 if (pageNum === 1) return;
