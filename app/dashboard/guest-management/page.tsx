@@ -3,6 +3,7 @@
 import AddGuest from '@/components/guest-management/add-guest-modal/add-guest';
 import { AddGuestModal } from '@/components/guest-management/add-guest-modal/add-guest-modal';
 import FilterBtn from '@/components/guest-management/filter-btn';
+import GuestProfiles from '@/components/guest-management/guest-profile-modal/guest-profile-modal';
 import ImportGuestModal from '@/components/guest-management/import-guest-modal/import-guest-modal';
 import MenuPopup from '@/components/guest-management/menu-popup/menu-popup';
 import {
@@ -31,102 +32,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import React, { ChangeEventHandler, useState } from 'react';
+import React, { useState } from 'react';
+import guests from '../../../data/dummy_guests';
 
 type Props = {};
-
-const guests = [
-  {
-    id: 'guest1',
-    fullName: 'John Doe',
-    email: 'john.doe@example.com',
-    rsvpStatus: 'confirmed',
-    inviteCode: '1234567890',
-    tags: ['church', 'rehearsal'],
-    plusOne: 'yes',
-  },
-  {
-    id: 'guest2',
-    fullName: 'Jane Smith',
-    email: 'jane.smith@example.com',
-    rsvpStatus: 'pending',
-    inviteCode: '0987654321',
-    tags: ['church', 'after party'],
-    plusOne: 'no',
-  },
-  {
-    id: 'guest3',
-    fullName: 'Alice Johnson',
-    email: 'alice.johnson@example.com',
-    rsvpStatus: 'declined',
-    inviteCode: '2345678901',
-    tags: ['bridal shower', 'VIP bestman'],
-    plusOne: 'yes',
-  },
-  {
-    id: 'guest4',
-    fullName: 'Bob Anderson',
-    email: 'bob.anderson@example.com',
-    rsvpStatus: 'confirmed',
-    inviteCode: '3456789012',
-    tags: ['church', 'rehearsal'],
-    plusOne: 'no',
-  },
-  {
-    id: 'guest4',
-    fullName: 'Eva Rodriguez',
-    email: 'eva.rodriguez@example.com',
-    rsvpStatus: 'confirmed',
-    inviteCode: '4567890123',
-    tags: ['after party', 'VIP bestman'],
-    plusOne: 'yes',
-  },
-  {
-    id: 'guest5',
-    fullName: 'Michael Brown',
-    email: 'michael.brown@example.com',
-    rsvpStatus: 'pending',
-    inviteCode: '5678901234',
-    tags: ['church', 'bridal shower'],
-    plusOne: 'no',
-  },
-  {
-    id: 'guest6',
-    fullName: 'Emily Davis',
-    email: 'emily.davis@example.com',
-    rsvpStatus: 'confirmed',
-    inviteCode: '6789012345',
-    tags: ['rehearsal', 'after party'],
-    plusOne: 'yes',
-  },
-  {
-    id: 'guest7',
-    fullName: 'Chris Wilson',
-    email: 'chris.wilson@example.com',
-    rsvpStatus: 'pending',
-    inviteCode: '7890123456',
-    tags: ['bridal shower', 'VIP bestman'],
-    plusOne: 'no',
-  },
-  {
-    id: 'guest8',
-    fullName: 'Olivia Taylor',
-    email: 'olivia.taylor@example.com',
-    rsvpStatus: 'declined',
-    inviteCode: '8901234567',
-    tags: ['church', 'rehearsal'],
-    plusOne: 'yes',
-  },
-  {
-    id: 'guest9',
-    fullName: 'Daniel Martinez',
-    email: 'daniel.martinez@example.com',
-    rsvpStatus: 'confirmed',
-    inviteCode: '9012345678',
-    tags: ['after party', 'VIP bestman'],
-    plusOne: 'no',
-  },
-];
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -321,7 +230,7 @@ const GuestManagement = (props: Props) => {
                 </td>
                 <td className="py-4 px-2">Guest Name</td>
                 <td className="py-4 px-2">Email</td>
-                <td className="py-4 px-2">RSV Status</td>
+                <td className="py-4 px-2 text-center">RSV Status</td>
                 <td className="py-4 px-2">Invite Code</td>
                 <td className="py-4 px-2">Tags</td>
                 <td className="py-4 px-2">Plus One?</td>
@@ -351,7 +260,9 @@ const GuestManagement = (props: Props) => {
                         />
                         {/* <input type="checkbox" className='accent-[#292D32]' /> */}
                       </td>
-                      <td className="py-4 px-2 whitespace-nowrap">{item.fullName}</td>
+                      <td className="py-4 px-2 whitespace-nowrap">
+                        <GuestProfiles name={item.fullName} id={item.id} />
+                      </td>
                       <td className="py-4 px-2">{item.email}</td>
                       <td className="py-4 px-2">
                         <div

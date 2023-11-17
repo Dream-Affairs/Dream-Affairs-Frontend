@@ -6,7 +6,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 type Props = {
   titleAlign?: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent';
-  Icon: React.FC;
+  Icon?: React.FC;
   size?: 'default' | 'sm' | 'lg' | 'icon' | null | undefined;
   variant?: 'link' | 'secondary' | 'default' | 'destructive' | 'outline' | 'ghost' | 'disabled' | null | undefined;
   className?: string;
@@ -29,12 +29,12 @@ export function AddGuestModal({
     <Dialog>
       <DialogTrigger asChild>
         <Button size={size} variant={variant} className={className}>
-          <Icon />
+          {Icon && <Icon />}
           {triggerBtnText}
         </Button>
       </DialogTrigger>
       <DialogContent style={{ width: `700px` }} className={`max-w-[90vw] max-h-[90svh] rounded-lg overflow-auto`}>
-        <div className="flex border-b py-4 border-[#E1E1E1] -mx-5 px-14">
+        <div className="flex py-4 px-14 -mx-5">
           <h4 className="font-medium text-[#282828] text-2xl flex-1" style={{ textAlign: titleAlign }}>
             {modalTitle}
           </h4>
