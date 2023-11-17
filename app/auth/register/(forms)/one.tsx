@@ -80,17 +80,17 @@ const One = ({ formOne, setFormOne, formOneError, setFormOneError, errorMessages
       return;
     }
 
-    if (passwordChecker(formOne.password)) {
-      setFormOneError((prev) => ({ ...prev, password: true }));
-      setErrorMessages((prev) => ({ ...prev, password: passwordChecker(formOne.password) }));
-      return;
-    }
+    // if (passwordChecker(formOne.password)) {
+    //   setFormOneError((prev) => ({ ...prev, password: true }));
+    //   setErrorMessages((prev) => ({ ...prev, password: passwordChecker(formOne.password) }));
+    //   return;
+    // }
 
-    if (isEmpty(formOne.confirmPassword)) {
-      setFormOneError((prev) => ({ ...prev, confirmPassword: true }));
-      setErrorMessages((prev) => ({ ...prev, confirmPassword: 'Please fill out this field' }));
-      return;
-    }
+    // if (isEmpty(formOne.confirmPassword)) {
+    //   setFormOneError((prev) => ({ ...prev, confirmPassword: true }));
+    //   setErrorMessages((prev) => ({ ...prev, confirmPassword: 'Please fill out this field' }));
+    //   return;
+    // }
 
     // if (formOne.password !== formOne.confirmPassword) {
     //   setFormOneError((prev) => ({ ...prev, confirmPassword: true }));
