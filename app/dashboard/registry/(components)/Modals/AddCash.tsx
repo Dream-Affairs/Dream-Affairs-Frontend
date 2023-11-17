@@ -50,17 +50,20 @@ const AddCash: React.FC = () => {
   return (
     <>
       <div className="mb-16">
-        <p className="text-[32px] font-medium leading-none tracking-tight pl-[79px] pt-12 mb-[14px]">
-          Add product to registry
+        <p className="text-base md:text-[32px] font-medium leading-none tracking-tight pl-4 md:pl-[79px] pt-7 md:pt-12 mb-[14px]">
+          Add cash funds to registry
         </p>
         <div className="h-[1px] bg-border w-full"></div>
-        <section className="flex justify-center gap-11 px-16 mt-12">
+        <form action="" className="flex flex-col lg:flex-row justify-center gap-11 px-4 md:px-16 mt-6 md:mt-12">
           <div>
+            <p className="md:hidden text-sm text-center font-medium text-foreground mb-8 ">
+              By creating your cash funds, your guest can send you cash to cater for your cash needs
+            </p>
             {/* Product image section starts here  */}
 
             <div
               id="ProductImage"
-              className="bg-[#E8E8E8] w-[310px] h-[362px] rounded-[8px] flex flex-col items-center gap-4 text-center cursor-pointer"
+              className="bg-[#E8E8E8] w-[200px] md:w-[310px] h-[250px] md:h-[362px] rounded-[8px] flex flex-col items-center gap-4 text-center cursor-pointer mx-auto"
               onClick={handleImageClick}
             >
               {image ? (
@@ -73,8 +76,8 @@ const AddCash: React.FC = () => {
                 />
               ) : (
                 <>
-                  <Image src={Camera} alt="" className="mt-[157px]" />
-                  <p className="w-[246px] text-sm font-normal text-[#6F6F6F]">
+                  <Image src={Camera} alt="" className="mt-16 md:mt-[157px]" />
+                  <p className="w-[168px] md:w-[246px] text-sm font-normal text-[#6F6F6F]">
                     Upload a photo of the product you want to add to your registry
                   </p>
                 </>
@@ -92,12 +95,12 @@ const AddCash: React.FC = () => {
             {/* Product image section ends here  */}
           </div>
 
-          <aside className="flex flex-col gap-3">
-            <p className="text-base font-medium text-foreground ">
+          <aside className="flex flex-col gap-3 px-4">
+            <p className="hidden md:block text-base font-medium text-foreground ">
               By creating your cash funds, your guest can send you cash to cater for your cash needs
             </p>
 
-            <form action="">
+            <div>
               <div className="flex flex-col gap-2 mb-9">
                 <label htmlFor="title" className="text-base font-semibold ">
                   Title
@@ -218,7 +221,7 @@ const AddCash: React.FC = () => {
                   </div>
                 </TabsContent>
               </Tabs>
-              <div className="flex gap-7 mb-9">
+              <div className="flex md:flex-row flex-col gap-7 mb-9">
                 <div className="flex flex-col gap-2 flex-1">
                   <label htmlFor="bankName" className="text-base font-semibold ">
                     Bank name
@@ -289,9 +292,9 @@ const AddCash: React.FC = () => {
                   Add gift
                 </Button>
               </div>
-            </form>
+            </div>
           </aside>
-        </section>
+        </form>
       </div>
     </>
   );
