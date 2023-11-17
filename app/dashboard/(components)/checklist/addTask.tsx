@@ -6,16 +6,16 @@ import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { Calendar as CalenderIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { AssignIcon } from './Icons';
-import AssignPopover from './AssignPopover';
+import { AssignIcon, SearchIcon } from './Icons';
+import { v4 as uuidv4 } from 'uuid';
 
 type task = {
   decription: string;
   date: Date | undefined;
   assignee: string;
   done: boolean;
+  id: string;
 };
 
 interface MyAddTasksProps {
@@ -50,6 +50,7 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
       date: date,
       assignee: assignedMember,
       done: false,
+      id: uuidv4(),
     };
 
     addTask(task);
@@ -64,16 +65,22 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
   };
 
   return (
-    <div className="w-full items-center pt-4 pb-2 border rounded-lg border-neutral-200 mt-5">
-      <aside className="px-3">
+    <form
+      onSubmit={handleDone}
+      className="w-full items-center pt-4 pb-2 border-t border-b sm:border sm:rounded-lg border-neutral-200 mt-5"
+    >
+      <aside className="px-6 sm:px-3">
         <div className="w-full flex-col justify-start items-start gap-8 flex">
           {/* Description Input */}
           <input
-            className={`relative outline-none placeholder:text-neutral-400`}
+            className={`relative outline-none placeholder:text-neutral-400 w-full py-2`}
             placeholder="Create a New Task"
             type="text"
             value={taskText}
-            onChange={(e) => setTaskText(e.target.value)}
+            onChange={(e) => {
+              if (e.target.value.length === 60) return;
+              setTaskText(e.target.value);
+            }}
             autoFocus
             onKeyDown={(e) => {
               if (e.key == 'Enter' && taskText.length > 0) {
@@ -87,7 +94,7 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
             <Popover>
               <PopoverTrigger
                 className={cn(
-                  ` text-sm  file:text-sm file:font-medium placeholder:text-gray-400 w-[115px]  disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out border-0 hover:!bg-none
+                  `text-xs sm:text-sm  file:text-sm file:font-medium placeholder:text-gray-400 sm:w-[115px]  disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out border-0 hover:!bg-none
            ${error && ' text-red-500 placeholder:text-red-500'}
       
           ${date && ' text-black'}`,
@@ -96,15 +103,15 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
               >
                 <p
                   className={cn(
-                    'flex items-center justify-start  text-left font-normal cursor-pointer',
-                    !date && 'text-neutral-400 ',
+                    'text-xs sm:text-sm flex items-center justify-start  text-left font-normal cursor-pointer',
+                    !date && 'text-neutral-400 whitespace-nowrap',
                   )}
                 >
                   <CalenderIcon className="mr-2 h-4 w-4" />
                   {date ? format(date, 'MMM dd') : <span className="text-zinc-500">Set due date</span>}
                 </p>
               </PopoverTrigger>
-              <PopoverContent className="w-auto translate-x-1/4 p-0">
+              <PopoverContent className="w-auto -translate-x-1/8  sm:translate-x-1/4 p-0">
                 <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
               </PopoverContent>
             </Popover>
@@ -112,7 +119,11 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
             {/* Assign To */}
             <aside onClick={() => setIsAssigning(true)} className="relative flex gap-2">
               <AssignIcon stroke={assignedMember !== 'Assign Task' ? '#030712' : '#898C8F'} />
-              <p className={`text-sm cursor-pointer ${assignedMember === 'Assign Task' ? 'text-neutral-400' : ''}`}>
+              <p
+                className={`text-xs sm:text-sm whitespace-nowrap cursor-pointer ${
+                  assignedMember === 'Assign Task' ? 'text-neutral-400' : ''
+                }`}
+              >
                 {assignedMember}
               </p>
 
@@ -123,18 +134,21 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
                       setIsAssigning(false);
                     }, 300);
                   }}
-                  className="absolute top-5 w-44 bg-white rounded-lg shadow border border-zinc-100 flex-col justify-start items-center gap-2 flex"
+                  className="absolute top-5 w-44 bg-white rounded-lg shadow border border-zinc-100 flex-col justify-start items-center gap-2 flex z-50"
                 >
-                  <input
-                    type="text"
-                    placeholder="Assign to..."
-                    autoFocus
-                    value={searchMember}
-                    onChange={(e) => {
-                      setSearchMember(e.target.value);
-                    }}
-                    className="text-neutral-400 leading-tight p-3 border-b border-gray-200 w-full outline-none"
-                  />
+                  <aside className="flex justify-between items-center p-3 border-b border-gray-200">
+                    <input
+                      type="text"
+                      placeholder="Assign to..."
+                      autoFocus
+                      value={searchMember}
+                      onChange={(e) => {
+                        setSearchMember(e.target.value);
+                      }}
+                      className="text-neutral-400 leading-tight w-full outline-none"
+                    />
+                    <SearchIcon />
+                  </aside>
                   {members.map((item, i) => (
                     <p
                       onClick={() => setAssignedMember(item)}
@@ -152,7 +166,7 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
       </aside>
 
       {/* Action */}
-      <div className="w-full pr-3 justify-end items-start gap-2 flex border-t pt-2 mt-5 border-neutral-200">
+      <div className="w-full pr-3 justify-end items-start gap-2 hidden sm:flex border-t pt-2 mt-5 border-neutral-200">
         <Button onClick={() => cancel()} className="px-6 py-3 h-fit" variant="outline">
           Cancel
         </Button>
@@ -167,7 +181,7 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
           </Button>
         )}
       </div>
-    </div>
+    </form>
   );
 };
 export default AddTask;

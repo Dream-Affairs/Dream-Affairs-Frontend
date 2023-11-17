@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { SearchIcon } from './Icons';
 
 const Members: string[] = ['You', 'John', 'Nonye'];
 
@@ -35,18 +36,21 @@ const AssignPopover = ({ handleBlur, updateAssignMember, editAssignee }: AssignP
   return (
     <div
       // onBlur={() => handleBlur()}
-      className="absolute top-5 w-44 bg-white rounded-lg shadow border border-zinc-100 flex-col justify-start items-center gap-2 flex z-30"
+      className="absolute -translate-x-1/2 top-5 w-44 bg-white rounded-lg shadow border border-zinc-100 flex-col justify-start items-center gap-2 flex z-50"
     >
-      <input
-        type="text"
-        placeholder="Assign to..."
-        autoFocus
-        value={searchMember}
-        onChange={(e) => {
-          setSearchMember(e.target.value);
-        }}
-        className="text-neutral-400 leading-tight p-3 border-b border-gray-200 w-full outline-none"
-      />
+      <aside className="flex justify-between items-center p-3 border-b border-gray-200">
+        <input
+          type="text"
+          placeholder="Assign to..."
+          autoFocus
+          value={searchMember}
+          onChange={(e) => {
+            setSearchMember(e.target.value);
+          }}
+          className="text-neutral-400 leading-tight w-full outline-none"
+        />
+        <SearchIcon />
+      </aside>
       {members.map((item, i) => (
         <p
           onClick={async () => {
