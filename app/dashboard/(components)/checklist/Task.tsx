@@ -16,11 +16,12 @@ type task = {
   date: Date | undefined;
   assignee: string;
   done: boolean;
+  id: string;
 };
 
 interface MyTasksProps {
-  deleteTask: (index: number) => void;
-  editItem: (index: number, item: task) => void;
+  deleteTask: (id: string) => void;
+  editItem: (id: string, item: task) => void;
   item: task;
   index: number;
 }
@@ -30,6 +31,7 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
   const [date, setDate] = React.useState<Date | undefined>(undefined);
   const [description, setDescription] = useState('');
   const [assignedMember, setAssignedMember] = useState('');
+  // const [id, setId] = useState('');
   const [done, setDone] = useState(false);
   const [editedTask, setEditedTask] = React.useState<task>(item);
   const error = false;
@@ -42,8 +44,8 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
   }, [item]);
 
   useEffect(() => {
-    setEditedTask({ decription: description, date: date, assignee: assignedMember, done: done });
-  }, [date, assignedMember, description, done]);
+    setEditedTask({ decription: description, date: date, assignee: assignedMember, done: done, id: item.id });
+  }, [date, assignedMember, description, done, item]);
 
   const handleAssignBlur = useCallback(() => {
     setTimeout(() => {
@@ -56,8 +58,8 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
   };
 
   const handleEditAssignee = useCallback(() => {
-    editItem(index, editedTask);
-  }, [index, editedTask, editItem]);
+    editItem(item.id, editedTask);
+  }, [item, editedTask, editItem]);
 
   return (
     <div
@@ -66,14 +68,20 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
           handleAssignBlur();
         }, 1000);
       }}
-      className="w-full pr-9 pb-2 border-b border-neutral-100 flex-col justify-center items-start gap-2 inline-flex"
+      className="w-full sm:pr-9 pb-2 border-b border-neutral-100 flex-col justify-center items-start gap-2 inline-flex"
     >
       <div className="self-stretch justify-start items-start gap-2 inline-flex">
         {/* Check */}
         <div
           onClick={() => {
             setDone((prev) => !prev);
-            editItem(index, { decription: description, date: date, assignee: assignedMember, done: !done });
+            editItem(item.id, {
+              decription: description,
+              date: date,
+              assignee: assignedMember,
+              done: !done,
+              id: item.id,
+            });
           }}
           className={`min-w-[16px] h-[16px] mt-1 border-[2px] ${
             done ? 'border-transparent' : 'border-[#9F7DB5]'
@@ -81,22 +89,29 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
         >
           {done && <DoneIcon />}
         </div>
-        <div className="w-full items-start grid grid-cols-3">
+        <div className="w-full items-start grid grid-cols-4 sm:grid-cols-3">
           {/* Description */}
 
-          <div className="flex-col justify-start items-start gap-3 inline-flex">
+          <div className="col-span-2 sm:col-span-1 flex-col justify-start items-start gap-3 inline-flex mr-5 ">
             <input
               type="text"
               placeholder="Task description"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              onBlur={() => (description.length === 0 ? '' : editItem(index, editedTask))}
+              onChange={(e) => {
+                if (e.target.value.length === 60) return;
+                setDescription(e.target.value);
+              }}
+              onBlur={() =>
+                description.length === 0 ? setDescription(item.decription) : editItem(item.id, editedTask)
+              }
               onKeyDown={(e) => {
                 if (e.key == 'Enter') {
-                  return description.length === 0 ? '' : editItem(index, editedTask);
+                  return description.length === 0 ? setDescription(item.decription) : editItem(item.id, editedTask);
                 }
               }}
-              className={`${done && 'line-through'} text-neutral-800 outline-none leading-snug`}
+              className={`${
+                done && 'line-through'
+              } text-neutral-800 outline-none leading-snug w-full bg-transparent text-sm sm:text-base`}
             />
             {/* Date */}
             <Popover>
@@ -123,7 +138,13 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
               <PopoverContent
                 onBlur={() => {
                   if (done) return;
-                  editItem(index, { decription: description, date: date, assignee: assignedMember, done: done });
+                  editItem(item.id, {
+                    decription: description,
+                    date: date,
+                    assignee: assignedMember,
+                    done: done,
+                    id: item.id,
+                  });
                 }}
                 className="w-auto translate-x-1/4 p-0"
               >
@@ -133,12 +154,16 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
           </div>
 
           {/* Assignee */}
-          <div onClick={() => setIsAssigning(true)} className="justify-self-center relative">
-            {assignedMember !== 'Assign Task' ? (
-              <p className={`${done && 'line-through'} text-slate-600 leading-snug cursor-pointer`}>{assignedMember}</p>
-            ) : (
-              <AssignIcon stroke="#898C8F" />
-            )}
+          <aside onClick={() => setIsAssigning(true)} className="justify-self-center col-span-1 relative">
+            <p className="bg-gray-300 md:bg-transparent rounded-2xl -translate-y-[20%] sm:translate-y-0 py-1 px-2 -z-50 text-sm sm:text-base">
+              {assignedMember !== 'Assign Task' ? (
+                <span className={`${done && 'line-through'} text-slate-600 leading-snug cursor-pointer`}>
+                  {assignedMember}
+                </span>
+              ) : (
+                <AssignIcon stroke="#898C8F" />
+              )}
+            </p>
             {isAssigning && (
               <AssignPopover
                 handleBlur={handleAssignBlur}
@@ -146,7 +171,7 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
                 editAssignee={handleEditAssignee}
               />
             )}
-          </div>
+          </aside>
 
           {/* Delete */}
           <aside
@@ -163,7 +188,7 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
               closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
               otherBtn={
                 <DialogClose asChild>
-                  <Button onClick={() => deleteTask(index)} variant="destructive" className="w-full mt-5">
+                  <Button onClick={() => deleteTask(item.id)} variant="destructive" className="w-full mt-5">
                     Delete
                   </Button>
                 </DialogClose>

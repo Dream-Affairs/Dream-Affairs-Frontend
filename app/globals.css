@@ -92,6 +92,15 @@
   .guest-spacing {
     @apply pl-[50px] pr-[50px];
   }
+  .import-btn {
+    @apply flex items-center gap-2.5 bg-[#FCF7FF] border border-secondary font-semibold text-[#111] mb-6 last:mb-0;
+  }
+  .import-title {
+    @apply font-medium text-2xl text-[#282828];
+  }
+  .import-wrapper {
+    @apply text-center flex-col items-center mx-auto py-6 gap-6 text-[#535353] transition-all;
+  }
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
