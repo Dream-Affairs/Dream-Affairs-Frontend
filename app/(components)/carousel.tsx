@@ -104,12 +104,12 @@ const Carousel = () => {
             className="h-[178px] sm:h-[400px] lg:h-[629px] rounded-[8px] lg:w-[1270px] mx-auto"
           />
           <ChevronLeft
-            size={30}
+            size={26}
             onClick={prevSlide}
             className="absolute z-20 sm:top-[50%] top-[40%] left-2 md:left-14 text-2xl rounded-full p-1 border-2 border-white text-white cursor-pointer"
           />
            <ChevronRight
-              size={30}
+              size={26}
               onClick={nextSlide}
               className="absolute z-20 sm:top-[50%] top-[40%] right-2 md:right-14 text-2xl rounded-full p-1 border-2 border-white text-white cursor-pointer"
             />
