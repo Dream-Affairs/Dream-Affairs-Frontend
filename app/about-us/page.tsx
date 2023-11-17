@@ -8,11 +8,11 @@ import AboutUs from './(components)/about';
 const About = () => {
   return (
     <ExternalLayout>
-      <main className="w-full relative mb-[113px] flex flex-col justify-center">
+      <main className="w-full relative flex flex-col justify-center">
         <Hero />
         <AboutUs />
         <Values />
-        <Team />
+        {/* <Team /> */}
         <Contact />
       </main>
     </ExternalLayout>
