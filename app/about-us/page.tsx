@@ -12,7 +12,7 @@ const About = () => {
         <Hero />
         <AboutUs />
         <Values />
-        <Team />
+        {/* <Team /> */}
         <Contact />
       </main>
     </ExternalLayout>
