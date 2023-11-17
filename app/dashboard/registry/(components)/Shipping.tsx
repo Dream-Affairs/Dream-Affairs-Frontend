@@ -15,7 +15,10 @@ const Shipping = () => {
             <label htmlFor="name" className="text-sm md:text-base font-semibold ">
               Name
             </label>
-            <Input type="text" placeholder="Enter name" id="name" className="text-sm font-normal" />
+            <div>
+              <Input type="text" placeholder="Enter name" id="name" className="text-sm font-normal" />
+              <p className="text-xs font-normal mt-1">Only one recipient name is required</p>
+            </div>
           </div>
 
           <div className="flex flex-col gap-2 mb-6 md:mb-12">
