@@ -31,9 +31,9 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
   const [date, setDate] = React.useState<Date | undefined>(undefined);
   const [description, setDescription] = useState('');
   const [assignedMember, setAssignedMember] = useState('');
-  // const [id, setId] = useState('');
   const [done, setDone] = useState(false);
   const [editedTask, setEditedTask] = React.useState<task>(item);
+  const [isOutdated, setIsOutdated] = useState(false);
   const error = false;
 
   useEffect(() => {
@@ -53,13 +53,42 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
     }, 300);
   }, []);
 
+  //// ASSIGN MEMBERS
   const updateAssignMember = (item: string) => {
     setAssignedMember(item);
   };
 
+  ////  EDIT FUNCTION()
   const handleEditAssignee = useCallback(() => {
     editItem(item.id, editedTask);
   }, [item, editedTask, editItem]);
+
+  //// TASK DATE STUTUS()
+  const isTodayOrYesterday = (selectedDate: Date): string => {
+    const currentDate = new Date(); // Current date and time
+
+    // Set the time part of the current date to midnight
+    const todayStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+
+    // Set the time part of yesterday to midnight
+    const yesterdayStart = new Date(currentDate);
+    yesterdayStart.setDate(yesterdayStart.getDate() - 1);
+    yesterdayStart.setHours(0, 0, 0, 0);
+
+    // Compare selected date with today and yesterday
+    if (
+      selectedDate >= todayStart &&
+      selectedDate < new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1)
+    ) {
+      return 'Today';
+    } else if (selectedDate >= yesterdayStart && selectedDate < todayStart) {
+      return 'Yesterday';
+    } else if (selectedDate < todayStart) {
+      return format(selectedDate, 'MMM dd' + '.');
+    } else {
+      return format(selectedDate, 'MMM dd');
+    }
+  };
 
   return (
     <div
@@ -111,27 +140,32 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
               }}
               className={`${
                 done && 'line-through'
-              } text-neutral-800 outline-none leading-snug w-full bg-transparent text-sm sm:text-base`}
+              }  outline-none leading-snug w-full bg-transparent text-sm sm:text-base ${
+                date && isTodayOrYesterday(date) === 'Today' && 'text-[#762995]'
+              } ${date && isTodayOrYesterday(date) === 'Yesterday' && 'text-[#F00]'} ${
+                date && isTodayOrYesterday(date).includes('.') && 'text-[#F00]'
+              }`}
             />
             {/* Date */}
             <Popover>
               <PopoverTrigger
                 className={cn(
                   ` text-sm  file:text-sm file:font-medium placeholder:text-gray-400 w-[115px]  disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out border-0 hover:!bg-none cursor-pointer
-           ${error && ' text-red-500 placeholder:text-red-500'}
-      
-          ${date && ' text-black'}`,
+           `,
                 )}
                 asChild
               >
                 <p
                   className={cn(
-                    'flex items-center justify-start  text-left text-zinc-500 text-xs leading-none ',
+                    'flex items-center justify-start  text-left  text-xs leading-none ',
                     !date && 'text-neutral-400',
                     done && 'line-through',
+                    date && isTodayOrYesterday(date) === 'Today' && 'text-[#762995]',
+                    date && isTodayOrYesterday(date) === 'Yesterday' && 'text-[#F00]',
+                    date && isTodayOrYesterday(date).includes('.') && 'text-[#F00]',
                   )}
                 >
-                  {date ? format(date, 'MMM dd') : <CalenderIcon className="mr-2 h-4 w-4" />}
+                  {date ? isTodayOrYesterday(date) : <CalenderIcon className="mr-2 h-4 w-4" />}
                 </p>
                 {/* )} */}
               </PopoverTrigger>
