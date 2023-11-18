@@ -65,10 +65,7 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
   };
 
   return (
-    <form
-      onSubmit={handleDone}
-      className="w-full items-center pt-4 pb-2 border-t border-b sm:border sm:rounded-lg border-neutral-200 mt-5"
-    >
+    <div className="w-full items-center pt-4 pb-2 border-t border-b sm:border sm:rounded-lg border-neutral-200 mt-5">
       <aside className="px-6 sm:px-3">
         <div className="w-full flex-col justify-start items-start gap-8 flex">
           {/* Description Input */}
@@ -181,7 +178,7 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
           </Button>
         )}
       </div>
-    </form>
+    </div>
   );
 };
 export default AddTask;
