@@ -7,22 +7,22 @@ export const links = [
   },
   {
     id: 2,
-    href: 'diy',
+    href: 'blog',
     text: 'DIY Ideas',
   },
   {
     id: 3,
-    href: 'honeymoon-and-travel',
+    href: 'blog',
     text: 'Honemoon & Travel',
   },
   {
     id: 4,
-    href: 'client-stores',
+    href: 'blog',
     text: 'Client Stories',
   },
   {
     id: 5,
-    href: 'design-and-decor',
+    href: 'blog',
     text: 'Design & Decor',
   },
 ];
