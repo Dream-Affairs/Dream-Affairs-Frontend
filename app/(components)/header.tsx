@@ -103,7 +103,7 @@ const Header = () => {
         <div className="relative z-10 content lg:hidden">
           <motion.button
             animate={mobileNav ? 'open' : 'closed'}
-            className="flex flex-col space-y-1 mt-4 sm:mt-5"
+            className="flex flex-col space-y-1 mt-[17.5px] sm:mt-5"
             onClick={() => toggleMobileNav()}
           >
             <motion.span
@@ -134,7 +134,7 @@ const Header = () => {
               }}
               className={`${
                 mobileNav ? 'absolute' : 'hidden'
-              } w-5 p-3 bottom-[10px] right-[-3.99px] h-px border border-black block`}
+              } w-5 p-3 bottom-[6px] sm:bottom-[9px] right-[-2.99px] h-px border border-black block`}
             ></motion.span>
           </motion.button>
         </div>
@@ -168,7 +168,7 @@ const Header = () => {
                 animate="open"
                 initial="closed"
                 exit="closed"
-                className="fixed inset-0 bg-white min-h-[200vh]"
+                className="fixed inset-0 bg-white min-h[200vh]"
               >
                 <motion.div
                   variants={{
@@ -184,7 +184,7 @@ const Header = () => {
                   className="text-white py-4 px-8 border-t border-[#E1E1E1] mt-[70px]"
                 >
                   <p
-                    className="cursor-pointer duration-700 text-black py-5"
+                    className="cursor-pointer duration-700 text-black pt-5 pb-3"
                     onClick={() => setIsDropDownVisible(!isDropDownVisible)}
                   >
                     Features
@@ -218,7 +218,7 @@ const Header = () => {
                           className="flex flex-col bg-white text-black text-[14px] rounded-[8px]"
                         >
                           <Link
-                            className="rounded-t-[8px] py-3 hover:text-[#E0B0FF] duration-700"
+                            className="rounded-t-[8px] pt-6 pb-3 hover:text-[#E0B0FF] duration-700"
                             href="/dashboard/event-management"
                           >
                             Event Management
@@ -235,7 +235,7 @@ const Header = () => {
                           <Link className="py-3 hover:text-[#E0B0FF] duration-700" href="/">
                             Registry
                           </Link>
-                          <Link className="rounded-b-[8px] py-3 hover:text-[#E0B0FF] duration-700" href="/">
+                          <Link className="rounded-b-[8px] pt-3 hover:text-[#E0B0FF] duration-700" href="/">
                             Budget
                           </Link>
                         </motion.div>
