@@ -21,10 +21,7 @@ const Header = () => {
           <Image width={0} height={0} src={da} alt="da" className="w-[60%] sm:w-auto" />
         </Link>
         <div className="lg:space-x-8 mt-5 hidden lg:flex">
-          <p
-            className="cursor-pointer"
-            onClick={() => setIsDropDownVisible(!isDropDownVisible)}
-          >
+          <p className="cursor-pointer" onClick={() => setIsDropDownVisible(!isDropDownVisible)}>
             Features
             {isDropDownVisible ? (
               <ChevronUp className="inline mb-[1px]" />
@@ -84,7 +81,7 @@ const Header = () => {
             )}
           </p>
           <Link href="/pricing">Pricing</Link>
-          <Link href="/">Blog</Link>
+          <Link href="/blog">Blog</Link>
           <Link href="/about-us">About</Link>
           <Link href="/">Contact Us</Link>
         </div>
@@ -248,7 +245,7 @@ const Header = () => {
                   <Link href="/" className="flex duration-700 text-black py-5">
                     Pricing
                   </Link>
-                  <Link href="/" className=" flex duration-700 text-black py-5">
+                  <Link href="/blog" className=" flex duration-700 text-black py-5">
                     Blog
                   </Link>
                   <Link href="/about-us" className=" flex duration-700 text-black py-5">
