@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import ExternalLayout from '../(components)/External-Layout';
 import imgHead from './(assets)/img.svg';
 import imgFoot from '../auth/(assets)/image1.svg';
-import blogImg from './(assets)/blogImg.svg';
 import Aos from 'aos';
 import Head from './(components)/Head';
 import Nav from './(components)/Nav';
@@ -24,7 +23,7 @@ const Blog = () => {
     <ExternalLayout>
       <Head img={imgHead} />
       <Nav links={links} active={active} setActive={setActive} />
-      <BlogImg blogImg={blogImg} />
+      <BlogImg data={data[0]} showBtn={true} />
       <Posts>
         <Cards data={data} />
       </Posts>
