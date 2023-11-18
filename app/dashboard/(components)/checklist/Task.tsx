@@ -140,7 +140,7 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
               }}
               className={`${
                 done && 'line-through'
-              } text-neutral-800 outline-none leading-snug w-full bg-transparent text-sm sm:text-base ${
+              }  outline-none leading-snug w-full bg-transparent text-sm sm:text-base ${
                 date && isTodayOrYesterday(date) === 'Today' && 'text-[#762995]'
               } ${date && isTodayOrYesterday(date) === 'Yesterday' && 'text-[#F00]'} ${
                 date && isTodayOrYesterday(date).includes('.') && 'text-[#F00]'
@@ -151,15 +151,13 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
               <PopoverTrigger
                 className={cn(
                   ` text-sm  file:text-sm file:font-medium placeholder:text-gray-400 w-[115px]  disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out border-0 hover:!bg-none cursor-pointer
-           ${error && ' text-red-500 placeholder:text-red-500'}
-      
-          ${date && ' text-black'}`,
+           `,
                 )}
                 asChild
               >
                 <p
                   className={cn(
-                    'flex items-center justify-start  text-left  text-xs leading-none text-zinc-500',
+                    'flex items-center justify-start  text-left  text-xs leading-none ',
                     !date && 'text-neutral-400',
                     done && 'line-through',
                     date && isTodayOrYesterday(date) === 'Today' && 'text-[#762995]',
