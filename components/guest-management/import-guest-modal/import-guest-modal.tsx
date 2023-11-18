@@ -28,7 +28,7 @@ function ImportGuestModal() {
       className="guest-btn"
       titleAlign="center"
     >
-      <div className="min-h-[362px]">
+      <div className="min-h-[362px] guest-modal-border">
         {selectedImport === importTypes.DEFAULT && (
           <div className="text-[#282828] flex flex-col items-center w-fit mx-auto py-6">
             <h3 className="text-xl font-medium text-center mb-10">Select a means to import your guest list</h3>

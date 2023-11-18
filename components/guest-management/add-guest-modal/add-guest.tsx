@@ -34,7 +34,7 @@ function AddGuest() {
       triggerBtnText="Add Guest"
       modalTitle="Add Guest Manually"
     >
-      <form className="-mx-5 text-[#282828] pb-20">
+      <form className="text-[#282828] pb-20 guest-modal-border">
         <section className="px-14">
           <p className="text-sm leading-loose my-5">
             Manually input guests and/or their plus one details onto your guest list, where it automatically generates a

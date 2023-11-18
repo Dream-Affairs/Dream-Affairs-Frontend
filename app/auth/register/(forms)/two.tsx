@@ -130,34 +130,35 @@ const Two = ({
         description: 'Please check your email for a verification link',
       });
       setTimeout(() => {
-        setFormThree(true);
-      }, 2000);
+        // setFormThree(true);
+        window.location.href = '/dashboard';
+      }, 1500);
     } catch (error: any) {
-      const response = error.response.data;
+      const response = error.response.data.message;
       const status = error.response.status;
-      const loc = error.response.data.detail ? error.response?.data?.detail[0]?.loc[1] : '';
-      console.log(error.response.data);
+      // const email = error.response.data.detail[0].msg;
 
-      if (loc === 'email') {
-        toast({ title: 'Validation Error', description: 'Please enter a valid email' });
+      // if (email) {
+      //   toast({ title: 'An error occured', description: 'Please enter a valid email address' });
+      //   setFormOne((prev) => ({ ...prev, valid: false }));
+      //   setFormOneError((prev) => ({ ...prev, email: true }));
+      //   setErrorMessages((prev) => ({ ...prev, email: 'Please enter a valid email address' }));
+      //   return;
+      // }
+
+      toast({ title: 'An error occured', description: response });
+      if (response.includes('Email')) {
         setFormOne((prev) => ({ ...prev, valid: false }));
         setFormOneError((prev) => ({ ...prev, email: true }));
-        setErrorMessages((prev) => ({ ...prev, email: 'Please enter a valid email address' }));
+        setErrorMessages((prev) => ({ ...prev, email: response }));
         return;
       }
-
-      if (status === 409 || 'Failed to create account') {
-        toast({ title: 'An error occured', description: 'Email already exists, please recover your password' });
+      if (response.includes('Password')) {
         setFormOne((prev) => ({ ...prev, valid: false }));
-        setFormOneError((prev) => ({ ...prev, email: true }));
-        setErrorMessages((prev) => ({ ...prev, email: 'Email already exists' }));
+        setFormOneError((prev) => ({ ...prev, password: true }));
+        setErrorMessages((prev) => ({ ...prev, password: response }));
         return;
       }
-
-      toast({
-        title: 'Something went wrong',
-        description: response.message,
-      });
     } finally {
       setIsSubmitting(false);
     }

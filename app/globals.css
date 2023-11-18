@@ -101,6 +101,15 @@
   .import-wrapper {
     @apply text-center flex-col items-center mx-auto py-6 gap-6 text-[#535353] transition-all;
   }
+  .guest-modal-border {
+    @apply border-t border-[#E1E1E1] -mx-5;
+  }
+  .profile-tab-btn {
+    @apply px-0.5 rounded-none transition-all;
+  }
+  .profile-tab-btn.active {
+    @apply text-primary border-b-2 border-primary;
+  }
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -113,8 +122,8 @@
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 
 /* Handle */
