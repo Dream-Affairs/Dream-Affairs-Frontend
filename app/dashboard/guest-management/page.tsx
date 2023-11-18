@@ -3,6 +3,8 @@
 import AddGuest from '@/components/guest-management/add-guest-modal/add-guest';
 import { AddGuestModal } from '@/components/guest-management/add-guest-modal/add-guest-modal';
 import FilterBtn from '@/components/guest-management/filter-btn';
+import GuestProfiles from '@/components/guest-management/guest-profile-modal/guest-profile-modal';
+import ImportGuestModal from '@/components/guest-management/import-guest-modal/import-guest-modal';
 import MenuPopup from '@/components/guest-management/menu-popup/menu-popup';
 import {
   ArrowLeft,
@@ -19,6 +21,7 @@ import {
   Track,
 } from '@/components/svg-icons/svg-icons';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -30,91 +33,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import React, { useState } from 'react';
+import guests from '../../../data/dummy_guests';
 
 type Props = {};
-
-const guests = [
-  {
-    fullName: 'John Doe',
-    email: 'john.doe@example.com',
-    rsvpStatus: 'confirmed',
-    inviteCode: '1234567890',
-    tags: ['church', 'rehearsal'],
-    plusOne: 'yes',
-  },
-  {
-    fullName: 'Jane Smith',
-    email: 'jane.smith@example.com',
-    rsvpStatus: 'pending',
-    inviteCode: '0987654321',
-    tags: ['church', 'after party'],
-    plusOne: 'no',
-  },
-  {
-    fullName: 'Alice Johnson',
-    email: 'alice.johnson@example.com',
-    rsvpStatus: 'declined',
-    inviteCode: '2345678901',
-    tags: ['bridal shower', 'VIP bestman'],
-    plusOne: 'yes',
-  },
-  {
-    fullName: 'Bob Anderson',
-    email: 'bob.anderson@example.com',
-    rsvpStatus: 'confirmed',
-    inviteCode: '3456789012',
-    tags: ['church', 'rehearsal'],
-    plusOne: 'no',
-  },
-  {
-    fullName: 'Eva Rodriguez',
-    email: 'eva.rodriguez@example.com',
-    rsvpStatus: 'confirmed',
-    inviteCode: '4567890123',
-    tags: ['after party', 'VIP bestman'],
-    plusOne: 'yes',
-  },
-  {
-    fullName: 'Michael Brown',
-    email: 'michael.brown@example.com',
-    rsvpStatus: 'pending',
-    inviteCode: '5678901234',
-    tags: ['church', 'bridal shower'],
-    plusOne: 'no',
-  },
-  {
-    fullName: 'Emily Davis',
-    email: 'emily.davis@example.com',
-    rsvpStatus: 'confirmed',
-    inviteCode: '6789012345',
-    tags: ['rehearsal', 'after party'],
-    plusOne: 'yes',
-  },
-  {
-    fullName: 'Chris Wilson',
-    email: 'chris.wilson@example.com',
-    rsvpStatus: 'pending',
-    inviteCode: '7890123456',
-    tags: ['bridal shower', 'VIP bestman'],
-    plusOne: 'no',
-  },
-  {
-    fullName: 'Olivia Taylor',
-    email: 'olivia.taylor@example.com',
-    rsvpStatus: 'declined',
-    inviteCode: '8901234567',
-    tags: ['church', 'rehearsal'],
-    plusOne: 'yes',
-  },
-  {
-    fullName: 'Daniel Martinez',
-    email: 'daniel.martinez@example.com',
-    rsvpStatus: 'confirmed',
-    inviteCode: '9012345678',
-    tags: ['after party', 'VIP bestman'],
-    plusOne: 'no',
-  },
-];
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -145,8 +66,34 @@ const getStatusBg = (status: string) => {
 const GuestManagement = (props: Props) => {
   const [activeFilter, setActiveFilter] = useState<string>('');
   const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [selectedGuest, setSelectedGuests] = useState<string[]>([]);
+  const [deletedGuests, setDeletedGuests] = useState<string[]>([]);
+
   const showMenu = (e: any) => {
     setShowPopup(true);
+  };
+
+  const selectAllGuest = () => {
+    if (selectedGuest.length === guests.length) {
+      setSelectedGuests([]);
+    } else {
+      setSelectedGuests(guests.map((item) => item.id));
+    }
+  };
+
+  const handleChange = (id: string) => {
+    setSelectedGuests((prevState) => {
+      if (prevState.includes(id)) {
+        return prevState.filter((item) => item != id);
+      } else {
+        return [...prevState, id];
+      }
+    });
+  };
+
+  const deleteSelected = () => {
+    setDeletedGuests(selectedGuest);
+    setSelectedGuests([]);
   };
 
   return (
@@ -216,14 +163,16 @@ const GuestManagement = (props: Props) => {
         </div>
         <div className="w-full overflow-hidden">
           <div className="flex items-center gap-3.5 w-full overflow-scroll no-scrollbar">
-            <Button variant="outline" size={'sm'} className="gap-2">
-              <Delete />
+            <Button
+              variant={selectedGuest.length ? null : 'outline'}
+              size={'sm'}
+              className={selectedGuest.length ? 'guest-btn' : 'gap-2'}
+              onClick={deleteSelected}
+            >
+              <Delete color={selectedGuest.length ? '#282828' : '#9C9C9C'} />
               Delete Guest
             </Button>
-            <Button size="sm" className="guest-btn">
-              <Import />
-              Import List
-            </Button>
+            <ImportGuestModal />
             <Button size="sm" className="guest-btn">
               <Tags />
               Assign Tags
@@ -277,11 +226,11 @@ const GuestManagement = (props: Props) => {
             <thead className="bg-[#FFF8FA] font-medium border-b border-b-[#E1E1E1]">
               <tr>
                 <td className="py-4 px-3">
-                  <input type="checkbox" />
+                  <Checkbox onClick={selectAllGuest} checked={selectedGuest.length === guests.length} />
                 </td>
                 <td className="py-4 px-2">Guest Name</td>
                 <td className="py-4 px-2">Email</td>
-                <td className="py-4 px-2">RSV Status</td>
+                <td className="py-4 px-2 text-center">RSV Status</td>
                 <td className="py-4 px-2">Invite Code</td>
                 <td className="py-4 px-2">Tags</td>
                 <td className="py-4 px-2">Plus One?</td>
@@ -299,14 +248,21 @@ const GuestManagement = (props: Props) => {
             </thead>
             <tbody>
               {guests
-                .filter((item) => item.rsvpStatus.includes(activeFilter))
+                .filter((item) => item.rsvpStatus.includes(activeFilter) && !deletedGuests.includes(item.id))
                 .map((item, index) => {
                   return (
-                    <tr key={index} className="border-b border-b-[#E1E1E1] last:border-none text-[#282828]">
+                    <tr key={item.id} className="border-b border-b-[#E1E1E1] last:border-none text-[#282828]">
                       <td className="py-4 px-3 bg-[#FFF8FA]">
-                        <input type="checkbox" />
+                        <Checkbox
+                          id={item.id}
+                          onClick={() => handleChange(item.id)}
+                          checked={selectedGuest.includes(item.id)}
+                        />
+                        {/* <input type="checkbox" className='accent-[#292D32]' /> */}
                       </td>
-                      <td className="py-4 px-2 whitespace-nowrap">{item.fullName}</td>
+                      <td className="py-4 px-2 whitespace-nowrap">
+                        <GuestProfiles name={item.fullName} id={item.id} />
+                      </td>
                       <td className="py-4 px-2">{item.email}</td>
                       <td className="py-4 px-2">
                         <div
