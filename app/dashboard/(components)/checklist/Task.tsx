@@ -31,9 +31,9 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
   const [date, setDate] = React.useState<Date | undefined>(undefined);
   const [description, setDescription] = useState('');
   const [assignedMember, setAssignedMember] = useState('');
-
   const [done, setDone] = useState(false);
   const [editedTask, setEditedTask] = React.useState<task>(item);
+  const [isOutdated, setIsOutdated] = useState(false);
   const error = false;
 
   useEffect(() => {
@@ -83,6 +83,8 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
       return 'Today';
     } else if (selectedDate >= yesterdayStart && selectedDate < todayStart) {
       return 'Yesterday';
+    } else if (selectedDate < todayStart) {
+      return format(selectedDate, 'MMM dd' + '.');
     } else {
       return format(selectedDate, 'MMM dd');
     }
@@ -138,7 +140,11 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
               }}
               className={`${
                 done && 'line-through'
-              } text-neutral-800 outline-none leading-snug w-full bg-transparent text-sm sm:text-base`}
+              } text-neutral-800 outline-none leading-snug w-full bg-transparent text-sm sm:text-base ${
+                date && isTodayOrYesterday(date) === 'Today' && 'text-[#762995]'
+              } ${date && isTodayOrYesterday(date) === 'Yesterday' && 'text-[#F00]'} ${
+                date && isTodayOrYesterday(date).includes('.') && 'text-[#F00]'
+              }`}
             />
             {/* Date */}
             <Popover>
@@ -153,9 +159,12 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
               >
                 <p
                   className={cn(
-                    'flex items-center justify-start  text-left text-zinc-500 text-xs leading-none ',
+                    'flex items-center justify-start  text-left  text-xs leading-none text-zinc-500',
                     !date && 'text-neutral-400',
                     done && 'line-through',
+                    date && isTodayOrYesterday(date) === 'Today' && 'text-[#762995]',
+                    date && isTodayOrYesterday(date) === 'Yesterday' && 'text-[#F00]',
+                    date && isTodayOrYesterday(date).includes('.') && 'text-[#F00]',
                   )}
                 >
                   {date ? isTodayOrYesterday(date) : <CalenderIcon className="mr-2 h-4 w-4" />}
