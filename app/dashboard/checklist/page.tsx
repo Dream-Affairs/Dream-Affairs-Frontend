@@ -36,7 +36,7 @@ type ts = {
 
 type addTask = (task: task) => void;
 type deleteTask = (id: string) => void;
-type editItem = (index: number, item: task) => void;
+type getTasks = () => task[];
 
 const Checklist = () => {
   const [filterKey, setFilterKey] = useState('All tasks');
@@ -51,10 +51,9 @@ const Checklist = () => {
 
   const searchResultsPerPage = 6;
 
-  // GET TASKS
-  useEffect(() => {
+  const getTasks = async (): Promise<task[]> => {
     const response: any = localStorage.getItem('Tasks');
-    const storedTasks: ts[] = JSON.parse(response);
+    const storedTasks: ts[] = await JSON.parse(response);
 
     const updatedTask: task[] = storedTasks?.map((item) => {
       return {
@@ -65,7 +64,20 @@ const Checklist = () => {
         id: item.id,
       };
     });
-    if (storedTasks) setTasks(updatedTask);
+
+    return updatedTask;
+  };
+
+  // GET TASKS
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const tasks: task[] = await getTasks();
+      if (tasks) setTasks(tasks);
+    };
+
+    return () => {
+      fetchTasks();
+    };
   }, []);
 
   // GET NUMBER OF PAGES
@@ -142,6 +154,16 @@ const Checklist = () => {
     localStorage.setItem('Tasks', JSON.stringify(newTasksArr));
   };
 
+  // SEARCH TASK
+  const searchTasks = async (query: string) => {
+    const data: task[] = await getTasks();
+    if (data) {
+      if (query.length === 0) setTasks(data);
+      const searchResult = data?.filter((item) => item.decription.includes(query));
+      setTasks(searchResult);
+    }
+  };
+
   return (
     <section className="w-full">
       <aside className="hidden pt-10 sm:flex flex-col gap-2 justify-start items-start sm:px-8">
@@ -151,7 +173,7 @@ const Checklist = () => {
         </p>
       </aside>
       {/* Search */}
-      <Search />
+      <Search search={searchTasks} />
       {/* Tasks side */}
       <aside className="mt-8 sm:mt-20 ">
         <div className="w-full h-14 flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between md:items-center px-6 sm:px-8">
