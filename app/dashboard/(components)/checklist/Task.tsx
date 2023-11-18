@@ -31,7 +31,7 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
   const [date, setDate] = React.useState<Date | undefined>(undefined);
   const [description, setDescription] = useState('');
   const [assignedMember, setAssignedMember] = useState('');
-  // const [id, setId] = useState('');
+
   const [done, setDone] = useState(false);
   const [editedTask, setEditedTask] = React.useState<task>(item);
   const error = false;
@@ -53,13 +53,40 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
     }, 300);
   }, []);
 
+  //// ASSIGN MEMBERS
   const updateAssignMember = (item: string) => {
     setAssignedMember(item);
   };
 
+  ////  EDIT FUNCTION()
   const handleEditAssignee = useCallback(() => {
     editItem(item.id, editedTask);
   }, [item, editedTask, editItem]);
+
+  //// TASK DATE STUTUS()
+  const isTodayOrYesterday = (selectedDate: Date): string => {
+    const currentDate = new Date(); // Current date and time
+
+    // Set the time part of the current date to midnight
+    const todayStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+
+    // Set the time part of yesterday to midnight
+    const yesterdayStart = new Date(currentDate);
+    yesterdayStart.setDate(yesterdayStart.getDate() - 1);
+    yesterdayStart.setHours(0, 0, 0, 0);
+
+    // Compare selected date with today and yesterday
+    if (
+      selectedDate >= todayStart &&
+      selectedDate < new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1)
+    ) {
+      return 'Today';
+    } else if (selectedDate >= yesterdayStart && selectedDate < todayStart) {
+      return 'Yesterday';
+    } else {
+      return format(selectedDate, 'MMM dd');
+    }
+  };
 
   return (
     <div
@@ -131,7 +158,7 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
                     done && 'line-through',
                   )}
                 >
-                  {date ? format(date, 'MMM dd') : <CalenderIcon className="mr-2 h-4 w-4" />}
+                  {date ? isTodayOrYesterday(date) : <CalenderIcon className="mr-2 h-4 w-4" />}
                 </p>
                 {/* )} */}
               </PopoverTrigger>
