@@ -11,7 +11,13 @@ interface MyModalProps {
   title: string;
   message: string;
   actionName: string;
-  //   modalRef: React.RefObject<HTMLDivElement>;
+  cancelButtonStyle?: ButtonStyle | null;
+  actionButtonStyle?: ButtonStyle | null;
+}
+interface ButtonStyle {
+  backgroundColor: string;
+  borderColor: string;
+  textColor: string;
 }
 
 const MyModal: React.FC<MyModalProps> = ({
@@ -21,6 +27,8 @@ const MyModal: React.FC<MyModalProps> = ({
   title,
   message,
   actionName,
+  cancelButtonStyle,
+  actionButtonStyle,
 }) => {
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -65,15 +73,15 @@ const MyModal: React.FC<MyModalProps> = ({
             </div>
             <h2 className=" text-2xl text-center font-medium mt-2 mb-4">{title}</h2>
             <p className="mb-4 text-center">{message}</p>
-            <div className="flex justify-center">
+            <div className="flex gap-8 justify-center">
               <button
-                className="bg-[#f5e7ff] text-primary font-medium px-4 py-2 rounded-md mr-2"
+                className={`bg-[${cancelButtonStyle?.backgroundColor}] text-[${cancelButtonStyle?.textColor}] border border-[${cancelButtonStyle?.borderColor}] font-medium px-4 py-2 rounded-md mr-2`}
                 onClick={handleCancel}
               >
                 Cancel
               </button>
               <button
-                className="bg-transparent border border-[#B93F54] hover:bg-[#B93F54] hover:text-white  text-[#B93F54] px-4 py-2 rounded-md"
+                className={`bg-[${actionButtonStyle?.backgroundColor}] border border-[${actionButtonStyle?.borderColor}] text-[${actionButtonStyle?.textColor}] px-4 py-2 rounded-md`}
                 // onClick={handleSuspend}
               >
                 {actionName}
