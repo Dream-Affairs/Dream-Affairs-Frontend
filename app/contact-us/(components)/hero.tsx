@@ -10,7 +10,7 @@ const Hero = () => {
       >
         <div className="text-center text-white">
           <h1 className="lg:text-[64px] text-[28px] font-[600]">Get in touch with us</h1>
-          <p className="lg:text-[24px] text-[18px] font-[500] lg:w-[791px]">We're here to assist you! Whether you have questions, feedback, or just want to say hello, we'd love to hear from you. </p>
+          <p className="lg:text-[24px] text-[18px] font-[500] lg:w-[791px]">We&lsquo;re here to assist you! Whether you have questions, feedback, or just want to say hello, we&lsquo;d love to hear from you. </p>
         </div>
       </div>
     </section>
