@@ -36,7 +36,6 @@ type ts = {
 
 type addTask = (task: task) => void;
 type deleteTask = (id: string) => void;
-type getTasks = () => task[];
 
 const Checklist = () => {
   const [filterKey, setFilterKey] = useState('All tasks');
@@ -161,6 +160,7 @@ const Checklist = () => {
       if (query.length === 0) setTasks(data);
       const searchResult = data?.filter((item) => item.decription.includes(query));
       setTasks(searchResult);
+      setPageNum(1);
     }
   };
 
