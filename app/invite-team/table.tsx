@@ -1,40 +1,81 @@
 import React from 'react';
+import Image from 'next/image';
+import ActionButton from './utils/actionbtn';
+import arrowDown from './icons/arrow-down.png';
+import sort from './icons/sort.png';
 
-const SampleTable: React.FC = () => {
-  const data = [
-    { fullName: 'John Doe', email: 'johndoe@example.com', role: 'Admin' },
-    { fullName: 'Alice Smith', email: 'alicesmith@example.com', role: 'Decorator' },
-    { fullName: 'Bob Johnson', email: 'bobjohnson@example.com', role: 'Guest' },
-    { fullName: 'Eve Adams', email: 'eveadams@example.com', role: 'Admin' },
-    { fullName: 'Charlie Brown', email: 'charliebrown@example.com', role: 'Guest' },
-  ];
+interface Member {
+  fullName: string;
+  email: string;
+  role: string;
+}
+
+interface TableProps {
+  data: Member[];
+  handleSort: (field: string) => void;
+  sortField: string;
+  selectedMember: number | null;
+  toggleMemberActions: (index: number) => void;
+  closeMemberActions: () => void;
+  activeTab: string;
+  onActionClick: () => void;
+}
+
+const Table: React.FC<TableProps> = ({
+  data,
+  handleSort,
+  sortField,
+  selectedMember,
+  toggleMemberActions,
+  closeMemberActions,
+  activeTab,
+  onActionClick,
+}) => {
+  const renderRows = () => {
+    return data.map((member, index) => (
+      <tr key={index} className={'border-b'}>
+        <td className="px-4 py-2 text-center">
+          <Image src={sort} alt="sort" />
+        </td>
+        <td className="px-4 py-2 text-left">{member.fullName}</td>
+        <td className="px-4 py-2 text-left">{member.email}</td>
+        <td className="px-4 py-2 text-left">{member.role}</td>
+        <td className="px-4 py-2 text-end">
+          {/* <ActionButton
+            selected={selectedMember === index}
+            toggleMemberActions={() => toggleMemberActions(index)}
+            closeMemberActions={closeMemberActions}
+            activeTab={activeTab}
+            onActionClick={onActionClick}
+          /> */}
+        </td>
+      </tr>
+    ));
+  };
 
   return (
     <table className="min-w-full table-auto">
       <thead className="border-b">
         <tr>
-          <th className="px-4 py-2">Full Name</th>
-          <th className="px-4 py-2">Email</th>
-          <th className="px-4 py-2">Role</th>
-          <th className="px-4 py-2">Action</th>
+          <th className="px-4 py-2"></th>
+          <th
+            className="px-4 py-2 flex items-center gap-1 text-left cursor-pointer"
+            onClick={() => handleSort('fullName')}
+          >
+            Full Name {sortField === 'fullName' && <Image src={arrowDown} alt="arrow-down" />}
+          </th>
+          <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('email')}>
+            Email {sortField === 'email' && <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />}
+          </th>
+          <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('role')}>
+            Role {sortField === 'role' && <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />}
+          </th>
+          <th className="px-4 py-2 text-left">Action</th>
         </tr>
       </thead>
-      <tbody>
-        {data.map((item, index) => (
-          <tr key={index} className={index !== data.length - 1 ? 'border-b' : ''}>
-            <td className="px-4 py-2 text-center">{item.fullName}</td>
-            <td className="px-4 py-2 text-center">{item.email}</td>
-            <td className="px-4 py-2 text-center">{item.role}</td>
-            <td className="px-4 py-2 text-center">
-              {/* You can add action buttons here */}
-              <button className="bg-blue-500 text-white px-2 py-1">Edit</button>
-              <button className="bg-red-500 text-white px-2 py-1">Delete</button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
+      <tbody>{renderRows()}</tbody>
     </table>
   );
 };
 
-export default SampleTable;
+export default Table;
