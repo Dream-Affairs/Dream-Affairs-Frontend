@@ -36,7 +36,6 @@ type ts = {
 
 type addTask = (task: task) => void;
 type deleteTask = (id: string) => void;
-type getTasks = () => task[];
 
 const Checklist = () => {
   const [filterKey, setFilterKey] = useState('All tasks');
@@ -161,6 +160,7 @@ const Checklist = () => {
       if (query.length === 0) setTasks(data);
       const searchResult = data?.filter((item) => item.decription.includes(query));
       setTasks(searchResult);
+      setPageNum(1);
     }
   };
 
@@ -176,15 +176,15 @@ const Checklist = () => {
       <Search search={searchTasks} />
       {/* Tasks side */}
       <aside className="mt-8 sm:mt-20 ">
-        <div className="w-full h-14 flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between md:items-center px-6 sm:px-8">
+        <div className="w-full h-14 flex flex-col gap-2 md:gap-0 md:flex-row md:justify-between md:items-center px-6 sm:px-8">
           <h3 className="text-zinc-800 text-lg sm:text-xl font-semibold leading-loose">Tasks</h3>
-          <div className="justify-center items-center sm:gap-3 sm:flex">
-            <p className="text-zinc-800 leading-snug hidden sm:block">Filter By</p>
+          <div className="justify-center items-center md:gap-3 md:flex">
+            <p className="text-zinc-800 leading-snug hidden md:block">Filter By</p>
 
-            <aside className="flex sm:grid sm:grid-cols-2 gap-3  ">
+            <aside className="flex md:grid md:grid-cols-2 gap-3  ">
               {/* <Filter /> */}
               <Select>
-                <SelectTrigger className="w-full sm:w-[180px] h-[45px]">
+                <SelectTrigger className="w-full md:w-[180px] h-[45px]">
                   <SelectValue placeholder={filterKey} />
                 </SelectTrigger>
                 <SelectContent className="w-full">
@@ -202,8 +202,8 @@ const Checklist = () => {
                 variant={addTask ? 'disabled' : 'secondary'}
                 onClick={() => setAddTask(true)}
               >
-                <span className="hidden sm:block">Add Task</span>
-                <span className="sm:hidden">
+                <span className="hidden md:block">Add Task</span>
+                <span className="md:hidden">
                   <PlusIcon />
                 </span>
               </Button>
@@ -211,7 +211,7 @@ const Checklist = () => {
           </div>
         </div>
         {/* Add Tasks */}
-        <div className="w-full mt-14 sm:mt-8 sm:border-t border-neutral-200 sm:px-8">
+        <div className="w-full mt-14 md:mt-8 md:border-t border-neutral-200 sm:px-8">
           {addTask && <AddTask addTask={handleAddTask} cancel={CancelAddTask} />}
         </div>
         {/* Tasks */}
@@ -226,27 +226,27 @@ const Checklist = () => {
         </ul>
         {/* Pagination */}
         {tasks?.length > 6 && (
-          <div className="w-full h-8 mt-8 rounded flex justify-between sm:justify-end items-center px-6 sm:px-8 pb-3">
-            <p
-              onClick={() => {
-                if (pageNum === 1) return;
-                setPageNum((prev) => prev - 1);
-              }}
-              className={`px-3 py-1.5 bg-transparent hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500 ${
-                showPrevBtn ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              <span>
-                <Arrow />
-              </span>
-              Previous
-            </p>
+          <div className="w-full h-8 mt-8 rounded flex  justify-end items-center px-6 sm:px-8 pb-3">
+            {showPrevBtn && (
+              <p
+                onClick={() => {
+                  if (pageNum === 1) return;
+                  setPageNum((prev) => prev - 1);
+                }}
+                className={`px-3 py-1.5 bg-transparent sm:hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent sm:hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500 `}
+              >
+                <span>
+                  <Arrow />
+                </span>
+                <span className="hidden sm:block">Previous</span>
+              </p>
+            )}
 
             {PaginationArr?.filter((item) => item !== 0 && item <= numPages).map((item) => (
               <p
                 onClick={() => setPageNum(item)}
                 key={item}
-                className={`px-3 py-1.5 hidden sm:block ${
+                className={`px-3 py-1.5  ${
                   pageNum === item ? 'bg-purple-200' : 'bg-transparent'
                 } hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-gray-300 cursor-pointer transition-all duration-500`}
               >
@@ -254,20 +254,20 @@ const Checklist = () => {
               </p>
             ))}
 
-            <p
-              onClick={() => {
-                if (pageNum === numPages) return;
-                setPageNum((prev) => prev + 1);
-              }}
-              className={`px-3 py-1.5 bg-transparent hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500 ${
-                showNextBtn ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              Next
-              <span className="rotate-180">
-                <Arrow />
-              </span>
-            </p>
+            {showNextBtn && (
+              <p
+                onClick={() => {
+                  if (pageNum === numPages) return;
+                  setPageNum((prev) => prev + 1);
+                }}
+                className={`px-3 py-1.5 bg-transparent sm:hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent sm:hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500 `}
+              >
+                <span className="hidden sm:block">Next</span>
+                <span className="rotate-180">
+                  <Arrow />
+                </span>
+              </p>
+            )}
           </div>
         )}
       </aside>
