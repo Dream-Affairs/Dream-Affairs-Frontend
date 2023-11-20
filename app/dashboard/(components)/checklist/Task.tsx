@@ -213,28 +213,33 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
             className="justify-self-end cursor-pointer"
           >
             <Modal
-              width="700"
+              width="400"
               showXIcon={false}
               btnTiggerText={<DeleteIcon />}
               btnTriggerStyle=""
-              showCloseBtn={true}
+              showCloseBtn={false}
               closeBtnText="Close"
               closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
-              otherBtn={
-                <DialogClose asChild>
-                  <Button onClick={() => deleteTask(item.id)} variant="destructive" className="w-full mt-5">
-                    Delete
-                  </Button>
-                </DialogClose>
-              }
             >
-              <div className="w-full flex-col justify-start items-start gap-3.5 inline-flex border-b border-gray-200 pb-8">
-                <div className="flex flex-col justify-start items-start gap-4">
+              <div className="w-full flex-col justify-start items-start gap-3.5 inline-flex ">
+                <div className="flex flex-col justify-start items-start gap-4 border-b border-gray-200 pb-8">
                   <h3 className="w-80 text-neutral-900 text-base font-medium  leading-snug">Delete task</h3>
                   <p className="self-stretch text-neutral-900 text-sm font-normal  leading-tight">
-                    Are you sure you want to delete create guest list from your tasks
+                    {`Are you sure you want to delete "${description}" from your tasks`}
                   </p>
                 </div>
+                <aside className="w-full md:w-fit flex items-center gap-3 self-end">
+                  <DialogClose asChild>
+                    <Button variant="outline" className="w-full md:w-24 mt-5">
+                      Close
+                    </Button>
+                  </DialogClose>
+                  <DialogClose asChild>
+                    <Button onClick={() => deleteTask(item.id)} variant="destructive" className="w-full md:w-24 mt-5">
+                      Delete
+                    </Button>
+                  </DialogClose>
+                </aside>
               </div>
             </Modal>
           </aside>
