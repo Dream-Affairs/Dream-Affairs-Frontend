@@ -33,7 +33,7 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
   const [assignedMember, setAssignedMember] = useState('');
   const [done, setDone] = useState(false);
   const [editedTask, setEditedTask] = React.useState<task>(item);
-  const [isOutdated, setIsOutdated] = useState(false);
+
   const error = false;
 
   useEffect(() => {
@@ -118,10 +118,10 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
         >
           {done && <DoneIcon />}
         </div>
-        <div className="w-full items-start grid grid-cols-4 sm:grid-cols-3">
+        <div className="w-full items-start flex gap-1 sm:gap-0 justify-between md:grid md:grid-cols-4 ">
           {/* Description */}
 
-          <div className="col-span-2 sm:col-span-1 flex-col justify-start items-start gap-3 inline-flex mr-5 ">
+          <div className="col-span-2  flex-col justify-start items-start gap-3 inline-flex mr-5 w-full">
             <input
               type="text"
               placeholder="Task description"
@@ -146,67 +146,74 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
                 date && isTodayOrYesterday(date).includes('.') && 'text-[#F00]'
               }`}
             />
-            {/* Date */}
-            <Popover>
-              <PopoverTrigger
-                className={cn(
-                  ` text-sm  file:text-sm file:font-medium placeholder:text-gray-400 w-[115px]  disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out border-0 hover:!bg-none cursor-pointer
-           `,
-                )}
-                asChild
-              >
-                <p
+            <aside className="flex items-center gap-2">
+              {/* Date */}
+              <Popover>
+                <PopoverTrigger
                   className={cn(
-                    'flex items-center justify-start  text-left  text-xs leading-none ',
-                    !date && 'text-neutral-400',
-                    done && 'line-through',
-                    date && isTodayOrYesterday(date) === 'Today' && 'text-[#762995]',
-                    date && isTodayOrYesterday(date) === 'Yesterday' && 'text-[#F00]',
-                    date && isTodayOrYesterday(date).includes('.') && 'text-[#F00]',
+                    ` text-sm  file:text-sm file:font-medium placeholder:text-gray-400 md:w-[115px]  disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out border-0 hover:!bg-none cursor-pointer
+           `,
                   )}
+                  asChild
                 >
-                  {date ? isTodayOrYesterday(date) : <CalenderIcon className="mr-2 h-4 w-4" />}
-                </p>
-                {/* )} */}
-              </PopoverTrigger>
-              <PopoverContent
-                onBlur={() => {
-                  if (done) return;
-                  editItem(item.id, {
-                    decription: description,
-                    date: date,
-                    assignee: assignedMember,
-                    done: done,
-                    id: item.id,
-                  });
-                }}
-                className="w-auto translate-x-1/4 p-0"
-              >
-                <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
-              </PopoverContent>
-            </Popover>
+                  <p
+                    className={cn(
+                      'flex items-center justify-start  text-left  text-xs leading-none ',
+                      !date && 'text-neutral-400',
+                      done && 'line-through',
+                      date && isTodayOrYesterday(date) === 'Today' && 'text-[#762995]',
+                      date && isTodayOrYesterday(date) === 'Yesterday' && 'text-[#F00]',
+                      date && isTodayOrYesterday(date).includes('.') && 'text-[#F00]',
+                    )}
+                  >
+                    {date ? isTodayOrYesterday(date) : <CalenderIcon className="mr-2 h-4 w-4" />}
+                  </p>
+                  {/* )} */}
+                </PopoverTrigger>
+                <PopoverContent
+                  onBlur={() => {
+                    if (done) return;
+                    editItem(item.id, {
+                      decription: description,
+                      date: date,
+                      assignee: assignedMember,
+                      done: done,
+                      id: item.id,
+                    });
+                  }}
+                  className="w-auto translate-x-1/4 p-0"
+                >
+                  <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+                </PopoverContent>
+              </Popover>
+              {/* Assign Mobile */}
+              <aside onClick={() => setIsAssigning(true)} className="md:hidden justify-self-center col-span-1 relative">
+                <Assignee
+                  assignedMember={assignedMember}
+                  done={done}
+                  isAssigning={isAssigning}
+                  handleAssignBlur={handleAssignBlur}
+                  updateAssignMember={updateAssignMember}
+                  handleEditAssignee={handleEditAssignee}
+                />
+              </aside>
+            </aside>
           </div>
 
           {/* ASSIGNEE */}
-          <aside onClick={() => setIsAssigning(true)} className="justify-self-center col-span-1 relative">
-            <p className="bg-gray-300 md:bg-transparent rounded-2xl -translate-y-[20%] sm:translate-y-0 py-1 px-2 -z-50 text-sm sm:text-base">
-              {assignedMember !== 'Assign Task' ? (
-                <span className={`${done && 'line-through'} text-slate-600 leading-snug cursor-pointer`}>
-                  {assignedMember}
-                </span>
-              ) : (
-                <AssignIcon stroke="#898C8F" />
-              )}
-            </p>
-            {isAssigning && (
-              <AssignPopover
-                handleBlur={handleAssignBlur}
-                updateAssignMember={updateAssignMember}
-                editAssignee={handleEditAssignee}
-              />
-            )}
+          <aside
+            onClick={() => setIsAssigning(true)}
+            className="hidden w-fit justify-self-start col-span-1 md:block relative"
+          >
+            <Assignee
+              assignedMember={assignedMember}
+              done={done}
+              isAssigning={isAssigning}
+              handleAssignBlur={handleAssignBlur}
+              updateAssignMember={updateAssignMember}
+              handleEditAssignee={handleEditAssignee}
+            />
           </aside>
-
           {/* DELETE SIDE */}
           <aside className="justify-self-end cursor-pointer">
             <Modal
@@ -246,3 +253,42 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
   );
 };
 export default Task;
+
+interface AssigneeProps {
+  assignedMember: string;
+  done: boolean;
+  isAssigning: boolean;
+  handleAssignBlur: () => void;
+  handleEditAssignee: () => void;
+  updateAssignMember: (item: string) => void;
+}
+
+const Assignee = ({
+  assignedMember,
+  done,
+  isAssigning,
+  handleAssignBlur,
+  updateAssignMember,
+  handleEditAssignee,
+}: AssigneeProps) => {
+  return (
+    <>
+      <p className="bg-gray-300 md:bg-transparent rounded-2xl py-1 md:py-0 px-2 md:px-0 -z-50 md:text-center md:w-14 text-sm sm:text-base">
+        {assignedMember !== 'Assign Task' ? (
+          <span className={`${done && 'line-through'} text-slate-600 leading-snug cursor-pointer`}>
+            {assignedMember}
+          </span>
+        ) : (
+          <AssignIcon stroke="#898C8F" />
+        )}
+      </p>
+      {isAssigning && (
+        <AssignPopover
+          handleBlur={handleAssignBlur}
+          updateAssignMember={updateAssignMember}
+          editAssignee={handleEditAssignee}
+        />
+      )}
+    </>
+  );
+};
