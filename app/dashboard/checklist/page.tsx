@@ -226,27 +226,27 @@ const Checklist = () => {
         </ul>
         {/* Pagination */}
         {tasks?.length > 6 && (
-          <div className="w-full h-8 mt-8 rounded flex justify-between sm:justify-end items-center px-6 sm:px-8 pb-3">
-            <p
-              onClick={() => {
-                if (pageNum === 1) return;
-                setPageNum((prev) => prev - 1);
-              }}
-              className={`px-3 py-1.5 bg-transparent hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500 ${
-                showPrevBtn ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              <span>
-                <Arrow />
-              </span>
-              Previous
-            </p>
+          <div className="w-full h-8 mt-8 rounded flex  justify-end items-center px-6 sm:px-8 pb-3">
+            {showPrevBtn && (
+              <p
+                onClick={() => {
+                  if (pageNum === 1) return;
+                  setPageNum((prev) => prev - 1);
+                }}
+                className={`px-3 py-1.5 bg-transparent sm:hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent sm:hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500 `}
+              >
+                <span>
+                  <Arrow />
+                </span>
+                <span className="hidden sm:block">Previous</span>
+              </p>
+            )}
 
             {PaginationArr?.filter((item) => item !== 0 && item <= numPages).map((item) => (
               <p
                 onClick={() => setPageNum(item)}
                 key={item}
-                className={`px-3 py-1.5 hidden sm:block ${
+                className={`px-3 py-1.5  ${
                   pageNum === item ? 'bg-purple-200' : 'bg-transparent'
                 } hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-gray-300 cursor-pointer transition-all duration-500`}
               >
@@ -254,20 +254,20 @@ const Checklist = () => {
               </p>
             ))}
 
-            <p
-              onClick={() => {
-                if (pageNum === numPages) return;
-                setPageNum((prev) => prev + 1);
-              }}
-              className={`px-3 py-1.5 bg-transparent hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500 ${
-                showNextBtn ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              Next
-              <span className="rotate-180">
-                <Arrow />
-              </span>
-            </p>
+            {showNextBtn && (
+              <p
+                onClick={() => {
+                  if (pageNum === numPages) return;
+                  setPageNum((prev) => prev + 1);
+                }}
+                className={`px-3 py-1.5 bg-transparent sm:hover:bg-purple-200 text-center text-gray-500 text-sm font-medium border border-transparent sm:hover:border-gray-300 cursor-pointer flex items-center gap-1 transition-all duration-500 `}
+              >
+                <span className="hidden sm:block">Next</span>
+                <span className="rotate-180">
+                  <Arrow />
+                </span>
+              </p>
+            )}
           </div>
         )}
       </aside>

@@ -187,7 +187,7 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
             </Popover>
           </div>
 
-          {/* Assignee */}
+          {/* ASSIGNEE */}
           <aside onClick={() => setIsAssigning(true)} className="justify-self-center col-span-1 relative">
             <p className="bg-gray-300 md:bg-transparent rounded-2xl -translate-y-[20%] sm:translate-y-0 py-1 px-2 -z-50 text-sm sm:text-base">
               {assignedMember !== 'Assign Task' ? (
@@ -207,19 +207,16 @@ export const Task = ({ deleteTask, item, index, editItem }: MyTasksProps) => {
             )}
           </aside>
 
-          {/* Delete */}
-          <aside
-            // onClick={() => deleteTask(index)}
-            className="justify-self-end cursor-pointer"
-          >
+          {/* DELETE SIDE */}
+          <aside className="justify-self-end cursor-pointer">
             <Modal
-              width="400"
+              width=""
               showXIcon={false}
               btnTiggerText={<DeleteIcon />}
               btnTriggerStyle=""
               showCloseBtn={false}
-              closeBtnText="Close"
-              closeBtnStyle="bg-secondary p-4 rounded-md text-sm font-medium w-full mt-5"
+              closeBtnText=""
+              closeBtnStyle=""
             >
               <div className="w-full flex-col justify-start items-start gap-3.5 inline-flex ">
                 <div className="flex flex-col justify-start items-start gap-4 border-b border-gray-200 pb-8">
