@@ -83,7 +83,7 @@ const Header = () => {
           <Link href="/pricing">Pricing</Link>
           <Link href="/blog">Blog</Link>
           <Link href="/about-us">About</Link>
-          <Link href="/">Contact Us</Link>
+          <Link href="/contact-us">Contact Us</Link>
         </div>
         <div className="hidden lg:flex">
           <Link href="/auth/login">
