@@ -71,7 +71,7 @@ const Checklist = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       const storedTasks: task[] = await getTasks();
-      console.log(storedTasks);
+
       setTasks(storedTasks);
     };
 
