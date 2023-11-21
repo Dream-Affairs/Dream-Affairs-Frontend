@@ -71,13 +71,11 @@ const Checklist = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       const storedTasks: task[] = await getTasks();
-
+      console.log(storedTasks);
       setTasks(storedTasks);
     };
 
-    return () => {
-      fetchTasks();
-    };
+    fetchTasks();
   }, [getTasks]);
 
   // GET NUMBER OF PAGES
