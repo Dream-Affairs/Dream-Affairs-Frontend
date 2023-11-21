@@ -1,7 +1,6 @@
 import React from 'react';
 import CoverPhoto from './profile-images';
 import ProfileDetail from './profile-form';
-import Subtitle from './subtitle';
 
 const ProfileManagement = () => {
   return (
