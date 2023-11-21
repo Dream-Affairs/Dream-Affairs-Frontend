@@ -37,7 +37,7 @@ const AssignPopover = ({ handleBlur, updateAssignMember, editAssignee }: AssignP
   return (
     <div
       // onBlur={() => handleBlur()}
-      className="absolute -translate-x-1/2 top-5 w-44 bg-white rounded-lg shadow border border-zinc-100 flex-col justify-start items-center gap-2 flex z-50"
+      className="absolute md:-translate-x-1/2 top-5 w-44 bg-white rounded-lg shadow border border-zinc-100 flex-col justify-start items-center gap-2 flex z-50"
     >
       <aside className="flex justify-between items-center p-3 border-b border-gray-200">
         <input
