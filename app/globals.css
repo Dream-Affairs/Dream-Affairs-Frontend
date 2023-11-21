@@ -110,6 +110,9 @@
   .profile-tab-btn.active {
     @apply text-primary border-b-2 border-primary;
   }
+  .summary-count {
+    @apply flex items-center text-xl gap-2 py-1;
+  }
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
