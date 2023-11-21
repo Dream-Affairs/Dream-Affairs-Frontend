@@ -75,9 +75,7 @@ const Checklist = () => {
       setTasks(storedTasks);
     };
 
-    return () => {
-      fetchTasks();
-    };
+    fetchTasks();
   }, [getTasks]);
 
   // GET NUMBER OF PAGES
