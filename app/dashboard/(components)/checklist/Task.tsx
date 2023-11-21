@@ -273,7 +273,7 @@ const Assignee = ({
 }: AssigneeProps) => {
   return (
     <>
-      <p className="bg-gray-300 md:bg-transparent rounded-2xl py-1 md:py-0 px-2 md:px-0 -z-50 md:text-center md:w-14 text-sm sm:text-base">
+      <p className="bg-gray-300 md:bg-transparent rounded-2xl px-2 md:px-0 -z-50 md:text-center md:w-14 text-sm sm:text-base">
         {assignedMember !== 'Assign Task' ? (
           <span className={`${done && 'line-through'} text-slate-600 leading-snug cursor-pointer`}>
             {assignedMember}
