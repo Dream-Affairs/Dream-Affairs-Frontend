@@ -70,8 +70,9 @@ const Checklist = () => {
   // GET TASKS
   useEffect(() => {
     const fetchTasks = async () => {
-      const tasks: task[] = await getTasks();
-      if (tasks) setTasks(tasks);
+      const storedTasks: task[] = await getTasks();
+
+      setTasks(storedTasks);
     };
 
     return () => {
