@@ -11,6 +11,7 @@ import {
   ArrowRight,
   Delete,
   Ellipsis,
+  ExportIcon,
   HashTag,
   Import,
   Plus,
@@ -34,34 +35,11 @@ import {
 } from '@/components/ui/select';
 import React, { useState } from 'react';
 import guests from '../../../data/dummy_guests';
+import Link from 'next/link';
+import StatusTag from '@/components/guest-management/status-tag/status-tag';
+import Pagination from '@/components/guest-management/pagination/pagination';
 
 type Props = {};
-
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case 'confirmed':
-      return '#008D36';
-    case 'pending':
-      return '#FF8515';
-    case 'declined':
-      return '#F00';
-    default:
-      return 'black'; // Default color for unknown status
-  }
-};
-
-const getStatusBg = (status: string) => {
-  switch (status) {
-    case 'confirmed':
-      return '#E6F4EB';
-    case 'pending':
-      return '#FFF3E8';
-    case 'declined':
-      return '#FFE6E6';
-    default:
-      return 'black'; // Default color for unknown status
-  }
-};
 
 const GuestManagement = (props: Props) => {
   const [activeFilter, setActiveFilter] = useState<string>('');
@@ -99,41 +77,12 @@ const GuestManagement = (props: Props) => {
   return (
     <div className="pt-10 relative w-full h-full py-6">
       {showPopup && <MenuPopup closePop={setShowPopup} />}
-      <div className=" guest-spacing w-full overflow-hidden">
+      <div className="guest-spacing w-full overflow-hidden">
         <header className="flex justify-between">
           <h2 className="text-3xl font-bold text-[#1c1c1c]">Guest Management</h2>
           <div className="flex gap-[22px]">
             <Button variant="disabled" className="gap-2.5" size={'lg'}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-                <path
-                  d="M12.5 9V2L10.5 4"
-                  stroke="#9C9C9C"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M12.5 2L14.5 4"
-                  stroke="#9C9C9C"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M2.47998 13H6.88998C7.26998 13 7.60998 13.21 7.77998 13.55L8.94998 15.89C9.28998 16.57 9.97998 17 10.74 17H14.27C15.03 17 15.72 16.57 16.06 15.89L17.23 13.55C17.4 13.21 17.75 13 18.12 13H22.48"
-                  stroke="#9C9C9C"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M7.5 5.12988C3.96 5.64988 2.5 7.72988 2.5 11.9999V14.9999C2.5 19.9999 4.5 21.9999 9.5 21.9999H15.5C20.5 21.9999 22.5 19.9999 22.5 14.9999V11.9999C22.5 7.72988 21.04 5.64988 17.5 5.12988"
-                  stroke="#9C9C9C"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ExportIcon />
               Export
             </Button>
             <AddGuest />
@@ -182,8 +131,10 @@ const GuestManagement = (props: Props) => {
               Manage Tags
             </Button>
             <Button size="sm" className="guest-btn">
-              <Track />
-              Track RSVP
+              <Link href="/dashboard/guest-management/rsvp-tracker" className="flex gap-2">
+                <Track />
+                Track RSVP
+              </Link>
             </Button>
             <Button size="sm" className="guest-btn">
               <Send />
@@ -265,21 +216,7 @@ const GuestManagement = (props: Props) => {
                       </td>
                       <td className="py-4 px-2">{item.email}</td>
                       <td className="py-4 px-2">
-                        <div
-                          style={{
-                            color: getStatusColor(item.rsvpStatus),
-                            backgroundColor: getStatusBg(item.rsvpStatus),
-                          }}
-                          className={`text-xs font-medium capitalize rounded-[20px] flex items-center w-fit mx-auto py-1 px-3 text-[${getStatusColor(
-                            item.rsvpStatus,
-                          )}] bg-[${getStatusBg(item.rsvpStatus)}]`}
-                        >
-                          <div
-                            style={{ backgroundColor: getStatusColor(item.rsvpStatus) }}
-                            className={`h-1.5 w-1.5 rounded-full mr-2`}
-                          />
-                          {item.rsvpStatus}
-                        </div>
+                        <StatusTag status={item.rsvpStatus} />
                       </td>
                       <td className="py-4 px-2">{item.inviteCode}</td>
                       <td className="py-4 px-2">
@@ -304,20 +241,7 @@ const GuestManagement = (props: Props) => {
           </table>
         </div>
       </div>
-
-      <div className="flex w-fit border border-[#D1D5DB] rounded mx-auto mt-12 text-[#6B7280] text-sm font-medium">
-        <button className="flex items-center border-r border-[#D1D5DB py-2 px-3 gap-2">
-          <ArrowLeft />
-          Previous
-        </button>
-        <button className="py-2 px-3 border-r border-[#D1D5DB]">1</button>
-        <button className="py-2 px-3 border-r border-[#D1D5DB] bg-[#D1D5DB]">2</button>
-        <button className="py-2 px-3 border-r border-[#D1D5DB]">3</button>
-        <button className="flex items-center py-2 px-3 gap-2">
-          Next
-          <ArrowRight />
-        </button>
-      </div>
+      <Pagination />
     </div>
   );
 };
