@@ -91,7 +91,7 @@ const MealForm: React.FC<mealProps> = ({ setMealName, setMealDescription, mealDe
             </SelectTrigger>
             <SelectContent>
               <SelectGroup className="">
-                {mealCategories?.map((meal: String) => <SelectItem value={meal.toString()}>{meal}</SelectItem>)}
+                {mealCategories?.map((meal: String, index) => <SelectItem key={index} value={meal.toString()}>{meal}</SelectItem>)}
                 <SelectItem value="add">Add category</SelectItem>
               </SelectGroup>
             </SelectContent>
