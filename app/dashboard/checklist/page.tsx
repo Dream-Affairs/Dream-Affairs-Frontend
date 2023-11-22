@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Filter from '../(components)/checklist/Filter';
 import Search from '../(components)/checklist/Search';
 import AddTask from '../(components)/checklist/addTask';
@@ -50,7 +50,7 @@ const Checklist = () => {
 
   const searchResultsPerPage = 6;
 
-  const getTasks = async (): Promise<task[]> => {
+  const getTasks = useCallback(async (): Promise<task[]> => {
     const response: any = localStorage.getItem('Tasks');
     const storedTasks: ts[] = await JSON.parse(response);
 
@@ -65,19 +65,18 @@ const Checklist = () => {
     });
 
     return updatedTask;
-  };
+  }, []);
 
   // GET TASKS
   useEffect(() => {
     const fetchTasks = async () => {
-      const tasks: task[] = await getTasks();
-      if (tasks) setTasks(tasks);
+      const storedTasks: task[] = await getTasks();
+
+      setTasks(storedTasks);
     };
 
-    return () => {
-      fetchTasks();
-    };
-  }, []);
+    fetchTasks();
+  }, [getTasks]);
 
   // GET NUMBER OF PAGES
   useEffect(() => {
@@ -142,7 +141,7 @@ const Checklist = () => {
     localStorage.setItem('Tasks', JSON.stringify(newTasksArr));
   };
 
-  // EDIT TASK
+  // EDIT TASK useCallback
   const handleEditTask = (id: string, item: task) => {
     const index = tasks?.findIndex((item) => item.id === id);
     const newTasksArr = [...tasks];
@@ -158,7 +157,7 @@ const Checklist = () => {
     const data: task[] = await getTasks();
     if (data) {
       if (query.length === 0) setTasks(data);
-      const searchResult = data?.filter((item) => item.decription.includes(query));
+      const searchResult = data?.filter((item) => item.decription.toLowerCase().includes(query.toLowerCase()));
       setTasks(searchResult);
       setPageNum(1);
     }
