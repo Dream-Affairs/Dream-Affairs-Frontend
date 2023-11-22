@@ -14,6 +14,11 @@ export function useModal() {
   const [actionName, setActionName] = useState<string>('');
   const [cancelButtonStyle, setCancelButtonStyle] = useState<ButtonStyle | null>(null);
   const [actionButtonStyle, setActionButtonStyle] = useState<ButtonStyle | null>(null);
+  const [modalAction, setModalAction] = useState<{
+    action: () => void;
+    actionName: string;
+    memberId?: string | undefined;
+  } | null>(null);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -39,6 +44,8 @@ export function useModal() {
     actionButtonStyle,
     setActionButtonStyle,
     setCancelButtonStyle,
+    setModalAction,
+    modalAction,
   };
 }
 
@@ -167,4 +174,21 @@ export const MODAL_STYLES = {
       textColor: '#008D36',
     },
   },
+};
+
+type Member = {
+  name: string;
+  email: string;
+  role: string;
+};
+export const useSorting = () => {
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [sortField, setSortField] = useState<keyof Member>('name');
+
+  const handleSort = (field: keyof Member) => {
+    setSortField(field);
+    setSortOrder((prevSortOrder) => (prevSortOrder === 'asc' ? 'desc' : 'asc'));
+  };
+
+  return { sortOrder, sortField, handleSort };
 };

@@ -6,13 +6,18 @@ import closeIcon from './icons/close-icon.png';
 interface MyModalProps {
   isModalOpen: boolean;
   //   setIsModalOpen: (isOpen: boolean) => void;
-  handleOpenModal: () => void;
+  handleOpenModal: (handleAction: () => void, ...args: any[]) => void;
   handleCloseModal: () => void;
   title: string;
   message: string;
   actionName: string;
   cancelButtonStyle?: ButtonStyle | null;
   actionButtonStyle?: ButtonStyle | null;
+  modalAction: {
+    action: () => void;
+    actionName: string;
+    memberId?: string; // Add this line to receive the memberId
+  } | null;
 }
 interface ButtonStyle {
   backgroundColor: string;
@@ -29,6 +34,7 @@ const MyModal: React.FC<MyModalProps> = ({
   actionName,
   cancelButtonStyle,
   actionButtonStyle,
+  modalAction,
 }) => {
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -60,6 +66,13 @@ const MyModal: React.FC<MyModalProps> = ({
     };
   }, [isModalOpen, handleCloseModal]);
 
+  const handleActionClick = () => {
+    if (modalAction && modalAction.action) {
+      modalAction.action();
+    }
+    handleCloseModal();
+  };
+
   return (
     <div className="flex items-center justify-center h-screen">
       {isModalOpen && (
@@ -82,7 +95,7 @@ const MyModal: React.FC<MyModalProps> = ({
               </button>
               <button
                 className={`bg-[${actionButtonStyle?.backgroundColor}] border border-[${actionButtonStyle?.borderColor}] text-[${actionButtonStyle?.textColor}] px-4 py-2 rounded-md`}
-                // onClick={handleSuspend}
+                onClick={handleActionClick}
               >
                 {actionName}
               </button>
