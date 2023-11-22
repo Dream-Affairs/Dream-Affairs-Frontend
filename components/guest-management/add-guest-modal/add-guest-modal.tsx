@@ -14,6 +14,7 @@ type Props = {
   modalTitle: string;
   children: React.ReactNode;
   hideHeader?: boolean;
+  disableTrigger?: boolean;
 };
 
 export function AddGuestModal({
@@ -26,10 +27,11 @@ export function AddGuestModal({
   children,
   modalTitle,
   hideHeader,
+  disableTrigger,
 }: Props) {
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger disabled={disableTrigger} asChild>
         <Button size={size} variant={variant} className={className}>
           {Icon && <Icon />}
           {triggerBtnText}

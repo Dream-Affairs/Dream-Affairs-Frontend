@@ -39,6 +39,7 @@ import Link from 'next/link';
 import StatusTag from '@/components/guest-management/status-tag/status-tag';
 import Pagination from '@/components/guest-management/pagination/pagination';
 import ManageTagsModal from '@/components/guest-management/manage-tags-modal/manage-tags-modal';
+import AssignTagsModal from '@/components/guest-management/assign-tags-modal/assign-tags-modal';
 
 type Props = {};
 
@@ -47,7 +48,22 @@ const GuestManagement = (props: Props) => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [selectedGuest, setSelectedGuests] = useState<string[]>([]);
   const [deletedGuests, setDeletedGuests] = useState<string[]>([]);
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>([
+    'Bridal Shower',
+    'Bestman ',
+    'Parents',
+    'Bride’s friend',
+    "Groom's Colleagues",
+    'Long Distance',
+    'Church',
+    'Band',
+    'Ex',
+    "Bride's-Maid",
+    'Family Friend',
+    'Flight',
+    'Co-Worker',
+    'VIP',
+  ]);
 
   const showMenu = (e: any) => {
     setShowPopup(true);
@@ -119,19 +135,13 @@ const GuestManagement = (props: Props) => {
               size={'sm'}
               className={selectedGuest.length ? 'guest-btn' : 'gap-2'}
               onClick={deleteSelected}
+              disabled={selectedGuest.length ? false : true}
             >
               <Delete color={selectedGuest.length ? '#282828' : '#9C9C9C'} />
               Delete Guest
             </Button>
             <ImportGuestModal />
-            <Button
-              variant={selectedGuest.length ? null : 'outline'}
-              size="sm"
-              className={selectedGuest.length ? 'guest-btn' : 'gap-2'}
-            >
-              <Tags />
-              Assign Tags
-            </Button>
+            <AssignTagsModal tags={tags} selectedGuestNumber={selectedGuest.length} />
             <ManageTagsModal tags={tags} tagSetter={setTags} />
             <Button size="sm" className="guest-btn">
               <Link href="/dashboard/guest-management/rsvp-tracker" className="flex gap-2">
