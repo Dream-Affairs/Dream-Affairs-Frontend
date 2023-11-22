@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { sidebarMenu } from '../data/dashboard-data';
 import { Button } from '@/components/ui/button';
+import logout from '../(assets)/logout-nav.svg';
 
 type Props = {};
 
@@ -88,13 +89,16 @@ const Sidebar = (props: Props) => {
         </button>
 
         <Button
-          className="h-auto w-auto text-white"
+          className={`flex items-center p-3 rounded text-base leading-6 font-semibold h-fit ${
+            viewMenu ? 'w-full' : 'w-fit'
+          }`}
           onClick={() => {
             sessionStorage.removeItem('daff');
             window.location.href = '/auth/login';
           }}
         >
-          Logout
+          <Image src={logout} alt="user" width={24} height={24} />
+          {viewMenu && <span className="mt-1 ml-3">Logout</span>}
         </Button>
       </div>
     </nav>

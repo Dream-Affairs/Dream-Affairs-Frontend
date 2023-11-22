@@ -21,7 +21,7 @@ const Dashboard = () => {
     setGifts(giftList);
   }, []);
   return (
-    <section className="w-full h-fit py-6 lg:px-[52px] space-y-8 border-l">
+    <section className="w-full h-full py-6 lg:px-[52px] md:px-10 px-6 lg:space-y-10 md:spacey-8 space-y-6 lg:border-l border-0">
       {/* Header, Add Guest and Upgrade Plan  */}
       <div className="flex justify-between items-center">
         {/* Header  */}
@@ -44,7 +44,7 @@ const Dashboard = () => {
       </div>
 
       {/* Event Details and Countdown Clock  */}
-      <div className="flex gap-x-8 w-full">
+      <div className="flex items-center lg:flex-row flex-col lg:gap-x-8 gap-y-6 w-full">
         {/* Event Details  */}
         <div className="border border-[#E1E1E1] rounded-[5px] w-full h-[150px] p-4 space-y-4 text-[#282828]">
           <p className="text-lg leading-6 font-semibold">Event Details</p>
@@ -86,7 +86,7 @@ const Dashboard = () => {
       </div>
 
       {/* RSVP Overview and Financial Overview  */}
-      <div className="flex gap-x-8 w-full">
+      <div className="flex items-center lg:flex-row flex-col lg:gap-x-8 gap-y-6 w-full">
         {/* RSVP Overview  */}
         <div className="border border-[#E1E1E1] rounded-[5px] w-full h-full p-4">
           <p className="text-lg leading-6 font-semibold text-[#282828]">RSVP Overview</p>
@@ -106,7 +106,7 @@ const Dashboard = () => {
       </div>
 
       {/* Checklist and Gifts  */}
-      <div className="flex gap-x-8 w-full h-full">
+      <div className="flex items-center lg:flex-row flex-col lg:gap-x-8 gap-y-6 w-full h-full">
         {/* Checklist */}
         <div className={`border border-[#E1E1E1] rounded-[5px] w-full ${tasks ? 'h-fit' : 'h-[380px]'} p-4 space-y-4`}>
           <div className="flex justify-between items-center">
