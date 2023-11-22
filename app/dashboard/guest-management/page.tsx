@@ -38,6 +38,7 @@ import guests from '../../../data/dummy_guests';
 import Link from 'next/link';
 import StatusTag from '@/components/guest-management/status-tag/status-tag';
 import Pagination from '@/components/guest-management/pagination/pagination';
+import ManageTagsModal from '@/components/guest-management/manage-tags-modal/manage-tags-modal';
 
 type Props = {};
 
@@ -46,6 +47,7 @@ const GuestManagement = (props: Props) => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [selectedGuest, setSelectedGuests] = useState<string[]>([]);
   const [deletedGuests, setDeletedGuests] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
 
   const showMenu = (e: any) => {
     setShowPopup(true);
@@ -122,14 +124,15 @@ const GuestManagement = (props: Props) => {
               Delete Guest
             </Button>
             <ImportGuestModal />
-            <Button size="sm" className="guest-btn">
+            <Button
+              variant={selectedGuest.length ? null : 'outline'}
+              size="sm"
+              className={selectedGuest.length ? 'guest-btn' : 'gap-2'}
+            >
               <Tags />
               Assign Tags
             </Button>
-            <Button size="sm" className="guest-btn">
-              <Store />
-              Manage Tags
-            </Button>
+            <ManageTagsModal tags={tags} tagSetter={setTags} />
             <Button size="sm" className="guest-btn">
               <Link href="/dashboard/guest-management/rsvp-tracker" className="flex gap-2">
                 <Track />
@@ -223,10 +226,7 @@ const GuestManagement = (props: Props) => {
                         <div className="flex gap-2">
                           {item.tags.map((item, index) => {
                             return (
-                              <span
-                                key={index}
-                                className="block whitespace-nowrap px-2 py-1 bg-[#E6F4EB] text-xs text-[#008D36] font-medium rounded-[8px]"
-                              >
+                              <span key={index} className="block tags">
                                 {item}
                               </span>
                             );

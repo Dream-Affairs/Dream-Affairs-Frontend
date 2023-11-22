@@ -13,6 +13,7 @@ type Props = {
   triggerBtnText: string;
   modalTitle: string;
   children: React.ReactNode;
+  hideHeader?: boolean;
 };
 
 export function AddGuestModal({
@@ -24,6 +25,7 @@ export function AddGuestModal({
   triggerBtnText,
   children,
   modalTitle,
+  hideHeader,
 }: Props) {
   return (
     <Dialog>
@@ -34,14 +36,16 @@ export function AddGuestModal({
         </Button>
       </DialogTrigger>
       <DialogContent style={{ width: `700px` }} className={`max-w-[90vw] max-h-[90svh] rounded-lg overflow-auto`}>
-        <div className="flex py-4 px-14 -mx-5">
-          <h4 className="font-medium text-[#282828] text-2xl flex-1" style={{ textAlign: titleAlign }}>
-            {modalTitle}
-          </h4>
-          <DialogClose className="ml-auto">
-            <CloseIcon />
-          </DialogClose>
-        </div>
+        {!hideHeader && (
+          <div className="flex py-4 px-14 -mx-5">
+            <h4 className="font-medium text-[#282828] text-2xl flex-1" style={{ textAlign: titleAlign }}>
+              {modalTitle}
+            </h4>
+            <DialogClose className="ml-auto">
+              <CloseIcon />
+            </DialogClose>
+          </div>
+        )}
         {children}
       </DialogContent>
     </Dialog>
