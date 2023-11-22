@@ -80,10 +80,10 @@ const InviteTeam: React.FC = () => {
       isValid = false;
     }
 
-    if (!role) {
-      setRoleError('Please choose a role');
-      isValid = false;
-    }
+    // if (!role) {
+    //   setRoleError('Please choose a role');
+    //   isValid = false;
+    // }
 
     if (isValid) {
       console.log('Full Name:', fullName);
@@ -93,7 +93,7 @@ const InviteTeam: React.FC = () => {
   };
   return (
     <>
-      <div className="pl-6 mt-6">
+      <div className="pl-16 mt-6">
         <h1 className=" text-[32px] font-semibold">Invite Team</h1>
 
         <p className=" lg:w-3/5 text-base leading-[22.4px] font-normal">
@@ -107,7 +107,7 @@ const InviteTeam: React.FC = () => {
 
       {/* invite team section */}
       <section
-        className="mx-6 flex flex-col gap-4 rounded-xl px-4 py-8 pb-20 border border-border"
+        className="mx-6 flex flex-col gap-4 rounded-xl px-[40px] py-8 pb-20 border border-border"
         style={{
           backgroundColor: 'white',
           boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.1)',
@@ -115,7 +115,7 @@ const InviteTeam: React.FC = () => {
       >
         <h1 className="text-2xl font-medium">Invite Team form</h1>
 
-        <div className="flex flex-col items-center justify-center lg:flex-row gap-2">
+        <div className="flex flex-col items-center justify-center lg:flex-row gap-8">
           {/* full name input */}
           <div className="flex flex-col w-full gap-2">
             <Label htmlFor="fullname">
@@ -149,8 +149,8 @@ const InviteTeam: React.FC = () => {
           </div>
 
           {/* dropdown for roles */}
-          <div className="flex w-full flex-col relative">
-            <Label className="mb-2">
+          <div className="flex w-full gap-2 flex-col relative">
+            <Label className="">
               Role <span className="text-red-600">*</span>
             </Label>
             <Select>
@@ -177,7 +177,7 @@ const InviteTeam: React.FC = () => {
                 </SelectGroup>
               </SelectContent>
             </Select>
-            {roleError && <p className="text-red-600 mt-1  text-xs">{roleError}</p>}
+            {roleError && <span className="text-red-600 mt-1 absolute -bottom-5  text-xs">{roleError}</span>}
           </div>
         </div>
 
@@ -193,7 +193,7 @@ const InviteTeam: React.FC = () => {
 
       {/* team management section */}
       <section
-        className="mx-6 my-6 flex flex-col gap-4 rounded-xl px-4 pt-4 pb-6 border border-border"
+        className="mx-6 my-6 flex flex-col gap-4 rounded-xl px-[40px] pt-4 pb-6 border border-border"
         style={{
           backgroundColor: 'white',
           boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.1)',
@@ -203,14 +203,6 @@ const InviteTeam: React.FC = () => {
 
         <Teammgt />
       </section>
-      {/* {isModalOpen && (
-        <MyModal
-          isModalOpen={isModalOpen}
-          handleCloseModal={handleCloseModal}
-          handleOpenModal={handleOpenModal}
-          modalRef={modalRef}
-        />
-      )} */}
     </>
   );
 };

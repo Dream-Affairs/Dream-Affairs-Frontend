@@ -107,7 +107,7 @@ const Pricecards = () => {
             <Button
               size="lg"
               variant="secondary"
-              className="w-[100%] lg:mt-[22px] lg:mb-[86px] mt-[40px] mb-[28px] h-[56px] text-[16px]"
+              className="w-[100%] lg:mt-[80px] lg:mb-[30px] mt-[40px] mb-[28px] h-[56px] text-[16px]"
             >
               Choose Plan
             </Button>
