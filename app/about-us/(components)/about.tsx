@@ -44,17 +44,17 @@ const AboutUs = () => {
     <>
       <section className="w-full flex flex-col items-center mt-[28px] sm:mt-[12px] lg:mt-[56px] lg:px-0 lg:pt-0 px-[24px]">
         <SubHeading title="About" />
-        <div className="w-full bg-[#FFF8FA] lg:bg-none  px-[24px] pt-[24px] lg:pt-0  lg:px-[80px] lg:h-[724px] flex flex-col sm:flex-row mt-[24px] sm:mt-[36px] lg:mt-[40px] sm:gap-x-[36px] lg:gap-x-[44px] gap-x-[87px] gap-y-[24px] lg:gap-y-0 items-center">
+        <div className="w-full bg-[#FFF8FA] lg:bg-none lg:pr-0 px-[24px] pt-[24px] xl:pt-0  lg:px-[80px] xl:h-[724px] flex flex-col sm:flex-row mt-[24px] sm:mt-[36px] lg:mt-[40px] sm:gap-x-[36px] lg:gap-x-[44px] gap-x-[87px] gap-y-[24px] lg:gap-y-0 items-center border-2 border-red-600">
           <Image
             data-aos="fade-up"
             src={historyImg}
             alt=""
             height={0}
             width={0}
-            className="lg:w-[510px] sm:h-[450px] md:h-[500px] sm:w-[280px] md:w-[300px] lg:h-[724px] h-[328px] rounded-[8px] lg:rounded-none object-cover"
+            className="xl:w-[510px] lg:w-[400px] sm:h-[450px] md:h-[500px] sm:w-[280px] md:w-[300px] lg:h-[724px] h-[328px] rounded-[8px] lg:rounded-none object-cover"
           />
           <div className="flex flex-col lg:flex-col gap-y-[24px] lg:gap-y-[58px]">
-            <div className="w-full lg:mt-0 lg:max-w-[696px] flex flex-col gap-y-[12px] lg:gap-y-[3px]">
+            <div className="w-full lg:border-2 border-red-400 lg:mt-0 lg:max-w-[696px] flex flex-col gap-y-[12px] lg:gap-y-[3px]">
               <h2 className="font-[600] text-[16px] sm:text-[22px] md:text-[24px] leading-[22.4px] sm:leading-[42.8px] lg:text-[40px] lg:leading-[56px] text-[#48195A]">
                 Our Product Summary
               </h2>
@@ -62,12 +62,14 @@ const AboutUs = () => {
                 Introducing DreamAffiars, where we aim to transform your wedding dreams into reality. Our intuitive
                 platform offers customisable templates, effortless guest management, and integrated gift registry.
                 Coordinate events, manage meals, and budget wisely, all in one place. Our goal is to provide a
-                stress-free, intuitive experience, ensuring your journey to &apos;I do&apos; is as joyful and memorable as the
-                celebration itself. Join us in creating the perfect beginning to your forever
+                stress-free, intuitive experience, ensuring your journey to &apos;I do&apos; is as joyful and memorable
+                as the celebration itself. Join us in creating the perfect beginning to your forever
               </p>
             </div>
             <div className="flex flex-col gap-y-[12px] lg:gap-y-[3px]">
-              <h1 className="font-[600] text-[16px] leading-[22.4px]  lg:text-[40px] lg:leading-[56px] text-[#48195A]">Our Approach</h1>
+              <h1 className="font-[600] text-[16px] leading-[22.4px]  lg:text-[40px] lg:leading-[56px] text-[#48195A]">
+                Our Approach
+              </h1>
               <ul className="flex flex-col sm:gap-y-[12px] gap-y-[16px] lg:gap-y-[24px]">
                 {ourApproach.map((approach, index) => (
                   <li key={index} className="flex flex-row items-center gap-x-[4px]">
@@ -81,7 +83,9 @@ const AboutUs = () => {
                         fill="#AB72C2"
                       />
                     </svg>
-                    <span className="text-[12px] lg:text-[24px] font-[400] leading-[15.8px] lg:leading-[33.6px] text-[#111111]">{approach}</span>
+                    <span className="text-[12px] lg:text-[24px] font-[400] leading-[15.8px] lg:leading-[33.6px] text-[#111111]">
+                      {approach}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -116,10 +120,7 @@ const AboutUs = () => {
               their guests.
             </p>
           </div>
-          <div
-            data-aos="fade-up"
-            className="lg:w-[617px] lg:mt-[88px] flex flex-col lg:gap-y-[11px]"
-          >
+          <div data-aos="fade-up" className="lg:w-[617px] lg:mt-[88px] flex flex-col lg:gap-y-[11px]">
             <Image
               src={entrance}
               alt="ailse entrance "

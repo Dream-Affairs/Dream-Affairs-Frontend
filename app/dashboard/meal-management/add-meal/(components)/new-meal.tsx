@@ -134,7 +134,7 @@ const NewMeal = () => {
                 </div>
               )}
             </div>
-            <MealForm setMealName={setMealName} setMealDescription={setMealDescription}/>
+            <MealForm setMealName={setMealName} setMealDescription={setMealDescription} mealDescription={mealDescription}/>
           </div>
         </div>
         {/* preview */}

@@ -113,6 +113,9 @@
   .summary-count {
     @apply flex items-center text-xl gap-2 py-1;
   }
+  .tags {
+    @apply whitespace-nowrap px-2 py-1 bg-[#E6F4EB] text-xs text-[#008D36] font-medium rounded-[8px];
+  }
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
