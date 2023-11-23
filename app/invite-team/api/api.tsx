@@ -1,6 +1,6 @@
 export async function fetchAcceptedInvites(organizationId: string) {
   try {
-    const url = `https://dev.api.dreamaffairs.mooo.com/api/v1/invites/accepted/${organizationId}`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/invites/accepted/${organizationId}`;
 
     const response = await fetch(url, {
       method: 'GET',
@@ -31,7 +31,7 @@ export async function fetchAcceptedInvites(organizationId: string) {
 // to fetch roles
 export async function fetchRoles(organizationId: string) {
   try {
-    const url = `https://dev.api.dreamaffairs.mooo.com/api/v1/roles/${organizationId}`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/roles/${organizationId}`;
 
     const response = await fetch(url, {
       method: 'GET',
@@ -61,7 +61,7 @@ export async function fetchRoles(organizationId: string) {
 
 export async function fetchSuspendedInvites(organizationId: string) {
   try {
-    const url = `https://dev.api.dreamaffairs.mooo.com/api/v1/invites/suspended/${organizationId}`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/invites/suspended/${organizationId}`;
 
     const response = await fetch(url, {
       method: 'GET',
@@ -93,7 +93,7 @@ export async function fetchSuspendedInvites(organizationId: string) {
 
 export async function suspendUser(organizationId: string, memberId: string) {
   try {
-    const url = `https://dev.api.dreamaffairs.mooo.com/api/v1/invites/suspend/${organizationId}/${memberId}`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/invites/suspend/${organizationId}/${memberId}`;
 
     const response = await fetch(url, {
       method: 'PUT',

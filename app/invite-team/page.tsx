@@ -117,7 +117,7 @@ const InviteTeam: React.FC = () => {
           };
 
           try {
-            const response = await fetch('https://dev.api.dreamaffairs.mooo.com/api/v1/invites', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invites`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -180,10 +180,10 @@ const InviteTeam: React.FC = () => {
 
   return (
     <>
-      <div className="pl-16 mt-6">
-        <h1 className=" text-[32px] font-semibold">Invite Team</h1>
+      <div className="lg:pl-16 mt-2 lg:mt-6">
+        <h1 className="text-2xl text-center lg:text-left lg:text-[32px] font-semibold">Invite Team</h1>
 
-        <p className=" lg:w-3/5 text-base leading-[22.4px] font-normal">
+        <p className=" lg:w-3/5 px-8 lg:px-0 mt-4 text-base leading-[22.4px] font-normal">
           Transform event planning by inviting family and friends to collaborate seamlessly and create lasting memories
           together.
         </p>
@@ -194,7 +194,7 @@ const InviteTeam: React.FC = () => {
 
       {/* invite team section */}
       <section
-        className="mx-6 flex flex-col gap-4 rounded-xl px-[40px] py-8 pb-20 border border-border"
+        className="mx-6 flex flex-col gap-4 rounded-xl px-5 py-4 lg:px-[40px] lg:py-8 lg:pb-20 border border-border"
         style={{
           backgroundColor: 'white',
           boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.1)',
@@ -276,7 +276,7 @@ const InviteTeam: React.FC = () => {
 
       {/* team management section */}
       <section
-        className="mx-6 my-6 flex flex-col gap-4 rounded-xl px-[40px] pt-4 pb-6 border border-border"
+        className="mx-6 my-6 flex flex-col gap-4 rounded-xl px-4 lg:px-[40px] pt-4 pb-6 border border-border"
         style={{
           backgroundColor: 'white',
           boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.1)',

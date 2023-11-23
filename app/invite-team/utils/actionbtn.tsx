@@ -66,21 +66,21 @@ export default function ActionButton(props: ActionButtonProps) {
           >
             {activeTab === 'teamMembers' && (
               <>
-                {renderActionButton(edituser.src, 'Edit user', () => null)}
+                {renderActionButton(edituser.src, 'Edit Role', () => null)}
                 {renderActionButton(reinstateuser.src, 'Suspend user', () => openSuspendUserModal())}
                 {renderActionButton(removeuser.src, 'Remove user', () => openRemoveUserModal())}
               </>
             )}
             {activeTab === 'suspendedUsers' && (
               <>
-                {renderActionButton(edituser.src, 'Edit user', () => null)}
+                {renderActionButton(edituser.src, 'Edit Role', () => null)}
                 {renderActionButton(reinstateuser.src, 'Reinstate user', () => openReinstateUserModal())}
                 {renderActionButton(removeuser.src, 'Remove user', () => openRemoveUserModal())}
               </>
             )}
             {activeTab === 'unverifiedUsers' && (
               <>
-                {renderActionButton(edituser.src, 'Edit user', () => null)}
+                {renderActionButton(edituser.src, 'Edit Role', () => null)}
                 {renderActionButton(resendinvite.src, 'Resend invite', () => openResendInvitLinkModal())}
                 {renderActionButton(removeuser.src, 'Remove user', () => openRemoveUserModal())}
               </>
