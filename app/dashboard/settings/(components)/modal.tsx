@@ -97,7 +97,7 @@ const SettingsModal: React.FC<SetModalProps> = ({
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-black opacity-40"></div>
-          <div className="bg-white w-[680px] py-5 rounded-lg shadow-lg relative" ref={modalRef}>
+          <div className="bg-white w-[400px] md:w-[680px] py-5 rounded-lg shadow-lg relative" ref={modalRef}>
             <div className="flex justify-between items-start px-6">
               <p className="text-base">Profile Picture</p>
               <span onClick={handleCloseModal} className="cursor-pointer w-10 h-8 flex justify-end">
@@ -126,7 +126,7 @@ const SettingsModal: React.FC<SetModalProps> = ({
                 </svg>
               </span>
             </div>
-            <div className="w-[190px] h-[190px] mx-auto rounded-full overflow-hidden my-5">
+            <div className="w-[150px] h-[150px] md:w-[190px] md:h-[190px] mx-auto rounded-full overflow-hidden my-5">
               <Image
                 src={src === '' ? profile : src}
                 alt="profile picture"
