@@ -6,6 +6,7 @@ import Image from 'next/image';
 import SpreadsheetImport from './import-methods/spreadsheet-import';
 import ExcelImport from './import-methods/excel-imports';
 import CsvImport from './import-methods/csv-import';
+import { ArrowLeftIcon } from 'lucide-react';
 
 type imports = 'google_sheets' | 'excel' | 'csv' | '';
 
@@ -29,6 +30,16 @@ function ImportGuestModal() {
       titleAlign="center"
     >
       <div className="min-h-[362px] guest-modal-border">
+        <button className="absolute">
+          {selectedImport !== importTypes.DEFAULT && (
+            <ArrowLeftIcon
+              size={28}
+              onClick={() => setSelectedImport(importTypes.DEFAULT)}
+              color="#282828"
+              className="absolute left-10 -top-12"
+            />
+          )}
+        </button>
         {selectedImport === importTypes.DEFAULT && (
           <div className="text-[#282828] flex flex-col items-center w-fit mx-auto py-6">
             <h3 className="text-xl font-medium text-center mb-10">Select a means to import your guest list</h3>
