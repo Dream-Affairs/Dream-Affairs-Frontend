@@ -13,6 +13,7 @@ import { fetchSuspendedInvites } from './api/api';
 import { suspendUser } from './api/api';
 import Loading from './loading';
 import { toast } from '@/components/ui/use-toast';
+import MemberItem from './(component)/mobiletable';
 
 export default function Teammgt() {
   const {
@@ -26,9 +27,7 @@ export default function Teammgt() {
     setModalMessage,
     setActionName,
     actionButtonStyle,
-    cancelButtonStyle,
     setActionButtonStyle,
-    setCancelButtonStyle,
     modalAction,
     setModalAction,
   } = useModal();
@@ -93,7 +92,6 @@ export default function Teammgt() {
     setModalMessage(MODAL_MESSAGES.suspend);
     setActionName('Suspend');
     setActionButtonStyle(MODAL_STYLES.actionButtonStyles.suspend);
-    setCancelButtonStyle(MODAL_STYLES.cancelButtonStyles.suspend);
     setModalAction({
       action: () => handleSuspendUser(memberId),
       actionName: 'Suspend',
@@ -107,7 +105,6 @@ export default function Teammgt() {
     setModalMessage(MODAL_MESSAGES.remove);
     setActionName('Remove');
     setActionButtonStyle(MODAL_STYLES.actionButtonStyles.remove);
-    setCancelButtonStyle(MODAL_STYLES.cancelButtonStyles.remove);
     handleOpenModal();
   };
 
@@ -116,7 +113,6 @@ export default function Teammgt() {
     setModalMessage(MODAL_MESSAGES.reinstate);
     setActionName('Reinstate');
     setActionButtonStyle(MODAL_STYLES.actionButtonStyles.reinstate);
-    setCancelButtonStyle(MODAL_STYLES.cancelButtonStyles.reinstate);
     handleOpenModal();
   };
 
@@ -125,7 +121,6 @@ export default function Teammgt() {
     setModalMessage(MODAL_MESSAGES.resendInviteLink);
     setActionName('Resend');
     setActionButtonStyle(MODAL_STYLES.actionButtonStyles.resendInviteLink);
-    setCancelButtonStyle(MODAL_STYLES.cancelButtonStyles.resendInviteLink);
     handleOpenModal();
   };
 
@@ -162,9 +157,9 @@ export default function Teammgt() {
 
   return (
     <div>
-      <div className="flex gap-4 pb-4">
+      <div className="flex overflow-x-auto sm:overflow-x-auto gap-4 pb-4">
         <button
-          className={`tab-button focus:outline-none ${
+          className={`tab-button whitespace-nowrap text-xs lg:text-base focus:outline-none ${
             activeTab === 'teamMembers'
               ? 'text-primary font-medium border-b-[3px] pb-2 border-primary'
               : 'text-black pb-2'
@@ -180,8 +175,9 @@ export default function Teammgt() {
             {filteredMembers.length}
           </span>
         </button>
+
         <button
-          className={`tab-button focus:outline-none ${
+          className={`tab-button whitespace-nowrap text-xs lg:text-base focus:outline-none ${
             activeTab === 'unverifiedUsers'
               ? 'text-primary font-medium border-b-[3px] pb-2 border-primary'
               : 'text-black pb-2'
@@ -199,8 +195,9 @@ export default function Teammgt() {
             {filteredUnverifiedUsers.length}
           </span>
         </button>
+
         <button
-          className={`tab-button focus:outline-none ${
+          className={`tab-button whitespace-nowrap text-xs lg:text-base focus:outline-none ${
             activeTab === 'suspendedUsers'
               ? 'text-primary font-medium border-b-[3px] pb-2 border-primary'
               : 'text-black pb-2'
@@ -219,60 +216,86 @@ export default function Teammgt() {
           </span>
         </button>
       </div>
+
       <Suspense fallback={<Loading />}>
         <div className="tab-content">
           {activeTab === 'teamMembers' && (
             <div>
               {sortedMembers.length === 0 ? (
-                <p>No team members found.</p>
+                <p className="text-center font-bold text-lg">No team members found.</p>
               ) : (
-                <table className="min-w-full table-auto">
-                  <thead className="border-b">
-                    <tr>
-                      <th className="px-4 py-2"></th>
-                      <th
-                        className="px-4 py-2 flex items-center gap-1 text-left cursor-pointer"
-                        onClick={() => handleSort('name')}
-                      >
-                        Full Name {sortField === 'name' && <Image src={arrowDown} alt="arrow-down" />}
-                      </th>
-                      <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('email')}>
-                        Email{' '}
-                        {sortField === 'email' && <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />}
-                      </th>
-                      <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('role')}>
-                        Role{' '}
-                        {sortField === 'role' && <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />}
-                      </th>
-                      <th className="px-4 py-2 text-left">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+                <>
+                  <div className="flex flex-col gap-5">
                     {sortedMembers.map((member, index) => (
-                      <tr key={index} className={`border-b`}>
-                        <td className="px-4 py-2 text-center cursor-move">
-                          <Image src={sort} alt="sort" />
-                        </td>
-                        <td className="px-4 py-2 text-left capitalize">{member.name}</td>
-                        <td className="px-4 py-2 text-left">{member.email}</td>
-                        <td className="px-4 py-2 text-left capitalize">{member.role}</td>
-                        <td className="px-4 py-2 text-end">
-                          <ActionButton
-                            selected={selectedMember === index}
-                            toggleMemberActions={() => toggleMemberActions(index)}
-                            closeMemberActions={closeMemberActions}
-                            activeTab={activeTab}
-                            // openModal={handleOpenModal}
-                            openRemoveUserModal={openRemoveUserModal}
-                            openSuspendUserModal={() => openSuspendUserModal(member.id)}
-                            openReinstateUserModal={openReinstateUserModal}
-                            openResendInvitLinkModal={openResendInvitLinkModal}
-                          />
-                        </td>
-                      </tr>
+                      <MemberItem
+                        key={index}
+                        member={member}
+                        index={index}
+                        selectedMember={selectedMember}
+                        toggleMemberActions={toggleMemberActions}
+                        closeMemberActions={closeMemberActions}
+                        activeTab={activeTab}
+                        openRemoveUserModal={openRemoveUserModal}
+                        openSuspendUserModal={() => openSuspendUserModal(member.id)}
+                        openReinstateUserModal={openReinstateUserModal}
+                        openResendInvitLinkModal={openResendInvitLinkModal}
+                      />
                     ))}
-                  </tbody>
-                </table>
+                  </div>
+                  <div className="lg:block hidden">
+                    <table className="min-w-full table-auto">
+                      <thead className="border-b">
+                        <tr>
+                          <th className="px-4 py-2"></th>
+                          <th
+                            className="px-4 py-2 flex items-center gap-1 text-left cursor-pointer"
+                            onClick={() => handleSort('name')}
+                          >
+                            Full Name {sortField === 'name' && <Image src={arrowDown} alt="arrow-down" />}
+                          </th>
+                          <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('email')}>
+                            Email{' '}
+                            {sortField === 'email' && (
+                              <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />
+                            )}
+                          </th>
+                          <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('role')}>
+                            Role{' '}
+                            {sortField === 'role' && (
+                              <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />
+                            )}
+                          </th>
+                          <th className="px-4 py-2 text-left">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {sortedMembers.map((member, index) => (
+                          <tr key={index} className={`border-b`}>
+                            <td className="px-4 py-2 text-center cursor-move">
+                              <Image src={sort} alt="sort" />
+                            </td>
+                            <td className="px-4 py-2 text-left capitalize">{member.name}</td>
+                            <td className="px-4 py-2 text-left">{member.email}</td>
+                            <td className="px-4 py-2 text-left capitalize">{member.role}</td>
+                            <td className="px-4 py-2 text-end">
+                              <ActionButton
+                                selected={selectedMember === index}
+                                toggleMemberActions={() => toggleMemberActions(index)}
+                                closeMemberActions={closeMemberActions}
+                                activeTab={activeTab}
+                                // openModal={handleOpenModal}
+                                openRemoveUserModal={openRemoveUserModal}
+                                openSuspendUserModal={() => openSuspendUserModal(member.id)}
+                                openReinstateUserModal={openReinstateUserModal}
+                                openResendInvitLinkModal={openResendInvitLinkModal}
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
               )}
             </div>
           )}
@@ -281,53 +304,79 @@ export default function Teammgt() {
               {sortedUnverifiedUsers.length === 0 ? (
                 <p className="text-center font-bold text-lg">No unverified users found.</p>
               ) : (
-                <table className="min-w-full table-auto">
-                  <thead className="border-b">
-                    <tr>
-                      <th className="px-4 py-2"></th>
-                      <th
-                        className="px-4 py-2 flex items-center gap-1 text-left cursor-pointer"
-                        onClick={() => handleSort('name')}
-                      >
-                        Full Name {sortField === 'name' && <Image src={arrowDown} alt="arrow-down" />}
-                      </th>
-                      <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('email')}>
-                        Email{' '}
-                        {sortField === 'email' && <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />}
-                      </th>
-                      <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('role')}>
-                        Role{' '}
-                        {sortField === 'role' && <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />}
-                      </th>
-                      <th className="px-4 py-2 text-left">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+                <div>
+                  <div className="flex flex-col gap-5">
                     {sortedUnverifiedUsers.map((member, index) => (
-                      <tr key={index} className={'border-b'}>
-                        <td className="px-4 py-2 text-center cursor-move">
-                          <Image src={sort} alt="sort" />
-                        </td>
-                        <td className="px-4 py-2 text-left">{member.name}</td>
-                        <td className="px-4 py-2 text-left">{member.email}</td>
-                        <td className="px-4 py-2 text-left">{member.role}</td>
-                        <td className="px-4 py-2 text-end">
-                          <ActionButton
-                            selected={selectedMember === index}
-                            toggleMemberActions={() => toggleMemberActions(index)}
-                            closeMemberActions={closeMemberActions}
-                            activeTab={activeTab}
-                            // openModal={handleOpenModal}
-                            openRemoveUserModal={openRemoveUserModal}
-                            openSuspendUserModal={() => openSuspendUserModal(member.id)}
-                            openReinstateUserModal={openReinstateUserModal}
-                            openResendInvitLinkModal={openResendInvitLinkModal}
-                          />
-                        </td>
-                      </tr>
+                      <MemberItem
+                        key={index}
+                        member={member}
+                        index={index}
+                        selectedMember={selectedMember}
+                        toggleMemberActions={toggleMemberActions}
+                        closeMemberActions={closeMemberActions}
+                        activeTab={activeTab}
+                        openRemoveUserModal={openRemoveUserModal}
+                        openSuspendUserModal={() => openSuspendUserModal(member.id)}
+                        openReinstateUserModal={openReinstateUserModal}
+                        openResendInvitLinkModal={openResendInvitLinkModal}
+                      />
                     ))}
-                  </tbody>
-                </table>
+                  </div>
+
+                  <div className="lg:block hidden">
+                    <table className="min-w-full table-auto">
+                      <thead className="border-b">
+                        <tr>
+                          <th className="px-4 py-2"></th>
+                          <th
+                            className="px-4 py-2 flex items-center gap-1 text-left cursor-pointer"
+                            onClick={() => handleSort('name')}
+                          >
+                            Full Name {sortField === 'name' && <Image src={arrowDown} alt="arrow-down" />}
+                          </th>
+                          <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('email')}>
+                            Email{' '}
+                            {sortField === 'email' && (
+                              <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />
+                            )}
+                          </th>
+                          <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('role')}>
+                            Role{' '}
+                            {sortField === 'role' && (
+                              <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />
+                            )}
+                          </th>
+                          <th className="px-4 py-2 text-left">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {sortedUnverifiedUsers.map((member, index) => (
+                          <tr key={index} className={'border-b'}>
+                            <td className="px-4 py-2 text-center cursor-move">
+                              <Image src={sort} alt="sort" />
+                            </td>
+                            <td className="px-4 py-2 text-left">{member.name}</td>
+                            <td className="px-4 py-2 text-left">{member.email}</td>
+                            <td className="px-4 py-2 text-left">{member.role}</td>
+                            <td className="px-4 py-2 text-end">
+                              <ActionButton
+                                selected={selectedMember === index}
+                                toggleMemberActions={() => toggleMemberActions(index)}
+                                closeMemberActions={closeMemberActions}
+                                activeTab={activeTab}
+                                // openModal={handleOpenModal}
+                                openRemoveUserModal={openRemoveUserModal}
+                                openSuspendUserModal={() => openSuspendUserModal(member.id)}
+                                openReinstateUserModal={openReinstateUserModal}
+                                openResendInvitLinkModal={openResendInvitLinkModal}
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               )}
             </div>
           )}
@@ -336,59 +385,84 @@ export default function Teammgt() {
               {sortedSuspendedUsers.length === 0 ? (
                 <p className="text-center font-bold text-lg">No suspended users found.</p>
               ) : (
-                <table className="min-w-full table-auto">
-                  <thead className="border-b">
-                    <tr>
-                      <th className="px-4 py-2"></th>
-                      <th
-                        className="px-4 py-2 flex items-center gap-1 text-left cursor-pointer"
-                        onClick={() => handleSort('name')}
-                      >
-                        Full Name {sortField === 'name' && <Image src={arrowDown} alt="arrow-down" />}
-                      </th>
-                      <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('email')}>
-                        Email{' '}
-                        {sortField === 'email' && <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />}
-                      </th>
-                      <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('role')}>
-                        Role{' '}
-                        {sortField === 'role' && <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />}
-                      </th>
-                      <th className="px-4 py-2 text-left">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+                <>
+                  <div className="flex flex-col gap-5">
                     {sortedSuspendedUsers.map((member, index) => (
-                      <tr key={member.id} className={'border-b'}>
-                        <td className="px-4 py-2 text-center cursor-move">
-                          <Image src={sort} alt="sort" />
-                        </td>
-                        <td className="px-4 py-2 text-left capitalize" style={{ color: '#9C9C9C' }}>
-                          {member.name}
-                        </td>
-                        <td className="px-4 py-2 text-left" style={{ color: '#9C9C9C' }}>
-                          {member.email}
-                        </td>
-                        <td className="px-4 py-2 text-left capitalize" style={{ color: '#9C9C9C' }}>
-                          {member.role}
-                        </td>
-                        <td className="px-4 py-2 text-end">
-                          <ActionButton
-                            selected={selectedMember === index}
-                            toggleMemberActions={() => toggleMemberActions(index)}
-                            closeMemberActions={closeMemberActions}
-                            activeTab={activeTab}
-                            // openModal={handleOpenModal}
-                            openRemoveUserModal={openRemoveUserModal}
-                            openSuspendUserModal={() => openSuspendUserModal(member.id)}
-                            openReinstateUserModal={openReinstateUserModal}
-                            openResendInvitLinkModal={openResendInvitLinkModal}
-                          />
-                        </td>
-                      </tr>
+                      <MemberItem
+                        key={index}
+                        member={member}
+                        index={index}
+                        selectedMember={selectedMember}
+                        toggleMemberActions={toggleMemberActions}
+                        closeMemberActions={closeMemberActions}
+                        activeTab={activeTab}
+                        openRemoveUserModal={openRemoveUserModal}
+                        openSuspendUserModal={() => openSuspendUserModal(member.id)}
+                        openReinstateUserModal={openReinstateUserModal}
+                        openResendInvitLinkModal={openResendInvitLinkModal}
+                      />
                     ))}
-                  </tbody>
-                </table>
+                  </div>
+                  <div className="lg:block hidden">
+                    <table className=" min-w-full table-auto">
+                      <thead className="border-b">
+                        <tr>
+                          <th className="px-4 py-2"></th>
+                          <th
+                            className="px-4 py-2 flex items-center gap-1 text-left cursor-pointer"
+                            onClick={() => handleSort('name')}
+                          >
+                            Full Name {sortField === 'name' && <Image src={arrowDown} alt="arrow-down" />}
+                          </th>
+                          <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('email')}>
+                            Email{' '}
+                            {sortField === 'email' && (
+                              <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />
+                            )}
+                          </th>
+                          <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('role')}>
+                            Role{' '}
+                            {sortField === 'role' && (
+                              <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />
+                            )}
+                          </th>
+                          <th className="px-4 py-2 text-left">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {sortedSuspendedUsers.map((member, index) => (
+                          <tr key={member.id} className={'border-b'}>
+                            <td className="px-4 py-2 text-center cursor-move">
+                              <Image src={sort} alt="sort" />
+                            </td>
+                            <td className="px-4 py-2 text-left capitalize" style={{ color: '#9C9C9C' }}>
+                              {member.name}
+                            </td>
+                            <td className="px-4 py-2 text-left" style={{ color: '#9C9C9C' }}>
+                              {member.email}
+                            </td>
+                            <td className="px-4 py-2 text-left capitalize" style={{ color: '#9C9C9C' }}>
+                              {member.role}
+                            </td>
+                            <td className="px-4 py-2 text-end">
+                              <ActionButton
+                                selected={selectedMember === index}
+                                toggleMemberActions={() => toggleMemberActions(index)}
+                                closeMemberActions={closeMemberActions}
+                                activeTab={activeTab}
+                                // openModal={handleOpenModal}
+                                openRemoveUserModal={openRemoveUserModal}
+                                openSuspendUserModal={() => openSuspendUserModal(member.id)}
+                                openReinstateUserModal={openReinstateUserModal}
+                                openResendInvitLinkModal={openResendInvitLinkModal}
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
               )}
             </div>
           )}
@@ -405,7 +479,6 @@ export default function Teammgt() {
           message={modalMessage}
           actionName={actionName}
           actionButtonStyle={actionButtonStyle}
-          cancelButtonStyle={cancelButtonStyle}
           modalAction={modalAction}
         />
       )}
