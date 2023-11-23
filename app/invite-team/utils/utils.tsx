@@ -1,7 +1,6 @@
 interface ButtonStyle {
-  backgroundColor: string;
-  borderColor: string;
-  textColor: string;
+  backgroundColor: any;
+  textColor: any;
 }
 
 import React, { useState, useEffect, useRef, MouseEvent } from 'react';
@@ -12,8 +11,7 @@ export function useModal() {
   const [modalTitle, setModalTitle] = useState<string>('');
   const [modalMessage, setModalMessage] = useState<string>('');
   const [actionName, setActionName] = useState<string>('');
-  const [cancelButtonStyle, setCancelButtonStyle] = useState<ButtonStyle | null>(null);
-  const [actionButtonStyle, setActionButtonStyle] = useState<ButtonStyle | null>(null);
+  const [actionButtonStyle, setActionButtonStyle] = useState<ButtonStyle>();
   const [modalAction, setModalAction] = useState<{
     action: () => void;
     actionName: string;
@@ -40,10 +38,8 @@ export function useModal() {
     setModalTitle,
     setModalMessage,
     setActionName,
-    cancelButtonStyle,
     actionButtonStyle,
     setActionButtonStyle,
-    setCancelButtonStyle,
     setModalAction,
     modalAction,
   };
@@ -130,6 +126,7 @@ export const MODAL_MESSAGES = {
 };
 
 export const MODAL_STYLES = {
+  // cancel btn styles
   cancelButtonStyles: {
     reinstate: {
       backgroundColor: '#FFFFFF',
@@ -142,36 +139,33 @@ export const MODAL_STYLES = {
       textColor: '#282828',
     },
     remove: {
-      backgroundColor: '#F5E7FF',
-      borderColor: '#E1E1E1',
-      textColor: '#822DA4',
+      backgroundColor: '#FFFFFF',
+      borderColor: '#161616',
+      textColor: '#161616',
     },
     suspend: {
-      backgroundColor: '#F5E7FF',
-      borderColor: '#E1E1E1',
-      textColor: '#822DA4',
+      backgroundColor: '#FFFFFF',
+      borderColor: '#161616',
+      textColor: '#161616',
     },
   },
+  // action btn styles
   actionButtonStyles: {
     suspend: {
-      backgroundColor: '#ffffff',
-      borderColor: '#B93F54',
-      textColor: '#B93F54',
+      backgroundColor: '#FF0000',
+      textColor: '#ffffff',
     },
     remove: {
-      backgroundColor: '#ffffff',
-      borderColor: '#B93F54',
-      textColor: '#B93F54',
+      backgroundColor: '#FF0000',
+      textColor: '#ffffff',
     },
     reinstate: {
-      backgroundColor: '#E6F4EB',
-      borderColor: '#008D36',
-      textColor: '#008D36',
+      backgroundColor: '#008D36',
+      textColor: '#FFFFFF',
     },
     resendInviteLink: {
-      backgroundColor: '#E6F4EB',
-      borderColor: '#008D36',
-      textColor: '#008D36',
+      backgroundColor: '#008D36',
+      textColor: '#FFFFFF',
     },
   },
 };
