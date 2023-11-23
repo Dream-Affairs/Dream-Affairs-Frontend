@@ -44,7 +44,7 @@ const AboutUs = () => {
     <>
       <section className="w-full flex flex-col items-center mt-[28px] sm:mt-[12px] lg:mt-[56px] lg:px-0 lg:pt-0 px-[24px]">
         <SubHeading title="About" />
-        <div className="w-full bg-[#FFF8FA] lg:bg-none lg:pr-0 px-[24px] pt-[24px] xl:pt-0  lg:px-[80px] xl:h-[724px] flex flex-col sm:flex-row mt-[24px] sm:mt-[36px] lg:mt-[40px] sm:gap-x-[36px] lg:gap-x-[44px] gap-x-[87px] gap-y-[24px] lg:gap-y-0 items-center border-2 border-red-600">
+        <div className="w-full bg-[#FFF8FA] lg:bg-none lg:pr-0 px-[24px] pt-[24px] xl:pt-0  lg:px-[80px] xl:h-[724px] flex flex-col sm:flex-row mt-[24px] sm:mt-[36px] lg:mt-[40px] sm:gap-x-[36px] lg:gap-x-[44px] gap-x-[87px] gap-y-[24px] lg:gap-y-0 items-center ">
           <Image
             data-aos="fade-up"
             src={historyImg}
@@ -54,7 +54,7 @@ const AboutUs = () => {
             className="xl:w-[510px] lg:w-[400px] sm:h-[450px] md:h-[500px] sm:w-[280px] md:w-[300px] lg:h-[724px] h-[328px] rounded-[8px] lg:rounded-none object-cover"
           />
           <div className="flex flex-col lg:flex-col gap-y-[24px] lg:gap-y-[58px]">
-            <div className="w-full lg:border-2 border-red-400 lg:mt-0 lg:max-w-[696px] flex flex-col gap-y-[12px] lg:gap-y-[3px]">
+            <div className="w-full lg:mt-0 lg:max-w-[696px] flex flex-col gap-y-[12px] lg:gap-y-[3px]">
               <h2 className="font-[600] text-[16px] sm:text-[22px] md:text-[24px] leading-[22.4px] sm:leading-[42.8px] lg:text-[40px] lg:leading-[56px] text-[#48195A]">
                 Our Product Summary
               </h2>
