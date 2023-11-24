@@ -5,10 +5,11 @@ import Export from 'app/dashboard/(assets)/export.svg';
 import Gift from 'app/dashboard/(assets)/giftTrack.svg';
 import Preview from './Preview';
 import Count from './Count';
+import TrackerCard from './TrackerCard';
 
 const Tracker = () => {
   return (
-    <div className="pl-9 pt-9 pr-9 flex flex-col gap-5">
+    <div className=" px-5 md:px-9 pt-9 flex flex-col gap-5">
       {/* Navbar section  */}
       <div className="flex flex-col md:flex-row justify-between text-sm lg:text-base gap-6 ">
         <Preview />
@@ -49,6 +50,8 @@ const Tracker = () => {
               </p>
             </div>
           </div>
+
+          <TrackerCard />
         </div>
         {/* Side 2 ends here  */}
       </div>

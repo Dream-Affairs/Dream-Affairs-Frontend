@@ -1,5 +1,5 @@
 'use client';
-import React, {useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { SubHeading } from './about';
 import founder from '../(assets)/founder.png';
 import Image from 'next/image';

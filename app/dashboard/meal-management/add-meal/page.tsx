@@ -1,12 +1,11 @@
-import NewMeal from "./(components)/new-meal"
+import NewMeal from './(components)/new-meal';
 
+const AddMeal = () => {
+  return (
+    <section className="">
+      <NewMeal />
+    </section>
+  );
+};
 
-const AddMeal=()=>{
-    return(
-        <section className=''>
-            <NewMeal/>
-        </section>
-    )
-}
-
-export default AddMeal
+export default AddMeal;
