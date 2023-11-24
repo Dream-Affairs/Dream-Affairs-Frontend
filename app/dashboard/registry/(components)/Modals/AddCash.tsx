@@ -123,9 +123,9 @@ const AddCash: React.FC = () => {
                     <SelectGroup className="text-sm font-normal">
                       <SelectLabel>Currency</SelectLabel>
                       {currencies.map((currency) => (
-                        <div key={currency}>
-                          <SelectItem onClick={() => setCurrency(currency)} value={currency}>
-                            {currency}
+                        <div key={currency.code}>
+                          <SelectItem onClick={() => setCurrency(currency.name)} value={currency.name}>
+                            {`${currency.name} (${currency.symbol})`}
                           </SelectItem>
                         </div>
                       ))}

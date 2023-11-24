@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 
 const PasswordUpdate = () => {
   return (
-    <div className=" p-5 lg:p-16">
+    <div className="p-5 lg:p-16">
       <ChangePassword />
       <div className="border rounded-2xl p-6 mt-6">
         <div>
