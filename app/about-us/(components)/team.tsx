@@ -1,5 +1,5 @@
 'use client';
-import React, {useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { SubHeading } from './about';
 import founder from '../(assets)/founder.png';
 import Image from 'next/image';
@@ -43,7 +43,7 @@ const Team = () => {
     },
   ];
   return (
-    <section className="w-full px-[24px] mt-[40px] lg:mt-0 lg:px-[81px] lg:hidden flex flex-col items-center pb-[96px]">
+    <section className="w-full px-[24px] mt-[40px] lg:mt-0 lg:px-[81px] lg:hidden flex flex-col items-center pb-[40px] lg:pb-[96px]">
       <SubHeading title="Meet the team" />
       <div className="w-full place-items-center grid grid-cols-2 md:grid-cols-3 mt-[24px] lg:mt-[23px] lg:gap-x-[37px] gap-y-[40px] gap-x-[15px]">
         {teams.map((team, index) => (
@@ -66,7 +66,7 @@ const Team = () => {
               <h3 className="text-[#48195A] text-[14px] leading-[19.6px] lg:text-[32px] font-[500] lg:leading-[44.8px]">
                 {team.name}
               </h3>
-              <p className="font-[400] mt-[8px] text-[12px] lg:text-[24px] leading-[16.8px] llg:eading-[33.6px] text-[#535353]">
+              <p className="font-[400] mt-[8px] text-[12px] lg:text-[24px] leading-[16.8px] lg:leading-[33.6px] text-[#535353]">
                 {team.role}
               </p>
             </div>

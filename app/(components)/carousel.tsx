@@ -77,18 +77,18 @@ const Carousel = () => {
     return () => clearInterval(interval);
   }, [currentIndex]);
 
-   const prevSlide = () => {
+  const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
     const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
-     setCurrentIndex(newIndex);
-   };
+    setCurrentIndex(newIndex);
+  };
 
-   const nextSlide = () => {
+  const nextSlide = () => {
     const isLastSlide = currentIndex === slides.length - 1;
-    const newIndex = isLastSlide? 0 : currentIndex + 1;
-     setCurrentIndex(newIndex);
-   };
- 
+    const newIndex = isLastSlide ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+  };
+
   return (
     <div>
       <div className="max-w-[1440px] mx-auto px-8 lg:px-10">
@@ -108,13 +108,13 @@ const Carousel = () => {
             onClick={prevSlide}
             className="absolute z-20 sm:top-[50%] top-[40%] left-2 md:left-14 text-2xl rounded-full p-1 border-2 border-white text-white cursor-pointer"
           />
-           <ChevronRight
-              size={26}
-              onClick={nextSlide}
-              className="absolute z-20 sm:top-[50%] top-[40%] right-2 md:right-14 text-2xl rounded-full p-1 border-2 border-white text-white cursor-pointer"
-            />
-          
-          <div className="absolute top-[50%] lg:top-[80%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full m-auto text-center text-white mt-10">
+          <ChevronRight
+            size={26}
+            onClick={nextSlide}
+            className="absolute z-20 sm:top-[50%] top-[40%] right-2 md:right-14 text-2xl rounded-full p-1 border-2 border-white text-white cursor-pointer"
+          />
+
+          <div className="absolute top-[50%] sm:top-[60%] lg:top-[80%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full m-auto text-center text-white mt-10">
             <h3 className="text-[16px] sm:text-[60px] font-semibold m-auto">{slides[currentIndex]?.title}</h3>
             <p className="text-[11px]  sm:text-[18px] w-[237px] sm:w-[400px] m-auto sm:leading-7">
               {slides[currentIndex]?.description}

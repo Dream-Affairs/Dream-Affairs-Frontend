@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 const Pricecards = () => {
   return (
     <section className="w-[80%] mx-auto flex lg:flex-row flex-col items-center justify-between lg:mt-[-100px] my-[40px] lg:mb-[118px]">
-      <div className="lg:w-[325px] w-[327px] lg:h-[700px] h-[644px] rounded-[20px] lg:px-4 px-[19px] border-[#EBEBEB] border text-[14px] bg-white mb-[20px] lg:mb-0">
+      <div className="lg:w-[325px] w-[327px] h-auto rounded-[20px] lg:px-4 px-[19px] border-[#EBEBEB] border text-[14px] bg-white mb-[20px] lg:mb-0">
         <div className="h-[195px] border-b border-[#BCBCBC] mt-[20px]">
           <Image src={freemium} alt="" width={24} height={24} />
           <h3 className="text-[24px] font-[600] mt-[12px]">Free Plan</h3>
@@ -52,11 +52,15 @@ const Pricecards = () => {
             </p>
           </div>
         </div>
-        <Button size="lg" variant="outline" className="w-[100%] lg:mt-[55px] mt-[40px] h-[56px] text-[16px]">
+        <Button
+          size="lg"
+          variant="outline"
+          className="w-[100%] lg:mt-[55px] lg:mb-[26px] mt-[40px] mb-[28px] h-[56px] text-[16px]"
+        >
           Choose Plan
         </Button>
       </div>
-      <div className="lg:w-[395px] w-[327px] lg:h-[814px] h-[723px] rounded-[20px] border-[#EBEBEB] border text-[14px] bg-[#FFF8FA] mb-[20px] lg:mb-0 relative">
+      <div className="lg:w-[395px] w-[327px] h-auto rounded-[20px] border-[#EBEBEB] border text-[14px] bg-[#FFF8FA] mb-[20px] lg:mb-0 relative">
         <p className="text-[#008D36] lg:text-[16px] text-[10px] font-[500] bg-[#E6F4EB] lg:w-[134px] w-[86px] lg:h-[30px] h-[22px] rounded-[8px] self-end flex justify-center items-center absolute lg:top-[27px] top-[8px] lg:right-[24px] right-[8px]">
           Recommended
         </p>
@@ -107,14 +111,14 @@ const Pricecards = () => {
             <Button
               size="lg"
               variant="secondary"
-              className="w-[100%] lg:mt-[22px] mt-[40px] mb-[28px] h-[56px] text-[16px]"
+              className="w-[100%] lg:mt-[80px] lg:mb-[30px] mt-[40px] mb-[28px] h-[56px] text-[16px]"
             >
               Choose Plan
             </Button>
           </div>
         </div>
       </div>
-      <div className="lg:w-[325px] w-[327px] lg:h-[700px] h-[683px] rounded-[20px] lg:px-4 px-[19px] border-[#EBEBEB] border text-[14px] bg-white mb-[20px] lg:mb-0">
+      <div className="lg:w-[325px] w-[327px] lg:h-auto h-[683px] rounded-[20px] lg:px-4 px-[19px] border-[#EBEBEB] border text-[14px] bg-white mb-[20px] lg:mb-0">
         <div className="h-[195px] border-b border-[#BCBCBC] mt-[20px]">
           <Image src={coreIcon} alt="" width={24} height={24} />
           <h3 className="text-[24px] font-[600] mt-[12px]">Core Plan</h3>
@@ -157,7 +161,11 @@ const Pricecards = () => {
             </p>
           </div>
         </div>
-        <Button size="lg" variant="outline" className="w-[100%] lg:mt-[32px] mt-[40px] mb-[28px] h-[56px] text-[16px]">
+        <Button
+          size="lg"
+          variant="outline"
+          className="w-[100%] lg:mt-[32px] lg:mb-[25px] mt-[40px] mb-[28px] h-[56px] text-[16px]"
+        >
           Choose Plan
         </Button>
       </div>

@@ -1,15 +1,15 @@
 'use client';
 import { SubHeading } from './about';
 import { useEffect } from 'react';
-import Image from 'next/image'
+import Image from 'next/image';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import boxTick from '../(assets)/box-tick.svg'
-import pathSquare from '../(assets)/path-square.svg'
-import designTools from '../(assets)/designtools.svg'
-import userOctagon from '../(assets)/user-octagon.svg'
-import profile2User from '../(assets)/profile-2user.svg'
-import book from '../(assets)/book.svg'
+import boxTick from '../(assets)/box-tick.svg';
+import pathSquare from '../(assets)/path-square.svg';
+import designTools from '../(assets)/designtools.svg';
+import userOctagon from '../(assets)/user-octagon.svg';
+import profile2User from '../(assets)/profile-2user.svg';
+import book from '../(assets)/book.svg';
 
 const Values = () => {
   useEffect(() => {
@@ -48,8 +48,8 @@ const Values = () => {
     },
   ];
   return (
-    <section className="w-full px-[24px] lg:px-[80px] mt-[40px] lg:mt-[36px] flex flex-col items-center">
-      <SubHeading title="Our Value" />
+    <section className="w-full px-[24px] lg:px-[80px] mt-[40px] lg:mt-[100px] flex flex-col items-center mb-[40px] lg:mb-[100px]">
+      <SubHeading title="Our ValueS" />
       <div className="w-full mt-[24px] lg:mt-[56px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-[20px] sm:gap-[24px] lg:gap-[44px]">
         {values.map((value, index) => (
           <div
@@ -57,8 +57,8 @@ const Values = () => {
             key={index}
             className="lg:w-[393px] px-[25px] lg:h-[384px] flex flex-col bg-[#FFF8FA] py-[33px] lg:py-0 lg:px-[35px] lg:pt-[70px] items-center lg:gap-y-0 gap-y-[24px]"
           >
-            <Image src={value.icon} width={40} height={40} alt={value.icon} className=""/>
-            
+            <Image src={value.icon} width={40} height={40} alt={value.icon} className="" />
+
             <h4 className="lg:mt-[16px] font-[600] text-[16px] lg:text-[24px] leading-[22.4px] lg:leading-[33.6px] text-center text-[#48195A]">
               {value.title}
             </h4>

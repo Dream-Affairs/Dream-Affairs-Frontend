@@ -14,6 +14,7 @@ import {
 import Asterisk from '../asterisk/asterisk';
 import country_codes from '../../../data/country_codes';
 import { Button } from '@/components/ui/button';
+import { AddIcon } from '@/components/svg-icons/svg-icons';
 
 function AddGuest() {
   const [toggle, setToggle] = useState<boolean>(false);
@@ -26,8 +27,14 @@ function AddGuest() {
   }, [toggle]);
 
   return (
-    <AddGuestModal>
-      <form className="-mx-5 text-[#282828] pb-20">
+    <AddGuestModal
+      Icon={AddIcon}
+      size="lg"
+      variant="secondary"
+      triggerBtnText="Add Guest"
+      modalTitle="Add Guest Manually"
+    >
+      <form className="text-[#282828] pb-20 guest-modal-border">
         <section className="px-14">
           <p className="text-sm leading-loose my-5">
             Manually input guests and/or their plus one details onto your guest list, where it automatically generates a

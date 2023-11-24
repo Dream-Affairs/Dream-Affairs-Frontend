@@ -1,121 +1,165 @@
 'use client';
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Image from 'next/image';
 import sort from './icons/sort.png';
-import actionImg from './icons/action.png';
-import edituser from './icons/edit-user.png';
-import removeuser from './icons/remove-user.png';
-import reinstateuser from './icons/reinstate-user.png';
-import resendinvite from './icons/resend-invite.png';
+import arrowDown from './icons/arrow-down.png';
 import MyModal from './modal';
+import ActionButton from './utils/actionbtn';
+import { useSorting } from './utils/utils';
+import { useModal, useMemberActions } from './utils/utils';
+import { MODAL_TITLES, MODAL_MESSAGES, MODAL_STYLES } from './utils/utils';
+import { fetchAcceptedInvites } from './api/api';
+import { fetchSuspendedInvites } from './api/api';
+import { suspendUser } from './api/api';
+import Loading from './loading';
+import { toast } from '@/components/ui/use-toast';
+import MemberItem from './(component)/mobiletable';
 
 export default function Teammgt() {
+  const {
+    isModalOpen,
+    modalTitle,
+    modalMessage,
+    actionName,
+    handleOpenModal,
+    handleCloseModal,
+    setModalTitle,
+    setModalMessage,
+    setActionName,
+    actionButtonStyle,
+    setActionButtonStyle,
+    modalAction,
+    setModalAction,
+  } = useModal();
+  const { sortOrder, sortField, handleSort } = useSorting();
+  // const { data, onDragStart, onDragEnd, isDragging } = useDragAndDrop();
+  const { selectedMember, isActionsOpen, toggleMemberActions, closeMemberActions } = useMemberActions();
   const [activeTab, setActiveTab] = useState('teamMembers');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalMessage, setModalMessage] = useState('');
-  const [actionName, setActionName] = useState('');
+  const [acceptedInvites, setAcceptedInvites] = useState<AcceptedInvite[]>([]);
+  const [suspendedInvites, SetSupendedInvites] = useState<SuspendeInvites[]>([]);
 
-  //   test mode
-  const [selectedMember, setSelectedMember] = useState<number | null>(null);
-  const [isActionsOpen, setIsActionsOpen] = useState(false);
+  useEffect(() => {
+    // Fetch accepted invites when the component mounts
+    const organizationId = '4a7f6a9f98684f89a10af27167000e2a';
+    fetchAcceptedInvites(organizationId)
+      .then((data: AcceptedInvite[]) => {
+        setAcceptedInvites(data);
+      })
+      .catch((error: Error) => {
+        // Handle the error, if necessary
+        console.error('Error fetching accepted invites:', error.message);
+      });
+  }, []);
 
-  const toggleMemberActions = (index: number) => {
-    if (selectedMember === index && isActionsOpen) {
-      closeMemberActions();
-    } else {
-      setSelectedMember(index);
-      setIsActionsOpen(true);
+  useEffect(() => {
+    // Fetch accepted invites when the component mounts
+    const organizationId = '4a7f6a9f98684f89a10af27167000e2a';
+    fetchSuspendedInvites(organizationId)
+      .then((data: AcceptedInvite[]) => {
+        SetSupendedInvites(data);
+      })
+      .catch((error: Error) => {
+        // Handle the error, if necessary
+        console.error('Error fetching suspended invites invites:', error.message);
+      });
+  }, []);
+
+  const handleSuspendUser = async (memberId: string) => {
+    const organizationId = '4a7f6a9f98684f89a10af27167000e2a';
+
+    try {
+      await suspendUser(organizationId, memberId);
+      toast({
+        title: 'User Suspended',
+        description: `${memberId} has been suspended`,
+      });
+      console.log('User suspended successfully');
+    } catch (error: any) {
+      // Handle errors
+      console.error('Error suspending user:', error.message);
     }
   };
 
-  const closeMemberActions = () => {
-    setSelectedMember(null);
-    setIsActionsOpen(false);
-  };
-  // test end
+  // const containerRef = useRef<HTMLDivElement | null>(null);
+  // useOutsideClickHandler(selectedMember, containerRef, closeMemberActions);
 
-  const showTeamMembers = () => {
-    setActiveTab('teamMembers');
-  };
+  const showTeamMembers = () => setActiveTab('teamMembers');
+  const showUnverifiedUsers = () => setActiveTab('unverifiedUsers');
+  const showSuspendedUsers = () => setActiveTab('suspendedUsers');
 
-  const showUnverifiedUsers = () => {
-    setActiveTab('unverifiedUsers');
-  };
-
-  const showSuspendedUsers = () => {
-    setActiveTab('suspendedUsers');
-  };
-
-  //   functions for modal
-  const openSuspendUserModal = () => {
-    setModalTitle("You're about to Suspend this User");
-    setModalMessage(
-      'Are you sure you want to suspend the wedding planner from the collaboration team? This action will restrict their access to the shared dashboard and collaborative features.',
-    );
+  const openSuspendUserModal = (memberId: string) => {
+    setModalTitle(MODAL_TITLES.suspend);
+    setModalMessage(MODAL_MESSAGES.suspend);
     setActionName('Suspend');
+    setActionButtonStyle(MODAL_STYLES.actionButtonStyles.suspend);
+    setModalAction({
+      action: () => handleSuspendUser(memberId),
+      actionName: 'Suspend',
+      memberId: memberId,
+    });
     handleOpenModal();
   };
 
   const openRemoveUserModal = () => {
-    setModalTitle("You're about to Remove this User");
-    setModalMessage(
-      'Are you sure you want to remove the wedding planner from the collaboration team? This action will revoke their access to the shared dashboard and collaborative features.',
-    );
+    setModalTitle(MODAL_TITLES.remove);
+    setModalMessage(MODAL_MESSAGES.remove);
     setActionName('Remove');
+    setActionButtonStyle(MODAL_STYLES.actionButtonStyles.remove);
     handleOpenModal();
   };
 
   const openReinstateUserModal = () => {
-    setModalTitle('You about to Reinstate this User');
-    setModalMessage(
-      'you are lifting the suspension, allowing the user to resume their normal activities on the platform. Ensure a smooth return to regular participation and collaboration.',
-    );
+    setModalTitle(MODAL_TITLES.reinstate);
+    setModalMessage(MODAL_MESSAGES.reinstate);
     setActionName('Reinstate');
+    setActionButtonStyle(MODAL_STYLES.actionButtonStyles.reinstate);
     handleOpenModal();
   };
 
   const openResendInvitLinkModal = () => {
-    setModalTitle('You about to Resend invite link this User');
-    setModalMessage(
-      `Give it another shot! Resend the invitation link to ensure they don't miss out on the exciting collaboration. Let's make sure they're part of the action!`,
-    );
+    setModalTitle(MODAL_TITLES.resendInviteLink);
+    setModalMessage(MODAL_MESSAGES.resendInviteLink);
     setActionName('Resend');
+    setActionButtonStyle(MODAL_STYLES.actionButtonStyles.resendInviteLink);
     handleOpenModal();
   };
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-    closeMemberActions();
-    // Disable scrolling when the modal is open
-    document.body.style.overflow = 'hidden';
+  useEffect(() => {
+    const handleBodyOverflow = () => {
+      document.body.style.overflow = isModalOpen ? 'hidden' : 'auto';
+    };
+
+    handleBodyOverflow(); // Set initial body overflow
+    return () => {
+      handleBodyOverflow(); // Reset body overflow on component unmount
+    };
+  }, [isModalOpen]);
+  // to filter what to render on each table
+  const filteredMembers = acceptedInvites.filter((member) => member.is_accepted);
+  const filteredSuspendedUsers = suspendedInvites.filter((member) => member.is_suspended && member.is_accepted);
+  const filteredUnverifiedUsers = acceptedInvites.filter((member) => member.is_accepted);
+
+  // to sort each column alphbetically
+  const getSortedMembers = (membersArray: AcceptedInvite[]) => {
+    return [...membersArray].sort((a, b) => {
+      const fieldA = a[sortField].toLowerCase();
+      const fieldB = b[sortField].toLowerCase();
+
+      if (fieldA < fieldB) return sortOrder === 'asc' ? -1 : 1;
+      if (fieldA > fieldB) return sortOrder === 'asc' ? 1 : -1;
+      return 0;
+    });
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    // Enable scrolling when the modal is closed
-    document.body.style.overflow = 'auto';
-  };
-
-  // Sample data for members
-  const members = [
-    { fullName: 'John Doe', email: 'johndoe@example.com', role: 'Admin', status: 'Team Member' },
-    { fullName: 'Alice Smith', email: 'alicesmith@example.com', role: 'Event Planner', status: 'Unverified' },
-    { fullName: 'Bob Johnson', email: 'bobjohnson@example.com', role: 'Guest Manager', status: 'Suspended' },
-    { fullName: 'Eve Adams', email: 'eveadams@example.com', role: 'Admin', status: 'Team Member' },
-    { fullName: 'Charlie Brown', email: 'charliebrown@example.com', role: 'Guest Manager', status: 'Suspended' },
-    { fullName: 'Prosper Pii', email: 'prosperh@example.com', role: 'Event Planner', status: 'Team Member' },
-  ];
-
-  const filteredMembers = members.filter((member) => member.status === 'Team Member');
-  const filteredUnverifiedUsers = members.filter((member) => member.status === 'Unverified');
-  const filteredSuspendedUsers = members.filter((member) => member.status === 'Suspended');
+  const sortedMembers = getSortedMembers(filteredMembers);
+  const sortedUnverifiedUsers = getSortedMembers(filteredUnverifiedUsers);
+  const sortedSuspendedUsers = getSortedMembers(filteredSuspendedUsers);
 
   return (
     <div>
-      <div className="flex gap-4">
+      <div className="flex overflow-x-auto sm:overflow-x-auto gap-4 pb-4">
         <button
-          className={`tab-button focus:outline-none ${
+          className={`tab-button whitespace-nowrap text-xs lg:text-base focus:outline-none ${
             activeTab === 'teamMembers'
               ? 'text-primary font-medium border-b-[3px] pb-2 border-primary'
               : 'text-black pb-2'
@@ -125,18 +169,17 @@ export default function Teammgt() {
           Team Members{' '}
           <span
             className={
-              activeTab === 'teamMembers'
-                ? `bg-secondary rounded-full py-1 px-2 ml-2`
-                : `bg-accent rounded-full py-1 px-2 ml-2`
+              activeTab === 'teamMembers' ? `bg-secondary rounded-full py-1 px-2` : `bg-accent rounded-full py-1 px-2`
             }
           >
             {filteredMembers.length}
           </span>
         </button>
+
         <button
-          className={`tab-button focus:outline-none ${
+          className={`tab-button whitespace-nowrap text-xs lg:text-base focus:outline-none ${
             activeTab === 'unverifiedUsers'
-              ? 'text-primary font-medium border-b-[3px] border-primary pb-2'
+              ? 'text-primary font-medium border-b-[3px] pb-2 border-primary'
               : 'text-black pb-2'
           }`}
           onClick={showUnverifiedUsers}
@@ -145,17 +188,18 @@ export default function Teammgt() {
           <span
             className={
               activeTab === 'unverifiedUsers'
-                ? `bg-secondary rounded-full py-1 px-2 ml-2`
-                : `bg-accent rounded-full py-1 px-2 ml-2`
+                ? `bg-secondary rounded-full py-1 px-2`
+                : `bg-accent rounded-full py-1 px-2`
             }
           >
             {filteredUnverifiedUsers.length}
           </span>
         </button>
+
         <button
-          className={`tab-button focus:outline-none ${
+          className={`tab-button whitespace-nowrap text-xs lg:text-base focus:outline-none ${
             activeTab === 'suspendedUsers'
-              ? 'text-primary font-medium border-b-[3px] border-primary pb-2'
+              ? 'text-primary font-medium border-b-[3px] pb-2 border-primary'
               : 'text-black pb-2'
           }`}
           onClick={showSuspendedUsers}
@@ -164,142 +208,266 @@ export default function Teammgt() {
           <span
             className={
               activeTab === 'suspendedUsers'
-                ? `bg-secondary rounded-full py-1 px-2 ml-2`
-                : `bg-accent rounded-full py-1 px-2 ml-2`
+                ? `bg-secondary rounded-full py-1 px-2 ml-1`
+                : `bg-accent rounded-full py-1 px-2 ml-1`
             }
           >
             {filteredSuspendedUsers.length}
           </span>
         </button>
       </div>
-      <div className="tab-content">
-        {activeTab === 'teamMembers' && (
-          <div>
-            <table className="min-w-full table-auto">
-              <thead className="border-b">
-                <tr>
-                  <th className="px-4 py-2"></th>
-                  <th className="px-4 py-2 text-left">Full Name</th>
-                  <th className="px-4 py-2 text-left">Email</th>
-                  <th className="px-4 py-2 text-left">Role</th>
-                  <th className="px-4 py-2 text-left">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredMembers.map((member, index) => (
-                  <tr key={index} className={'border-b'}>
-                    <td className="px-4 py-2 text-center">
-                      <Image src={sort} alt="sort" />
-                    </td>
-                    <td className="px-4 py-2 text-left">{member.fullName}</td>
-                    <td className="px-4 py-2 text-left">{member.email}</td>
-                    <td className="px-4 py-2 text-left">{member.role}</td>
-                    <td className="px-4 py-2 text-end">
-                      <ActionButton
-                        selected={selectedMember === index}
-                        toggleMemberActions={() => toggleMemberActions(index)}
+
+      <Suspense fallback={<Loading />}>
+        <div className="tab-content">
+          {activeTab === 'teamMembers' && (
+            <div>
+              {sortedMembers.length === 0 ? (
+                <p className="text-center font-bold text-lg">No team members found.</p>
+              ) : (
+                <>
+                  <div className="flex flex-col gap-5">
+                    {sortedMembers.map((member, index) => (
+                      <MemberItem
+                        key={index}
+                        member={member}
+                        index={index}
+                        selectedMember={selectedMember}
+                        toggleMemberActions={toggleMemberActions}
                         closeMemberActions={closeMemberActions}
                         activeTab={activeTab}
-                        openModal={handleOpenModal}
                         openRemoveUserModal={openRemoveUserModal}
-                        openSuspendUserModal={openSuspendUserModal}
+                        openSuspendUserModal={() => openSuspendUserModal(member.id)}
                         openReinstateUserModal={openReinstateUserModal}
                         openResendInvitLinkModal={openResendInvitLinkModal}
                       />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-        {activeTab === 'unverifiedUsers' && (
-          <div>
-            <table className="min-w-full table-auto">
-              <thead className="border-b">
-                <tr>
-                  <th className="px-4 py-2"></th>
-                  <th className="px-4 py-2">Full Name</th>
-                  <th className="px-4 py-2">Email</th>
-                  <th className="px-4 py-2">Role</th>
-                  <th className="px-4 py-2">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredUnverifiedUsers.map((member, index) => (
-                  <tr key={index} className={'border-b'}>
-                    <td className="px-4 py-2 text-center">
-                      <Image src={sort} alt="sort" />
-                    </td>
-                    <td className="px-4 py-2 text-center">{member.fullName}</td>
-                    <td className="px-4 py-2 text-center">{member.email}</td>
-                    <td className="px-4 py-2 text-center">{member.role}</td>
-                    <td className="px-4 py-2 text-center">
-                      <ActionButton
-                        selected={selectedMember === index}
-                        toggleMemberActions={() => toggleMemberActions(index)}
+                    ))}
+                  </div>
+                  <div className="lg:block hidden">
+                    <table className="min-w-full table-auto">
+                      <thead className="border-b">
+                        <tr>
+                          <th className="px-4 py-2"></th>
+                          <th
+                            className="px-4 py-2 flex items-center gap-1 text-left cursor-pointer"
+                            onClick={() => handleSort('name')}
+                          >
+                            Full Name {sortField === 'name' && <Image src={arrowDown} alt="arrow-down" />}
+                          </th>
+                          <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('email')}>
+                            Email{' '}
+                            {sortField === 'email' && (
+                              <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />
+                            )}
+                          </th>
+                          <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('role')}>
+                            Role{' '}
+                            {sortField === 'role' && (
+                              <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />
+                            )}
+                          </th>
+                          <th className="px-4 py-2 text-left">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {sortedMembers.map((member, index) => (
+                          <tr key={index} className={`border-b`}>
+                            <td className="px-4 py-2 text-center cursor-move">
+                              <Image src={sort} alt="sort" />
+                            </td>
+                            <td className="px-4 py-2 text-left capitalize">{member.name}</td>
+                            <td className="px-4 py-2 text-left">{member.email}</td>
+                            <td className="px-4 py-2 text-left capitalize">{member.role}</td>
+                            <td className="px-4 py-2 text-end">
+                              <ActionButton
+                                selected={selectedMember === index}
+                                toggleMemberActions={() => toggleMemberActions(index)}
+                                closeMemberActions={closeMemberActions}
+                                activeTab={activeTab}
+                                // openModal={handleOpenModal}
+                                openRemoveUserModal={openRemoveUserModal}
+                                openSuspendUserModal={() => openSuspendUserModal(member.id)}
+                                openReinstateUserModal={openReinstateUserModal}
+                                openResendInvitLinkModal={openResendInvitLinkModal}
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+          {activeTab === 'unverifiedUsers' && (
+            <div>
+              {sortedUnverifiedUsers.length === 0 ? (
+                <p className="text-center font-bold text-lg">No unverified users found.</p>
+              ) : (
+                <div>
+                  <div className="flex flex-col gap-5">
+                    {sortedUnverifiedUsers.map((member, index) => (
+                      <MemberItem
+                        key={index}
+                        member={member}
+                        index={index}
+                        selectedMember={selectedMember}
+                        toggleMemberActions={toggleMemberActions}
                         closeMemberActions={closeMemberActions}
                         activeTab={activeTab}
-                        openModal={handleOpenModal}
                         openRemoveUserModal={openRemoveUserModal}
-                        openSuspendUserModal={openSuspendUserModal}
+                        openSuspendUserModal={() => openSuspendUserModal(member.id)}
                         openReinstateUserModal={openReinstateUserModal}
                         openResendInvitLinkModal={openResendInvitLinkModal}
                       />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-        {activeTab === 'suspendedUsers' && (
-          <div>
-            <table className="min-w-full table-auto">
-              <thead className="border-b">
-                <tr>
-                  <th className="px-4 py-2"></th>
-                  <th className="px-4 py-2">Full Name</th>
-                  <th className="px-4 py-2">Email</th>
-                  <th className="px-4 py-2">Role</th>
-                  <th className="px-4 py-2">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredSuspendedUsers.map((member, index) => (
-                  <tr key={index} className={'border-b'}>
-                    <td className="px-4 py-2 text-center">
-                      <Image src={sort} alt="sort" />
-                    </td>
-                    <td className="px-4 py-2 text-center" style={{ color: '#9C9C9C' }}>
-                      {member.fullName}
-                    </td>
-                    <td className="px-4 py-2 text-center" style={{ color: '#9C9C9C' }}>
-                      {member.email}
-                    </td>
-                    <td className="px-4 py-2 text-center" style={{ color: '#9C9C9C' }}>
-                      {member.role}
-                    </td>
-                    <td className="px-4 py-2 text-center">
-                      <ActionButton
-                        selected={selectedMember === index}
-                        toggleMemberActions={() => toggleMemberActions(index)}
+                    ))}
+                  </div>
+
+                  <div className="lg:block hidden">
+                    <table className="min-w-full table-auto">
+                      <thead className="border-b">
+                        <tr>
+                          <th className="px-4 py-2"></th>
+                          <th
+                            className="px-4 py-2 flex items-center gap-1 text-left cursor-pointer"
+                            onClick={() => handleSort('name')}
+                          >
+                            Full Name {sortField === 'name' && <Image src={arrowDown} alt="arrow-down" />}
+                          </th>
+                          <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('email')}>
+                            Email{' '}
+                            {sortField === 'email' && (
+                              <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />
+                            )}
+                          </th>
+                          <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('role')}>
+                            Role{' '}
+                            {sortField === 'role' && (
+                              <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />
+                            )}
+                          </th>
+                          <th className="px-4 py-2 text-left">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {sortedUnverifiedUsers.map((member, index) => (
+                          <tr key={index} className={'border-b'}>
+                            <td className="px-4 py-2 text-center cursor-move">
+                              <Image src={sort} alt="sort" />
+                            </td>
+                            <td className="px-4 py-2 text-left">{member.name}</td>
+                            <td className="px-4 py-2 text-left">{member.email}</td>
+                            <td className="px-4 py-2 text-left">{member.role}</td>
+                            <td className="px-4 py-2 text-end">
+                              <ActionButton
+                                selected={selectedMember === index}
+                                toggleMemberActions={() => toggleMemberActions(index)}
+                                closeMemberActions={closeMemberActions}
+                                activeTab={activeTab}
+                                // openModal={handleOpenModal}
+                                openRemoveUserModal={openRemoveUserModal}
+                                openSuspendUserModal={() => openSuspendUserModal(member.id)}
+                                openReinstateUserModal={openReinstateUserModal}
+                                openResendInvitLinkModal={openResendInvitLinkModal}
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+          {activeTab === 'suspendedUsers' && (
+            <div>
+              {sortedSuspendedUsers.length === 0 ? (
+                <p className="text-center font-bold text-lg">No suspended users found.</p>
+              ) : (
+                <>
+                  <div className="flex flex-col gap-5">
+                    {sortedSuspendedUsers.map((member, index) => (
+                      <MemberItem
+                        key={index}
+                        member={member}
+                        index={index}
+                        selectedMember={selectedMember}
+                        toggleMemberActions={toggleMemberActions}
                         closeMemberActions={closeMemberActions}
                         activeTab={activeTab}
-                        openModal={handleOpenModal}
                         openRemoveUserModal={openRemoveUserModal}
-                        openSuspendUserModal={openSuspendUserModal}
+                        openSuspendUserModal={() => openSuspendUserModal(member.id)}
                         openReinstateUserModal={openReinstateUserModal}
                         openResendInvitLinkModal={openResendInvitLinkModal}
                       />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+                    ))}
+                  </div>
+                  <div className="lg:block hidden">
+                    <table className=" min-w-full table-auto">
+                      <thead className="border-b">
+                        <tr>
+                          <th className="px-4 py-2"></th>
+                          <th
+                            className="px-4 py-2 flex items-center gap-1 text-left cursor-pointer"
+                            onClick={() => handleSort('name')}
+                          >
+                            Full Name {sortField === 'name' && <Image src={arrowDown} alt="arrow-down" />}
+                          </th>
+                          <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('email')}>
+                            Email{' '}
+                            {sortField === 'email' && (
+                              <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />
+                            )}
+                          </th>
+                          <th className="px-4 py-2 text-left cursor-pointer" onClick={() => handleSort('role')}>
+                            Role{' '}
+                            {sortField === 'role' && (
+                              <Image src={arrowDown} alt="arrow-down" className=" inline-flex" />
+                            )}
+                          </th>
+                          <th className="px-4 py-2 text-left">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {sortedSuspendedUsers.map((member, index) => (
+                          <tr key={member.id} className={'border-b'}>
+                            <td className="px-4 py-2 text-center cursor-move">
+                              <Image src={sort} alt="sort" />
+                            </td>
+                            <td className="px-4 py-2 text-left capitalize" style={{ color: '#9C9C9C' }}>
+                              {member.name}
+                            </td>
+                            <td className="px-4 py-2 text-left" style={{ color: '#9C9C9C' }}>
+                              {member.email}
+                            </td>
+                            <td className="px-4 py-2 text-left capitalize" style={{ color: '#9C9C9C' }}>
+                              {member.role}
+                            </td>
+                            <td className="px-4 py-2 text-end">
+                              <ActionButton
+                                selected={selectedMember === index}
+                                toggleMemberActions={() => toggleMemberActions(index)}
+                                closeMemberActions={closeMemberActions}
+                                activeTab={activeTab}
+                                // openModal={handleOpenModal}
+                                openRemoveUserModal={openRemoveUserModal}
+                                openSuspendUserModal={() => openSuspendUserModal(member.id)}
+                                openReinstateUserModal={openReinstateUserModal}
+                                openResendInvitLinkModal={openResendInvitLinkModal}
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+        </div>
+      </Suspense>
 
       {/* test */}
       {isModalOpen && (
@@ -310,106 +478,31 @@ export default function Teammgt() {
           title={modalTitle}
           message={modalMessage}
           actionName={actionName}
+          actionButtonStyle={actionButtonStyle}
+          modalAction={modalAction}
         />
       )}
     </div>
   );
 }
 
-interface ActionButtonProps {
-  selected: boolean;
-  toggleMemberActions: () => void;
-  closeMemberActions: () => void;
-  activeTab: string;
-  openModal: () => void;
-  openSuspendUserModal: () => void;
-  openRemoveUserModal: () => void;
-  openReinstateUserModal: () => void;
-  openResendInvitLinkModal: () => void;
+interface AcceptedInvite {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  organization: string;
+  invite_token: string;
+  is_accepted: boolean;
+  is_suspended: boolean;
 }
-
-function ActionButton(props: ActionButtonProps) {
-  const {
-    selected,
-    toggleMemberActions,
-    closeMemberActions,
-    activeTab,
-    openModal,
-    openRemoveUserModal,
-    openSuspendUserModal,
-    openReinstateUserModal,
-    openResendInvitLinkModal,
-  } = props;
-
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      if (selected && containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        closeMemberActions();
-      }
-    };
-
-    if (selected) {
-      document.addEventListener('click', handleOutsideClick);
-    }
-
-    return () => {
-      document.removeEventListener('click', handleOutsideClick);
-    };
-  }, [selected, closeMemberActions]);
-
-  return (
-    <div style={{ position: 'relative', display: 'inline-block' }}>
-      <button onClick={toggleMemberActions} className="text-white p-2 rounded">
-        <Image src={actionImg} alt="action" />
-      </button>
-      {selected && (
-        <div ref={containerRef} className="actions-container">
-          <div
-            className="absolute bottom-10 -left-[150px] mt-2 w-[190px] rounded-lg py-[6px] flex flex-col z-10"
-            style={{
-              backgroundColor: 'white',
-              boxShadow: '0px 0px 8px rgba(0, 0, 0, 0.2)',
-            }}
-          >
-            {activeTab === 'teamMembers' && (
-              <>
-                {renderActionButton(edituser.src, 'Edit user', () => null)}
-                {renderActionButton(reinstateuser.src, 'Suspend user', () => openSuspendUserModal())}
-                {renderActionButton(removeuser.src, 'Remove user', () => openRemoveUserModal())}
-              </>
-            )}
-            {activeTab === 'suspendedUsers' && (
-              <>
-                {renderActionButton(edituser.src, 'Edit user', () => null)}
-                {renderActionButton(reinstateuser.src, 'Reinstate user', () => openReinstateUserModal())}
-                {renderActionButton(removeuser.src, 'Remove user', () => openRemoveUserModal())}
-              </>
-            )}
-            {activeTab === 'unverifiedUsers' && (
-              <>
-                {renderActionButton(edituser.src, 'Edit user', () => null)}
-                {renderActionButton(resendinvite.src, 'Resend invite', () => openResendInvitLinkModal())}
-                {renderActionButton(removeuser.src, 'Remove user', () => openRemoveUserModal())}
-              </>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// component for the popup action
-function renderActionButton(imageSrc: string, label: string, onClick: () => void) {
-  return (
-    <button
-      className="hover:bg-gray-100 flex gap-1 h-[44px] items-center justify-start pl-4 text-base font-normal leading-[22.4px]"
-      onClick={onClick}
-    >
-      <Image src={imageSrc} alt={label} width={24} height={24} />
-      <p>{label}</p>
-    </button>
-  );
+interface SuspendeInvites {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  organization: string;
+  invite_token: string;
+  is_accepted: boolean;
+  is_suspended: boolean;
 }

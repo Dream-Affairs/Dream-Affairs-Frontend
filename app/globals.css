@@ -92,6 +92,30 @@
   .guest-spacing {
     @apply pl-[50px] pr-[50px];
   }
+  .import-btn {
+    @apply flex items-center gap-2.5 bg-[#FCF7FF] border border-secondary font-semibold text-[#111] mb-6 last:mb-0;
+  }
+  .import-title {
+    @apply font-medium text-2xl text-[#282828];
+  }
+  .import-wrapper {
+    @apply text-center flex-col items-center mx-auto py-6 gap-6 text-[#535353] transition-all;
+  }
+  .guest-modal-border {
+    @apply border-t border-[#E1E1E1] -mx-5;
+  }
+  .profile-tab-btn {
+    @apply px-0.5 rounded-none transition-all;
+  }
+  .profile-tab-btn.active {
+    @apply text-primary border-b-2 border-primary;
+  }
+  .summary-count {
+    @apply flex items-center text-xl gap-2 py-1;
+  }
+  .tags {
+    @apply whitespace-nowrap px-2 py-1 bg-[#E6F4EB] text-xs text-[#008D36] font-medium rounded-[8px];
+  }
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -104,8 +128,8 @@
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 
 /* Handle */

@@ -3,12 +3,15 @@
 import AddGuest from '@/components/guest-management/add-guest-modal/add-guest';
 import { AddGuestModal } from '@/components/guest-management/add-guest-modal/add-guest-modal';
 import FilterBtn from '@/components/guest-management/filter-btn';
+import GuestProfiles from '@/components/guest-management/guest-profile-modal/guest-profile-modal';
+import ImportGuestModal from '@/components/guest-management/import-guest-modal/import-guest-modal';
 import MenuPopup from '@/components/guest-management/menu-popup/menu-popup';
 import {
   ArrowLeft,
   ArrowRight,
   Delete,
   Ellipsis,
+  ExportIcon,
   HashTag,
   Import,
   Plus,
@@ -19,6 +22,7 @@ import {
   Track,
 } from '@/components/svg-icons/svg-icons';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -29,173 +33,142 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import guests from '../../../data/dummy_guests';
+import Link from 'next/link';
+import StatusTag from '@/components/guest-management/status-tag/status-tag';
+import Pagination from '@/components/guest-management/pagination/pagination';
+import ManageTagsModal from '@/components/guest-management/manage-tags-modal/manage-tags-modal';
+import AssignTagsModal from '@/components/guest-management/assign-tags-modal/assign-tags-modal';
+import DisabledButton from '@/components/guest-management/tool-tip/tool-tip';
 
 type Props = {};
 
-const guests = [
+const columns: { id: string; name: string; isShown: boolean }[] = [
   {
-    fullName: 'John Doe',
-    email: 'john.doe@example.com',
-    rsvpStatus: 'confirmed',
-    inviteCode: '1234567890',
-    tags: ['church', 'rehearsal'],
-    plusOne: 'yes',
+    id: 'column1',
+    name: 'Guest Name',
+    isShown: true,
   },
   {
-    fullName: 'Jane Smith',
-    email: 'jane.smith@example.com',
-    rsvpStatus: 'pending',
-    inviteCode: '0987654321',
-    tags: ['church', 'after party'],
-    plusOne: 'no',
+    id: 'column2',
+    name: 'Email',
+    isShown: true,
   },
   {
-    fullName: 'Alice Johnson',
-    email: 'alice.johnson@example.com',
-    rsvpStatus: 'declined',
-    inviteCode: '2345678901',
-    tags: ['bridal shower', 'VIP bestman'],
-    plusOne: 'yes',
+    id: 'column3',
+    name: 'RSVP Status',
+    isShown: true,
   },
   {
-    fullName: 'Bob Anderson',
-    email: 'bob.anderson@example.com',
-    rsvpStatus: 'confirmed',
-    inviteCode: '3456789012',
-    tags: ['church', 'rehearsal'],
-    plusOne: 'no',
+    id: 'column4',
+    name: 'Invite Code',
+    isShown: true,
   },
   {
-    fullName: 'Eva Rodriguez',
-    email: 'eva.rodriguez@example.com',
-    rsvpStatus: 'confirmed',
-    inviteCode: '4567890123',
-    tags: ['after party', 'VIP bestman'],
-    plusOne: 'yes',
+    id: 'column5',
+    name: 'Tags',
+    isShown: true,
   },
   {
-    fullName: 'Michael Brown',
-    email: 'michael.brown@example.com',
-    rsvpStatus: 'pending',
-    inviteCode: '5678901234',
-    tags: ['church', 'bridal shower'],
-    plusOne: 'no',
+    id: 'column6',
+    name: 'Plus one?',
+    isShown: true,
   },
   {
-    fullName: 'Emily Davis',
-    email: 'emily.davis@example.com',
-    rsvpStatus: 'confirmed',
-    inviteCode: '6789012345',
-    tags: ['rehearsal', 'after party'],
-    plusOne: 'yes',
+    id: 'column7',
+    name: 'Meal Preferences',
+    isShown: true,
   },
   {
-    fullName: 'Chris Wilson',
-    email: 'chris.wilson@example.com',
-    rsvpStatus: 'pending',
-    inviteCode: '7890123456',
-    tags: ['bridal shower', 'VIP bestman'],
-    plusOne: 'no',
+    id: 'column8',
+    name: 'Gifts',
+    isShown: true,
   },
   {
-    fullName: 'Olivia Taylor',
-    email: 'olivia.taylor@example.com',
-    rsvpStatus: 'declined',
-    inviteCode: '8901234567',
-    tags: ['church', 'rehearsal'],
-    plusOne: 'yes',
+    id: 'column9',
+    name: 'Seat Allocation',
+    isShown: true,
   },
   {
-    fullName: 'Daniel Martinez',
-    email: 'daniel.martinez@example.com',
-    rsvpStatus: 'confirmed',
-    inviteCode: '9012345678',
-    tags: ['after party', 'VIP bestman'],
-    plusOne: 'no',
+    id: 'column10',
+    name: 'Location',
+    isShown: false,
   },
 ];
 
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case 'confirmed':
-      return '#008D36';
-    case 'pending':
-      return '#FF8515';
-    case 'declined':
-      return '#F00';
-    default:
-      return 'black'; // Default color for unknown status
-  }
-};
-
-const getStatusBg = (status: string) => {
-  switch (status) {
-    case 'confirmed':
-      return '#E6F4EB';
-    case 'pending':
-      return '#FFF3E8';
-    case 'declined':
-      return '#FFE6E6';
-    default:
-      return 'black'; // Default color for unknown status
-  }
-};
-
 const GuestManagement = (props: Props) => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const guests_list = guests.slice((currentPage - 1) * 10, currentPage * 10);
   const [activeFilter, setActiveFilter] = useState<string>('');
-  const [showPopup, setShowPopup] = useState<boolean>(false);
-  const showMenu = (e: any) => {
-    setShowPopup(true);
+  const [search, setSearch] = useState<string>('');
+  const [selectedGuest, setSelectedGuests] = useState<string[]>([]);
+  const [deletedGuests, setDeletedGuests] = useState<string[]>([]);
+  const [columnsList, setColumnsList] = useState(columns);
+  const [tags, setTags] = useState<string[]>([
+    'Bridal Shower',
+    'Bestman ',
+    'Parents',
+    'Bride’s friend',
+    "Groom's Colleagues",
+    'Long Distance',
+    'Church',
+    'Band',
+    'Ex',
+    "Bride's-Maid",
+    'Family Friend',
+    'Flight',
+    'Co-Worker',
+    'VIP',
+  ]);
+
+  const selectAllGuest = () => {
+    if (selectedGuest.length === guests_list.length) {
+      setSelectedGuests([]);
+    } else {
+      setSelectedGuests(guests_list.map((item) => item.id));
+    }
+  };
+
+  const handleChange = (id: string) => {
+    setSelectedGuests((prevState) => {
+      if (prevState.includes(id)) {
+        return prevState.filter((item) => item != id);
+      } else {
+        return [...prevState, id];
+      }
+    });
+  };
+
+  const deleteSelected = () => {
+    setDeletedGuests(selectedGuest);
+    setSelectedGuests([]);
+  };
+
+  const isColumnEnabled = (id: string): boolean | undefined => {
+    let column = columnsList.find((item) => item.id === id);
+    return column?.isShown;
   };
 
   return (
     <div className="pt-10 relative w-full h-full py-6">
-      {showPopup && <MenuPopup closePop={setShowPopup} />}
-      <div className=" guest-spacing w-full overflow-hidden">
+      <div className="guest-spacing w-full overflow-hidden">
         <header className="flex justify-between">
           <h2 className="text-3xl font-bold text-[#1c1c1c]">Guest Management</h2>
           <div className="flex gap-[22px]">
-            <Button variant="disabled" className="gap-2.5" size={'lg'}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-                <path
-                  d="M12.5 9V2L10.5 4"
-                  stroke="#9C9C9C"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M12.5 2L14.5 4"
-                  stroke="#9C9C9C"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M2.47998 13H6.88998C7.26998 13 7.60998 13.21 7.77998 13.55L8.94998 15.89C9.28998 16.57 9.97998 17 10.74 17H14.27C15.03 17 15.72 16.57 16.06 15.89L17.23 13.55C17.4 13.21 17.75 13 18.12 13H22.48"
-                  stroke="#9C9C9C"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M7.5 5.12988C3.96 5.64988 2.5 7.72988 2.5 11.9999V14.9999C2.5 19.9999 4.5 21.9999 9.5 21.9999H15.5C20.5 21.9999 22.5 19.9999 22.5 14.9999V11.9999C22.5 7.72988 21.04 5.64988 17.5 5.12988"
-                  stroke="#9C9C9C"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              Export
-            </Button>
+            <DisabledButton />
             <AddGuest />
           </div>
         </header>
         <div className="flex items-center gap-10 py-8">
           <div className="flex items-center flex-1 border border-[#D0D5DD] px-3 py-2.5 gap-2 rounded-md">
             <Search height="20" width="20" />
-            <input type="text" placeholder="Search for guests" className="focus:outline-none w-full" />
+            <input
+              type="text"
+              placeholder="Search for guests"
+              className="focus:outline-none w-full"
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </div>
           <div className="flex items-center">
             <Label className="whitespace-nowrap mr-2">Filter By</Label>
@@ -216,25 +189,24 @@ const GuestManagement = (props: Props) => {
         </div>
         <div className="w-full overflow-hidden">
           <div className="flex items-center gap-3.5 w-full overflow-scroll no-scrollbar">
-            <Button variant="outline" size={'sm'} className="gap-2">
-              <Delete />
+            <Button
+              variant={selectedGuest.length ? null : 'outline'}
+              size={'sm'}
+              className={selectedGuest.length ? 'guest-btn' : 'gap-2'}
+              onClick={deleteSelected}
+              disabled={selectedGuest.length ? false : true}
+            >
+              <Delete color={selectedGuest.length ? '#282828' : '#9C9C9C'} />
               Delete Guest
             </Button>
+            <ImportGuestModal />
+            <AssignTagsModal tags={tags} selectedGuestNumber={selectedGuest.length} />
+            <ManageTagsModal tags={tags} tagSetter={setTags} />
             <Button size="sm" className="guest-btn">
-              <Import />
-              Import List
-            </Button>
-            <Button size="sm" className="guest-btn">
-              <Tags />
-              Assign Tags
-            </Button>
-            <Button size="sm" className="guest-btn">
-              <Store />
-              Manage Tags
-            </Button>
-            <Button size="sm" className="guest-btn">
-              <Track />
-              Track RSVP
+              <Link href="/dashboard/guest-management/rsvp-tracker" className="flex gap-2">
+                <Track />
+                Track RSVP
+              </Link>
             </Button>
             <Button size="sm" className="guest-btn">
               <Send />
@@ -248,99 +220,112 @@ const GuestManagement = (props: Props) => {
         </div>
       </div>
       <div className="flex gap-9 pt-8 guest-spacing border-b border-[#E1E1E1]">
-        <FilterBtn statusFilter="" name="All guest" count={112} activeBtn={activeFilter} setFunc={setActiveFilter} />
+        <FilterBtn
+          statusFilter=""
+          name="All guest"
+          count={guests.length}
+          activeBtn={activeFilter}
+          setFunc={setActiveFilter}
+        />
         <FilterBtn
           statusFilter="confirmed"
           name="Confirmed"
-          count={80}
+          count={guests.filter((item) => item.rsvpStatus === 'confirmed')?.length}
           activeBtn={activeFilter}
           setFunc={setActiveFilter}
         />
         <FilterBtn
           statusFilter="declined"
           name="Regretfully Declined"
-          count={2}
+          count={guests.filter((item) => item.rsvpStatus === 'declined')?.length}
           activeBtn={activeFilter}
           setFunc={setActiveFilter}
         />
         <FilterBtn
           statusFilter="pending"
           name="Awaiting Response"
-          count={20}
+          count={guests.filter((item) => item.rsvpStatus === 'pending')?.length}
           activeBtn={activeFilter}
           setFunc={setActiveFilter}
         />
       </div>
       <div className="mt-5 guest-spacing">
-        <div className="border border-[#E1E1E1] rounded-[10px] overflow-hidden">
+        <div className="border border-[#E1E1E1] rounded-[10px] overflow-x-scroll">
           <table className="w-full text-sm">
-            <thead className="bg-[#FFF8FA] font-medium border-b border-b-[#E1E1E1]">
+            <thead className="bg-[#FFF8FA] text-left font-medium border-b border-b-[#E1E1E1]">
               <tr>
                 <td className="py-4 px-3">
-                  <input type="checkbox" />
+                  <Checkbox onClick={selectAllGuest} checked={selectedGuest.length === guests_list.length} />
                 </td>
-                <td className="py-4 px-2">Guest Name</td>
-                <td className="py-4 px-2">Email</td>
-                <td className="py-4 px-2">RSV Status</td>
-                <td className="py-4 px-2">Invite Code</td>
-                <td className="py-4 px-2">Tags</td>
-                <td className="py-4 px-2">Plus One?</td>
-                <td className="py-4 px-2">
-                  <button>
-                    <Plus />
-                  </button>
-                </td>
-                <td className="py-4 px-4">
-                  <button onClick={showMenu}>
-                    <Ellipsis />
-                  </button>
-                </td>
+                {isColumnEnabled('column1') && <th className="py-4 px-2">Guest Name</th>}
+                {isColumnEnabled('column2') && <th className="py-4 px-2">Email</th>}
+                {isColumnEnabled('column3') && <th className="py-4 px-2 text-center">RSV Status</th>}
+                {isColumnEnabled('column4') && <th className="py-4 px-2">Invite Code</th>}
+                {isColumnEnabled('column5') && <th className="py-4 px-2">Tags</th>}
+                {isColumnEnabled('column6') && <th className="py-4 px-2 whitespace-nowrap">Plus One?</th>}
+                {isColumnEnabled('column7') && <th className="py-4 px-4">Meal Preferences</th>}
+                {isColumnEnabled('column8') && <th className="py-4 px-2">Gift</th>}
+                {isColumnEnabled('column9') && (
+                  <th className="py-4 px-2 text-center whitespace-nowrap"> Seat Allocation</th>
+                )}
+                {isColumnEnabled('column10') && <th className="py-4 px-2 text-center whitespace-nowrap"> Location</th>}
+                <th className="py-4 px-6">
+                  <MenuPopup columns={columnsList} columnSetter={setColumnsList} />
+                </th>
               </tr>
             </thead>
             <tbody>
-              {guests
-                .filter((item) => item.rsvpStatus.includes(activeFilter))
+              {guests_list
+                .filter(
+                  (item) =>
+                    item.rsvpStatus.includes(activeFilter) &&
+                    !deletedGuests.includes(item.id) &&
+                    item.fullName.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
+                )
                 .map((item, index) => {
                   return (
-                    <tr key={index} className="border-b border-b-[#E1E1E1] last:border-none text-[#282828]">
+                    <tr key={item.id} className="border-b border-b-[#E1E1E1] last:border-none text-[#282828]">
                       <td className="py-4 px-3 bg-[#FFF8FA]">
-                        <input type="checkbox" />
+                        <Checkbox
+                          id={item.id}
+                          onClick={() => handleChange(item.id)}
+                          checked={selectedGuest.includes(item.id)}
+                        />
+                        {/* <input type="checkbox" className='accent-[#292D32]' /> */}
                       </td>
-                      <td className="py-4 px-2 whitespace-nowrap">{item.fullName}</td>
-                      <td className="py-4 px-2">{item.email}</td>
-                      <td className="py-4 px-2">
-                        <div
-                          style={{
-                            color: getStatusColor(item.rsvpStatus),
-                            backgroundColor: getStatusBg(item.rsvpStatus),
-                          }}
-                          className={`text-xs font-medium capitalize rounded-[20px] flex items-center w-fit mx-auto py-1 px-3 text-[${getStatusColor(
-                            item.rsvpStatus,
-                          )}] bg-[${getStatusBg(item.rsvpStatus)}]`}
-                        >
-                          <div
-                            style={{ backgroundColor: getStatusColor(item.rsvpStatus) }}
-                            className={`h-1.5 w-1.5 rounded-full mr-2`}
-                          />
-                          {item.rsvpStatus}
-                        </div>
-                      </td>
-                      <td className="py-4 px-2">{item.inviteCode}</td>
-                      <td className="py-4 px-2">
-                        <div className="flex gap-2">
-                          {item.tags.map((item, index) => {
-                            return (
-                              <span
-                                key={index}
-                                className="block whitespace-nowrap px-2 py-1 bg-[#E6F4EB] text-xs text-[#008D36] font-medium rounded-[8px]"
-                              >
+                      {isColumnEnabled('column1') && (
+                        <td className="py-4 px-2 whitespace-nowrap">
+                          <GuestProfiles name={item.fullName} id={item.id} />
+                        </td>
+                      )}
+                      {isColumnEnabled('column2') && <td className="py-4 px-2">{item.email}</td>}
+                      {isColumnEnabled('column3') && (
+                        <td className="py-4 px-2">
+                          <StatusTag status={item.rsvpStatus} />
+                        </td>
+                      )}
+                      {isColumnEnabled('column4') && <td className="py-4 px-2">{item.inviteCode}</td>}
+                      {isColumnEnabled('column5') && (
+                        <td className="py-4 px-2">
+                          <div className="flex gap-2">
+                            {item.tags.map((item, index) => (
+                              <span key={index} className="block tags">
                                 {item}
                               </span>
-                            );
-                          })}
-                        </div>
-                      </td>
-                      <td className="py-4 px-2 capitalize text-center">{item.plusOne}</td>
+                            ))}
+                          </div>
+                        </td>
+                      )}
+                      {isColumnEnabled('column6') && (
+                        <td className="py-4 px-2 capitalize text-center">{item.plusOne}</td>
+                      )}
+                      {isColumnEnabled('column7') && (
+                        <td className="py-4 px-4 text-sm whitespace-nowrap">{item.mealPreferecences}</td>
+                      )}
+                      {isColumnEnabled('column8') && (
+                        <td className="py-4 px-2 whitespace-nowrap">{item.gift.join(', ')}</td>
+                      )}
+                      {isColumnEnabled('column9') && <td className="py-4 px-2 text-center">{item.seatAllocation}</td>}
                     </tr>
                   );
                 })}
@@ -348,20 +333,7 @@ const GuestManagement = (props: Props) => {
           </table>
         </div>
       </div>
-
-      <div className="flex w-fit border border-[#D1D5DB] rounded mx-auto mt-12 text-[#6B7280] text-sm font-medium">
-        <button className="flex items-center border-r border-[#D1D5DB py-2 px-3 gap-2">
-          <ArrowLeft />
-          Previous
-        </button>
-        <button className="py-2 px-3 border-r border-[#D1D5DB]">1</button>
-        <button className="py-2 px-3 border-r border-[#D1D5DB] bg-[#D1D5DB]">2</button>
-        <button className="py-2 px-3 border-r border-[#D1D5DB]">3</button>
-        <button className="flex items-center py-2 px-3 gap-2">
-          Next
-          <ArrowRight />
-        </button>
-      </div>
+      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );
 };

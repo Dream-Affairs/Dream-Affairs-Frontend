@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Teammgt from './teammgt';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -13,18 +13,36 @@ import {
   SelectContent,
   SelectValue,
 } from '@/components/ui/select';
+import { toast } from '@/components/ui/use-toast';
+import { ImSpinner8 } from 'react-icons/im';
 
 import { Button } from '@/components/ui/button';
-
+import { fetchRoles } from './api/api';
 const InviteTeam: React.FC = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const [role, setRole] = useState('');
+  const [roles, setRoles] = useState<Role[]>([]);
+  const [selectedRole, setSelectedRole] = useState<string>('Choose Role');
   const [fullNameError, setFullNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [roleError, setRoleError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  //   full name input field
+  useEffect(() => {
+    const organizationId = '4a7f6a9f98684f89a10af27167000e2a';
+
+    const getRoles = async () => {
+      try {
+        const fetchedRoles: Role[] = await fetchRoles(organizationId);
+        setRoles(fetchedRoles);
+      } catch (error: any) {
+        console.error('Error fetching roles:', error.message);
+      }
+    };
+
+    getRoles();
+  }, []);
+
   const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFullName(e.target.value);
     if (!e.target.value) {
@@ -36,7 +54,6 @@ const InviteTeam: React.FC = () => {
     }
   };
 
-  //   email imput field
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
     if (!e.target.value) {
@@ -54,20 +71,20 @@ const InviteTeam: React.FC = () => {
     return emailRegex.test(email);
   };
 
-  //   change role dropdown
   const handleRoleChange = (selectedRole: string) => {
-    // Log the selected role.
-    console.log('Selected Role:', selectedRole);
-
-    // Set the role state variable to the selected role.
-    setRole(selectedRole);
-
-    // Clear the role error message when a role is selected.
-    setRoleError('');
+    const roleObject = roles.find((role) => role.name === selectedRole);
+    if (roleObject) {
+      console.log(roleObject.id);
+      setSelectedRole(roleObject.id);
+      setRoleError('');
+    } else {
+      console.error('Role not found for the selected role name:', selectedRole);
+      console.log('List of roles:', roles);
+    }
   };
 
-  //   sendinvite button
-  const handleInviteClick = () => {
+  // sendinvite button
+  const handleInviteClick = async () => {
     let isValid = true;
 
     if (!fullName) {
@@ -80,23 +97,93 @@ const InviteTeam: React.FC = () => {
       isValid = false;
     }
 
-    if (!role) {
+    if (!selectedRole) {
       setRoleError('Please choose a role');
       isValid = false;
     }
 
     if (isValid) {
-      console.log('Full Name:', fullName);
-      console.log('Email:', email);
-      console.log('Role:', role);
+      setIsSubmitting(true);
+
+      try {
+        const roleObject = roles.find((role) => role.id === selectedRole);
+
+        if (roleObject) {
+          const postData = {
+            name: fullName,
+            email: email,
+            organization_id: '4a7f6a9f98684f89a10af27167000e2a',
+            role_id: roleObject.id,
+          };
+
+          try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invites`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                accept: 'application/json',
+              },
+              body: JSON.stringify(postData),
+            });
+
+            if (response.ok) {
+              toast({
+                title: 'Invite Sent',
+                description: 'Your invitation has been sent successfully.',
+              });
+              // Log the response body because no email is sent for now
+              const responseBody = await response.json();
+              console.log('Response body:', responseBody);
+
+              setFullName('');
+              setEmail('');
+              setSelectedRole('Choose Role');
+            } else {
+              console.error('Error sending invite:', response.statusText);
+
+              toast({
+                title: 'Error',
+                description: 'An error occurred while sending the invitation. Please try again.',
+              });
+            }
+          } catch (error: any) {
+            console.error('Error sending invite:', error.message);
+
+            toast({
+              title: 'Error',
+              description: 'An error occurred while sending the invitation. Please try again.',
+            });
+          }
+        } else {
+          console.error('Role not found for the selected role id:', selectedRole);
+
+          toast({
+            title: 'Error',
+            description: 'An error occurred while sending the invitation. Please try again.',
+          });
+        }
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
+
+  // cancel btn
+  const handleCancel = () => {
+    setFullName('');
+    setEmail('');
+    setSelectedRole('Choose Role');
+    setFullNameError('');
+    setEmailError('');
+    setRoleError('');
+  };
+
   return (
     <>
-      <div className="pl-6 mt-6">
-        <h1 className=" text-[32px] font-semibold">Invite Team</h1>
+      <div className="lg:pl-16 mt-2 lg:mt-6">
+        <h1 className="text-2xl text-center lg:text-left lg:text-[32px] font-semibold">Invite Team</h1>
 
-        <p className=" lg:w-3/5 text-base leading-[22.4px] font-normal">
+        <p className=" lg:w-3/5 px-8 lg:px-0 mt-4 text-base leading-[22.4px] font-normal">
           Transform event planning by inviting family and friends to collaborate seamlessly and create lasting memories
           together.
         </p>
@@ -107,7 +194,7 @@ const InviteTeam: React.FC = () => {
 
       {/* invite team section */}
       <section
-        className="mx-6 flex flex-col gap-4 rounded-xl px-4 py-8 pb-20 border border-border"
+        className="mx-6 flex flex-col gap-4 rounded-xl px-5 py-4 lg:px-[40px] lg:py-8 lg:pb-20 border border-border"
         style={{
           backgroundColor: 'white',
           boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.1)',
@@ -115,7 +202,7 @@ const InviteTeam: React.FC = () => {
       >
         <h1 className="text-2xl font-medium">Invite Team form</h1>
 
-        <div className="flex flex-col items-center justify-center lg:flex-row gap-2">
+        <div className="flex flex-col items-center justify-center lg:flex-row gap-8">
           {/* full name input */}
           <div className="flex flex-col w-full gap-2">
             <Label htmlFor="fullname">
@@ -149,51 +236,47 @@ const InviteTeam: React.FC = () => {
           </div>
 
           {/* dropdown for roles */}
-          <div className="flex w-full flex-col relative">
-            <Label className="mb-2">
+          <div className="flex w-full gap-2 flex-col relative">
+            <Label className="">
               Role <span className="text-red-600">*</span>
             </Label>
-            <Select>
+            <Select onValueChange={handleRoleChange}>
               <SelectTrigger
-                className={`w-full h-[55px] ${roleError ? 'border-red-500' : ''} ${
+                className={`w-full h-[55px] capitalize ${roleError ? 'border-red-500' : ''} ${
                   !roleError ? 'hover:border-primary' : ''
                 }`}
               >
-                <SelectValue placeholder="Choose Role" />
+                <SelectValue placeholder={selectedRole} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Choose role</SelectLabel>
-                  <SelectItem value="admin" onSelect={() => handleRoleChange('Admin')}>
-                    Admin
-                  </SelectItem>
-
-                  <SelectItem value="eventPlanner" onSelect={() => handleRoleChange('EventPlanner')}>
-                    Event Planner
-                  </SelectItem>
-                  <SelectItem value="guestManager" onSelect={() => handleRoleChange('GuestManager')}>
-                    Guest Manager
-                  </SelectItem>
+                  {roles.map((role) => (
+                    <SelectItem key={role.id} value={role.name} className="capitalize">
+                      {role.name}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
-            {roleError && <p className="text-red-600 mt-1  text-xs">{roleError}</p>}
+            {roleError && <span className="text-red-600 mt-1 absolute -bottom-5  text-xs">{roleError}</span>}
           </div>
         </div>
 
         <div className="flex lg:justify-start mt-4 items-center justify-center sm:w-full gap-6">
-          <Button variant="outline" className=" w-32">
+          <Button variant="outline" className=" w-32" onClick={handleCancel}>
             Cancel
           </Button>
           <Button variant="secondary" className=" w-32" onClick={handleInviteClick}>
-            Send Invite
+            {isSubmitting ? <ImSpinner8 className="animate-spin mr-2" /> : null}
+            {isSubmitting ? 'Sending...' : 'Send Invite'}
           </Button>
         </div>
       </section>
 
       {/* team management section */}
       <section
-        className="mx-6 my-6 flex flex-col gap-4 rounded-xl px-4 pt-4 pb-6 border border-border"
+        className="mx-6 my-6 flex flex-col gap-4 rounded-xl px-4 lg:px-[40px] pt-4 pb-6 border border-border"
         style={{
           backgroundColor: 'white',
           boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.1)',
@@ -203,16 +286,18 @@ const InviteTeam: React.FC = () => {
 
         <Teammgt />
       </section>
-      {/* {isModalOpen && (
-        <MyModal
-          isModalOpen={isModalOpen}
-          handleCloseModal={handleCloseModal}
-          handleOpenModal={handleOpenModal}
-          modalRef={modalRef}
-        />
-      )} */}
     </>
   );
 };
 
 export default InviteTeam;
+
+interface Role {
+  id: string;
+  name: string;
+  description: string;
+  organization_id: string;
+  is_default: boolean;
+  created_at: string;
+  updated_at: string;
+}
