@@ -3,10 +3,10 @@
 import Title from '../settings/(components)/title';
 import React, { useState } from 'react';
 import ProfileManagement from './(components)/profile';
-import ChangePassword from './(components)/change-password';
 import Notification from './(components)/notification';
 import Payment from './(components)/payment';
 import Permission from './(components)/roles-permission';
+import PasswordUpdate from './(components)/security-update';
 
 type Props = {};
 
@@ -23,7 +23,7 @@ const settingsData = [
     title: 'Password Updates',
     name: 'Change Password',
     active: false,
-    render: <ChangePassword />,
+    render: <PasswordUpdate />,
   },
   {
     id: 3,
@@ -67,20 +67,20 @@ const Settings = (props: Props) => {
 
   return (
     <div className=" box-border w-full relative pb-12">
-      <div className="ps-5 xl:ps-20 border-b-[1px] py-7 ms-1 fixed z-10 top-10 xl:top-0 pb-4 bg-white w-full">
+      <div className="ps-5 xl:ps-16 border-b-[1px] py-7 ms-1 fixed z-10 top-10 xl:top-0 pb-4 bg-white w-full">
         {settings.map((setting) => (
           <div key={setting.id}>{setting.active ? <Title text={setting.title} /> : null}</div>
         ))}
-        <div className="flex gap-0 gap-x-8 gap-y-3 md:gap-20 mt-3 md:mt-6 overflow-scroll scroll-smooth scrollbar-hidex w-full">
+        <div className="flex gap-0 gap-x-8 gap-y-3 md:gap-20 mt-3 md:mt-6 overflow-scroll scroll-smooth no-scrollbar w-full">
           {settings.map((setting) => (
             <p
               key={setting.id}
               onClick={() => {
                 handleActive(setting.id);
               }}
-              className={`whitespace-nowrap capitalize text-sm md:text-base font-medium cursor-pointer border-b-[3.2px]  hover:text-purple-700 ${
+              className={`whitespace-nowrap capitalize text-sm md:text-base font-medium cursor-pointer border-b-[2.8px] md:border-b-[3.2px] hover:text-purple-700 ${
                 setting.active
-                  ? 'border-b-[3.2px] border-purple-700 text-purple-700 transition-all duration-300'
+                  ? 'border-purple-700 text-purple-700 transition-all duration-300'
                   : 'text-[#242424] border-b-transparent'
               }`}
             >

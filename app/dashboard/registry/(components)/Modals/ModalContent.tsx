@@ -37,7 +37,7 @@ const ModalContent: React.FC<ModalContentProps> = ({ modal, setModal }) => {
   return (
     <Modal modal={modal} setModal={setModal} hidden={hidden}>
       <section
-        className={`fixed left-[50%] top-[50%] z-50 grid w-[88.9%] lg:w-[886px] h-auto max-h-[850px] rounded-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background shadow-lg duration-200 overflow-auto transition-all ${hidden} `}
+        className={`fixed left-[50%] top-[70%] md:top-[50%] z-50 grid w-[88.9%] lg:w-[886px] h-auto max-h-[850px] rounded-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background shadow-lg duration-200 overflow-auto transition-all ${hidden} `}
       >
         <button
           onClick={() => setModal(false)}

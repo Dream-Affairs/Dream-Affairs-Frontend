@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { Calendar as CalenderIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { Button } from '@/components/ui/button';
-import { AssignIcon, SearchIcon } from './Icons';
+import { ArrowIcon, AssignIcon, SearchIcon } from './Icons';
 import { v4 as uuidv4 } from 'uuid';
 
 type task = {
@@ -85,85 +85,91 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
               }
             }}
           />
-
-          <div className="flex gap-5 w-full">
-            {/* Add Date */}
-            <Popover>
-              <PopoverTrigger
-                className={cn(
-                  `text-xs sm:text-sm  file:text-sm file:font-medium placeholder:text-gray-400 sm:w-[115px]  disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out border-0 hover:!bg-none
+          <aside className="flex items-center justify-between w-full">
+            <div className="flex gap-5 w-full">
+              {/* Add Date */}
+              <Popover>
+                <PopoverTrigger
+                  className={cn(
+                    `text-xs sm:text-sm  file:text-sm file:font-medium placeholder:text-gray-400 sm:w-[115px]  disabled:cursor-not-allowed disabled:opacity-50 outline-none ring-0 transition-colors duration-200 ease-in-out border-0 hover:!bg-none
            ${error && ' text-red-500 placeholder:text-red-500'}
       
           ${date && ' text-black'}`,
-                )}
-                asChild
-              >
-                <p
-                  className={cn(
-                    'text-xs sm:text-sm flex items-center justify-start  text-left font-normal cursor-pointer',
-                    !date && 'text-neutral-400 whitespace-nowrap',
                   )}
+                  asChild
                 >
-                  <CalenderIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, 'MMM dd') : <span className="text-zinc-500">Set due date</span>}
+                  <p
+                    className={cn(
+                      'text-xs sm:text-sm flex items-center justify-start  text-left font-normal cursor-pointer',
+                      !date && 'text-neutral-400 whitespace-nowrap',
+                    )}
+                  >
+                    <CalenderIcon className="mr-2 h-4 w-4" />
+                    {date ? format(date, 'MMM dd') : <span className="text-zinc-500">Set due date</span>}
+                  </p>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto -translate-x-1/8  sm:translate-x-1/4 p-0">
+                  <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+                </PopoverContent>
+              </Popover>
+
+              {/* Assign To */}
+              <aside onClick={() => setIsAssigning(true)} className="relative flex gap-2">
+                <AssignIcon stroke={assignedMember !== 'Assign Task' ? '#030712' : '#898C8F'} />
+                <p
+                  className={`text-xs sm:text-sm whitespace-nowrap cursor-pointer ${
+                    assignedMember === 'Assign Task' ? 'text-neutral-400' : ''
+                  }`}
+                >
+                  {assignedMember}
                 </p>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto -translate-x-1/8  sm:translate-x-1/4 p-0">
-                <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
-              </PopoverContent>
-            </Popover>
 
-            {/* Assign To */}
-            <aside onClick={() => setIsAssigning(true)} className="relative flex gap-2">
-              <AssignIcon stroke={assignedMember !== 'Assign Task' ? '#030712' : '#898C8F'} />
-              <p
-                className={`text-xs sm:text-sm whitespace-nowrap cursor-pointer ${
-                  assignedMember === 'Assign Task' ? 'text-neutral-400' : ''
-                }`}
-              >
-                {assignedMember}
-              </p>
-
-              {isAssigning && (
-                <div
-                  onBlur={() => {
-                    setTimeout(() => {
-                      setIsAssigning(false);
-                    }, 300);
-                  }}
-                  className="absolute top-5 w-44 bg-white rounded-lg shadow border border-zinc-100 flex-col justify-start items-center gap-2 flex z-50"
-                >
-                  <aside className="flex justify-between items-center p-3 border-b border-gray-200">
-                    <input
-                      type="text"
-                      placeholder="Assign to..."
-                      autoFocus
-                      value={searchMember}
-                      onChange={(e) => {
-                        setSearchMember(e.target.value);
-                      }}
-                      className="text-neutral-400 leading-tight w-full outline-none"
-                    />
-                    <SearchIcon />
-                  </aside>
-                  {members.map((item, i) => (
-                    <p
-                      onClick={() => setAssignedMember(item)}
-                      key={i + 1}
-                      className="text-neutral-800 hover:bg-blue-50 text-sm font-normal leading-tight cursor-pointer p-3 w-full"
-                    >
-                      {item}
-                    </p>
-                  ))}
-                </div>
-              )}
-            </aside>
-          </div>
+                {isAssigning && (
+                  <div
+                    onBlur={() => {
+                      setTimeout(() => {
+                        setIsAssigning(false);
+                      }, 300);
+                    }}
+                    className="absolute top-5 w-44 bg-white rounded-lg shadow border border-zinc-100 flex-col justify-start items-center gap-2 flex z-50"
+                  >
+                    <aside className="flex justify-between items-center p-3 border-b border-gray-200">
+                      <input
+                        type="text"
+                        placeholder="Assign to..."
+                        autoFocus
+                        value={searchMember}
+                        onChange={(e) => {
+                          setSearchMember(e.target.value);
+                        }}
+                        className="text-neutral-400 leading-tight w-full outline-none"
+                      />
+                      <SearchIcon />
+                    </aside>
+                    {members.map((item, i) => (
+                      <p
+                        onClick={() => setAssignedMember(item)}
+                        key={i + 1}
+                        className="text-neutral-800 hover:bg-blue-50 text-sm font-normal leading-tight cursor-pointer p-3 w-full"
+                      >
+                        {item}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </aside>
+            </div>
+            {taskText.length > 0 && (
+              <aside onClick={handleDone} className="sm:hidden">
+                <ArrowIcon />
+              </aside>
+            )}
+          </aside>
         </div>
       </aside>
 
       {/* Action */}
-      <div className="w-full pr-3 justify-end items-start gap-2 hidden sm:flex border-t pt-2 mt-5 border-neutral-200">
+      <aside className="w-full pr-3 justify-end items-start gap-2 hidden sm:flex border-t pt-2 mt-5 border-neutral-200">
         <Button onClick={() => cancel()} className="px-6 py-3 h-fit" variant="outline">
           Cancel
         </Button>
@@ -177,7 +183,7 @@ const AddTask = ({ cancel, addTask }: MyAddTasksProps) => {
             Done
           </Button>
         )}
-      </div>
+      </aside>
     </div>
   );
 };

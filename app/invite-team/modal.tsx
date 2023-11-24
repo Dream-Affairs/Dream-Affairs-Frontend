@@ -6,12 +6,17 @@ import closeIcon from './icons/close-icon.png';
 interface MyModalProps {
   isModalOpen: boolean;
   //   setIsModalOpen: (isOpen: boolean) => void;
-  handleOpenModal: () => void;
+  handleOpenModal: (handleAction: () => void, ...args: any[]) => void;
   handleCloseModal: () => void;
   title: string;
   message: string;
   actionName: string;
-  //   modalRef: React.RefObject<HTMLDivElement>;
+  actionButtonStyle: any;
+  modalAction: {
+    action: () => void;
+    actionName: string;
+    memberId?: string; // Add this line to receive the memberId
+  } | null;
 }
 
 const MyModal: React.FC<MyModalProps> = ({
@@ -21,6 +26,8 @@ const MyModal: React.FC<MyModalProps> = ({
   title,
   message,
   actionName,
+  actionButtonStyle,
+  modalAction,
 }) => {
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -52,32 +59,49 @@ const MyModal: React.FC<MyModalProps> = ({
     };
   }, [isModalOpen, handleCloseModal]);
 
+  const handleActionClick = () => {
+    if (modalAction && modalAction.action) {
+      modalAction.action();
+    }
+    handleCloseModal();
+  };
+
   return (
     <div className="flex items-center justify-center h-screen">
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-black opacity-40"></div>
-          <div className="bg-white w-[550px] p-6 rounded-lg shadow-lg relative" ref={modalRef}>
+          <div
+            className="bg-white w-[347px] height-[298px] lg:w-[600px] lg:h-[316px] lg:px-6 py-8 rounded-lg shadow-lg relative"
+            ref={modalRef}
+          >
             <div className="flex justify-end">
-              <button className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={handleCloseModal}>
+              <button
+                className="text-gray-500 mr-4 lg:mr-0 hover:text-gray-700 cursor-pointer"
+                onClick={handleCloseModal}
+              >
                 <Image src={closeIcon} alt="close" height={24} width={24} />
               </button>
             </div>
-            <h2 className=" text-2xl text-center font-medium mt-2 mb-4">{title}</h2>
-            <p className="mb-4 text-center">{message}</p>
-            <div className="flex justify-center">
-              <button
-                className="bg-[#f5e7ff] text-primary font-medium px-4 py-2 rounded-md mr-2"
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
-              <button
-                className="bg-transparent border border-[#B93F54] hover:bg-[#B93F54] hover:text-white  text-[#B93F54] px-4 py-2 rounded-md"
-                // onClick={handleSuspend}
-              >
-                {actionName}
-              </button>
+            <div className="lg:hidden my-2 border w-full border-border"></div>
+
+            <div className="flex flex-col px-4 gap-5 lg:gap-6">
+              <h2 className=" text-base lg:text-2xl text-center font-medium">{title}</h2>
+              <p className=" text-center lg:text-base text-sm">{message}</p>
+              <div className="flex gap-12 justify-center">
+                <button
+                  className={` hover:opacity-80 text-[#161616] border border-[#161616] font-medium h-[56px] w-[154px] rounded-md`}
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </button>
+                <button
+                  className={`bg-[${actionButtonStyle.backgroundColor}] hover:opacity-80 text-[${actionButtonStyle.textColor}] h-[56px] w-[163px] rounded-md`}
+                  onClick={handleActionClick}
+                >
+                  {actionName}
+                </button>
+              </div>
             </div>
           </div>
         </div>
