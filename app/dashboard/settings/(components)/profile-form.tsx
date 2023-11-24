@@ -154,7 +154,11 @@ const ProfileDetail = () => {
                   />
                   <div className="flex flex-col w-[90%]">
                     <Label className="mb-3 text-base font-[500]">Select Currency</Label>
-                    <Select>
+                    <Select
+                      onValueChange={(value) => {
+                        setForm({ ...form, currency: value });
+                      }}
+                    >
                       <SelectTrigger className="w-full h-[55px]">
                         <SelectValue placeholder={form.currency} />
                       </SelectTrigger>

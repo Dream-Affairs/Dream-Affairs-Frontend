@@ -71,16 +71,16 @@ const Settings = (props: Props) => {
         {settings.map((setting) => (
           <div key={setting.id}>{setting.active ? <Title text={setting.title} /> : null}</div>
         ))}
-        <div className="flex gap-0 gap-x-8 gap-y-3 md:gap-20 mt-3 md:mt-6 overflow-scroll scroll-smooth scrollbar-hide w-full">
+        <div className="flex gap-0 gap-x-8 gap-y-3 md:gap-20 mt-3 md:mt-6 overflow-scroll scroll-smooth no-scrollbar w-full">
           {settings.map((setting) => (
             <p
               key={setting.id}
               onClick={() => {
                 handleActive(setting.id);
               }}
-              className={`whitespace-nowrap capitalize text-sm md:text-base font-medium cursor-pointer border-b-[3.2px]  hover:text-purple-700 ${
+              className={`whitespace-nowrap capitalize text-sm md:text-base font-medium cursor-pointer border-b-[2.8px] md:border-b-[3.2px] hover:text-purple-700 ${
                 setting.active
-                  ? 'border-b-[3.2px] border-purple-700 text-purple-700 transition-all duration-300'
+                  ? 'border-purple-700 text-purple-700 transition-all duration-300'
                   : 'text-[#242424] border-b-transparent'
               }`}
             >
