@@ -1,16 +1,19 @@
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { uploadImage } from '../apis/Api';
 
 export interface ImageUploadResult {
-  image: string | null;
+  ImageUrl: string | null;
   error: string | null;
   fileInputRef: React.RefObject<HTMLInputElement>;
   handleImageClick: () => void;
   handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  uploadProgress: number;
 }
 
 export const useImageUpload = (): ImageUploadResult => {
-  const [image, setImage] = useState<string | null>(null);
+  const [ImageUrl, setImageUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageClick = () => {
@@ -19,7 +22,7 @@ export const useImageUpload = (): ImageUploadResult => {
     }
   };
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
     if (file) {
@@ -31,16 +34,25 @@ export const useImageUpload = (): ImageUploadResult => {
         // Clear previous errors
         setError(null);
 
-        const reader = new FileReader();
-        reader.onload = () => {
-          setImage(reader.result as string);
-        };
-        reader.readAsDataURL(file);
+        try {
+          const formData = new FormData();
+          formData.append('file', file);
+
+          console.log('Uploading file:', file); // Log the file being uploaded
+
+          const ImageUrl = await uploadImage(formData, (progress) => setUploadProgress(progress));
+
+          setImageUrl(ImageUrl);
+          console.log('Agboola Agbeniga Hardcoded this:', ImageUrl);
+        } catch (uploadError) {
+          console.error('Error uploading image:', uploadError);
+          setError('Error uploading image. Please try again.');
+        }
       }
     }
   };
 
-  return { image, error, fileInputRef, handleImageClick, handleFileChange };
+  return { ImageUrl, error, fileInputRef, handleImageClick, handleFileChange, uploadProgress };
 };
 
 export const useLimitedTextInput = (initialValue: string, maxLength: number) => {
@@ -56,4 +68,47 @@ export const useLimitedTextInput = (initialValue: string, maxLength: number) => 
   };
 
   return { text, handleChange };
+};
+
+export interface UseFormProps<T> {
+  initialValues: T;
+  onSubmit: (values: T) => Promise<any>;
+}
+
+export const useForm = <T extends Record<string, any>>({ initialValues, onSubmit }: UseFormProps<T>) => {
+  const [formValues, setFormValues] = useState<T>(initialValues);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [id]: value,
+    }));
+  };
+
+  const [formError, setformError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    console.log('Form Submission Data:', formValues);
+
+    try {
+      await onSubmit(formValues);
+      // Handle success, redirect, or display success message
+      console.log('Form submitted successfully');
+      window.location.reload();
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // Handle error, display an error message, etc.
+      setformError('Failed to submit the form. Please try again.');
+    }
+  };
+
+  return {
+    formValues,
+    formError,
+    handleInputChange,
+    handleSubmit,
+  };
 };

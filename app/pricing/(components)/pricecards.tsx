@@ -52,7 +52,11 @@ const Pricecards = () => {
             </p>
           </div>
         </div>
-        <Button size="lg" variant="outline" className="w-[100%] lg:mt-[55px] lg:mb-[26px] mt-[40px] mb-[28px] h-[56px] text-[16px]">
+        <Button
+          size="lg"
+          variant="outline"
+          className="w-[100%] lg:mt-[55px] lg:mb-[26px] mt-[40px] mb-[28px] h-[56px] text-[16px]"
+        >
           Choose Plan
         </Button>
       </div>
@@ -157,7 +161,11 @@ const Pricecards = () => {
             </p>
           </div>
         </div>
-        <Button size="lg" variant="outline" className="w-[100%] lg:mt-[32px] lg:mb-[25px] mt-[40px] mb-[28px] h-[56px] text-[16px]">
+        <Button
+          size="lg"
+          variant="outline"
+          className="w-[100%] lg:mt-[32px] lg:mb-[25px] mt-[40px] mb-[28px] h-[56px] text-[16px]"
+        >
           Choose Plan
         </Button>
       </div>
