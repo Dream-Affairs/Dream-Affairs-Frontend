@@ -26,7 +26,7 @@ const ChangePassword = () => {
     <div className="border rounded-2xl p-6">
       <Subtitle text="Change Password" />
       <form>
-        <div className="mt-8 flex gap-14">
+        <div className="mt-8 flex flex-col md:flex-row gap-8 md:gap-14">
           <DynamicInput
             onChange={handleInputChange}
             value={form.currentpswd}
@@ -73,7 +73,7 @@ const ChangePassword = () => {
         <Button variant="secondary" className="px-10 mt-12">
           Update
         </Button>
-        <p className="mt-4 text-sm w-[85%]">
+        <p className="mt-4 text-xs md:text-sm w-[90%]">
           Security Note: Protect your account by creating a strong password. Use a combination of uppercase and
           lowercase letters, numbers, and special characters.
         </p>
