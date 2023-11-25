@@ -20,7 +20,6 @@ function MenuPopup({ columns, columnSetter }: Props) {
 
   useEffect(() => {
     const handleClickOutside = (e: any) => {
-      console.log(!columnRef.current?.contains(e.target));
       if (!columnRef.current?.contains(e.target)) {
         setShowPopup(false);
       }

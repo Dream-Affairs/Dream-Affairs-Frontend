@@ -1,3 +1,20 @@
+export const default_tags: string[] = [
+  'Bridal Shower',
+  'Bestman ',
+  'Parents',
+  'Bride’s friend',
+  "Groom's Colleagues",
+  'Long Distance',
+  'Church',
+  'Band',
+  'Ex',
+  "Bride's-Maid",
+  'Family Friend',
+  'Flight',
+  'Co-Worker',
+  'VIP',
+];
+
 export default [
   {
     id: 'guest1',
@@ -10,6 +27,7 @@ export default [
     mealPreferecences: 'Egusi soup',
     gift: ['Purchased', 'Donated'],
     seatAllocation: 10,
+    address: '165 Princess Street, Abuja',
   },
   {
     id: 'guest2',
@@ -22,6 +40,7 @@ export default [
     mealPreferecences: 'Jollof trash',
     gift: ['Donated', 'Purchased'],
     seatAllocation: 5,
+    address: '583 Duke Street, London, USA',
   },
   {
     id: 'guest3',
@@ -34,6 +53,7 @@ export default [
     mealPreferecences: 'Afang soup',
     gift: ['Donated'],
     seatAllocation: 8,
+    address: '3 Prince Street, Ikeja, Nigeria',
   },
   {
     id: 'guest4',
@@ -46,6 +66,7 @@ export default [
     mealPreferecences: 'Anywhere belle face',
     gift: ['Purchased'],
     seatAllocation: 7,
+    address: '724 Gwagwalada Avenue, Abuja',
   },
   {
     id: 'guest5',
@@ -58,6 +79,7 @@ export default [
     mealPreferecences: 'Barbeque & Chips',
     gift: ['Donated'],
     seatAllocation: 2,
+    address: '1000 Oak Street, London, Nigeria',
   },
   {
     id: 'guest6',
@@ -70,6 +92,7 @@ export default [
     mealPreferecences: 'Null',
     gift: ['Donated'],
     seatAllocation: 3,
+    address: '913 Queen Street, Abuja, USA',
   },
   {
     id: 'guest7',
@@ -82,6 +105,7 @@ export default [
     mealPreferecences: 'Any where Belle face',
     gift: ['Purchased'],
     seatAllocation: 6,
+    address: '544 Prince Street, Abuja',
   },
   {
     id: 'guest8',
@@ -94,6 +118,7 @@ export default [
     mealPreferecences: 'Pasta',
     gift: ['Purchased'],
     seatAllocation: 11,
+    address: '73 Queen Street, New York, USA',
   },
   {
     id: 'guest9',
@@ -106,6 +131,7 @@ export default [
     mealPreferecences: 'Rice, beans, moi moi',
     gift: ['Donated'],
     seatAllocation: 16,
+    address: '761 Princess Street, London',
   },
   {
     id: 'guest10',
@@ -118,6 +144,7 @@ export default [
     mealPreferecences: '(Not answered)',
     gift: ['Purchased'],
     seatAllocation: 19,
+    address: 'No 16 Maitamma Street, Abuja',
   },
   {
     id: 'guest11',
@@ -130,6 +157,7 @@ export default [
     mealPreferecences: 'Egusi soup',
     gift: ['Purchased'],
     seatAllocation: 17,
+    address: '3 Prince Street, London, Nigeria',
   },
   {
     id: 'guest12',
@@ -142,6 +170,7 @@ export default [
     mealPreferecences: 'Jollof trash',
     gift: ['Purchased'],
     seatAllocation: 18,
+    address: '724 King Street, Abuja, USA',
   },
   {
     id: 'guest13',
@@ -154,6 +183,7 @@ export default [
     mealPreferecences: 'Afang soup',
     gift: ['Purchased'],
     seatAllocation: 12,
+    address: '1000 Oak Street, London, Nigeria',
   },
   {
     id: 'guest14',
@@ -166,6 +196,7 @@ export default [
     mealPreferecences: 'Anywhere belle face',
     gift: ['Purchased'],
     seatAllocation: 16,
+    address: '913 Queen Street, Abuja, USA',
   },
   {
     id: 'guest15',
@@ -178,6 +209,7 @@ export default [
     mealPreferecences: 'Barbeque & Chips',
     gift: ['Purchased'],
     seatAllocation: 14,
+    address: '544 Prince Street, Abuja',
   },
   {
     id: 'guest16',
@@ -190,6 +222,7 @@ export default [
     mealPreferecences: 'Null',
     gift: ['Purchased'],
     seatAllocation: 'Null',
+    address: '73 Queen Street, New York, USA',
   },
   {
     id: 'guest17',
@@ -202,6 +235,7 @@ export default [
     mealPreferecences: 'Any where Belle face',
     gift: ['Donated'],
     seatAllocation: 13,
+    address: '761 Princess Street, London',
   },
   {
     id: 'guest18',
@@ -213,6 +247,7 @@ export default [
     plusOne: 'yes',
     mealPreferecences: 'Pasta',
     gift: ['Purchased'],
+    address: 'No 16 Maitamma Street, Abuja',
   },
   {
     id: 'guest19',
@@ -225,6 +260,7 @@ export default [
     mealPreferecences: 'Rice, beans, moi moi',
     gift: ['Purchased'],
     seatAllocation: 3,
+    address: 'Adamolekun Estate, Ado-Ekiti, Nigeria',
   },
   {
     id: 'guest20',
@@ -237,5 +273,6 @@ export default [
     mealPreferecences: 'Cassava, Garri, Ewa',
     gift: ['Purchased'],
     seatAllocation: 17,
+    address: 'Suite 33, Irewolede Estate, Ilorin',
   },
 ];
