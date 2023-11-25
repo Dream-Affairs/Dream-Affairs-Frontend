@@ -70,12 +70,12 @@ const Login = () => {
     } catch (error: any) {
       toast({
         title: 'Login Failed',
-        description: error.response.data.message,
+        description: error?.response?.data?.message,
       });
       setFormError((prev) => ({
         ...prev,
-        email: { status: true, message: error.response.data.message },
-        password: { status: true, message: error.response.data.message },
+        email: { status: true, message: error?.response?.data?.message },
+        password: { status: true, message: error?.response?.data?.message },
       }));
     } finally {
       setIsSubmitting(false);

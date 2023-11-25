@@ -35,16 +35,25 @@ const ForgotPassword = () => {
 
     try {
       setIsSubmitting(true);
-      const data = await axios.post(`${url}/auth/forgot-password`, { email });
-      console.log(data);
-      // toast({
-      //   title: 'Login Successful',
-      //   description: 'You have successfully logged in',
-      // });
-      // setIsValid(true);
-    } catch (error: any) {
+      const { data } = await axios.post(`${url}/auth/forgot-password`, { email });
       toast({
-        title: 'Verification link sent',
+        title: 'Success',
+        description: data.message,
+      });
+    } catch (error: any) {
+      console.log(error);
+
+      if (error.response?.data?.detail) {
+        const detailMsg = error.response.data.detail[0].msg.toLowerCase();
+        if (detailMsg.includes('email')) {
+          toast({ title: 'An error occured', description: 'Please enter a valid email' });
+          setError({ state: true, message: 'Please enter a valid email' });
+          return;
+        }
+        return;
+      }
+      toast({
+        title: 'An error occured',
         description: error.response.data.message,
       });
     } finally {

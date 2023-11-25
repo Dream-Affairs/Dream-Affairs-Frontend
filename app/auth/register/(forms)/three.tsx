@@ -1,5 +1,6 @@
+'use client';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../../(assets)/logo.svg';
 import da from '../../(assets)/da.svg';
 import linkSent from '../../(assets)/linkSent.svg';
@@ -15,6 +16,32 @@ interface Props {
 }
 
 const LinkSent = ({ formOne }: Props) => {
+  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(5);
+  const [isActive, setIsActive] = useState(true);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
+    if (isActive) {
+      interval = setInterval(() => {
+        if (seconds === 0) {
+          if (minutes === 0) {
+            clearInterval(interval);
+            setIsActive(false);
+          } else {
+            setMinutes((prevMinutes) => prevMinutes - 1);
+            setSeconds(59);
+          }
+        } else {
+          setSeconds((prevSeconds) => prevSeconds - 1);
+        }
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [seconds, minutes, isActive]);
+
   return (
     <div className="flex flex-col w-full h-[100svh] md:justify-start md:items-center gap-3">
       <div className="flex gap-5 md:p-0 pl-5 md:flex-auto flex-[2] w-[60%] sm:w-auto">
@@ -31,7 +58,12 @@ const LinkSent = ({ formOne }: Props) => {
             Resend Verification Link
           </Button>
           <div className="flex flex-col md:flex-row justify-between w-full md:items-center md:w-[450px]">
-            <p className="text-xs">Link expires in </p>
+            <p className="text-xs">
+              Link expires in{' '}
+              <span className="text-primary">{`${minutes.toString().padStart(2, '0')}:${seconds
+                .toString()
+                .padStart(2, '0')}`}</span>
+            </p>
             <p className="text-xs">
               Incorrect email address? <span className="text-primary cursor-pointer">Change email address</span>
             </p>

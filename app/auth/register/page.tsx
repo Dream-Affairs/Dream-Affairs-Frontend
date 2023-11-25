@@ -27,7 +27,7 @@ const Register = () => {
     confirmPassword: '',
   });
 
-  const [date, setDate] = React.useState<Date>();
+  const [date, setDate] = React.useState<Date | undefined>(new Date());
 
   const [formTwo, setFormTwo] = React.useState({
     yourFirstName: '',
@@ -37,11 +37,6 @@ const Register = () => {
   });
 
   const [formThree, setFormThree] = React.useState(false);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // setFormThree(true);
-  };
 
   return (
     <>
@@ -57,7 +52,7 @@ const Register = () => {
           sectionTitle={formOne.valid ? 'Lets get planning' : 'Sign up'}
           showBgText={true}
         >
-          <form onSubmit={handleSubmit}>
+          <div>
             {formOne.valid === false ? (
               <One
                 formOne={formOne}
@@ -80,7 +75,7 @@ const Register = () => {
                 setFormThree={setFormThree}
               />
             )}
-          </form>
+          </div>
         </Wrapper>
       )}
     </>
