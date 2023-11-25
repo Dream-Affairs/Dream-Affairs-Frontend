@@ -5,16 +5,16 @@ import { Button } from '@/components/ui/button';
 
 const PasswordUpdate = () => {
   return (
-    <div className="p-16">
+    <div className="p-5 lg:p-16">
       <ChangePassword />
       <div className="border rounded-2xl p-6 mt-6">
         <div>
           <Subtitle text="Enable Two-Factor Authentication" />
-          <p className="w-[38%] mt-4">
+          <p className="sm:w-[70%] lg:w-[70%] xl:w-[38%] text-sm sm:text-base mt-4">
             Protect your account with a login code when you sign in on a device we don’t recognize.
           </p>
         </div>
-        <Button variant="outline" className="px-10 mt-10">
+        <Button variant="outline" className="px-10 mt-10 sm:w-[70%] xl:w-[35%] w-full">
           Set Up Two-Factor Authentication
         </Button>
       </div>

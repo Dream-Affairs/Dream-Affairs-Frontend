@@ -1,7 +1,7 @@
 import React from 'react';
 import Curly from './(assets)/curly.svg';
 import Phone from './(assets)/ring.svg';
-import Rosy from './(assets)/rosy.svg'
+import Rosy from './(assets)/rosy.svg';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 

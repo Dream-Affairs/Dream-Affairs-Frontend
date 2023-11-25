@@ -14,7 +14,13 @@ interface mealProps {
   showPreview: boolean;
 }
 
-const MealForm: React.FC<mealProps> = ({ setMealName, setMealDescription, mealDescription, setShowPreview, showPreview }) => {
+const MealForm: React.FC<mealProps> = ({
+  setMealName,
+  setMealDescription,
+  mealDescription,
+  setShowPreview,
+  showPreview,
+}) => {
   const [inputText, setInputText] = useState('');
   const [inputTexts, setInputTexts] = useState('');
   const maxCharacter = 18;
@@ -70,13 +76,12 @@ const MealForm: React.FC<mealProps> = ({ setMealName, setMealDescription, mealDe
 
   const handleSaveMeal = () => {};
   const handleNext = () => {
-    const validate = validateMealForm()
-    if(Object.keys(validate).length ==0){
-      console.log('All required fields are filled')
-      setShowPreview(true)
+    const validate = validateMealForm();
+    if (Object.keys(validate).length == 0) {
+      console.log('All required fields are filled');
+      setShowPreview(true);
     }
-    console.log('All required fields are not filled')
-
+    console.log('All required fields are not filled');
   };
   const validateMealForm = () => {
     let formError: Record<string, string> = {};
@@ -233,8 +238,8 @@ const MealForm: React.FC<mealProps> = ({ setMealName, setMealDescription, mealDe
       <div className="flex flex-col gap-y-[12px] lg:gap-y-[8px]">
         <p className="font-[600] text-[12px] lg:text-[16px] leading-[19.6px] text-[#1C1C1C]">Quantity</p>
         <Input
-        value={mealQuantity}
-        onChange={(e)=>setMealQuantity(e.target.value)}
+          value={mealQuantity}
+          onChange={(e) => setMealQuantity(e.target.value)}
           placeholder="No. of quantity"
           className="placeholder-[#A0A0A0] h-[49px] lg:h-[52px] border-[#E1E1E1] font-[400] text-[12px] lg:text-[14px] leading-[16.8px] lg:leading-[19.6px] text-[#1C1C1C]"
         />

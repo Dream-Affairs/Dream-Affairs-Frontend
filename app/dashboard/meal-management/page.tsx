@@ -35,7 +35,7 @@ const MealManagement = () => {
   return (
     <section className="lg:w-[calc(100%-80px)]  lg:mt-[36px] lg:min-h-[calc(100vh-36px-26px)] lg:border-l flex flex-col flex-1">
       <h1 className="hidden lg:flex font-[600] lg:text-[32px] lg:leading-[44.8px] text-[#1C1C1C]">Meal Management</h1>
-      <div className="hidden lg:flex lg:max-w-full lg:ml-[36px]">
+      <div className="hidden lg:block lg:max-w-full lg:ml-[36px]">
         <div className="flex justify-between items-center gap28 mt-10 mb-4 mx8">
           <h2 className="font-[500] lg:text-[16px] lg:leading-[22.4px] text-[#282828]">All Meals: 0</h2>
           <div className="flex gap-x-[20px] items-center text-[#282828]">

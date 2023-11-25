@@ -144,8 +144,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #cacaca;
 }
-
-::selection {
-  background: hsl(283 57% 37%);
-  color: hsl(276, 100%, 94%);
-}
