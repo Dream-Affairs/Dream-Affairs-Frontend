@@ -49,7 +49,7 @@ const Payment = () => {
   const handlePlan = () => {};
 
   return (
-    <div className="p-5 lg:p-16">
+    <div className="p-5 lg:px-16 lg:py-12">
       <section className="w-full mx-auto lg:flex items-start-row flex items-start-col items-center gap-10">
         <div className="group hover:bg-[#E0B0FF] transition-all duration-100 lg:w-[325px] w-[327px] h-auto rounded-[20px] lg:px-4 px-[19px] border-[#EBEBEB] border text-[14px] bg-white mb-[20px] lg:mb-0">
           <div className="h-[195px] border-b border-[#BCBCBC] mt-[20px]">
