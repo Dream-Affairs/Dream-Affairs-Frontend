@@ -643,3 +643,25 @@ export function DocumentText() {
     </svg>
   );
 }
+
+export function ProfileRemove() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+      <path d="M20 19H16" stroke="#822DA4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path
+        d="M12.6508 10.87C12.5508 10.86 12.4308 10.86 12.3208 10.87C9.94078 10.79 8.05078 8.84 8.05078 6.44C8.05078 3.99 10.0308 2 12.4908 2C14.9408 2 16.9308 3.99 16.9308 6.44C16.9208 8.84 15.0308 10.79 12.6508 10.87Z"
+        stroke="#822DA4"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M12.4891 21.8097C10.6691 21.8097 8.85906 21.3497 7.47906 20.4297C5.05906 18.8097 5.05906 16.1697 7.47906 14.5597C10.2291 12.7197 14.7391 12.7197 17.4891 14.5597"
+        stroke="#822DA4"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}

@@ -34,13 +34,15 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import React, { useEffect, useRef, useState } from 'react';
-import guests from '../../../data/dummy_guests';
+import guests, { default_tags } from '../../../data/dummy_guests';
 import Link from 'next/link';
 import StatusTag from '@/components/guest-management/status-tag/status-tag';
 import Pagination from '@/components/guest-management/pagination/pagination';
 import ManageTagsModal from '@/components/guest-management/manage-tags-modal/manage-tags-modal';
 import AssignTagsModal from '@/components/guest-management/assign-tags-modal/assign-tags-modal';
 import DisabledButton from '@/components/guest-management/tool-tip/tool-tip';
+import { guestSelection, selectAllGuest } from '@/lib/utils';
+import GuestTags from '@/components/guest-management/tags/tags';
 
 type Props = {};
 
@@ -105,40 +107,7 @@ const GuestManagement = (props: Props) => {
   const [selectedGuest, setSelectedGuests] = useState<string[]>([]);
   const [deletedGuests, setDeletedGuests] = useState<string[]>([]);
   const [columnsList, setColumnsList] = useState(columns);
-  const [tags, setTags] = useState<string[]>([
-    'Bridal Shower',
-    'Bestman ',
-    'Parents',
-    'Bride’s friend',
-    "Groom's Colleagues",
-    'Long Distance',
-    'Church',
-    'Band',
-    'Ex',
-    "Bride's-Maid",
-    'Family Friend',
-    'Flight',
-    'Co-Worker',
-    'VIP',
-  ]);
-
-  const selectAllGuest = () => {
-    if (selectedGuest.length === guests_list.length) {
-      setSelectedGuests([]);
-    } else {
-      setSelectedGuests(guests_list.map((item) => item.id));
-    }
-  };
-
-  const handleChange = (id: string) => {
-    setSelectedGuests((prevState) => {
-      if (prevState.includes(id)) {
-        return prevState.filter((item) => item != id);
-      } else {
-        return [...prevState, id];
-      }
-    });
-  };
+  const [tags, setTags] = useState<string[]>(default_tags);
 
   const deleteSelected = () => {
     setDeletedGuests(selectedGuest);
@@ -209,8 +178,10 @@ const GuestManagement = (props: Props) => {
               </Link>
             </Button>
             <Button size="sm" className="guest-btn">
-              <Send />
-              Send Invites
+              <Link href="/dashboard/guest-management/send-invites" className="flex gap-2">
+                <Send />
+                Send Invites
+              </Link>
             </Button>
             <Button size="sm" className="guest-btn">
               <HashTag />
@@ -249,13 +220,16 @@ const GuestManagement = (props: Props) => {
           setFunc={setActiveFilter}
         />
       </div>
-      <div className="mt-5 guest-spacing">
+      <div className="mt-5 guest-spacing pb-12">
         <div className="border border-[#E1E1E1] rounded-[10px] overflow-x-scroll">
           <table className="w-full text-sm">
             <thead className="bg-[#FFF8FA] text-left font-medium border-b border-b-[#E1E1E1]">
               <tr>
                 <td className="py-4 px-3">
-                  <Checkbox onClick={selectAllGuest} checked={selectedGuest.length === guests_list.length} />
+                  <Checkbox
+                    onClick={() => selectAllGuest(selectedGuest, guests_list, setSelectedGuests)}
+                    checked={selectedGuest.length === guests_list.length}
+                  />
                 </td>
                 {isColumnEnabled('column1') && <th className="py-4 px-2">Guest Name</th>}
                 {isColumnEnabled('column2') && <th className="py-4 px-2">Email</th>}
@@ -288,10 +262,9 @@ const GuestManagement = (props: Props) => {
                       <td className="py-4 px-3 bg-[#FFF8FA]">
                         <Checkbox
                           id={item.id}
-                          onClick={() => handleChange(item.id)}
+                          onClick={() => guestSelection(item.id, setSelectedGuests)}
                           checked={selectedGuest.includes(item.id)}
                         />
-                        {/* <input type="checkbox" className='accent-[#292D32]' /> */}
                       </td>
                       {isColumnEnabled('column1') && (
                         <td className="py-4 px-2 whitespace-nowrap">
@@ -307,13 +280,7 @@ const GuestManagement = (props: Props) => {
                       {isColumnEnabled('column4') && <td className="py-4 px-2">{item.inviteCode}</td>}
                       {isColumnEnabled('column5') && (
                         <td className="py-4 px-2">
-                          <div className="flex gap-2">
-                            {item.tags.map((item, index) => (
-                              <span key={index} className="block tags">
-                                {item}
-                              </span>
-                            ))}
-                          </div>
+                          <GuestTags tags={item.tags} />
                         </td>
                       )}
                       {isColumnEnabled('column6') && (
@@ -333,7 +300,7 @@ const GuestManagement = (props: Props) => {
           </table>
         </div>
       </div>
-      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <Pagination list={guests} currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );
 };

@@ -32,7 +32,8 @@ const Preview: React.FC<previewProps> = ({ mealDescription, mealName, files, sho
                 width={350}
                 height={400}
                 alt={`preview-${index}`}
-                objectFit="fill"
+                // layout={'responsive'}
+                // objectFit="fill"
                 className="rounded-[8px] max-w-full max-h-[242px] object-cover object-center"
               />
             ))
