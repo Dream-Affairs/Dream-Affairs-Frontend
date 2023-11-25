@@ -6,11 +6,12 @@ import { cn } from '@/lib/utils';
 interface Props {
   currentPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
+  list: any[];
 }
 
-function Pagination({ currentPage, setCurrentPage }: Props) {
+function Pagination({ currentPage, setCurrentPage, list }: Props) {
   const pageSize: number = 10;
-  const totalPages = Math.ceil(dummy_guests.length / pageSize);
+  const totalPages = Math.ceil(list.length / pageSize);
   const pages = Array.from({ length: totalPages }, (x, i) => i + 1);
 
   const handlePageChange = (pageNumber: number) => {
@@ -32,7 +33,7 @@ function Pagination({ currentPage, setCurrentPage }: Props) {
   };
 
   return (
-    <div className="flex w-fit border border-[#D1D5DB] rounded mx-auto mt-12 text-[#6B7280] text-sm font-medium">
+    <div className="flex w-fit border border-[#D1D5DB] rounded mx-auto text-[#6B7280] text-sm font-medium">
       <button onClick={prevPage} className="flex items-center border-r border-[#D1D5DB py-2 px-3 gap-2">
         <ArrowLeft />
         Previous
