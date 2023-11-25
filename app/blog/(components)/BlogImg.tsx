@@ -15,6 +15,7 @@ const BlogImg = ({ data, showBtn }: any) => {
       // style={{ backgroundImage: `url(${blogImg.src})` }}
     >
       <Image
+        priority
         src={data.banner}
         width={0}
         height={0}
