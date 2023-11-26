@@ -11,11 +11,11 @@ import {
   ExportIcon,
   Search,
   TickCircle,
-} from '@/components/svg-icons/svg-icons';
+} from '../(components)/svg-icons/svg-icons';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeftIcon } from 'lucide-react';
-import TrackerSummaryCard from '@/components/guest-management/tracker-summary-card/tracker-summary-card';
+import TrackerSummaryCard from '../(components)/guest-management/tracker-summary-card/tracker-summary-card';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -26,8 +26,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import StatusTag from '@/components/guest-management/status-tag/status-tag';
-import Pagination from '@/components/guest-management/pagination/pagination';
+import StatusTag from '../(components)/guest-management/status-tag/status-tag';
+import Pagination from '../(components)/guest-management/pagination/pagination';
 
 const guests: any[] = [
   {

@@ -68,7 +68,7 @@ const Two = ({
 
     try {
       setIsSubmitting(true);
-      await axios.post(`${url}/auth/signup`, {
+      const { data } = await axios.post(`${url}/auth/signup`, {
         email: formOne.email,
         password: formOne.password,
         confirm_password: formOne.confirmPassword,
@@ -77,6 +77,8 @@ const Two = ({
         event_date: formTwo.pickedADate ? null : date,
         location: formTwo.location,
       });
+
+      console.log(data);
 
       toast({
         title: 'Account Created',
