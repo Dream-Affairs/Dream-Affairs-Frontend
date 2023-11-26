@@ -1,11 +1,10 @@
 'use client';
-
-import AddGuest from '@/components/guest-management/add-guest-modal/add-guest';
-import { AddGuestModal } from '@/components/guest-management/add-guest-modal/add-guest-modal';
-import FilterBtn from '@/components/guest-management/filter-btn';
-import GuestProfiles from '@/components/guest-management/guest-profile-modal/guest-profile-modal';
-import ImportGuestModal from '@/components/guest-management/import-guest-modal/import-guest-modal';
-import MenuPopup from '@/components/guest-management/menu-popup/menu-popup';
+import AddGuest from './(components)/guest-management/add-guest-modal/add-guest';
+import { AddGuestModal } from './(components)/guest-management/add-guest-modal/add-guest-modal';
+import FilterBtn from './(components)/guest-management/filter-btn';
+import GuestProfiles from './(components)/guest-management/guest-profile-modal/guest-profile-modal';
+import ImportGuestModal from './(components)/guest-management/import-guest-modal/import-guest-modal';
+import MenuPopup from './(components)/guest-management/menu-popup/menu-popup';
 import {
   ArrowLeft,
   ArrowRight,
@@ -20,9 +19,18 @@ import {
   Store,
   Tags,
   Track,
-} from '@/components/svg-icons/svg-icons';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+} from './(components)/svg-icons/svg-icons';
+
+import React, { useEffect, useRef, useState } from 'react';
+import guests, { default_tags } from './data/dummy_guests';
+import Link from 'next/link';
+import StatusTag from './(components)/guest-management/status-tag/status-tag';
+import Pagination from './(components)/guest-management/pagination/pagination';
+import ManageTagsModal from './(components)/guest-management/manage-tags-modal/manage-tags-modal';
+import AssignTagsModal from './(components)/guest-management/assign-tags-modal/assign-tags-modal';
+import DisabledButton from './(components)/guest-management/tool-tip/tool-tip';
+import { guestSelection, selectAllGuest } from '@/lib/utils';
+import GuestTags from './(components)/guest-management/tags/tags';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -33,16 +41,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import React, { useEffect, useRef, useState } from 'react';
-import guests, { default_tags } from '../../../data/dummy_guests';
-import Link from 'next/link';
-import StatusTag from '@/components/guest-management/status-tag/status-tag';
-import Pagination from '@/components/guest-management/pagination/pagination';
-import ManageTagsModal from '@/components/guest-management/manage-tags-modal/manage-tags-modal';
-import AssignTagsModal from '@/components/guest-management/assign-tags-modal/assign-tags-modal';
-import DisabledButton from '@/components/guest-management/tool-tip/tool-tip';
-import { guestSelection, selectAllGuest } from '@/lib/utils';
-import GuestTags from '@/components/guest-management/tags/tags';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 
 type Props = {};
 

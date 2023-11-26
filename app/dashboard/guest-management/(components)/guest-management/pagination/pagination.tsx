@@ -1,6 +1,6 @@
-import { ArrowLeft, ArrowRight } from '@/components/svg-icons/svg-icons';
+import { ArrowLeft, ArrowRight } from '../../svg-icons/svg-icons';
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import dummy_guests from '@/data/dummy_guests';
+import dummy_guests from '@/app/dashboard/guest-management/data/dummy_guests';
 import { cn } from '@/lib/utils';
 
 interface Props {

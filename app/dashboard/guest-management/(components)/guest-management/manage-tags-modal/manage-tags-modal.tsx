@@ -1,6 +1,6 @@
 import React, { Dispatch, FormEvent, SetStateAction, useRef, useState } from 'react';
 import { AddGuestModal } from '../add-guest-modal/add-guest-modal';
-import { Store } from '@/components/svg-icons/svg-icons';
+import { Store } from '../../svg-icons/svg-icons';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';

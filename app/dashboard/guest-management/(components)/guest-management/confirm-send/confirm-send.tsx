@@ -1,9 +1,9 @@
-import { DocumentText, ProfileRemove, Search } from '@/components/svg-icons/svg-icons';
+import { DocumentText, ProfileRemove, Search } from '../../svg-icons/svg-icons';
 import { Button } from '@/components/ui/button';
 import React, { useState } from 'react';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import SendInviteModal from '../send-invite-modal/send-invite-modal';
-import guests from '@/data/dummy_guests';
+import guests from '@/app/dashboard/guest-management/data/dummy_guests';
 import GuestTags from '../tags/tags';
 import { Checkbox } from '@/components/ui/checkbox';
 import Pagination from '../pagination/pagination';

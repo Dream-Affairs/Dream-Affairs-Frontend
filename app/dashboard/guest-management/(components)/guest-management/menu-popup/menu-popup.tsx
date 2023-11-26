@@ -1,4 +1,4 @@
-import { AngleRight, Close, Ellipsis, Eyes, EyesClosed, Grab, Search } from '@/components/svg-icons/svg-icons';
+import { AngleRight, Close, Ellipsis, Eyes, EyesClosed, Grab, Search } from '../../svg-icons/svg-icons';
 import React, { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react';
 
 interface Columns {

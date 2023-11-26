@@ -5,6 +5,7 @@ import logo from '../../(assets)/logo.svg';
 import da from '../../(assets)/da.svg';
 import linkSent from '../../(assets)/linkSent.svg';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   formOne: {
@@ -16,8 +17,9 @@ interface Props {
 }
 
 const LinkSent = ({ formOne }: Props) => {
+  const router = useRouter();
   const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(5);
+  const [minutes, setMinutes] = useState(1);
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
@@ -37,10 +39,16 @@ const LinkSent = ({ formOne }: Props) => {
           setSeconds((prevSeconds) => prevSeconds - 1);
         }
       }, 1000);
+    } else {
+      router.replace('/auth/login');
+    }
+
+    if (minutes === 0 && seconds === 0) {
+      setIsActive(false);
     }
 
     return () => clearInterval(interval);
-  }, [seconds, minutes, isActive]);
+  }, [seconds, minutes, isActive, router]);
 
   return (
     <div className="flex flex-col w-full h-[100svh] md:justify-start md:items-center gap-3">

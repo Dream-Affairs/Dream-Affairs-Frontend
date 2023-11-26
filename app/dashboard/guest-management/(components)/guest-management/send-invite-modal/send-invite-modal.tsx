@@ -1,7 +1,7 @@
 import React, { Dispatch, FormEvent, SetStateAction, useMemo, useRef, useState } from 'react';
 import { AddGuestModal } from '../add-guest-modal/add-guest-modal';
-import { Search } from '@/components/svg-icons/svg-icons';
-import guests, { default_tags } from '@/data/dummy_guests';
+import { Search } from '../../svg-icons/svg-icons';
+import guests, { default_tags } from '@/app/dashboard/guest-management/data/dummy_guests';
 import { cn, guestSelection, selectAllGuest } from '@/lib/utils';
 import { Checkbox } from '@/components/ui/checkbox';
 import StatusTag from '../status-tag/status-tag';

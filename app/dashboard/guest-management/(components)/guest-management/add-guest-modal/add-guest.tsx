@@ -14,7 +14,7 @@ import {
 import Asterisk from '../asterisk/asterisk';
 import country_codes from '../../../data/country_codes';
 import { Button } from '@/components/ui/button';
-import { AddIcon } from '@/components/svg-icons/svg-icons';
+import { AddIcon } from '../../svg-icons/svg-icons';
 
 function AddGuest() {
   const [toggle, setToggle] = useState<boolean>(false);
