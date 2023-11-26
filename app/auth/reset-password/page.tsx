@@ -2,15 +2,15 @@
 import React from 'react';
 import Wrapper from '../(components)/Wrapper';
 import bg from '../(assets)/image1.svg';
-import fg from '../(assets)/fg.svg';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { isEmpty, passwordChecker } from '@/app/auth/(helpers)/helpers';
 import Link from 'next/link';
-import Image from 'next/image';
 import { AiOutlineEye } from 'react-icons/ai';
 import { PiEyeSlashLight } from 'react-icons/pi';
+import { toast } from '@/components/ui/use-toast';
+import axios from 'axios';
 
 const ResetPassword = () => {
   const [password, setPassword] = React.useState({
@@ -29,8 +29,9 @@ const ResetPassword = () => {
   });
   const [passwordVisible, setPasswordVisible] = React.useState(false);
   const [isValid, setIsValid] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isEmpty(password.password)) {
       setError((prev) => ({ ...prev, password: { state: true, message: 'New password is required' } }));
@@ -48,23 +49,45 @@ const ResetPassword = () => {
       return;
     }
 
-    if (isEmpty(password.confirmPassword)) {
-      setError((prev) => ({ ...prev, confirmPassword: { state: true, message: 'Confirm password is required' } }));
-      return;
-    }
-
     if (password.password !== password.confirmPassword) {
       setError((prev) => ({
         ...prev,
         confirmPassword: {
           state: true,
-          message: 'Password does not match',
+          message: 'Passwords do not match',
         },
       }));
       return;
     }
 
-    setIsValid(true);
+    try {
+      const url = process.env.NEXT_PUBLIC_API_URL;
+      setIsSubmitting(true);
+      const { data } = await axios.post(`${url}/auth/reset-password`, {
+        token: '',
+        password: password.password,
+        confirm_password: password.confirmPassword,
+      });
+      toast({
+        title: 'Success',
+        description: data.message,
+      });
+      setIsValid(true);
+    } catch (error: any) {
+      if (error.response?.data?.detail) {
+        const detailMsg = error.response.data.detail[0].msg.toLowerCase();
+        if (detailMsg.includes('email')) {
+          toast({ title: 'An error occured', description: 'Please enter a valid email' });
+          return;
+        }
+        return;
+      }
+      toast({
+        title: 'An error occured',
+        description: error.response.data.message,
+      });
+    } finally {
+    }
   };
 
   return (
@@ -92,6 +115,7 @@ const ResetPassword = () => {
                 error={error.password.state}
                 hasValue={password.password !== '' ? true : false}
                 value={password.password}
+                autoComplete="new-password"
                 onChange={(e) => {
                   setError({ ...error, password: { state: false, message: '' } });
                   setPassword({ ...password, password: e.target.value });
@@ -118,6 +142,7 @@ const ResetPassword = () => {
                 error={error.confirmPassword.state}
                 hasValue={password.confirmPassword !== '' ? true : false}
                 value={password.confirmPassword}
+                autoComplete="confirm-password"
                 onChange={(e) => {
                   setError({ ...error, confirmPassword: { state: false, message: '' } });
                   setPassword({ ...password, confirmPassword: e.target.value });

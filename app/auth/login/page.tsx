@@ -11,9 +11,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/use-toast';
-import { isEmpty } from '../(helpers)/isAuthenticated';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { isEmpty } from '../(helpers)/helpers';
 
 const Login = () => {
   const router = useRouter();

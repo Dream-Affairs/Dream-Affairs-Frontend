@@ -40,6 +40,7 @@ const ForgotPassword = () => {
         title: 'Success',
         description: data.message,
       });
+      setIsValid(true);
     } catch (error: any) {
       console.log(error);
 
@@ -56,6 +57,7 @@ const ForgotPassword = () => {
         title: 'An error occured',
         description: error.response.data.message,
       });
+      setError({ state: true, message: error.response.data.message });
     } finally {
       setIsSubmitting(false);
     }
