@@ -1,7 +1,5 @@
 import { jwtDecode } from 'jwt-decode';
-
-export const isEmpty = (param: string | null | any) =>
-  param === null || typeof param === 'undefined' || param.length == 0;
+import { isEmpty } from './helpers';
 
 const clearSessionStorage = () => sessionStorage.removeItem('zpt');
 
