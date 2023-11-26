@@ -58,14 +58,19 @@ const Login = () => {
       const formData = new FormData();
       formData.append('username', form.email);
       formData.append('password', form.password);
-      const data = await axios.post(`${url}/auth/login`, formData);
-      sessionStorage.setItem('daff', data.data.data.access_token);
+      const { data } = await axios.post(`${url}/auth/login`, formData);
+      console.log(data.data);
+      sessionStorage.setItem('daff', data.data.access_token);
+      sessionStorage.setItem(
+        'daff-data',
+        JSON.stringify({ organization: data.data.organization, user: data.data.user }),
+      );
       toast({
         title: 'Login Successful',
         description: 'You have successfully logged in',
       });
       setTimeout(() => {
-        router.push('/dashboard');
+        // router.push('/dashboard');
       }, 1000);
     } catch (error: any) {
       toast({

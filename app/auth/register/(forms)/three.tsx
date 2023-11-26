@@ -19,7 +19,7 @@ interface Props {
 const LinkSent = ({ formOne }: Props) => {
   const router = useRouter();
   const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(1);
+  const [minutes, setMinutes] = useState(5);
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
