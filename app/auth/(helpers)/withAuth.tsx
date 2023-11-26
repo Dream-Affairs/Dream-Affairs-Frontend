@@ -11,10 +11,8 @@ const withAuth = (WrappedComponent: any) => {
     useEffect(() => {
       const token = sessionStorage.getItem('daff');
       const isLoggedIn = isAuthenticated(token as string);
-      // if (!isLoggedIn) {
-      //   router.replace('/auth/login');
-      // }
-      if (path.includes('/dashboard') && !isLoggedIn) {
+
+      if ((path.includes('/dashboard') && !isLoggedIn) || !isLoggedIn) {
         sessionStorage.removeItem('daff');
         router.replace('/auth/login');
       }
