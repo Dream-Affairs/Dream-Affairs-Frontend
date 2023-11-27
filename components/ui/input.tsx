@@ -31,7 +31,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {error || icon ? (
           <div className="absolute h-full top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2 flex items-center gap-2">
             {icon}
-            {error ? <PiWarningLight className="text-red-500 bg-transparent" /> : null}
+            {error ? <PiWarningLight className="text-red-500 bg-white" /> : null}
           </div>
         ) : null}
 
