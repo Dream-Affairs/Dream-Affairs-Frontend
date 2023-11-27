@@ -1,13 +1,15 @@
 'use client';
 
 import axios from 'axios';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const VeriftAccount = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const url = process.env.NEXT_PUBLIC_API_URL;
+  
   const [verified, setVerified] = useState(false);
   const [verifying, setVerifying] = useState(true);
   const [error, setError] = useState('');
@@ -20,7 +22,7 @@ const VeriftAccount = () => {
         await axios.post(`${url}/auth/verify-account`, { token });
         setVerified(true);
         setTimeout(() => {
-          // router.push('/auth/login');
+          router.push('/auth/login');
         }, 3000);
       } catch (error: any) {
         setError(error.response.data.message);
@@ -32,7 +34,7 @@ const VeriftAccount = () => {
       verify();
     }
     return setVerifying(false);
-  }, [token, url]);
+  }, [router, token, url]);
 
   return <>{verifying ? <p>Verifying</p> : verified ? <p>Verified, redirecting...</p> : <p>{error}</p>}</>;
 };
