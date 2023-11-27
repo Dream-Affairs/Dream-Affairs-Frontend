@@ -1,15 +1,29 @@
 import Image from 'next/image';
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import PreviewCard from './preview-card';
 
-interface previewProps {
+export interface previewProps {
   mealDescription: string;
   mealName: string;
-  files: FileList | null;
-  showPreview: boolean;
+  files?: FileList | null;
+  showPreview?: boolean;
+  dietryTags?: string[];
+  rsvpQnty?: number | 0 | undefined;
+  showRSVP?: boolean;
+  imgUrl?: string | any;
 }
 
-const Preview: React.FC<previewProps> = ({ mealDescription, mealName, files, showPreview }) => {
+const Preview: React.FC<previewProps> = ({
+  mealDescription,
+  mealName,
+  files,
+  showPreview,
+  dietryTags,
+  rsvpQnty,
+  showRSVP,
+  imgUrl,
+}) => {
   const handleSaveMeal = () => {};
   return (
     <div
@@ -20,35 +34,15 @@ const Preview: React.FC<previewProps> = ({ mealDescription, mealName, files, sho
       }`}
     >
       <h3 className="hidden lg:block lg:text-[24px] font-[500] text-[#404141] lg:leading-[33.6px]">Preview</h3>
-      <div className="w-full border rounded-[8px] lg:mt-[26px] lg:w-[388px] lg:min-h-[392px] p-[16px]">
-        <div>
-          {!files ? (
-            <div className="w-full h-[242px] border  bg-gradient-to-r from-[#cdcdcdbe] to-[#cdcdcd00] rounded-[8px] animate-puls"></div>
-          ) : (
-            Array.from(files).map((file, index) => (
-              <Image
-                key={index}
-                src={URL.createObjectURL(file)}
-                width={350}
-                height={400}
-                alt={`preview-${index}`}
-                // layout={'responsive'}
-                // objectFit="fill"
-                className="rounded-[8px] max-w-full max-h-[242px] object-cover object-center"
-              />
-            ))
-          )}
-        </div>
-        <div className="flex flex-col gap-y-[12px] w-full lg:mt-[16px]">
-          <div className="font-[600] lg:text-[24px] lg:leading-[33.6px] text-[#282828] ">
-            {mealName || <p>Meal Name</p>}
-          </div>
-          <div className="text-[#6F6F6F] w-full break-words lg:text-[16px] font-[400] lg:leading-[22.4px]">
-            {mealDescription || <p>Meal Description</p>}
-          </div>
-          <h3 className="text-[#282828] lg:text-[16px] font-[400] lg:leading-[22.4px]">Dietary tags</h3>
-        </div>
-      </div>
+      <PreviewCard
+        mealDescription={mealDescription}
+        mealName={mealName}
+        // files={files}
+        dietryTags={dietryTags}
+        showRSVP={false}
+        rsvpQnty={rsvpQnty}
+        imgUrl={'blob:http://localhost:3000/0fb40867-c0ed-43ff-95b9-77edac93921a'}
+      />
       <Button
         variant="disabled"
         onClick={handleSaveMeal}
