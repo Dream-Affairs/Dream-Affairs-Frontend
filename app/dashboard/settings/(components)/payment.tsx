@@ -5,7 +5,8 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import React, { useState } from 'react';
 import { BsCalendar2Date } from 'react-icons/bs';
-import Modal from '@/components/ui/Modal';
+import { Modal } from '@/components/ui/ModalTwo';
+import PricingModal from './pricingModal';
 
 const arrowR = (
   <svg width={24} height={25} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,7 +43,7 @@ const subscriptionData = [
 ];
 
 const Payment = () => {
-  const [free, setFree] = useState<boolean>(true);
+  const [free, setFree] = useState<boolean>(false);
   const [pro, setPro] = useState<boolean>(false);
   const [core, setCore] = useState<boolean>(false);
 
@@ -94,16 +95,20 @@ const Payment = () => {
               </p>
             </div>
           </div>
-          <Button
-            size="lg"
-            variant={free ? 'disabled' : 'outline'}
-            className={`${
-              free ? '' : 'group-hover:bg-primary group-hover:text-white'
-            } w-[100%] lg:mt-[55px] lg:mb-[26px] mt-[40px] mb-[28px] h-[56px] text-[16px]`}
-            disabled={free}
-          >
-            Curerent Plan
-          </Button>
+          {free ? (
+            <Button
+              size="lg"
+              variant={free ? 'disabled' : 'outline'}
+              className={`${
+                free ? '' : 'group-hover:bg-primary group-hover:text-white'
+              } w-[100%] lg:mt-[55px] lg:mb-[26px] mt-[40px] mb-[28px] h-[56px] text-[16px]`}
+              disabled={free}
+            >
+              Curerent Plan
+            </Button>
+          ) : (
+            <PricingModal disabled={free} />
+          )}
         </div>
         <div className="group hover:bg-[#E0B0FF] transition-all duration-100 lg:w-[395px] w-[327px] h-auto rounded-[20px] border-[#EBEBEB] border text-[14px] mb-[20px] lg:mb-0 relative">
           <p className="text-[#008D36] lg:text-[16px] text-[10px] font-[500] bg-[#E6F4EB] lg:w-[134px] w-[86px] lg:h-[30px] h-[22px] rounded-[8px] self-end flex justify-center items-center absolute lg:top-[27px] top-[8px] lg:right-[24px] right-[8px]">
