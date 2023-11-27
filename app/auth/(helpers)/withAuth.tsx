@@ -12,7 +12,7 @@ const withAuth = (WrappedComponent: any) => {
       const token = sessionStorage.getItem('daff');
       const isLoggedIn = isAuthenticated(token as string);
 
-      if ((path.includes('/dashboard') && !isLoggedIn) || !isLoggedIn) {
+      if (path.includes('/dashboard') && !isLoggedIn) {
         sessionStorage.removeItem('daff');
         router.replace('/auth/login');
       }
