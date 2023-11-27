@@ -1,4 +1,4 @@
-import { FolderIcon } from '@/components/svg-icons/svg-icons';
+import { FolderIcon } from '../../../svg-icons/svg-icons';
 import React from 'react';
 
 function CsvImport({ selectedImport }: { selectedImport: string }) {

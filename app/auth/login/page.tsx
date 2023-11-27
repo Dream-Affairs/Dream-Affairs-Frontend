@@ -11,9 +11,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/use-toast';
-import { isEmpty } from '../(helpers)/isAuthenticated';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { isEmpty } from '../(helpers)/helpers';
 
 const Login = () => {
   const router = useRouter();
@@ -58,24 +58,29 @@ const Login = () => {
       const formData = new FormData();
       formData.append('username', form.email);
       formData.append('password', form.password);
-      const data = await axios.post(`${url}/auth/login`, formData);
-      sessionStorage.setItem('daff', data.data.data.access_token);
+      const { data } = await axios.post(`${url}/auth/login`, formData);
+      console.log(data.data);
+      sessionStorage.setItem('daff', data.data.access_token);
+      sessionStorage.setItem(
+        'daff-data',
+        JSON.stringify({ organization: data.data.organization, user: data.data.user }),
+      );
       toast({
         title: 'Login Successful',
         description: 'You have successfully logged in',
       });
       setTimeout(() => {
-        router.push('/dashboard');
+        // router.push('/dashboard');
       }, 1000);
     } catch (error: any) {
       toast({
         title: 'Login Failed',
-        description: error.response.data.message,
+        description: error?.response?.data?.message,
       });
       setFormError((prev) => ({
         ...prev,
-        email: { status: true, message: error.response.data.message },
-        password: { status: true, message: error.response.data.message },
+        email: { status: true, message: error?.response?.data?.message },
+        password: { status: true, message: error?.response?.data?.message },
       }));
     } finally {
       setIsSubmitting(false);

@@ -8,54 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { isEmpty } from '../../(helpers)/helpers';
 import { toast } from '@/components/ui/use-toast';
 import axios from 'axios';
-
-interface FormTwoProps {
-  formOne: {
-    email: string;
-    password: string;
-    confirmPassword: string;
-    valid: boolean;
-  };
-  setFormOne: React.Dispatch<
-    React.SetStateAction<{
-      email: string;
-      password: string;
-      confirmPassword: string;
-      valid: boolean;
-    }>
-  >;
-  setFormOneError: React.Dispatch<
-    React.SetStateAction<{
-      email: boolean;
-      password: boolean;
-      confirmPassword: boolean;
-    }>
-  >;
-  setErrorMessages: React.Dispatch<
-    React.SetStateAction<{
-      email: string;
-      password: string;
-      confirmPassword: string;
-    }>
-  >;
-  formTwo: {
-    yourFirstName: string;
-    partnersFirstName: string;
-    pickedADate: boolean;
-    location: string;
-  };
-  setFormTwo: React.Dispatch<
-    React.SetStateAction<{
-      yourFirstName: string;
-      partnersFirstName: string;
-      pickedADate: boolean;
-      location: string;
-    }>
-  >;
-  date: Date | undefined;
-  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-  setFormThree: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { FormTwoProps } from '../../(helpers)/types';
 
 const Two = ({
   formOne,
@@ -115,7 +68,7 @@ const Two = ({
 
     try {
       setIsSubmitting(true);
-      await axios.post(`${url}/auth/signup`, {
+      const { data } = await axios.post(`${url}/auth/signup`, {
         email: formOne.email,
         password: formOne.password,
         confirm_password: formOne.confirmPassword,
@@ -125,39 +78,47 @@ const Two = ({
         location: formTwo.location,
       });
 
+      console.log(data);
+
       toast({
         title: 'Account Created',
         description: 'Please check your email for a verification link',
       });
-      setTimeout(() => {
-        // setFormThree(true);
-        window.location.href = '/dashboard';
-      }, 1500);
+      setFormThree(true);
     } catch (error: any) {
-      const response = error.response.data.message;
-      const status = error.response.status;
-      // const email = error.response.data.detail[0].msg;
-
-      // if (email) {
-      //   toast({ title: 'An error occured', description: 'Please enter a valid email address' });
-      //   setFormOne((prev) => ({ ...prev, valid: false }));
-      //   setFormOneError((prev) => ({ ...prev, email: true }));
-      //   setErrorMessages((prev) => ({ ...prev, email: 'Please enter a valid email address' }));
-      //   return;
-      // }
-
-      toast({ title: 'An error occured', description: response });
-      if (response.includes('Email')) {
-        setFormOne((prev) => ({ ...prev, valid: false }));
-        setFormOneError((prev) => ({ ...prev, email: true }));
-        setErrorMessages((prev) => ({ ...prev, email: response }));
+      if (error.response?.data?.detail) {
+        const detailMsg = error.response.data.detail[0].msg.toLowerCase();
+        if (detailMsg.includes('email')) {
+          toast({ title: 'An error occured', description: 'Please enter a valid email' });
+          setFormOne((prev) => ({ ...prev, valid: false }));
+          setFormOneError((prev) => ({ ...prev, email: true }));
+          setErrorMessages((prev) => ({ ...prev, email: 'Please enter a valid email' }));
+          return;
+        }
         return;
       }
-      if (response.includes('Password')) {
-        setFormOne((prev) => ({ ...prev, valid: false }));
-        setFormOneError((prev) => ({ ...prev, password: true }));
-        setErrorMessages((prev) => ({ ...prev, password: response }));
-        return;
+
+      if (error.response?.data?.message) {
+        const response = error.response.data.message;
+        toast({ title: 'An error occured', description: response });
+        if (response.includes('Email')) {
+          setFormOne((prev) => ({ ...prev, valid: false }));
+          setFormOneError((prev) => ({ ...prev, email: true }));
+          setErrorMessages((prev) => ({ ...prev, email: response }));
+          return;
+        }
+        if (response.includes('User')) {
+          setFormOne((prev) => ({ ...prev, valid: false }));
+          setFormOneError((prev) => ({ ...prev, email: true }));
+          setErrorMessages((prev) => ({ ...prev, email: response }));
+          return;
+        }
+        if (response.includes('Password')) {
+          setFormOne((prev) => ({ ...prev, valid: false }));
+          setFormOneError((prev) => ({ ...prev, password: true }));
+          setErrorMessages((prev) => ({ ...prev, password: response }));
+          return;
+        }
       }
     } finally {
       setIsSubmitting(false);
@@ -201,7 +162,7 @@ const Two = ({
         <div>
           <DatePicker
             disabled={formTwo.pickedADate ? true : false}
-            date={formTwo.pickedADate ? undefined : date}
+            date={date}
             setDate={setDate}
             error={formError.eventDate}
           />

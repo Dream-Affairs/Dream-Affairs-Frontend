@@ -4,18 +4,17 @@ import React, { useState } from 'react';
 
 import {
   AddIcon,
-  ArrowLeft,
   Clock,
   CloseCircle,
   DocumentText,
   ExportIcon,
   Search,
   TickCircle,
-} from '@/components/svg-icons/svg-icons';
+} from '../(components)/svg-icons/svg-icons';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeftIcon } from 'lucide-react';
-import TrackerSummaryCard from '@/components/guest-management/tracker-summary-card/tracker-summary-card';
+import TrackerSummaryCard from '../(components)/guest-management/tracker-summary-card/tracker-summary-card';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -26,8 +25,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import StatusTag from '@/components/guest-management/status-tag/status-tag';
-import Pagination from '@/components/guest-management/pagination/pagination';
+import StatusTag from '../(components)/guest-management/status-tag/status-tag';
+import Pagination from '../(components)/guest-management/pagination/pagination';
+import DisabledButton from '../(components)/guest-management/tool-tip/tool-tip';
 
 const guests: any[] = [
   {
@@ -219,16 +219,7 @@ function RsvpTracker() {
             </Link>
             <span className="ml-4">RSVP Tracker</span>
           </h2>
-          <div className="flex gap-[22px]">
-            <Button variant="disabled" className="gap-2.5" size={'lg'}>
-              <ExportIcon />
-              Export
-            </Button>
-            <Button variant="secondary" className="gap-2.5" size={'lg'}>
-              <AddIcon />
-              Add RSVP
-            </Button>
-          </div>
+          <DisabledButton />
         </header>
         <section className="mb-12">
           <h3 className="text-xl mb-5">Summary</h3>

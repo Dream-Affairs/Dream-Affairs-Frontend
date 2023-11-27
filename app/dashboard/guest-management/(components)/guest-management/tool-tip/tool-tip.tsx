@@ -1,4 +1,4 @@
-import { ExportIcon } from '@/components/svg-icons/svg-icons';
+import { ExportIcon } from '../../svg-icons/svg-icons';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { TooltipContent } from '@radix-ui/react-tooltip';

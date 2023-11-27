@@ -1,10 +1,10 @@
 'use client';
 
-import ConfirmSend from '@/components/guest-management/confirm-send/confirm-send';
-import EditEmail from '@/components/guest-management/edit-email/edit-email';
-import SendInviteModal from '@/components/guest-management/send-invite-modal/send-invite-modal';
-import SendInvite from '@/components/guest-management/send-invite/send-invite';
-import { Send } from '@/components/svg-icons/svg-icons';
+import ConfirmSend from '../(components)/guest-management/confirm-send/confirm-send';
+import EditEmail from '../(components)/guest-management/edit-email/edit-email';
+import SendInviteModal from '../(components)/guest-management/send-invite-modal/send-invite-modal';
+import SendInvite from '../(components)/guest-management/send-invite/send-invite';
+import { Send } from '../(components)/svg-icons/svg-icons';
 import { Button } from '@/components/ui/button';
 import { InviteMailingProp } from '@/index';
 import { InviteTab, cn } from '@/lib/utils';

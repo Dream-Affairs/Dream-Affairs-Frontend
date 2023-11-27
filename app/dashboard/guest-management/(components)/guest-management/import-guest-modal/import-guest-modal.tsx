@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AddGuestModal } from '../add-guest-modal/add-guest-modal';
-import { Import, FolderIcon } from '@/components/svg-icons/svg-icons';
+import { Import, FolderIcon } from '../../svg-icons/svg-icons';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import SpreadsheetImport from './import-methods/spreadsheet-import';

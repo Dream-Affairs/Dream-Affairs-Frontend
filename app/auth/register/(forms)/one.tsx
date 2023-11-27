@@ -103,7 +103,7 @@ const One = ({ formOne, setFormOne, formOneError, setFormOneError, errorMessages
     setFormOneError((prev) => ({ ...prev, email: false, password: false, confirmPassword: false }));
   };
   return (
-    <div className="flex flex-col gap-8">
+    <form className="flex flex-col gap-8">
       <div className="flex flex-col gap-2">
         <Label htmlFor="email">Email</Label>
         <Input
@@ -201,7 +201,7 @@ const One = ({ formOne, setFormOne, formOneError, setFormOneError, errorMessages
           <FcGoogle className="text-xl" /> Sign up with Google
         </Button>
       </div>
-    </div>
+    </form>
   );
 };
 

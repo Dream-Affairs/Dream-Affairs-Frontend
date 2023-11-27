@@ -1,5 +1,5 @@
 'use client';
-import { AddIcon, Close, CloseIcon } from '@/components/svg-icons/svg-icons';
+import { AddIcon, Close, CloseIcon } from '../../svg-icons/svg-icons';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { AiOutlineClose } from 'react-icons/ai';

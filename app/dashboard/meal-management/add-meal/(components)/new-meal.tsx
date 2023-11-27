@@ -7,6 +7,7 @@ import trash from '../../../(assets)/trash.png';
 import { useRouter } from 'next/navigation';
 import MealForm from './meal-form';
 import Preview from './preview';
+// import MealModal from '../../(components)/meal-modal';
 
 // interface ModalProps {
 //   isOpen: boolean;
@@ -16,6 +17,7 @@ import Preview from './preview';
 const NewMeal = () => {
   // const NewMeal: React.FC<ModalProps> = ({ isOpen, toggleModal }) => {
   const [files, setFiles] = useState<FileList | null>(null);
+  const [imgUrl, setImgUrl] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const [mealName, setMealName] = useState('');
   const [mealDescription, setMealDescription] = useState('');
@@ -24,7 +26,9 @@ const NewMeal = () => {
   const [showPreview, setShowPreview] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number[]>([]);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
+  const organizationID = '669d5c746a1c420992b3ae786712c185';
   const router = useRouter();
 
   const handleDragOver = (event: DragEvent) => {
@@ -78,7 +82,12 @@ const NewMeal = () => {
   };
   const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const imageFile = event.target.files;
-    if (imageFile) {
+    console.log(imageFile?.[0]);
+    let img = Array.from(imageFile || []);
+    let url = URL.createObjectURL(img[0]);
+    console.log(`image link : ${url}`);
+    setImgUrl(url);
+    if (imageFile?.[0]) {
       setFiles(imageFile);
       setshowDragAndDropZone(false);
       uploadFile(imageFile);
@@ -196,7 +205,7 @@ const NewMeal = () => {
                   >
                     <input
                       type="file"
-                      multiple
+                      multiple={false}
                       onChange={handleFileInputChange}
                       hidden
                       accept="image/png, image/jpeg"
@@ -231,12 +240,22 @@ const NewMeal = () => {
               showPreview={showPreview}
               isSaved={isSaved}
               setIsSaved={setIsSaved}
+              files={files}
             />
           </div>
         </div>
         {/* preview */}
-        <Preview mealDescription={mealDescription} mealName={mealName} files={files} showPreview={showPreview} />
+        <Preview
+          mealDescription={mealDescription}
+          mealName={mealName}
+          files={files}
+          showPreview={showPreview}
+          imgUrl={imgUrl}
+        />
       </div>
+      {
+        // !showModal && <MealModal/>
+      }
     </section>
   );
 };

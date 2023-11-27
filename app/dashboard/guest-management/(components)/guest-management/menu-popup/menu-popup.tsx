@@ -1,5 +1,9 @@
-import { AngleRight, Close, Ellipsis, Eyes, EyesClosed, Grab, Search } from '@/components/svg-icons/svg-icons';
-import React, { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react';
+import { AlignLeft, EyeIcon, EyeOffIcon, MoreVerticalIcon, SearchIcon } from 'lucide-react';
+import { Close, Grab } from '../../svg-icons/svg-icons';
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { LiaAngleRightSolid } from 'react-icons/lia';
+import MenuPopupEdit from './menu-popup-edit';
+import MenuItem from './menu-item';
 
 interface Columns {
   id: string;
@@ -12,16 +16,24 @@ interface Props {
   columnSetter: Dispatch<SetStateAction<Columns[]>>;
 }
 
+interface EditProps {
+  isShown: boolean;
+  itemToEdit: string;
+}
+
 function MenuPopup({ columns, columnSetter }: Props) {
   const [search, setSearch] = useState<string>('');
   const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [editPopup, setEditPopup] = useState<EditProps>({ isShown: false, itemToEdit: '' });
   const menuBtn = useRef<HTMLButtonElement>(null);
   const columnRef = useRef<HTMLDivElement>(null);
+  const editRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: any) => {
-      if (!columnRef.current?.contains(e.target)) {
-        setShowPopup(false);
+      if (!columnRef.current?.contains(e.target) && !editRef.current?.contains(e.target)) {
+        // setShowPopup(false);
+        // closeEditPopup();
       }
     };
 
@@ -54,11 +66,36 @@ function MenuPopup({ columns, columnSetter }: Props) {
     });
   };
 
+  function showEdit(id: string) {
+    setEditPopup({ isShown: true, itemToEdit: id });
+    setShowPopup(false);
+  }
+
+  function closeEditPopup() {
+    setEditPopup({ isShown: false, itemToEdit: '' });
+  }
+
+  function returnToMainPopup() {
+    setShowPopup(true);
+    closeEditPopup();
+  }
+
   return (
     <div ref={columnRef} className="flex justify-end">
       <button ref={menuBtn} className="" onClick={() => setShowPopup(true)}>
-        <Ellipsis />
+        <MoreVerticalIcon size={20} color="#A0A0A0" />
       </button>
+      {editPopup.isShown && (
+        <MenuPopupEdit
+          ref={editRef}
+          id={editPopup.itemToEdit}
+          columns={columns}
+          columnSetter={columnSetter}
+          toggleColumn={toggleColumn}
+          close={closeEditPopup}
+          returnToMain={returnToMainPopup}
+        />
+      )}
       {showPopup && (
         <div className="bg-white w-80 rounded-lg px-4 pt-[22px] pb-8 font-medium fixed right-14 top-10 border border-[#E1E1E1]">
           <header className="text-[#1C1C1C] font-medium flex justify-between items-center">
@@ -68,7 +105,7 @@ function MenuPopup({ columns, columnSetter }: Props) {
             </button>
           </header>
           <div className="flex rounded p-2 border my-3 border-[#D0D5DD]">
-            <Search height="20" width="20" />
+            <SearchIcon size={20} color="#667185" />
             <input
               type="text"
               className="flex-1 pl-4 focus:outline-none"
@@ -88,16 +125,14 @@ function MenuPopup({ columns, columnSetter }: Props) {
               .filter((item) => item.isShown && item.name.toLowerCase().includes(search.toLowerCase()))
               .map((item) => {
                 return (
-                  <div key={item.id} className="flex items-center gap-2 py-1">
-                    <Grab />
-                    <span>{item.name}</span>
-                    <button onClick={() => toggleColumn(item.id)} className="ml-auto mr-1">
-                      {item.isShown ? <Eyes /> : <EyesClosed />}
-                    </button>
-                    <button>
-                      <AngleRight />
-                    </button>
-                  </div>
+                  <MenuItem
+                    key={item.id}
+                    isShown={item.isShown}
+                    name={item.name}
+                    id={item.id}
+                    toggleColumn={toggleColumn}
+                    showEdit={showEdit}
+                  />
                 );
               })}
             <div className="flex justify-between font-medium mt-2">
@@ -110,16 +145,14 @@ function MenuPopup({ columns, columnSetter }: Props) {
               .filter((item) => !item.isShown && item.name.toLowerCase().includes(search.toLowerCase()))
               .map((item) => {
                 return (
-                  <div key={item.id} className="flex items-center gap-2 py-1">
-                    <Grab />
-                    <span>{item.name}</span>
-                    <button onClick={() => toggleColumn(item.id)} className="ml-auto mr-1">
-                      {item.isShown ? <Eyes /> : <EyesClosed />}
-                    </button>
-                    <button>
-                      <AngleRight />
-                    </button>
-                  </div>
+                  <MenuItem
+                    key={item.id}
+                    isShown={item.isShown}
+                    name={item.name}
+                    id={item.id}
+                    toggleColumn={toggleColumn}
+                    showEdit={showEdit}
+                  />
                 );
               })}
           </div>
