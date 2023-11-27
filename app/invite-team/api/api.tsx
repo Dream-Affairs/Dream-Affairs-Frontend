@@ -17,7 +17,6 @@ export async function fetchAcceptedInvites(organizationId: string) {
     const { message, data } = result;
 
     if (message === 'Accepted invites fetched successfully' && Array.isArray(data)) {
-      console.log('Accepted Invites Response:', data);
       return data;
     } else {
       throw new Error('Unexpected response format');
@@ -48,7 +47,6 @@ export async function fetchRoles(organizationId: string) {
     const { message, data } = result;
 
     if (message === 'Roles retrieved successfully' && Array.isArray(data)) {
-      console.log('Roles Response:', data); // Log the entire data array
       return data;
     } else {
       throw new Error('Unexpected response format');
@@ -78,7 +76,6 @@ export async function fetchSuspendedInvites(organizationId: string) {
     const { message, data } = result;
 
     if (message === 'Suspended invites fetched successfully' && Array.isArray(data)) {
-      console.log('Suspended Invites Response:', data);
       return data;
     } else {
       throw new Error('Unexpected response format');

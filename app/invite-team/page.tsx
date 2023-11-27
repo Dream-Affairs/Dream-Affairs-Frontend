@@ -18,30 +18,35 @@ import { ImSpinner8 } from 'react-icons/im';
 
 import { Button } from '@/components/ui/button';
 import { fetchRoles } from './api/api';
+import useAuth from '../auth/(helpers)/useAuth';
+
 const InviteTeam: React.FC = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [roles, setRoles] = useState<Role[]>([]);
-  const [selectedRole, setSelectedRole] = useState<string>('Choose Role');
+  const [selectedRole, setSelectedRole] = useState<string>('');
   const [fullNameError, setFullNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [roleError, setRoleError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { org } = useAuth() as { userId: string; org: OrgType };
+
+  const organizationId = org.organization_id;
 
   useEffect(() => {
-    const organizationId = '4a7f6a9f98684f89a10af27167000e2a';
+    if (organizationId) {
+      const getRoles = async () => {
+        try {
+          const fetchedRoles: Role[] = await fetchRoles(organizationId);
+          setRoles(fetchedRoles);
+        } catch (error: any) {
+          console.error('Error fetching roles:', error.message);
+        }
+      };
 
-    const getRoles = async () => {
-      try {
-        const fetchedRoles: Role[] = await fetchRoles(organizationId);
-        setRoles(fetchedRoles);
-      } catch (error: any) {
-        console.error('Error fetching roles:', error.message);
-      }
-    };
-
-    getRoles();
-  }, []);
+      getRoles();
+    }
+  }, [organizationId]);
 
   const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFullName(e.target.value);
@@ -112,7 +117,7 @@ const InviteTeam: React.FC = () => {
           const postData = {
             name: fullName,
             email: email,
-            organization_id: '4a7f6a9f98684f89a10af27167000e2a',
+            organization_id: '8599465bf29d4a8d9903b7bf8344508d',
             role_id: roleObject.id,
           };
 
@@ -246,7 +251,7 @@ const InviteTeam: React.FC = () => {
                   !roleError ? 'hover:border-primary' : ''
                 }`}
               >
-                <SelectValue placeholder={selectedRole} />
+                <SelectValue placeholder="Choose Role" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -300,4 +305,9 @@ interface Role {
   is_default: boolean;
   created_at: string;
   updated_at: string;
+}
+
+interface OrgType {
+  organization_id: string;
+  organization_member_id: string;
 }
