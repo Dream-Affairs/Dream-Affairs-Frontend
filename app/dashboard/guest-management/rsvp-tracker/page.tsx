@@ -11,11 +11,11 @@ import {
   ExportIcon,
   Search,
   TickCircle,
-} from '@/components/svg-icons/svg-icons';
+} from '../(components)/svg-icons/svg-icons';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeftIcon } from 'lucide-react';
-import TrackerSummaryCard from '@/components/guest-management/tracker-summary-card/tracker-summary-card';
+import TrackerSummaryCard from '../(components)/guest-management/tracker-summary-card/tracker-summary-card';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -26,8 +26,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import StatusTag from '@/components/guest-management/status-tag/status-tag';
-import Pagination from '@/components/guest-management/pagination/pagination';
+import StatusTag from '../(components)/guest-management/status-tag/status-tag';
+import Pagination from '../(components)/guest-management/pagination/pagination';
 
 const guests: any[] = [
   {
@@ -287,7 +287,7 @@ function RsvpTracker() {
         </section>
         <section className="overflow-hidden">
           <h3 className="text-xl mb-5">Collected RSVPs</h3>
-          <div className="rounded-[8px] border border-[#F0C5C5] overflow-hidden">
+          <div className="rounded-[8px] border border-[#F0C5C5] mb-12 overflow-hidden">
             <header className="pt-5 pb-10 px-8 flex gap-20 border-b border-[#E1E1E1]">
               <div className="flex flex-1 items-center rounded-[6px] p-4 gap-2 border border-[#D0D5DD]">
                 <Search height="20" width="20" />
@@ -362,7 +362,7 @@ function RsvpTracker() {
               )}
             </div>
           </div>
-          <Pagination currentPage={activePage} setCurrentPage={setActivePage} />
+          <Pagination list={guests} currentPage={activePage} setCurrentPage={setActivePage} />
         </section>
       </div>
     </div>

@@ -7,19 +7,14 @@ import { Calendar as CalendarIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { FaAngleDown } from 'react-icons/fa';
-
-interface DatePickerProps {
-  error?: boolean;
-  disabled?: boolean;
-  date: Date | undefined;
-  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-}
+import { Popover, PopoverClose, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { DatePickerProps } from '../(helpers)/types';
 
 export function DatePicker({ error, disabled, date, setDate }: DatePickerProps) {
+  const [isCalendarOpen, setIsCalendarOpen] = React.useState(false);
+  const disabledDays = [{ from: new Date(0, 0, 0), to: new Date() }];
   return (
-    <Popover>
+    <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
       <PopoverTrigger
         disabled={disabled}
         className={cn(
@@ -42,7 +37,14 @@ export function DatePicker({ error, disabled, date, setDate }: DatePickerProps) 
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
-        <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+        <Calendar
+          mode="single"
+          selected={date}
+          onSelect={setDate}
+          initialFocus
+          onDayClick={() => setIsCalendarOpen(false)}
+          disabled={disabledDays}
+        />
       </PopoverContent>
     </Popover>
   );
