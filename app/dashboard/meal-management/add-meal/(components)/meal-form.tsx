@@ -5,6 +5,8 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { Input } from '@/components/ui/input';
 import { useRef, useState } from 'react';
 import { Textarea } from '@/components/ui/textarea';
+import axios from 'axios';
+import { toast } from '@/components/ui/use-toast';
 
 interface mealProps {
   setMealName: React.Dispatch<React.SetStateAction<string>>;
@@ -14,6 +16,7 @@ interface mealProps {
   showPreview: boolean;
   isSaved: boolean;
   setIsSaved: React.Dispatch<React.SetStateAction<boolean>>;
+  files?: FileList | null;
 }
 
 const MealForm: React.FC<mealProps> = ({
@@ -24,6 +27,7 @@ const MealForm: React.FC<mealProps> = ({
   showPreview,
   isSaved,
   setIsSaved,
+  files,
 }) => {
   const [inputText, setInputText] = useState('');
   // const [inputTexts, setInputTexts] = useState('');
@@ -44,9 +48,15 @@ const MealForm: React.FC<mealProps> = ({
   const [mealQuantity, setMealQuantity] = useState<string>('');
   const [dietryTags, setDietryTags] = useState<string[]>(['Vegan', 'Vegetarian']);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  // const [showTags, setShowTags] = useState<boolean>(false)
-  // const validDesc = mealDesc.slice(0, 100) || mealDesc;
-  // const descOverflow = mealDesc.length > 100 ? mealDesc.slice(101) : '';
+
+  const url = process.env.NEXT_PUBLIC_API_URL;
+  const organizationID = '669d5c746a1c420992b3ae786712c185';
+  const token = '';
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    accept: 'application/json',
+    'Content-Type': 'application/json',
+  };
   const handleMealName = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     if (inputValue.length <= maxCharacter) {
@@ -114,7 +124,59 @@ const MealForm: React.FC<mealProps> = ({
     const newDietryTags = [...dietryTags.slice(0, index), ...dietryTags.splice(index + 1)];
     setDietryTags(newDietryTags);
   };
-  const handleSaveMeal = () => {};
+  const handleSaveMeal = () => {
+    const validate = validateMealForm();
+    console.log(validate);
+    if (Object.keys(validate).length === 0) {
+      console.log('All inputs validated');
+      axios
+        .post(
+          `${url}/${organizationID}/meal-management/create-meal-category`,
+          {
+            name: mealCategory,
+          },
+          { headers },
+        )
+        .then((response) => {
+          console.log(response.data);
+          console.log(response.data.message);
+          if (response.status == 201) {
+            let categoryID = response.data.data.id;
+            console.log(categoryID);
+            toast({ title: 'Category Successfully created' });
+            axios
+              .post(`${url}/${organizationID}/meal-management/create-meal?meal_category_id=${categoryID}`, {
+                name: mealTitle,
+                description: mealDesc,
+                is_hidden: false,
+                image_url: files && URL.createObjectURL(Array.from(files)[0]).toString(),
+                quantity: 100,
+              })
+              .then((response) => {
+                console.log(response);
+                if (response.status === 201) {
+                  toast({ title: response.data?.message });
+                  setIsSaved(true);
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                console.log(error?.response?.statusText);
+                toast({ title: error.response?.data?.message || error?.response?.statusText });
+              });
+          }
+        })
+        .catch((error) => {
+          console.log(
+            `Category Error: ${error?.message || error?.response?.data?.message || error?.response?.statusText}`,
+          );
+          console.log(error);
+          toast({ title: error.response?.data?.message || error.message });
+        });
+    } else {
+      console.log('Inputs not validated');
+    }
+  };
   const handleNext = () => {
     const validate = validateMealForm();
     console.log(validate);
@@ -130,7 +192,6 @@ const MealForm: React.FC<mealProps> = ({
       formError.mealTitle = 'meal name cannot be empty';
     }
     if (!mealCategory) {
-      console.log(mealCategory);
       formError.mealCategory = 'Please add a meal category';
     }
     if (!dietryTags) {
@@ -148,6 +209,7 @@ const MealForm: React.FC<mealProps> = ({
         <h3 className=" font-[600] text-[14px] leading-[19.6px] lg:leading-[22.4px] lg:text-[16px] text-[#1C1C1C]">
           Meal Categories
         </h3>
+        {/* category Input */}
         <div className="relative">
           <form onSubmit={handleAddCategory} className="border-none">
             <input
@@ -163,6 +225,7 @@ const MealForm: React.FC<mealProps> = ({
               }`}
             />
           </form>
+          {/* Dropdown */}
           <Select
             value={(mealCategories.length > 0 && mealCategories[mealCategories?.length - 1].toString()) || ''}
             onValueChange={(value) => {
@@ -227,7 +290,7 @@ const MealForm: React.FC<mealProps> = ({
         <p className="font-[600] text-[14px] lg:text-[16px] leading-[19.6px] text-[#1C1C1C]">Meal Description</p>
         <div className="relative  ">
           <textarea
-            value={mealDesc.length > 100 ? mealDesc.slice(0, 100) + mealDesc.slice(101) : mealDesc}
+            value={mealDesc}
             style={{ height: height }}
             onChange={handleMealDescription}
             onBlur={() => setMealDescription(mealDesc)}
