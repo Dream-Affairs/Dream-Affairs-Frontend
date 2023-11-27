@@ -80,7 +80,7 @@ const Checklist = () => {
 
   // GET NUMBER OF PAGES
   useEffect(() => {
-    setNumPages(Math.ceil(tasks.length / searchResultsPerPage));
+    setNumPages(Math.ceil(tasks?.length / searchResultsPerPage));
   }, [tasks, searchResultsPerPage]);
 
   useEffect(() => {
@@ -89,7 +89,7 @@ const Checklist = () => {
       const start = (page - 1) * searchResultsPerPage;
       const end = page * searchResultsPerPage;
 
-      return tasks.slice(start, end);
+      return tasks?.slice(start, end);
     };
     setTasksPerPage(getTasksPage(pageNum));
 
@@ -117,7 +117,7 @@ const Checklist = () => {
 
   //  SHOW FORM IF NO TASK
   useEffect(() => {
-    tasks.length === 0 ? setAddTask(true) : setAddTask(false);
+    tasks?.length === 0 ? setAddTask(true) : setAddTask(false);
   }, [tasks]);
 
   // CANCLE ADD TASK FORM
@@ -215,7 +215,7 @@ const Checklist = () => {
         </div>
         {/* Tasks */}
         <ul className="pt-5 sm:pt-8 flex flex-col gap-5 z-0 px-6 sm:px-8">
-          {tasksPerPage.length > 0
+          {tasksPerPage?.length > 0
             ? tasksPerPage?.map((item, i) => (
                 <li key={i + 1} className="">
                   <Task editItem={handleEditTask} index={i} deleteTask={handleDelete} item={item} />
