@@ -70,7 +70,7 @@ const Login = () => {
         description: 'You have successfully logged in',
       });
       setTimeout(() => {
-        // router.push('/dashboard');
+        router.push('/dashboard');
       }, 1000);
     } catch (error: any) {
       toast({
