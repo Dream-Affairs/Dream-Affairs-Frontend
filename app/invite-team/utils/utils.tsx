@@ -3,7 +3,7 @@ interface ButtonStyle {
   textColor: any;
 }
 
-import React, { useState, useEffect, useRef, MouseEvent } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 
 export function useModal() {
@@ -156,7 +156,7 @@ export const MODAL_STYLES = {
       textColor: '#ffffff',
     },
     remove: {
-      backgroundColor: '#FF0000',
+      backgroundColor: 'rgba(255, 0, 0, 1)',
       textColor: '#ffffff',
     },
     reinstate: {
