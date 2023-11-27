@@ -18,6 +18,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useImageUpload, useLimitedTextInput } from '../hooks/RegistryForm';
 import currencies from '../../../settings/(components)/currency';
+import { Progress } from '@radix-ui/react-progress';
 
 const AddCash: React.FC = () => {
   const inputNumberStyle: React.CSSProperties = {
@@ -27,7 +28,7 @@ const AddCash: React.FC = () => {
   };
 
   // Image Upload function starts here
-  const { image, error, fileInputRef, handleImageClick, handleFileChange } = useImageUpload();
+  const { ImageUrl, error, fileInputRef, handleImageClick, handleFileChange, uploadProgress } = useImageUpload();
 
   // Image Upload functiom ends here
 
@@ -63,12 +64,12 @@ const AddCash: React.FC = () => {
 
             <div
               id="ProductImage"
-              className="bg-[#E8E8E8] w-[200px] md:w-[310px] h-[250px] md:h-[362px] rounded-[8px] flex flex-col items-center gap-4 text-center cursor-pointer mx-auto"
+              className="relative bg-[#E8E8E8] w-[200px] md:w-[310px] h-[250px] md:h-[362px] rounded-[8px] flex flex-col items-center gap-4 text-center cursor-pointer mx-auto"
               onClick={handleImageClick}
             >
-              {image ? (
+              {ImageUrl ? (
                 <Image
-                  src={image}
+                  src={`https://dev.api.dreamaffairs.mooo.com/api/v1/files/get-image?url=${ImageUrl}`}
                   alt="Uploaded"
                   width={310}
                   height={362}
@@ -84,13 +85,15 @@ const AddCash: React.FC = () => {
               )}
               <input
                 ref={fileInputRef}
-                id="profile-image-upload"
+                id="cash-image-upload"
                 className="hidden"
                 type="file"
                 accept=".jpg, .jpeg, .png"
                 onChange={handleFileChange}
               />
+              <Progress value={uploadProgress} className="absolute bottom-0" />
             </div>
+
             {error && <p className="text-xs text-red-500">{error}</p>}
             {/* Product image section ends here  */}
           </div>
@@ -120,9 +123,9 @@ const AddCash: React.FC = () => {
                     <SelectGroup className="text-sm font-normal">
                       <SelectLabel>Currency</SelectLabel>
                       {currencies.map((currency) => (
-                        <div key={currency}>
-                          <SelectItem onClick={() => setCurrency(currency)} value={currency}>
-                            {currency}
+                        <div key={currency.code}>
+                          <SelectItem onClick={() => setCurrency(currency.name)} value={currency.name}>
+                            {`${currency.name} (${currency.symbol})`}
                           </SelectItem>
                         </div>
                       ))}

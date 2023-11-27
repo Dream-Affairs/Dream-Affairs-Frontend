@@ -10,7 +10,6 @@ import clock from './(assets)/clock.svg';
 import { EmptyBudget, EmptyClock, EmptyRSVP } from './(components)/DashboardEmpty';
 import { checkList, giftList } from './data/dashboard-data';
 import { Checklist, Gifts } from './(components)/DashboardData';
-import withAuth from '../auth/(helpers)/withAuth';
 
 const Dashboard = () => {
   const [gifts, setGifts] = useState<any[] | null>(null);
@@ -169,4 +168,4 @@ const Dashboard = () => {
   );
 };
 
-export default withAuth(Dashboard);
+export default Dashboard;

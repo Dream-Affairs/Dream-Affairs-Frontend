@@ -14,7 +14,13 @@ const Cards = ({ data }: any) => {
           key={card.id}
           className="flex gap-2 flex-col border rounded-xl max-w-[350px] p-1"
         >
-          <Image src={card.card} width={0} alt="Curly" className="object-cover aspect-video rounded-lg w-full" />
+          <Image
+            priority
+            src={card.card}
+            width={0}
+            alt="Curly"
+            className="object-cover aspect-video rounded-lg w-full"
+          />
           <div className="flex flex-col gap-3 py-5 px-2">
             <Link
               href={`/blog/${card.id}`}

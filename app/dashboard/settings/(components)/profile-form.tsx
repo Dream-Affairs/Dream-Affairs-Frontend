@@ -17,14 +17,13 @@ import { Button } from '@/components/ui/button';
 
 const ProfileDetail = () => {
   const [checkedData, setCheckedData] = useState<string>('male');
-  const [currency, setCurrency] = useState<string>('Dollar ($)');
   const [form, setForm] = useState({
     firstname: 'John',
     lastname: '',
     email: 'example@gmail.com',
     phone: '',
     gender: '',
-    currency: 'Dollar ($)',
+    currency: 'US Dollar ($)',
   });
 
   const [formError, setFormError] = React.useState({
@@ -43,8 +42,7 @@ const ProfileDetail = () => {
 
   useEffect(() => {
     console.log(checkedData);
-    console.log(currency);
-  }, [checkedData, currency]);
+  }, [checkedData]);
 
   const handleCheck = (data: string) => {
     setCheckedData(data);
@@ -154,7 +152,11 @@ const ProfileDetail = () => {
                   />
                   <div className="flex flex-col w-[90%]">
                     <Label className="mb-3 text-base font-[500]">Select Currency</Label>
-                    <Select>
+                    <Select
+                      onValueChange={(value) => {
+                        setForm({ ...form, currency: value });
+                      }}
+                    >
                       <SelectTrigger className="w-full h-[55px]">
                         <SelectValue placeholder={form.currency} />
                       </SelectTrigger>
@@ -162,8 +164,8 @@ const ProfileDetail = () => {
                         <SelectGroup>
                           <SelectLabel>Currency</SelectLabel>
                           {currencies.map((currency) => (
-                            <div onClick={() => alert(currency)} key={currency}>
-                              <SelectItem value={currency}>{currency}</SelectItem>
+                            <div onClick={() => alert(currency.name)} key={currency.code}>
+                              <SelectItem value={currency.name}>{`${currency.name} (${currency.symbol})`}</SelectItem>
                             </div>
                           ))}
                         </SelectGroup>

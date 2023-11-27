@@ -11,11 +11,11 @@ import {
   ExportIcon,
   Search,
   TickCircle,
-} from '@/components/svg-icons/svg-icons';
+} from '../(components)/svg-icons/svg-icons';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeftIcon } from 'lucide-react';
-import TrackerSummaryCard from '@/components/guest-management/tracker-summary-card/tracker-summary-card';
+import TrackerSummaryCard from '../(components)/guest-management/tracker-summary-card/tracker-summary-card';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -26,8 +26,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import StatusTag from '@/components/guest-management/status-tag/status-tag';
-import Pagination from '@/components/guest-management/pagination/pagination';
+import StatusTag from '../(components)/guest-management/status-tag/status-tag';
+import Pagination from '../(components)/guest-management/pagination/pagination';
 
 const guests: any[] = [
   {
@@ -119,7 +119,7 @@ const guests: any[] = [
     address: '2223 King Street, London, UK',
   },
   {
-    name: 'John Doe',
+    name: 'Hilda Bacci',
     email: 'johndoe@example.com',
     response: 'confirmed',
     plusOne: 'no',
@@ -127,7 +127,7 @@ const guests: any[] = [
     address: '3334 Queen Street, New York, USA',
   },
   {
-    name: 'Jane Smith',
+    name: 'Sydney Talker',
     email: 'janesmith@example.com',
     response: 'pending',
     plusOne: 'yes',
@@ -135,27 +135,27 @@ const guests: any[] = [
     address: '5556 Princess Street, Abuja, Nigeria',
   },
   {
-    name: 'Michael Jones',
+    name: 'Lawyer Kunle',
     email: 'michaeljones@example.com',
     response: 'pending',
     plusOne: 'yes',
-    mealPreference: ['Barbeque Cips', 'Jollof Rice'],
+    mealPreference: ['Agbado', 'Cassava'],
     address: '7778 Duchess Street, New York, USA',
   },
   {
-    name: 'Emily Brown',
+    name: 'Shanks Comics',
     email: 'emilybrown@example.com',
     response: 'confirmed',
     plusOne: 'yes',
-    mealPreference: ['Sauce', 'Juice', 'Afang Soup'],
+    mealPreference: ['Cassava', 'Garri', 'Ewa'],
     address: '456 Elm Street, New York, USA',
   },
   {
-    name: 'David Miller',
+    name: 'Mr Macarroni',
     email: 'davidmiller@example.com',
     response: 'confirmed',
     plusOne: 'yes',
-    mealPreference: ['Moimoi', 'Afang Soup'],
+    mealPreference: ['Corn', 'Yam'],
     address: '6667 Duke Street, London, UK',
   },
   {
@@ -202,12 +202,12 @@ const guests: any[] = [
 
 function RsvpTracker() {
   const [search, setSearch] = useState<string>('');
+  const [activePage, setActivePage] = useState<number>(1);
+  const guests_list = guests.slice((activePage - 1) * 10, activePage * 10);
 
   const filter = (item: any) => {
     return item.name.toLocaleLowerCase().includes(search.toLocaleLowerCase());
   };
-
-  console.log(guests.filter((item) => item?.response !== 'pending').length);
 
   return (
     <div className="pt-10 relative w-full h-full py-6 overflow-hidden">
@@ -287,7 +287,7 @@ function RsvpTracker() {
         </section>
         <section className="overflow-hidden">
           <h3 className="text-xl mb-5">Collected RSVPs</h3>
-          <div className="rounded-[8px] border border-[#F0C5C5] overflow-hidden">
+          <div className="rounded-[8px] border border-[#F0C5C5] mb-12 overflow-hidden">
             <header className="pt-5 pb-10 px-8 flex gap-20 border-b border-[#E1E1E1]">
               <div className="flex flex-1 items-center rounded-[6px] p-4 gap-2 border border-[#D0D5DD]">
                 <Search height="20" width="20" />
@@ -329,7 +329,7 @@ function RsvpTracker() {
                   </tr>
                 </thead>
                 <tbody>
-                  {guests.filter(filter).map((item, index) => {
+                  {guests_list.filter(filter).map((item, index) => {
                     return (
                       <tr key={index} className="border-t border-[#E7E7E7]">
                         <td className="px-2 py-4 whitespace-nowrap">{item.name}</td>
@@ -362,7 +362,7 @@ function RsvpTracker() {
               )}
             </div>
           </div>
-          <Pagination />
+          <Pagination list={guests} currentPage={activePage} setCurrentPage={setActivePage} />
         </section>
       </div>
     </div>

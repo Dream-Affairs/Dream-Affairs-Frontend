@@ -7,7 +7,7 @@ import { ImSpinner8 } from 'react-icons/im';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { isEmpty, passwordChecker, isValidEmail } from '@/app/auth/(helpers)/helpers';
+import { isEmpty, isValidEmail, passwordChecker } from '@/app/auth/(helpers)/helpers';
 
 interface FormOneProps {
   formOne: {
@@ -80,30 +80,30 @@ const One = ({ formOne, setFormOne, formOneError, setFormOneError, errorMessages
       return;
     }
 
-    // if (passwordChecker(formOne.password)) {
-    //   setFormOneError((prev) => ({ ...prev, password: true }));
-    //   setErrorMessages((prev) => ({ ...prev, password: passwordChecker(formOne.password) }));
-    //   return;
-    // }
+    if (passwordChecker(formOne.password)) {
+      setFormOneError((prev) => ({ ...prev, password: true }));
+      setErrorMessages((prev) => ({ ...prev, password: passwordChecker(formOne.password) }));
+      return;
+    }
 
-    // if (isEmpty(formOne.confirmPassword)) {
-    //   setFormOneError((prev) => ({ ...prev, confirmPassword: true }));
-    //   setErrorMessages((prev) => ({ ...prev, confirmPassword: 'Please fill out this field' }));
-    //   return;
-    // }
+    if (isEmpty(formOne.confirmPassword)) {
+      setFormOneError((prev) => ({ ...prev, confirmPassword: true }));
+      setErrorMessages((prev) => ({ ...prev, confirmPassword: 'Please fill out this field' }));
+      return;
+    }
 
-    // if (formOne.password !== formOne.confirmPassword) {
-    //   setFormOneError((prev) => ({ ...prev, confirmPassword: true }));
-    //   setErrorMessages((prev) => ({ ...prev, confirmPassword: 'Passwords do not match' }));
-    //   return;
-    // }
+    if (formOne.password !== formOne.confirmPassword) {
+      setFormOneError((prev) => ({ ...prev, confirmPassword: true }));
+      setErrorMessages((prev) => ({ ...prev, confirmPassword: 'Passwords do not match' }));
+      return;
+    }
 
     setIsSubmitting(true);
     setFormOne((prev) => ({ ...prev, valid: true }));
     setFormOneError((prev) => ({ ...prev, email: false, password: false, confirmPassword: false }));
   };
   return (
-    <div className="flex flex-col gap-8">
+    <form className="flex flex-col gap-8">
       <div className="flex flex-col gap-2">
         <Label htmlFor="email">Email</Label>
         <Input
@@ -201,7 +201,7 @@ const One = ({ formOne, setFormOne, formOneError, setFormOneError, errorMessages
           <FcGoogle className="text-xl" /> Sign up with Google
         </Button>
       </div>
-    </div>
+    </form>
   );
 };
 
