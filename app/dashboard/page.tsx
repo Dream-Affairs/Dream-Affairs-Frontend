@@ -19,6 +19,7 @@ const Dashboard = () => {
     setTasks(checkList);
     setGifts(giftList);
   }, []);
+
   return (
     <section className="w-full h-full py-6 lg:px-[52px] md:px-10 px-6 lg:space-y-10 md:spacey-8 space-y-6 lg:border-l border-0">
       {/* Header, Add Guest and Upgrade Plan  */}
