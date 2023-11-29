@@ -5,7 +5,8 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import React, { useState } from 'react';
 import { BsCalendar2Date } from 'react-icons/bs';
-import Modal from '@/components/ui/Modal';
+import { Modal } from '@/components/ui/ModalTwo';
+import PricingModal from './pricingModal';
 
 const arrowR = (
   <svg width={24} height={25} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -50,8 +51,8 @@ const Payment = () => {
 
   return (
     <div className="p-5 lg:px-16 lg:py-12">
-      <section className="w-full mx-auto lg:flex items-start-row flex items-start-col items-center gap-10">
-        <div className="group hover:bg-[#E0B0FF] transition-all duration-100 lg:w-[325px] w-[327px] h-auto rounded-[20px] lg:px-4 px-[19px] border-[#EBEBEB] border text-[14px] bg-white mb-[20px] lg:mb-0">
+      <section className="w-full mx-auto flex flex-col lg:flex-row  items-center gap-6 lg:gap-10">
+        <div className="group hover:bg-[#E0B0FF] transition-all duration-100 lg:h-auto lg:w-[325px] w-[327px] h-auto pt-3 pb-10 md:pt-0 md:pb-0 rounded-[20px] lg:px-4 px-[19px] border-[#EBEBEB] border text-[14px] bg-white mb-[20px] lg:mb-0">
           <div className="h-[195px] border-b border-[#BCBCBC] mt-[20px]">
             <Image src={freemium} alt="" width={24} height={24} />
             <h3 className="text-[24px] font-[600] mt-[12px] capitalize">{subscriptionData[0].account} Plan</h3>
@@ -94,19 +95,29 @@ const Payment = () => {
               </p>
             </div>
           </div>
-          <Button
-            size="lg"
-            variant={free ? 'disabled' : 'outline'}
-            className={`${
-              free ? '' : 'group-hover:bg-primary group-hover:text-white'
-            } w-[100%] lg:mt-[55px] lg:mb-[26px] mt-[40px] mb-[28px] h-[56px] text-[16px]`}
-            disabled={free}
-          >
-            Curerent Plan
-          </Button>
+          {free ? (
+            <Button
+              size="lg"
+              variant={free ? 'disabled' : 'outline'}
+              className={`${
+                free ? '' : 'group-hover:bg-primary group-hover:text-white'
+              } w-[100%] lg:mt-[55px] lg:mb-[26px] mt-[40px] mb-[28px] h-[56px] text-[16px]`}
+              disabled={free}
+            >
+              Curerent Plan
+            </Button>
+          ) : (
+            <PricingModal
+              disabled={free}
+              account={subscriptionData[0].account}
+              price={subscriptionData[0].price}
+              subscription={subscriptionData[0].subscription}
+              info={subscriptionData[0].info}
+            />
+          )}
         </div>
-        <div className="group hover:bg-[#E0B0FF] transition-all duration-100 lg:w-[395px] w-[327px] h-auto rounded-[20px] border-[#EBEBEB] border text-[14px] mb-[20px] lg:mb-0 relative">
-          <p className="text-[#008D36] lg:text-[16px] text-[10px] font-[500] bg-[#E6F4EB] lg:w-[134px] w-[86px] lg:h-[30px] h-[22px] rounded-[8px] self-end flex justify-center items-center absolute lg:top-[27px] top-[8px] lg:right-[24px] right-[8px]">
+        <div className="group hover:bg-[#E0B0FF] transition-all duration-100 lg:h-auto lg:w-[395px] w-[327px] h-auto pt-5 pb-10 md:pt-0 md:pb-0 rounded-[20px] border-[#EBEBEB] border text-[14px] mb-[20px] lg:mb-0 relative">
+          <p className="text-[#008D36] md:absolute md:top-6 md:right-5 lg:text-[16px] text-[10px] font-[500] bg-[#E6F4EB] lg:w-[134px] w-[86px] lg:h-[30px] h-[22px] rounded-[8px] self-end flex justify-center items-center ms-auto me-2 md:me-0">
             Recommended
           </p>
           <div className="lg:px-4 px-[19px]">
@@ -156,20 +167,30 @@ const Payment = () => {
                   <strong>Customizable Invitations:</strong> Unlimited templates and full customization.
                 </p>
               </div>
+            </div>
+            {pro ? (
               <Button
                 size="lg"
                 variant={pro ? 'disabled' : 'outline'}
                 className={`${
                   pro ? '' : 'group-hover:bg-primary group-hover:text-white'
-                } w-[100%] lg:mt-[80px] lg:mb-[30px] mt-[40px] mb-[28px] h-[56px] text-[16px]`}
+                } w-[100%] lg:mt-[55px] lg:mb-[26px] mt-[40px] mb-[28px] h-[56px] text-[16px]`}
                 disabled={pro}
               >
-                Choose Plan
+                Curerent Plan
               </Button>
-            </div>
+            ) : (
+              <PricingModal
+                disabled={pro}
+                account={subscriptionData[1].account}
+                price={subscriptionData[1].price}
+                subscription={subscriptionData[1].subscription}
+                info={subscriptionData[1].info}
+              />
+            )}
           </div>
         </div>
-        <div className="group hover:bg-[#E0B0FF] transition-all duration-100 lg:w-[325px] w-[327px] lg:h-auto h-[683px] rounded-[20px] lg:px-4 px-[19px] border-[#EBEBEB] border text-[14px] bg-white mb-[20px] lg:mb-0">
+        <div className="group hover:bg-[#E0B0FF] transition-all duration-100 lg:w-[325px] w-[327px] rounded-[20px] pt-3 pb-10 md:pt-0 md:pb-0 lg:px-4 px-[19px] border-[#EBEBEB] border text-[14px] bg-white lg:mb-0">
           <div className="h-[195px] border-b border-[#BCBCBC] mt-[20px]">
             <Image src={coreIcon} alt="" width={24} height={24} />
             <h3 className="text-[24px] font-[600] mt-[12px] capitalize">{subscriptionData[2].account} Plan</h3>
@@ -213,16 +234,26 @@ const Payment = () => {
               </p>
             </div>
           </div>
-          <Button
-            size="lg"
-            variant={core ? 'disabled' : 'outline'}
-            className={`${
-              core ? '' : 'group-hover:bg-primary group-hover:text-white'
-            } w-[100%] lg:mt-[32px] lg:mb-[25px] mt-[40px] mb-[28px] h-[56px] text-[16px]`}
-            disabled={core}
-          >
-            Choose Plan
-          </Button>
+          {core ? (
+            <Button
+              size="lg"
+              variant={core ? 'disabled' : 'outline'}
+              className={`${
+                core ? '' : 'group-hover:bg-primary group-hover:text-white'
+              } w-[100%] lg:mt-[55px] lg:mb-[26px] mt-[40px] mb-[28px] h-[56px] text-[16px]`}
+              disabled={core}
+            >
+              Curerent Plan
+            </Button>
+          ) : (
+            <PricingModal
+              disabled={core}
+              account={subscriptionData[2].account}
+              price={subscriptionData[2].price}
+              subscription={subscriptionData[2].subscription}
+              info={subscriptionData[2].info}
+            />
+          )}
         </div>
       </section>
     </div>
