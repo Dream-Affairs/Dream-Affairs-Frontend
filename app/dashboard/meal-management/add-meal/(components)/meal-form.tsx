@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { FaRegTimesCircle } from 'react-icons/fa';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -7,6 +7,9 @@ import { useRef, useState } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import axios from 'axios';
 import { toast } from '@/components/ui/use-toast';
+import useAuth from '../../../../auth/(helpers)/useAuth';
+// import { getAllCategories } from '../../page';
+import { useRouter } from 'next/navigation';
 
 interface mealProps {
   setMealName: React.Dispatch<React.SetStateAction<string>>;
@@ -17,6 +20,7 @@ interface mealProps {
   isSaved: boolean;
   setIsSaved: React.Dispatch<React.SetStateAction<boolean>>;
   files?: FileList | null;
+  imgUrl: string | '';
 }
 
 const MealForm: React.FC<mealProps> = ({
@@ -28,6 +32,7 @@ const MealForm: React.FC<mealProps> = ({
   isSaved,
   setIsSaved,
   files,
+  imgUrl,
 }) => {
   const [inputText, setInputText] = useState('');
   // const [inputTexts, setInputTexts] = useState('');
@@ -39,6 +44,8 @@ const MealForm: React.FC<mealProps> = ({
   const [showTextBox, setShowTextBox] = useState<boolean>(false);
   const [showDietryTagsText, setShowDietryTagsText] = useState<boolean>(false);
   const [mealCategories, setMealCategories] = useState<String[]>([]);
+  const [updateCategories, setUpdateCategories] = useState<boolean>(false);
+  const [categoryID, setCategoryID] = useState<string>('');
   const categoryRef = useRef<HTMLInputElement | null>(null);
   const dietryTagsRef = useRef<HTMLInputElement | null>(null);
   const dietryTagsInputRef = useRef<HTMLInputElement | null>(null);
@@ -48,10 +55,27 @@ const MealForm: React.FC<mealProps> = ({
   const [mealQuantity, setMealQuantity] = useState<string>('');
   const [dietryTags, setDietryTags] = useState<string[]>(['Vegan', 'Vegetarian']);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-
-  const url = process.env.NEXT_PUBLIC_API_URL;
+  const { userId, org }: any = useAuth();
   const organizationID = '669d5c746a1c420992b3ae786712c185';
+  const url = process.env.NEXT_PUBLIC_API_URL;
+
+  const getAllCategories = () => {
+    axios
+      .get(`${url}/${organizationID}/meal-management/get-all-meal-category`)
+      .then((response) => {
+        console.log(response.data.data);
+        setMealCategories(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  useEffect(() => {
+    getAllCategories();
+  }, [updateCategories]);
+  // console.log( org?.organization_member_id)
   const token = '';
+  const router = useRouter();
   const headers = {
     Authorization: `Bearer ${token}`,
     accept: 'application/json',
@@ -74,21 +98,39 @@ const MealForm: React.FC<mealProps> = ({
 
   const handleAddCategory = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(text);
-    setMealCategory(text);
-    let categoryExist = mealCategories.find((meal: String) => meal == text);
-    if (!categoryExist && text != '') {
-      setMealCategories((prevVals: any) => [...prevVals, text]);
-    }
+    addCategory();
     setShowTextBox((prev) => false);
     setText('');
   };
   const addCategory = () => {
-    setMealCategory(text);
-    let categoryExist = mealCategories?.find((meal: String) => meal == text);
-    if (!categoryExist && text != '') {
-      setMealCategories((prevVals: any) => [...prevVals, text]);
-    }
+    console.log(text);
+    axios
+      .post(
+        `${url}/${organizationID}/meal-management/create-meal-category`,
+        {
+          name: mealCategory,
+        },
+        { headers },
+      )
+      .then((response) => {
+        // console.log(response.data);
+        console.log(response.data.message);
+        if (response.status == 201) {
+          let categoryID = response.data.data.id;
+          console.log(categoryID);
+          toast({ title: 'Category Successfully created' });
+          setMealCategory(text);
+          setCategoryID(categoryID);
+          setUpdateCategories(true);
+        }
+      })
+      .catch((error) => {
+        console.log(
+          `Category Error: ${error?.message || error?.response?.data?.message || error?.response?.statusText}`,
+        );
+        console.log(error);
+        toast({ title: error.response?.data?.message || error.message });
+      });
     setShowTextBox((prev) => false);
     setText('');
   };
@@ -127,56 +169,37 @@ const MealForm: React.FC<mealProps> = ({
   const handleSaveMeal = () => {
     const validate = validateMealForm();
     console.log(validate);
+    console.log(categoryID);
     if (Object.keys(validate).length === 0) {
       console.log('All inputs validated');
       axios
-        .post(
-          `${url}/${organizationID}/meal-management/create-meal-category`,
-          {
-            name: mealCategory,
-          },
-          { headers },
-        )
+        .post(`${url}/${organizationID}/meal-management/create-meal?meal_category_id=${categoryID}`, {
+          name: mealTitle,
+          description: mealDesc,
+          is_hidden: false,
+          image_url: imgUrl,
+          quantity: 100,
+        })
         .then((response) => {
-          console.log(response.data);
-          console.log(response.data.message);
-          if (response.status == 201) {
-            let categoryID = response.data.data.id;
-            console.log(categoryID);
-            toast({ title: 'Category Successfully created' });
-            axios
-              .post(`${url}/${organizationID}/meal-management/create-meal?meal_category_id=${categoryID}`, {
-                name: mealTitle,
-                description: mealDesc,
-                is_hidden: false,
-                image_url: files && URL.createObjectURL(Array.from(files)[0]).toString(),
-                quantity: 100,
-              })
-              .then((response) => {
-                console.log(response);
-                if (response.status === 201) {
-                  toast({ title: response.data?.message });
-                  setIsSaved(true);
-                }
-              })
-              .catch((error) => {
-                console.log(error);
-                console.log(error?.response?.statusText);
-                toast({ title: error.response?.data?.message || error?.response?.statusText });
-              });
+          console.log(response);
+          if (response.status === 201) {
+            toast({ title: response.data?.message });
+            setIsSaved(true);
+            setTimeout(() => {
+              router.push('/dashboard/meal-management');
+            }, 2000);
           }
         })
         .catch((error) => {
-          console.log(
-            `Category Error: ${error?.message || error?.response?.data?.message || error?.response?.statusText}`,
-          );
           console.log(error);
-          toast({ title: error.response?.data?.message || error.message });
+          console.log(error?.response?.statusText);
+          toast({ title: error.response?.data?.message || error?.response?.statusText });
         });
     } else {
       console.log('Inputs not validated');
     }
   };
+
   const handleNext = () => {
     const validate = validateMealForm();
     console.log(validate);
@@ -202,6 +225,7 @@ const MealForm: React.FC<mealProps> = ({
     }
     return formError;
   };
+
   return (
     <div className="relative flex flex-col gap-y-[20px] mt-[20px] lg:mt-[36px] pb-[28px] lg:pb-[88px]">
       {/* Meal Categories */}
@@ -227,10 +251,16 @@ const MealForm: React.FC<mealProps> = ({
           </form>
           {/* Dropdown */}
           <Select
-            value={(mealCategories.length > 0 && mealCategories[mealCategories?.length - 1].toString()) || ''}
+            value={
+              mealCategory || ''
+              // (mealCategories.length > 0 && mealCategories[mealCategories?.length - 1].toString()) || '' || mealCategory
+            }
             onValueChange={(value) => {
               console.log(value);
+              let category: any = mealCategories.find((catg: any) => catg.name === value);
+              console.log(category.id);
               setMealCategory(value);
+              setCategoryID(category?.id);
             }}
           >
             <SelectTrigger className="h-[56px] border-[#E1E1E1] placeholder-[#A0A0A0] font-[400] text-[12px] lg:text-[14px] leading-[16.8px] lg:leading-[19.6px] text-[#1C1C1C]">
@@ -238,13 +268,13 @@ const MealForm: React.FC<mealProps> = ({
             </SelectTrigger>
             <SelectContent>
               <SelectGroup className="">
-                {mealCategories?.map((meal: String, index) => (
+                {mealCategories?.map((meal: any, index) => (
                   <SelectItem
                     key={index}
-                    value={meal.toString()}
+                    value={meal?.name}
                     className="text-[#282828] text-[12px] leading-[16.8px] font-[400]"
                   >
-                    {meal}
+                    {meal?.name}
                   </SelectItem>
                 ))}
                 <button
@@ -299,20 +329,22 @@ const MealForm: React.FC<mealProps> = ({
               mealDesc.length > 100 && 'border-[1px] border-[#B50000]'
             } w-full border-[1px] resize-none overflow-hidden rounded-[8px] hover:border-primary focus-visible:outline-none focus:border-primary  p-[16px]  placeholder-[#A0A0A0] text-[12px] lg:text-[14px] leading-[16.8px] lg:leading-[19.6px] font-[400] text-[#1c1C1C] break-words h-[49px] lg:h-[52px] border-[#E1E1E1]`}
           />
-          {/* <div
+          {/*           
+          <div className="content text-black font-bold after:absolute after:inset-0 after:flex after:items-center after:justify-center after:content-['Your Text Here']"
             contentEditable
-            value={mealDesc.length > 100 ? mealDesc.slice(0, 100) + mealDesc.slice(101) : mealDesc}
-            style={{ height: height }}
-            onInput={handleMealDescription}
-            dangerouslySetInnerHTML={{ __html: mealDesc }}
-            onBlur={() => setMealDescription(mealDesc)}
-            placeholder="Add meal description here"
-            className={` ${
-              mealDesc.length > 100 && 'border-[1px] border-[#B50000]'
-            } w-full border-[1px] resize-none overflow-hidden rounded-[8px] hover:border-primary focus-visible:outline-none focus:border-primary  p-[16px]  placeholder-[#A0A0A0] lg:text-[14px] lg:leading-[19.6px] font-[400] text-[#1c1C1C] break-words lg:h-[52px] border-[#E1E1E1]`}
-          >
-            {mealDesc}
-          </div> */}
+            // value={content}
+            onInput={(e: React.ChangeEvent<HTMLDivElement>)=>{
+              let text =e.currentTarget.textContent || ''
+              // setContent(text)
+              console.log(text)
+              // if(text?.length >3){
+              // console.log(text.slice(3,))
+              let text2 = text.slice(3,)
+              setContent2(text)
+              // }
+
+            }}
+            dangerouslySetInnerHTML={{__html: content} }/> */}
 
           <div className="absolute bottom-[6px] lg:bottom-[3px] right-[5px]">
             <span className="text-[#A0A0A0] leading-[14px] lg:leading-[16.8px] text-[10px] lg:text-[12px]">
