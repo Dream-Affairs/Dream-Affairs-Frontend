@@ -5,17 +5,16 @@ import sort from './icons/sort.png';
 import arrowDown from './icons/arrow-down.png';
 import MyModal from './modal';
 import ActionButton from './utils/actionbtn';
-import { useSorting } from './utils/utils';
-import { useModal, useMemberActions } from './utils/utils';
-import { MODAL_TITLES, MODAL_MESSAGES, MODAL_STYLES } from './utils/utils';
-import { fetchAcceptedInvites } from './api/api';
-import { fetchSuspendedInvites } from './api/api';
-import { suspendUser } from './api/api';
+import { useSorting, useModal, useMemberActions, MODAL_TITLES, MODAL_MESSAGES, MODAL_STYLES } from './utils/utils';
+import { fetchAcceptedInvites, fetchSuspendedInvites, suspendUser } from './api/api';
 import Loading from './loading';
 import { toast } from '@/components/ui/use-toast';
 import MemberItem from './(component)/mobiletable';
+import useAuth from '../auth/(helpers)/useAuth';
 
 export default function Teammgt() {
+  const { org } = useAuth() as { userId: string; org: OrgType };
+  const organizationId = org.organization_id;
   const {
     isModalOpen,
     modalTitle,
@@ -39,34 +38,28 @@ export default function Teammgt() {
   const [suspendedInvites, SetSupendedInvites] = useState<SuspendeInvites[]>([]);
 
   useEffect(() => {
-    // Fetch accepted invites when the component mounts
-    const organizationId = '4a7f6a9f98684f89a10af27167000e2a';
-    fetchAcceptedInvites(organizationId)
-      .then((data: AcceptedInvite[]) => {
-        setAcceptedInvites(data);
-      })
-      .catch((error: Error) => {
-        // Handle the error, if necessary
-        console.error('Error fetching accepted invites:', error.message);
-      });
-  }, []);
+    if (organizationId) {
+      // Fetch accepted invites
+      fetchAcceptedInvites(organizationId)
+        .then((acceptedData: AcceptedInvite[]) => {
+          setAcceptedInvites(acceptedData);
+        })
+        .catch((error: Error) => {
+          console.error('Error fetching accepted invites:', error.message);
+        });
 
-  useEffect(() => {
-    // Fetch accepted invites when the component mounts
-    const organizationId = '4a7f6a9f98684f89a10af27167000e2a';
-    fetchSuspendedInvites(organizationId)
-      .then((data: AcceptedInvite[]) => {
-        SetSupendedInvites(data);
-      })
-      .catch((error: Error) => {
-        // Handle the error, if necessary
-        console.error('Error fetching suspended invites invites:', error.message);
-      });
-  }, []);
+      // Fetch suspended invites
+      fetchSuspendedInvites(organizationId)
+        .then((suspendedData: SuspendeInvites[]) => {
+          SetSupendedInvites(suspendedData);
+        })
+        .catch((error: Error) => {
+          console.error('Error fetching suspended invites:', error.message);
+        });
+    }
+  }, [organizationId]);
 
   const handleSuspendUser = async (memberId: string) => {
-    const organizationId = '4a7f6a9f98684f89a10af27167000e2a';
-
     try {
       await suspendUser(organizationId, memberId);
       toast({
@@ -97,6 +90,7 @@ export default function Teammgt() {
       actionName: 'Suspend',
       memberId: memberId,
     });
+    closeMemberActions();
     handleOpenModal();
   };
 
@@ -105,6 +99,7 @@ export default function Teammgt() {
     setModalMessage(MODAL_MESSAGES.remove);
     setActionName('Remove');
     setActionButtonStyle(MODAL_STYLES.actionButtonStyles.remove);
+    closeMemberActions();
     handleOpenModal();
   };
 
@@ -113,6 +108,7 @@ export default function Teammgt() {
     setModalMessage(MODAL_MESSAGES.reinstate);
     setActionName('Reinstate');
     setActionButtonStyle(MODAL_STYLES.actionButtonStyles.reinstate);
+    closeMemberActions();
     handleOpenModal();
   };
 
@@ -121,6 +117,7 @@ export default function Teammgt() {
     setModalMessage(MODAL_MESSAGES.resendInviteLink);
     setActionName('Resend');
     setActionButtonStyle(MODAL_STYLES.actionButtonStyles.resendInviteLink);
+    closeMemberActions();
     handleOpenModal();
   };
 
@@ -157,9 +154,9 @@ export default function Teammgt() {
 
   return (
     <div>
-      <div className="flex overflow-x-auto sm:overflow-x-auto gap-4 pb-4">
+      <div className="flex no-scrollbar overflow-x-scroll  sm:overflow-x-scroll gap-4 pb-4">
         <button
-          className={`tab-button whitespace-nowrap text-xs lg:text-base focus:outline-none ${
+          className={`tab-button whitespace-nowrap text-xs lg:text-base pt-4 focus:outline-none ${
             activeTab === 'teamMembers'
               ? 'text-primary font-medium border-b-[3px] pb-2 border-primary'
               : 'text-black pb-2'
@@ -177,7 +174,7 @@ export default function Teammgt() {
         </button>
 
         <button
-          className={`tab-button whitespace-nowrap text-xs lg:text-base focus:outline-none ${
+          className={`tab-button whitespace-nowrap text-xs lg:text-base pt-4 focus:outline-none ${
             activeTab === 'unverifiedUsers'
               ? 'text-primary font-medium border-b-[3px] pb-2 border-primary'
               : 'text-black pb-2'
@@ -197,7 +194,7 @@ export default function Teammgt() {
         </button>
 
         <button
-          className={`tab-button whitespace-nowrap text-xs lg:text-base focus:outline-none ${
+          className={`tab-button whitespace-nowrap text-xs lg:text-base pt-4 focus:outline-none ${
             activeTab === 'suspendedUsers'
               ? 'text-primary font-medium border-b-[3px] pb-2 border-primary'
               : 'text-black pb-2'
@@ -505,4 +502,9 @@ interface SuspendeInvites {
   invite_token: string;
   is_accepted: boolean;
   is_suspended: boolean;
+}
+
+interface OrgType {
+  organization_id: string;
+  organization_member_id: string;
 }

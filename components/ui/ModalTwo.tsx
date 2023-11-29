@@ -5,9 +5,12 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 type Props = {
   width: string;
+  padding?: string;
   btnTiggerText: string | React.ReactNode;
   btnTriggerStyle: string;
   showXIcon: boolean;
+  customCloseIcon?: string | React.ReactNode;
+  customCloseClass?: string;
   showCloseBtn?: boolean;
   closeBtnText?: string;
   closeBtnStyle?: string;
@@ -18,9 +21,12 @@ type Props = {
 export function Modal({
   showXIcon,
   width,
+  padding,
   btnTiggerText,
   btnTriggerStyle,
   showCloseBtn,
+  customCloseIcon,
+  customCloseClass,
   closeBtnText,
   closeBtnStyle,
   otherBtn,
@@ -31,11 +37,20 @@ export function Modal({
       <DialogTrigger asChild>
         <button className={btnTriggerStyle}>{btnTiggerText}</button>
       </DialogTrigger>
-      <DialogContent style={{ width: `${width}px` }} className={`max-w-[90vw] max-h-[90svh] rounded-lg overflow-auto`}>
+      <DialogContent
+        style={{ width: `${width}px`, padding: `${padding}px` }}
+        className={`max-w-[90vw] max-h-[90svh] rounded-lg overflow-auto`}
+      >
         {showXIcon && (
           <DialogClose className="w-0 h-0">
-            <span className="rounded-[10px] p-1 border absolute top-3 right-3 border-gray-400 hover:border-primary transition-all duration-200 ease-in-out hover:text-primary scale-75">
-              <AiOutlineClose />
+            <span
+              className={`${
+                customCloseIcon
+                  ? customCloseClass
+                  : 'rounded-[10px] p-1 border absolute top-3 right-3 border-gray-400 hover:border-primary transition-all duration-200 ease-in-out hover:text-primary scale-75'
+              }`}
+            >
+              {customCloseIcon ? customCloseIcon : <AiOutlineClose />}
             </span>
           </DialogClose>
         )}

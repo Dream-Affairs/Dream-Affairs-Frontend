@@ -1,7 +1,6 @@
-import { ArrowLeft, ArrowRight } from '../../svg-icons/svg-icons';
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import dummy_guests from '@/app/dashboard/guest-management/data/dummy_guests';
+import React, { Dispatch, SetStateAction } from 'react';
 import { cn } from '@/lib/utils';
+import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
 
 interface Props {
   currentPage: number;
@@ -34,8 +33,8 @@ function Pagination({ currentPage, setCurrentPage, list }: Props) {
 
   return (
     <div className="flex w-fit border border-[#D1D5DB] rounded mx-auto text-[#6B7280] text-sm font-medium">
-      <button onClick={prevPage} className="flex items-center border-r border-[#D1D5DB py-2 px-3 gap-2">
-        <ArrowLeft />
+      <button onClick={prevPage} className="flex items-center border-r border-[#D1D5DB] py-2 px-3 gap-1">
+        <ArrowLeftIcon size={14} color="#98A2B3" />
         Previous
       </button>
       {pages.map((item) => {
@@ -49,9 +48,9 @@ function Pagination({ currentPage, setCurrentPage, list }: Props) {
           </button>
         );
       })}
-      <button onClick={goNext} className="flex items-center py-2 px-3 gap-2">
+      <button onClick={goNext} className="flex items-center py-2 px-3 gap-1">
         Next
-        <ArrowRight />
+        <ArrowRightIcon size={14} color="#98A2B3" />
       </button>
     </div>
   );

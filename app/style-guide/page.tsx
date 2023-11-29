@@ -523,7 +523,43 @@ const ModalDemo = () => {
       <Modal
         width="300"
         showXIcon={true}
-        btnTiggerText={'Modal with x icon width' + '300'}
+        btnTiggerText={'Modal with x icon width ' + '300'}
+        btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
+      >
+        <div className="flex justify-center items-center gap-2 flex-col">
+          <h1 className="font-bold text-lg">Save The Date</h1>
+          <span className="bg-secondary p-2 rounded-full">
+            <BsCalendar2Date className="text-lg" />
+          </span>
+          <p className="text-center text-sm text-gray-400">
+            You have successfully sent out 1050 save the date wedding reminder to your guest list.
+          </p>
+        </div>
+      </Modal>
+      <Modal
+        width="300"
+        showXIcon={true}
+        padding="100"
+        btnTiggerText={'Custom Padding in px'}
+        btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
+      >
+        <div className="flex justify-center items-center gap-2 flex-col">
+          <h1 className="font-bold text-lg">Save The Date</h1>
+          <span className="bg-secondary p-2 rounded-full">
+            <BsCalendar2Date className="text-lg" />
+          </span>
+          <p className="text-center text-sm text-gray-400">
+            You have successfully sent out 1050 save the date wedding reminder to your guest list.
+          </p>
+        </div>
+      </Modal>
+      <Modal
+        width="300"
+        showXIcon={true}
+        padding="100"
+        btnTiggerText={'Custom close icon'}
+        customCloseIcon={'Close'}
+        customCloseClass="absolute top-0 right-0"
         btnTriggerStyle="bg-secondary p-4 rounded-md text-sm font-medium"
       >
         <div className="flex justify-center items-center gap-2 flex-col">
@@ -539,7 +575,7 @@ const ModalDemo = () => {
       <Modal
         width="400"
         showXIcon={true}
-        btnTiggerText={'Wider Modal with x icon width' + '400'}
+        btnTiggerText={'Wider Modal with x icon width ' + '400'}
         btnTriggerStyle="bg-muted text-white p-4 rounded-md text-sm font-medium"
       >
         <div className="flex justify-center items-center gap-2 flex-col">
@@ -555,7 +591,7 @@ const ModalDemo = () => {
       <Modal
         width="500"
         showXIcon={true}
-        btnTiggerText={'Modal with close button width' + '500'}
+        btnTiggerText={'Modal with close button width ' + '500'}
         btnTriggerStyle="bg-red-500 text-white p-4 rounded-md text-sm font-medium"
         showCloseBtn={true}
         closeBtnText="Close"
@@ -574,7 +610,7 @@ const ModalDemo = () => {
       <Modal
         width="600"
         showXIcon={false}
-        btnTiggerText={'Modal without x icon width' + '600'}
+        btnTiggerText={'Modal without x icon width ' + '600'}
         btnTriggerStyle="bg-green-500 p-4 rounded-md text-sm font-medium"
         showCloseBtn={true}
         closeBtnText="Close"
@@ -593,7 +629,7 @@ const ModalDemo = () => {
       <Modal
         width="600"
         showXIcon={false}
-        btnTiggerText={<BsCalendar2Date className="text-lg" />}
+        btnTiggerText={<BsCalendar2Date className="te xt-lg" />}
         btnTriggerStyle="py-2 px-4 bg-secondary rounded-full"
         showCloseBtn={true}
         closeBtnText="Close"
@@ -612,7 +648,7 @@ const ModalDemo = () => {
       <Modal
         width="700"
         showXIcon={false}
-        btnTiggerText={'Modal with another button width' + '700'}
+        btnTiggerText={'Modal with another button width ' + '700'}
         btnTriggerStyle="bg-accent p-4 rounded-md text-sm font-medium"
         showCloseBtn={true}
         closeBtnText="Close"
@@ -637,7 +673,7 @@ const ModalDemo = () => {
         width="800"
         showXIcon={false}
         btnTiggerText="This is a button lol;
-        Overflow Modal, you can give it any width you want, max width is 90vw, max height is 90vh and it will always be centered"
+        Overflow Modal, you can give it any width you want, max width is 90vw, max height is 90vh and it will always be  centered"
         btnTriggerStyle="bg-primary text-white p-4 rounded-md text-sm font-medium"
         showCloseBtn={true}
         closeBtnText="Close"

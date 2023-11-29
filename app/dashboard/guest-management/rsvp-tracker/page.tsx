@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 
 import {
   AddIcon,
-  ArrowLeft,
   Clock,
   CloseCircle,
   DocumentText,
@@ -28,6 +27,7 @@ import {
 } from '@/components/ui/select';
 import StatusTag from '../(components)/guest-management/status-tag/status-tag';
 import Pagination from '../(components)/guest-management/pagination/pagination';
+import DisabledButton from '../(components)/guest-management/tool-tip/tool-tip';
 
 const guests: any[] = [
   {
@@ -219,16 +219,7 @@ function RsvpTracker() {
             </Link>
             <span className="ml-4">RSVP Tracker</span>
           </h2>
-          <div className="flex gap-[22px]">
-            <Button variant="disabled" className="gap-2.5" size={'lg'}>
-              <ExportIcon />
-              Export
-            </Button>
-            <Button variant="secondary" className="gap-2.5" size={'lg'}>
-              <AddIcon />
-              Add RSVP
-            </Button>
-          </div>
+          <DisabledButton />
         </header>
         <section className="mb-12">
           <h3 className="text-xl mb-5">Summary</h3>
