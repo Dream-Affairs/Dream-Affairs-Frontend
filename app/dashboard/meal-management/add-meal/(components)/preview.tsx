@@ -41,7 +41,7 @@ const Preview: React.FC<previewProps> = ({
         dietryTags={dietryTags}
         showRSVP={false}
         rsvpQnty={rsvpQnty}
-        imgUrl={'blob:http://localhost:3000/0fb40867-c0ed-43ff-95b9-77edac93921a'}
+        imgUrl={imgUrl}
       />
       <Button
         variant="disabled"
