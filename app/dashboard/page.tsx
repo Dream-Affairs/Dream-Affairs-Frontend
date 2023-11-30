@@ -7,13 +7,30 @@ import add from './(assets)/add.svg';
 import calendar from './(assets)/calendar.svg';
 import location from './(assets)/location.svg';
 import clock from './(assets)/clock.svg';
+import addGuest from './(assets)/add-circle.svg';
 import { EmptyBudget, EmptyClock, EmptyRSVP } from './(components)/DashboardEmpty';
 import { checkList, giftList } from './data/dashboard-data';
-import { Checklist, Gifts } from './(components)/DashboardData';
+import { Budget, Checklist, Gifts, RSVP } from './(components)/DashboardData';
 
 const Dashboard = () => {
   const [gifts, setGifts] = useState<any[] | null>(null);
   const [tasks, setTasks] = useState<any[] | null>(null);
+  const [rsvpData, setRsvpData] = useState('');
+  const [budgetData, setBudgetData] = useState('');
+
+  const data1 = {
+    labels: ['Declined', 'Unconfirmed attendees', 'Confirmed attendees'],
+    datasets: [
+      {
+        label: '',
+        data: [10, 25, 65],
+        backgroundColor: ['#FFCAD3', '#EACAFF', '#762995'],
+        borderColor: ['#FFCAD3', '#EACAFF', '#762995'],
+      },
+    ],
+  };
+
+  const options = {};
 
   useEffect(() => {
     setTasks(checkList);
@@ -21,9 +38,9 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <section className="w-full h-full py-6 lg:px-[52px] md:px-10 px-6 lg:space-y-10 md:spacey-8 space-y-6 lg:border-l border-0">
+    <section className="w-full h-full py-6 lg:px-[52px] md:px-10 px-6 lg:space-y-10 md:space-y-8 space-y-6 lg:border-l border-0">
       {/* Header, Add Guest and Upgrade Plan  */}
-      <div className="flex justify-between items-center">
+      <div className="flex lg:flex-row flex-col-reverse justify-between items-center gap-y-5">
         {/* Header  */}
         <div>
           <h1 className="text-4xl leading-[44.8px] font-medium">Hi Funsho!</h1>
@@ -33,10 +50,21 @@ const Dashboard = () => {
         </div>
 
         {/* Add Guests */}
-        <div className="flex gap-x-6 items-center">
-          <Button className="px-8 py-2 rounded-[8px] flex justify-center items-center gap-x-2" variant={'outline'}>
+        <div className="flex lg:gap-x-6 gap-y-5 items-center self-end">
+          <Button
+            className="px-8 py-2 rounded-[8px] lg:flex hidden justify-center items-center gap-x-2"
+            variant={'outline'}
+          >
             <Image src={add} alt="add" /> <span>Add Guest</span>
           </Button>
+
+          <Button
+            className="px-8 py-2 rounded-[8px]  flex lg:hidden justify-center items-center gap-x-2"
+            variant={'ghost'}
+          >
+            <Image src={addGuest} alt="add guest" />
+          </Button>
+
           <Button className="px-8 py-2 rounded-[8px] text-[#282828] font-medium" variant={'secondary'}>
             Upgrade Plan
           </Button>
@@ -92,7 +120,7 @@ const Dashboard = () => {
           <p className="text-lg leading-6 font-semibold text-[#282828]">RSVP Overview</p>
 
           <div className="h-full w-full flex flex-col gap-y-7 mt-5 text-[#282828] text-sm">
-            <EmptyRSVP />
+            <RSVP data={data1} options={options} />
           </div>
         </div>
 
@@ -100,7 +128,7 @@ const Dashboard = () => {
         <div className="border border-[#E1E1E1] rounded-[5px] w-full h-[280px] p-4">
           <p className="text-lg leading-6 font-semibold text-[#282828]">Financial Overview</p>
           <div className="text-[#822DA4] text-base leading-6 h-full w-full flex items-center justify-center font-medium">
-            <EmptyBudget />
+            {budgetData ? <Budget /> : <EmptyBudget />}
           </div>
         </div>
       </div>

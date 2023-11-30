@@ -1,12 +1,20 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const CountdownClock = () => {
   return <></>;
 };
 
-export const RSVP = () => {
-  return <></>;
+export const RSVP = ({ data, options }: any) => {
+  return (
+    <div className="w-[300px] h-[300px]">
+      <Doughnut data={data} options={options} className="flex"></Doughnut>
+    </div>
+  );
 };
 
 export const Budget = () => {
@@ -44,9 +52,9 @@ export const Checklist = ({ tasks }: { tasks: any[] }) => {
   return (
     <>
       {tasks.map((task) => (
-        <div key={task.id} className="flex justify-between items-center py-3 gap-x-10">
+        <div key={task.id} className="flex justify-between items-center py-3 lg:gap-x-10 gap-x-1">
           <p className="text-[#282828] text-sm font-medium flex gap-x-2 items-center">
-            <span>{task.id}.</span>
+            <span className="self-start">{task.id}.</span>
             <span>{task.taskName}</span>
           </p>
 
