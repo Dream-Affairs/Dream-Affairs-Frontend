@@ -13,7 +13,8 @@ const previewCard: React.FC<previewProps> = ({
 }) => {
   console.log(imgUrl);
   return (
-    <div className="w-full border rounded-[8px] lg:mt-[26px] lg:w-[388px] lg:min-h-[392px] p-[16px]">
+    <div className="w-full flex flex-col border rounded-[8px] lg:mt-[26px] lg:w-[388px] lg:h-[435px] lg:min-h[392px] p-[16px]">
+      {/* Meal Image */}
       <div>
         {!imgUrl ? (
           <div className="w-full h-[242px] border  bg-gradient-to-r from-[#cdcdcdbe] to-[#cdcdcd00] rounded-[8px] animate-puls"></div>
@@ -28,7 +29,8 @@ const previewCard: React.FC<previewProps> = ({
           />
         )}
       </div>
-      <div className="flex flex-col gap-y-[12px] w-full lg:mt-[16px]">
+      {/* Meal details */}
+      <div className="flex flex-col h-full justify-between gap-y[12px] w-full lg:mt-[16px]">
         <div className="font-[600] lg:text-[24px] lg:leading-[33.6px] text-[#282828] ">
           {mealName || <p>Meal Name</p>}
         </div>

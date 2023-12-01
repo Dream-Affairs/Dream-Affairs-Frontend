@@ -13,6 +13,7 @@ import { DotsVerticalIcon, PlusIcon, PlusCircledIcon, CheckCircledIcon } from '@
 import { SearchIcon } from 'lucide-react';
 import PreviewCard from './add-meal/(components)/preview-card';
 import axios from 'axios';
+import useAuth from '@/app/auth/(helpers)/useAuth';
 // import useAuth from '../'
 
 // type Props = {};
@@ -27,12 +28,16 @@ const MealManagement = () => {
   const router = useRouter();
   const organizationID: string = '669d5c746a1c420992b3ae786712c185';
   const url = process.env.NEXT_PUBLIC_API_URL;
+  console.log(url);
 
-  // const { userId, org } = useAuth();
+  const { userId, org }: any = useAuth();
+  // let organizationID = org?.organization_id
+  console.log(organizationID);
+
   // const toggleModal = () => {
   //   setShowModal(!showModal);
   // };
-
+  // console.log(org)
   const addCategory = () => {
     setShowCategory(!showCategory);
   };
@@ -42,7 +47,7 @@ const MealManagement = () => {
   };
   const getAllCategories = () => {
     axios
-      .get(`${url}/${organizationID}/meal-management/get-all-meal-category`)
+      .get(`${url}/${organizationID}/meal-management/meal-category`)
       .then((response) => {
         console.log(response.data.data);
         setAllCategories(response.data.data);
@@ -53,14 +58,16 @@ const MealManagement = () => {
   };
 
   useEffect(() => {
-    getAllCategories();
+    organizationID && getAllCategories();
   }, []);
   const handleSelectCategory = (name: string) => {
     console.log(name);
     setSelectedCategory(name);
     const meal: {} | any = allCategories.find((categ: any) => categ.name === name);
     console.log(meal?.meals);
-    setAllMeals(meal?.meals);
+    if (meal.hasOwnProperty('meal')) {
+      setAllMeals(meal?.meals);
+    }
   };
 
   return (
@@ -68,7 +75,9 @@ const MealManagement = () => {
       <h1 className="hidden lg:flex font-[600] lg:text-[32px] lg:leading-[44.8px] text-[#1C1C1C]">Meal Management</h1>
       <div className="hidden lg:block lg:max-w-full lg:ml-[36px]">
         <div className="flex justify-between items-center gap28 mt-10 mb-4 mx8">
-          <h2 className="font-[500] lg:text-[16px] lg:leading-[22.4px] text-[#282828]">All Meals: 0</h2>
+          <h2 className="font-[500] lg:text-[16px] lg:leading-[22.4px] text-[#282828]">
+            All Meals: {allCategories.length}
+          </h2>
           <div className="flex gap-x-[20px] items-center text-[#282828]">
             <Button
               variant="secondary"
@@ -86,7 +95,7 @@ const MealManagement = () => {
         </div>
         <div className="flex lg:flex-row lg:gap-x-[16px]">
           {/* Category Menu */}
-          <div className="lg:w-[256px] lg:px-[32px] border-[1px] border-[#E1E1E1] rounded-[9px] flex flex-col lg:gap-y-[31px] items-center pt-[44px] h-screen">
+          <div className="lg:w-[256px] lg:px-[32px] border-[1px] border-[#E1E1E1] rounded-[9px] flex flex-col lg:gap-y-[31px] items-center pt-[44px] pb-[16px] min-h-screen  ">
             <h3 className="font-[500] text-start lg:text-[24px] text-[#404141] lg:leading-[33.6px]">Meal Categories</h3>
             {allCategories.length > 0 &&
               allCategories.map((category: any) => (
@@ -134,7 +143,7 @@ const MealManagement = () => {
             </div>
             {/* Previews */}
             {allMeals.length > 0 ? (
-              <div className="grid grid-cols-2 lg:gap-x-[13px] lg:gap-y-[16px]">
+              <div className="grid grid-cols-2 -mt-[26px] lg:gap-x-[13px] lg:gap-y-[16px]">
                 {allMeals?.map((meal: any) => (
                   <div className="" key={meal.id}>
                     <PreviewCard
