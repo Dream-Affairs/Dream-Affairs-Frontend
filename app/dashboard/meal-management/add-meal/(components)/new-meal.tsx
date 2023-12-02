@@ -111,16 +111,10 @@ const NewMeal = () => {
   };
   const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const imageFile = event.target.files;
-    // console.log(imageFile?.[0]);
-    // let img = Array.from(imageFile || []);
-    // let url = URL.createObjectURL(img[0]);
-    // console.log(`image link : ${url}`);
-    // setImgUrl(url);
     if (imageFile?.[0]) {
       setFiles(imageFile);
       setshowDragAndDropZone(false);
       uploadImage(imageFile);
-      // uploadFile(imageFile);
       setShowToast(true);
     }
   };
@@ -277,11 +271,11 @@ const NewMeal = () => {
         </div>
         {/* preview */}
         <Preview
-          mealDescription={mealDescription}
-          mealName={mealName}
-          files={files}
-          showPreview={showPreview}
-          imgUrl={imgUrl}
+          mealDescription={mealDescription && mealDescription}
+          mealName={mealName && mealName}
+          files={files && files}
+          showPreview={showPreview && showPreview}
+          imgUrl={imgUrl && imgUrl}
         />
       </div>
       {

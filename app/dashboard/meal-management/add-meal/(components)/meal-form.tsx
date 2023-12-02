@@ -55,13 +55,14 @@ const MealForm: React.FC<mealProps> = ({
   const [mealQuantity, setMealQuantity] = useState<string>('');
   const [dietryTags, setDietryTags] = useState<string[]>(['Vegan', 'Vegetarian']);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [mealId, setMealId] = useState<string>('');
   const { userId, org }: any = useAuth();
   const organizationID = '669d5c746a1c420992b3ae786712c185';
   const url = process.env.NEXT_PUBLIC_API_URL;
 
   const getAllCategories = () => {
     axios
-      .get(`${url}/${organizationID}/meal-management/get-all-meal-category`)
+      .get(`${url}/${organizationID}/meal-management/meal-category`)
       .then((response) => {
         console.log(response.data.data);
         setMealCategories(response.data.data);
@@ -104,33 +105,35 @@ const MealForm: React.FC<mealProps> = ({
   };
   const addCategory = () => {
     console.log(text);
-    axios
-      .post(
-        `${url}/${organizationID}/meal-management/create-meal-category`,
-        {
-          name: mealCategory,
-        },
-        { headers },
-      )
-      .then((response) => {
-        // console.log(response.data);
-        console.log(response.data.message);
-        if (response.status == 201) {
-          let categoryID = response.data.data.id;
-          console.log(categoryID);
-          toast({ title: 'Category Successfully created' });
-          setMealCategory(text);
-          setCategoryID(categoryID);
-          setUpdateCategories(true);
-        }
-      })
-      .catch((error) => {
-        console.log(
-          `Category Error: ${error?.message || error?.response?.data?.message || error?.response?.statusText}`,
-        );
-        console.log(error);
-        toast({ title: error.response?.data?.message || error.message });
-      });
+    if (text && text.trim() != '') {
+      axios
+        .post(
+          `${url}/${organizationID}/meal-management/create-meal-category`,
+          {
+            name: mealCategory,
+          },
+          { headers },
+        )
+        .then((response) => {
+          console.log(response.data);
+          console.log(response.data.message);
+          if (response.status == 201) {
+            let categoryID = response.data.data.id;
+            console.log(categoryID);
+            toast({ title: 'Category Successfully created' });
+            setMealCategory(text);
+            setCategoryID(categoryID);
+            setUpdateCategories(true);
+          }
+        })
+        .catch((error) => {
+          console.log(
+            `Category Error: ${error?.message || error?.response?.data?.message || error?.response?.statusText}`,
+          );
+          console.log(error);
+          toast({ title: error.response?.data?.message || error.message });
+        });
+    }
     setShowTextBox((prev) => false);
     setText('');
   };
@@ -147,6 +150,21 @@ const MealForm: React.FC<mealProps> = ({
     setShowDietryTagsText(false);
     setDietryTagsText('');
   };
+  const addMealTag = (mealId: string) => {
+    console.log(mealId);
+    if (selectedTags.length > 0) {
+      let mealTags = selectedTags.join(', ');
+      console.log(mealTags);
+      axios
+        .post(`${url}/${organizationID}/meal-management/meal-tag?meal_id=${mealId}&tag_name=${mealTags}`)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
   const addDietryTags = () => {
     let categoryExist = dietryTags?.find((tag: String) => tag == dietryTagsText);
     if (!categoryExist && text != '') {
@@ -158,22 +176,23 @@ const MealForm: React.FC<mealProps> = ({
   const onDietryTagsChange = (value: string) => {
     console.log(value);
     let categoryExist = selectedTags?.find((tag: String) => tag == value);
-    if (!categoryExist) {
+    if (!categoryExist && selectedTags.length < 3) {
       setSelectedTags((prev) => [...prev, value]);
     }
   };
   const handleRemoveTag = (index: number) => {
-    const newDietryTags = [...dietryTags.slice(0, index), ...dietryTags.splice(index + 1)];
-    setDietryTags(newDietryTags);
+    const filteredSelected = [...selectedTags.slice(0, index), ...selectedTags.splice(index + 1)];
+    setSelectedTags(filteredSelected);
+    // const newDietryTags = [...dietryTags.slice(0, index), ...dietryTags.splice(index + 1)];
+    // console.log(newDietryTags)
+    // setDietryTags(newDietryTags);
   };
   const handleSaveMeal = () => {
     const validate = validateMealForm();
-    console.log(validate);
-    console.log(categoryID);
     if (Object.keys(validate).length === 0) {
       console.log('All inputs validated');
       axios
-        .post(`${url}/${organizationID}/meal-management/create-meal?meal_category_id=${categoryID}`, {
+        .post(`${url}/${organizationID}/meal-management/meal?meal_category_id=${categoryID}`, {
           name: mealTitle,
           description: mealDesc,
           is_hidden: false,
@@ -185,6 +204,9 @@ const MealForm: React.FC<mealProps> = ({
           if (response.status === 201) {
             toast({ title: response.data?.message });
             setIsSaved(true);
+            let id = response.data.data.id;
+            setMealId(id);
+            addMealTag(id);
             setTimeout(() => {
               router.push('/dashboard/meal-management');
             }, 2000);
@@ -234,64 +256,66 @@ const MealForm: React.FC<mealProps> = ({
           Meal Categories
         </h3>
         {/* category Input */}
-        <div className="relative">
-          <form onSubmit={handleAddCategory} className="border-none">
-            <input
-              ref={categoryRef}
-              type="text"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              onBlurCapture={addCategory}
-              className={`${
-                !showTextBox
-                  ? 'hidden'
-                  : 'block absolute w-full h-[56px] border-[1px] focus:border-[#AB72C2] pl-[16px] rounded-[4px] border-[#E1E1E1] placeholder-[#A0A0A0] font-[400] text-[12px] lg:text-[14px] leading-[16.8px] lg:leading-[19.6px] text-[#1C1C1C] focus:outline-none'
-              }`}
-            />
-          </form>
+        <div className="relative ">
+          {showTextBox && (
+            <form onSubmit={handleAddCategory} className="border-none ">
+              <input
+                ref={categoryRef}
+                type="text"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                onBlurCapture={addCategory}
+                autoFocus
+                className={`${
+                  !showTextBox
+                    ? 'hidden'
+                    : 'block  z-[99] w-full h-[56px] border-[1px] focus:border-[#AB72C2] pl-[16px] rounded-[4px] border-[#E1E1E1] placeholder-[#A0A0A0] font-[400] text-[12px] lg:text-[14px] leading-[16.8px] lg:leading-[19.6px] text-[#1C1C1C] focus:outline-none'
+                }`}
+              />
+            </form>
+          )}
           {/* Dropdown */}
-          <Select
-            value={
-              mealCategory || ''
-              // (mealCategories.length > 0 && mealCategories[mealCategories?.length - 1].toString()) || '' || mealCategory
-            }
-            onValueChange={(value) => {
-              console.log(value);
-              let category: any = mealCategories.find((catg: any) => catg.name === value);
-              console.log(category.id);
-              setMealCategory(value);
-              setCategoryID(category?.id);
-            }}
-          >
-            <SelectTrigger className="h-[56px] border-[#E1E1E1] placeholder-[#A0A0A0] font-[400] text-[12px] lg:text-[14px] leading-[16.8px] lg:leading-[19.6px] text-[#1C1C1C]">
-              <SelectValue placeholder="e.g Appetizers, Main Dishes etc" className="" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup className="">
-                {mealCategories?.map((meal: any, index) => (
-                  <SelectItem
-                    key={index}
-                    value={meal?.name}
-                    className="text-[#282828] text-[12px] leading-[16.8px] font-[400]"
+          {!showTextBox && (
+            <Select
+              value={mealCategory || ''}
+              onValueChange={(value) => {
+                console.log(value);
+                let category: any = mealCategories.find((catg: any) => catg.name === value);
+                console.log(category.id);
+                setMealCategory(value);
+                setCategoryID(category?.id);
+              }}
+            >
+              <SelectTrigger className="h-[56px] border-[#E1E1E1] placeholder-[#A0A0A0] font-[400] text-[12px] lg:text-[14px] leading-[16.8px] lg:leading-[19.6px] text-[#1C1C1C]">
+                <SelectValue placeholder="e.g Appetizers, Main Dishes etc" className="" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup className="">
+                  {mealCategories?.map((meal: any, index) => (
+                    <SelectItem
+                      key={index}
+                      value={meal?.name}
+                      className="text-[#282828] text-[12px] leading-[16.8px] font-[400]"
+                    >
+                      {meal?.name}
+                    </SelectItem>
+                  ))}
+                  <button
+                    onClick={() => {
+                      setShowTextBox(true);
+                      if (categoryRef.current) {
+                        categoryRef.current.focus();
+                      }
+                    }}
+                    className="w-[100%] px-[16px] text-[#282828] text-[12px] leading-[16.8px] font-[400] text-left cursor-default"
                   >
-                    {meal?.name}
-                  </SelectItem>
-                ))}
-                <button
-                  onClick={() => {
-                    setShowTextBox(true);
-                    if (categoryRef.current) {
-                      categoryRef.current.focus();
-                    }
-                  }}
-                  className="w-[100%] px-[16px] text-[#282828] text-[12px] leading-[16.8px] font-[400] text-left cursor-default"
-                >
-                  Add category
-                </button>
-                {/* <SelectItem value="add">Add category</SelectItem> */}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+                    Add category
+                  </button>
+                  {/* <SelectItem value="add">Add category</SelectItem> */}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          )}
         </div>
       </div>
       {/* Meal Name  */}
@@ -358,87 +382,44 @@ const MealForm: React.FC<mealProps> = ({
         <p className="font-[600] text-[14px] lg:text-[16px] leading-[19.6px] text-[#1C1C1C]">Dietary Tags</p>
         <div className="relative">
           {/* input box */}
-          <form onSubmit={handleAddDietryTags} className="border-none">
-            <input
-              ref={dietryTagsInputRef}
-              type="text"
-              value={dietryTagsText}
-              onChange={(e) => setDietryTagsText(e.target.value)}
-              onBlurCapture={addDietryTags}
-              className={`${
-                !showDietryTagsText
-                  ? 'hidden'
-                  : 'block  absolute w-full h-[56px] border-[1px] focus:border-[#AB72C2] pl-[16px] rounded-[4px] border-[#E1E1E1] placeholder-[#A0A0A0] font-[400] text-[12px] lg:text-[14px] leading-[16.8px] lg:leading-[19.6px] text-[#1C1C1C] focus:outline-none'
-              }`}
-            />
-          </form>
-          {/* selected tags */}
-          <div
-            className={`${
-              showDietryTagsText
-                ? 'hidden'
-                : 'flex flex-row gap-x-[8px]  items-center absolute bg-white w-fit border-0 h-[52px] ml-[3px] mt-[2px] border-[1px focus:border-[#AB72C2] p-[13px] rounded-[4px] border-[#E1E1E1 placeholder-[#A0A0A0] font-[400] text-[12px] lg:text-[14px] leading-[16.8px] lg:leading-[19.6px] text-[#1C1C1C] focus:outline-none'
-            }`}
-          >
-            {selectedTags.length > 0
-              ? selectedTags.map((tag, index) => (
-                  <div key={index} className="-ml-[16px flex flex-row items-center gap-x-[10px]">
-                    <svg
-                      onClick={() => handleRemoveTag(index)}
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
-                        stroke="#282828"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M9.17188 14.8299L14.8319 9.16992"
-                        stroke="#282828"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M14.8319 14.8299L9.17188 9.16992"
-                        stroke="#292D32"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    <span> {tag}</span>
-                  </div>
-                ))
-              : 'e.g Vegan, Vegetarian etc (Optional)'}
-          </div>
-          <Select
-            //  defaultValue=''
-            value=" "
-            // value={dietryTags[dietryTags.length -1] || 'vegan' || 'vegetarian'}
-            onValueChange={(value) => onDietryTagsChange(value)}
-          >
-            <SelectTrigger
-              className={` h-[56px] pl-[32px] border-[#E1E1E1] placeholder-[#A0A0A0] font-[400] text-[12px] lg:text-[14px] leading-[16.8px] lg:leading-[19.6px] text-[#1C1C1C] `}
-            >
-              <SelectValue
-                placeholder="e.g Vegan, Vegetarian etc (Optional)"
-                className=" placeholder-shown:text-[#A0A0A0] "
+          {showDietryTagsText && (
+            <form onSubmit={handleAddDietryTags} className="border-none">
+              <input
+                ref={dietryTagsInputRef}
+                type="text"
+                value={dietryTagsText}
+                autoFocus
+                onChange={(e) => setDietryTagsText(e.target.value)}
+                onBlurCapture={addDietryTags}
+                className={`${
+                  !showDietryTagsText
+                    ? 'hidden'
+                    : 'block  w-full h-[56px] border-[1px] focus:border-[#AB72C2] pl-[16px] rounded-[4px] border-[#E1E1E1] placeholder-[#A0A0A0] font-[400] text-[12px] lg:text-[14px] leading-[16.8px] lg:leading-[19.6px] text-[#1C1C1C] focus:outline-none'
+                }`}
               />
-            </SelectTrigger>
-            <SelectContent ref={dietryTagsRef}>
-              <SelectGroup className="text-[#282828] text-[12px] leading-[16.8px] font-[400]">
-                {dietryTags?.length > 0 &&
-                  dietryTags.map((tag, index) => (
-                    <SelectItem key={index} value={tag} className="">
-                      <div className="-ml-[16px] flex flex-row items-center gap-x-[16px]">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            </form>
+          )}
+          {/* selected tags */}
+          {!showDietryTagsText && (
+            <>
+              <div
+                className={`${
+                  showDietryTagsText
+                    ? 'hidden'
+                    : 'flex flex-row gap-x-[12px]  items-center absolute bg-white w-fit border-0 h-[52px] ml-[3px] mt-[2px] border-[1px focus:border-[#AB72C2] p-[13px] rounded-[4px] border-[#E1E1E1 placeholder-[#A0A0A0] font-[400] text-[12px] lg:text-[14px] leading-[16.8px] lg:leading-[19.6px] text-[#1C1C1C] focus:outline-none'
+                }`}
+              >
+                {selectedTags.length > 0
+                  ? selectedTags.map((tag, index) => (
+                      <div key={index} className="-ml-[16px flex flex-row items-center gap-x-[6px]">
+                        <svg
+                          onClick={() => handleRemoveTag(index)}
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
                           <path
                             d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
                             stroke="#282828"
@@ -463,9 +444,62 @@ const MealForm: React.FC<mealProps> = ({
                         </svg>
                         <span> {tag}</span>
                       </div>
-                    </SelectItem>
-                  ))}
-                {/* <SelectItem value="vegan" className="">
+                    ))
+                  : 'e.g Vegan, Vegetarian etc (Optional)'}
+              </div>
+              <Select
+                value=" "
+                // value={dietryTags[dietryTags.length -1] || 'vegan' || 'vegetarian'}
+                onValueChange={(value) => onDietryTagsChange(value)}
+              >
+                <SelectTrigger
+                  className={` h-[56px] pl-[32px] border-[#E1E1E1] placeholder-[#A0A0A0] font-[400] text-[12px] lg:text-[14px] leading-[16.8px] lg:leading-[19.6px] text-[#1C1C1C] `}
+                >
+                  <SelectValue
+                    placeholder="e.g Vegan, Vegetarian etc (Optional)"
+                    className=" placeholder-shown:text-[#A0A0A0] "
+                  />
+                </SelectTrigger>
+                <SelectContent ref={dietryTagsRef}>
+                  <SelectGroup className="text-[#282828] text-[12px] leading-[16.8px] font-[400]">
+                    {dietryTags?.length > 0 &&
+                      dietryTags.map((tag, index) => (
+                        <SelectItem key={index} value={tag} className="">
+                          <div className="-ml-[16px] flex flex-row items-center gap-x-[16px]">
+                            <svg
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                                stroke="#282828"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                              <path
+                                d="M9.17188 14.8299L14.8319 9.16992"
+                                stroke="#282828"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                              <path
+                                d="M14.8319 14.8299L9.17188 9.16992"
+                                stroke="#292D32"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                            <span> {tag}</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    {/* <SelectItem value="vegan" className="">
                   <div className="-ml-[16px] flex flex-row items-center gap-x-[16px]">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
@@ -493,7 +527,7 @@ const MealForm: React.FC<mealProps> = ({
                     <span> Vegan</span>
                   </div>
                 </SelectItem> */}
-                {/* <SelectItem value="vegetarian">
+                    {/* <SelectItem value="vegetarian">
                 <div className="-ml-[16px] flex flex-row items-center gap-x-[16px]">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
@@ -521,26 +555,28 @@ const MealForm: React.FC<mealProps> = ({
                     <span> Vegetarian</span>
                   </div>
                   </SelectItem> */}
-                <button
-                  onClick={() => {
-                    if (dietryTagsRef.current) {
-                      dietryTagsRef.current.blur();
-                      dietryTagsRef.current.style.display = 'none';
-                    }
-                    setShowDietryTagsText(true);
-                    if (dietryTagsInputRef) {
-                      dietryTagsInputRef.current?.blur();
-                      dietryTagsInputRef.current?.focus();
-                    }
-                  }}
-                  className="w-[100%] px-[32px] mt-[8px] text-[#282828] text-[12px] leading-[16.8px] font-[400] text-left cursor-default"
-                >
-                  Add category
-                </button>
-                {/* <SelectItem value="add">Add Tags</SelectItem> */}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+                    <button
+                      onClick={() => {
+                        if (dietryTagsRef.current) {
+                          dietryTagsRef.current.blur();
+                          dietryTagsRef.current.style.display = 'none';
+                        }
+                        setShowDietryTagsText(true);
+                        if (dietryTagsInputRef) {
+                          dietryTagsInputRef.current?.blur();
+                          dietryTagsInputRef.current?.focus();
+                        }
+                      }}
+                      className="w-[100%] px-[32px] mt-[8px] text-[#282828] text-[12px] leading-[16.8px] font-[400] text-left cursor-default"
+                    >
+                      Add category
+                    </button>
+                    {/* <SelectItem value="add">Add Tags</SelectItem> */}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </>
+          )}
         </div>
       </div>
       {/* Quantity */}
