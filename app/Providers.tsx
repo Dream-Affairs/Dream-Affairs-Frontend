@@ -16,4 +16,4 @@ function Providers({ children }: React.PropsWithChildren) {
   );
 }
 
-export default withAuth(Providers);
+export default (Providers);
