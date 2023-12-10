@@ -221,7 +221,6 @@ const MealForm: React.FC<mealProps> = ({
       console.log('Inputs not validated');
     }
   };
-
   const handleNext = () => {
     const validate = validateMealForm();
     console.log(validate);
