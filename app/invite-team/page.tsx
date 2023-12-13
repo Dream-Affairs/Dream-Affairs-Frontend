@@ -29,9 +29,9 @@ const InviteTeam: React.FC = () => {
   const [emailError, setEmailError] = useState('');
   const [roleError, setRoleError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { org } = useAuth() as { userId: string; org: OrgType };
+  const { org, userId } = useAuth();
 
-  const organizationId = org.organization_id;
+  const organizationId = org?.organizationId;
 
   useEffect(() => {
     if (organizationId) {
