@@ -7,6 +7,9 @@ import trash from '../../../(assets)/trash.png';
 import { useRouter } from 'next/navigation';
 import MealForm from './meal-form';
 import Preview from './preview';
+import axios from 'axios';
+import useAuth from '@/app/auth/(helpers)/useAuth';
+import { toast } from '@/components/ui/use-toast';
 // import MealModal from '../../(components)/meal-modal';
 
 // interface ModalProps {
@@ -27,6 +30,9 @@ const NewMeal = () => {
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
+  // const [imgUrl, setImgUrl] = useState<string>('')
+  const { userId, org }: any = useAuth();
+  const url = process.env.NEXT_PUBLIC_API_URL;
 
   const organizationID = '669d5c746a1c420992b3ae786712c185';
   const router = useRouter();
@@ -80,17 +86,35 @@ const NewMeal = () => {
       reader.readAsDataURL(file);
     });
   };
+  const uploadImage = (files: any) => {
+    console.log(org.organization_id, org.organization_member_id);
+    const formData = new FormData();
+    console.log(files[0]);
+    if (files) {
+      formData.append('file', files[0]);
+      console.log(formData);
+      axios
+        .post(`${url}/file/${organizationID}`, formData)
+        .then((response) => {
+          console.log(response);
+          let imgurl = response.data.data;
+          setImgUrl(imgurl);
+          toast({ title: response.data?.message });
+        })
+        .catch((error) => {
+          console.log(error);
+          toast({ title: error.response?.statusText });
+        });
+    } else {
+      return;
+    }
+  };
   const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const imageFile = event.target.files;
-    console.log(imageFile?.[0]);
-    let img = Array.from(imageFile || []);
-    let url = URL.createObjectURL(img[0]);
-    console.log(`image link : ${url}`);
-    setImgUrl(url);
     if (imageFile?.[0]) {
       setFiles(imageFile);
       setshowDragAndDropZone(false);
-      uploadFile(imageFile);
+      uploadImage(imageFile);
       setShowToast(true);
     }
   };
@@ -241,16 +265,17 @@ const NewMeal = () => {
               isSaved={isSaved}
               setIsSaved={setIsSaved}
               files={files}
+              imgUrl={imgUrl}
             />
           </div>
         </div>
         {/* preview */}
         <Preview
-          mealDescription={mealDescription}
-          mealName={mealName}
-          files={files}
-          showPreview={showPreview}
-          imgUrl={imgUrl}
+          mealDescription={mealDescription && mealDescription}
+          mealName={mealName && mealName}
+          files={files && files}
+          showPreview={showPreview && showPreview}
+          imgUrl={imgUrl && imgUrl}
         />
       </div>
       {

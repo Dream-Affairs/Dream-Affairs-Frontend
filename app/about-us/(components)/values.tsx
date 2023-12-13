@@ -49,7 +49,7 @@ const Values = () => {
   ];
   return (
     <section className="w-full px-[24px] lg:px-[80px] mt-[40px] lg:mt-[100px] flex flex-col items-center mb-[40px] lg:mb-[100px]">
-      <SubHeading title="Our ValueS" />
+      <SubHeading title="Our Values" />
       <div className="w-full mt-[24px] lg:mt-[56px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-[20px] sm:gap-[24px] lg:gap-[44px]">
         {values.map((value, index) => (
           <div

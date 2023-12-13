@@ -9,10 +9,15 @@ import NewMeal from './add-meal/(components)/new-meal';
 import search from '../(assets)/Solid.png';
 import more from '../(assets)/more.png';
 import { useRouter } from 'next/navigation';
-import { DotsVerticalIcon, PlusIcon, PlusCircledIcon } from '@radix-ui/react-icons';
+import { DotsVerticalIcon, PlusIcon, PlusCircledIcon, CheckCircledIcon } from '@radix-ui/react-icons';
 import { SearchIcon } from 'lucide-react';
 import PreviewCard from './add-meal/(components)/preview-card';
 import axios from 'axios';
+import useAuth from '@/app/auth/(helpers)/useAuth';
+import CategoryMenu from './(components)/categoryMenu';
+import { twMerge } from 'tailwind-merge';
+import { SearchBar } from './(components)/search-bar';
+
 // import useAuth from '../'
 
 // type Props = {};
@@ -22,15 +27,21 @@ const MealManagement = () => {
   const [showCategory, setShowCategory] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [allMeals, setAllMeals] = useState<any>([]);
+  const [allCategories, setAllCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
   const router = useRouter();
   const organizationID: string = '669d5c746a1c420992b3ae786712c185';
   const url = process.env.NEXT_PUBLIC_API_URL;
+  console.log(url);
 
-  // const { userId, org } = useAuth();
+  const { userId, org }: any = useAuth();
+  // let organizationID = org?.organization_id
+  console.log(organizationID);
+
   // const toggleModal = () => {
   //   setShowModal(!showModal);
   // };
-
+  // console.log(org)
   const addCategory = () => {
     setShowCategory(!showCategory);
   };
@@ -40,25 +51,37 @@ const MealManagement = () => {
   };
   const getAllCategories = () => {
     axios
-      .get(`${url}/${organizationID}/meal-management/get-all-meal-category`)
+      .get(`${url}/${organizationID}/meal-management/meal-category`)
       .then((response) => {
         console.log(response.data.data);
-        setAllMeals(response.data.data);
+        setAllCategories(response.data.data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
   useEffect(() => {
-    getAllCategories();
+    organizationID && getAllCategories();
   }, []);
+  const handleSelectCategory = (name: string) => {
+    console.log(name);
+    setSelectedCategory(name);
+    const meal: {} | any = allCategories.find((categ: any) => categ.name === name);
+    console.log(meal?.meals);
+    if (meal.hasOwnProperty('meal')) {
+      setAllMeals(meal?.meals);
+    }
+  };
 
   return (
     <section className="lg:w-[calc(100%-80px)]  lg:mt-[36px] lg:min-h-[calc(100vh-36px-26px)] lg:border-l flex flex-col flex-1">
       <h1 className="hidden lg:flex font-[600] lg:text-[32px] lg:leading-[44.8px] text-[#1C1C1C]">Meal Management</h1>
       <div className="hidden lg:block lg:max-w-full lg:ml-[36px]">
         <div className="flex justify-between items-center gap28 mt-10 mb-4 mx8">
-          <h2 className="font-[500] lg:text-[16px] lg:leading-[22.4px] text-[#282828]">All Meals: 0</h2>
+          <h2 className="font-[500] lg:text-[16px] lg:leading-[22.4px] text-[#282828]">
+            All Meals: {allCategories.length}
+          </h2>
           <div className="flex gap-x-[20px] items-center text-[#282828]">
             <Button
               variant="secondary"
@@ -76,34 +99,29 @@ const MealManagement = () => {
         </div>
         <div className="flex lg:flex-row lg:gap-x-[16px]">
           {/* Category Menu */}
-          <div className="lg:w-[256px] lg:px-[32px] border-[1px] border-[#E1E1E1] rounded-[9px] flex flex-col lg:gap-y-[31px] items-center pt-[44px] h-screen">
-            <h3 className="font-[500] text-start lg:text-[24px] text-[#404141] lg:leading-[33.6px]">Meal Categories</h3>
-            <button className="flex flex-row items-center gap-x-[12px] lg:self-start">
-              <PlusCircledIcon className="lg:h-[24px] lg:w-[24px] text-[#40414166]" />
-              <h4 className="text-[#40414166] font-[400] lg:text-[16px] lg:leading-[22.4px]">Add category</h4>
-            </button>
-          </div>
+          <CategoryMenu
+            // title=''
+            allCategories={allCategories}
+            selectedCategory={selectedCategory}
+            handleSelectCategory={handleSelectCategory}
+          />
           {/* Main screen */}
           <div className="flex flex-col gap-y-[20px]  flex-1">
             {/* Search bar */}
-            <div className="relative lg:h-[36px]  py[12x]">
-              <SearchIcon className="absolute top-0 bottom-0 mx-[8px] my-auto left-0 z-10 w-[20px] h-[20px] text-[#8E8E8E]" />
-              <Input
-                placeholder="Search"
-                className=" px-[32px] font-[400] lg:h-[36px] lg:text-[14px] lg:leading-[20.3px] placeholder:text-[#B3B3B3]"
-              />
-            </div>
+            <SearchBar className="" />
             {/* Previews */}
             {allMeals.length > 0 ? (
-              <div className="grid grid-cols-2 lg:gap-x-[13px] lg:gap-y-[16px]">
-                {allMeals.map((meal: any) => (
+              <div className="grid grid-cols-2 -mt-[26px] lg:gap-x-[13px] lg:gap-y-[16px]">
+                {allMeals?.map((meal: any) => (
                   <div className="" key={meal.id}>
                     <PreviewCard
-                      mealDescription={meal.meals[0]?.description}
+                      mealDescription={meal?.description}
                       mealName={meal.name}
                       showRSVP={true}
                       rsvpQnty={0}
-                      imgUrl={`/${meal.meals[0]?.image_url}`}
+                      imgUrl={`${
+                        meal?.image_url.includes('blob') || meal?.image_url.includes('string') ? '/' : meal?.image_url
+                      }`}
                       // imgUrl={'blob:http://localhost:3000/0fb40867-c0ed-43ff-95b9-77edac93921a'}
                     />
                   </div>
