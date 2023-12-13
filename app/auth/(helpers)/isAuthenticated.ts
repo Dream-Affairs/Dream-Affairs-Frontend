@@ -1,10 +1,10 @@
 import { jwtDecode } from 'jwt-decode';
 import { isEmpty } from './helpers';
 
-const clearSessionStorage = () => sessionStorage.removeItem('zpt');
-
 function isAuthenticated(token: string) {
+  console.log('isAuthenticated', token);
   if (!token || isEmpty(token)) {
+    console.log('no token');
     return false;
   }
   try {
@@ -12,15 +12,17 @@ function isAuthenticated(token: string) {
     const expirationTime = (decodedToken as any).exp * 1000; // convert to milliseconds
 
     if (Date.now() >= expirationTime) {
-      clearSessionStorage();
+      console.log('token expired');
+      // clearCookie();
       return false;
     }
 
     return true;
   } catch (error) {
-    clearSessionStorage();
+    console.log('token invalid');
+    // clearCookie();
     return false;
   }
 }
 
-export default isAuthenticated;
+// export default isAuthenticated;

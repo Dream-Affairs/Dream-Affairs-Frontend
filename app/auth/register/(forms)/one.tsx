@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { isEmpty, isValidEmail, passwordChecker } from '@/app/auth/(helpers)/helpers';
+import axios from 'axios';
 
 interface FormOneProps {
   formOne: {
@@ -102,6 +103,20 @@ const One = ({ formOne, setFormOne, formOneError, setFormOneError, errorMessages
     setFormOne((prev) => ({ ...prev, valid: true }));
     setFormOneError((prev) => ({ ...prev, email: false, password: false, confirmPassword: false }));
   };
+
+  const googleSignUp = async () => {
+    const url = process.env.NEXT_PUBLIC_API_URL;
+    try {
+      setIsSubmitting(true);
+      const { data } = await axios.get(`${url}/google/signup`);
+      window.location.assign(data);
+      setIsSubmitting(false);
+    } catch (error) {
+      setIsSubmitting(false);
+      console.log(error);
+    }
+  };
+
   return (
     <form className="flex flex-col gap-8">
       <div className="flex flex-col gap-2">
@@ -195,6 +210,8 @@ const One = ({ formOne, setFormOne, formOneError, setFormOneError, errorMessages
           <hr className="border-gray-300 w-full" />
         </div>
         <Button
+          onClick={googleSignUp}
+          type="button"
           variant="outline"
           className="border-[1px] rounded-lg p-3 font-semibold flex justify-center items-center gap-2"
         >

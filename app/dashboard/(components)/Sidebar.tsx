@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { sidebarMenu } from '../data/dashboard-data';
 import { Button } from '@/components/ui/button';
+import { clearCookie } from '@/app/auth/(helpers)/helpers';
 
 type Props = {};
 
@@ -90,7 +91,7 @@ const Sidebar = (props: Props) => {
         <Button
           className="h-auto w-auto text-white"
           onClick={() => {
-            sessionStorage.removeItem('daff');
+            clearCookie();
             window.location.href = '/auth/login';
           }}
         >

@@ -71,14 +71,13 @@ const Two = ({
       const { data } = await axios.post(`${url}/auth/signup`, {
         email: formOne.email,
         password: formOne.password,
+        provider: 'local',
         confirm_password: formOne.confirmPassword,
         first_name: formTwo.yourFirstName,
         partner_name: formTwo.partnersFirstName,
         event_date: formTwo.pickedADate ? null : date,
         location: formTwo.location,
       });
-
-      console.log(data);
 
       toast({
         title: 'Account Created',

@@ -9,7 +9,9 @@ const VeriftAccount = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const url = process.env.NEXT_PUBLIC_API_URL;
-  
+
+  console.log(token);
+
   const [verified, setVerified] = useState(false);
   const [verifying, setVerifying] = useState(true);
   const [error, setError] = useState('');

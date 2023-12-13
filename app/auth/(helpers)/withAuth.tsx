@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import isAuthenticated from './isAuthenticated';
+// import isAuthenticated from './isAuthenticated';
 
 const withAuth = (WrappedComponent: any) => {
   const Wrapper = (props: any) => {
@@ -9,13 +9,15 @@ const withAuth = (WrappedComponent: any) => {
     const path = usePathname();
 
     useEffect(() => {
-      const token = sessionStorage.getItem('daff');
-      const isLoggedIn = isAuthenticated(token as string);
+      const token = document.cookie.split(';').find((c) => c.trim().startsWith('token='));
+      if (token?.split('=')[1] && path.includes('/auth')) {
+        router.replace('/dashboard');
+      }
 
-      if (path.includes('/dashboard') && !isLoggedIn) {
-        sessionStorage.removeItem('daff');
+      if (!token?.split('=')[1] && path.includes('/dashboard')) {
         router.replace('/auth/login');
       }
+
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
