@@ -13,8 +13,8 @@ import MemberItem from './(component)/mobiletable';
 import useAuth from '../auth/(helpers)/useAuth';
 
 export default function Teammgt() {
-  const { org } = useAuth() as { userId: string; org: OrgType };
-  const organizationId = org.organization_id;
+  const { org } = useAuth();
+  const organizationId = org?.organizationId;
   const {
     isModalOpen,
     modalTitle,
@@ -61,7 +61,7 @@ export default function Teammgt() {
 
   const handleSuspendUser = async (memberId: string) => {
     try {
-      await suspendUser(organizationId, memberId);
+      await suspendUser(organizationId as string, memberId);
       toast({
         title: 'User Suspended',
         description: `${memberId} has been suspended`,

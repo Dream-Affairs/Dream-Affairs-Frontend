@@ -7,6 +7,16 @@ export interface DatePickerProps {
   setDate: SelectSingleEventHandler | undefined;
 }
 
+export type LoginForm = {
+  email: string;
+  password: string;
+};
+
+export type LoginFormError = {
+  email: { status: boolean; message: string };
+  password: { status: boolean; message: string };
+};
+
 export interface FormTwoProps extends DatePickerProps {
   formOne: {
     email: string;

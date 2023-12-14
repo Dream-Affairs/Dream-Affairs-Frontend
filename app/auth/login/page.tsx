@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React from 'react';
 import bg from '../(assets)/image1.svg';
 import Wrapper from '../(components)/Wrapper';
 import Link from 'next/link';
@@ -13,24 +13,16 @@ import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/use-toast';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { isEmpty } from '../(helpers)/helpers';
+import { setCookie, validateLogin } from '../(helpers)/helpers';
+import { LoginForm, LoginFormError } from '../(helpers)/types';
 
 const Login = () => {
   const router = useRouter();
 
-  useEffect(() => {
-    if (sessionStorage.getItem('daff')) {
-      router.push('/dashboard');
-    }
-  }, [router]);
-
-  const [form, setForm] = React.useState({
-    email: '',
-    password: '',
-  });
+  const [form, setForm] = React.useState<LoginForm>({ email: '', password: '' });
   const [passwordVisible, setPasswordVisible] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [formError, setFormError] = React.useState({
+  const [formError, setFormError] = React.useState<LoginFormError>({
     email: { status: false, message: '' },
     password: { status: false, message: '' },
   });
@@ -44,27 +36,17 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const url = process.env.NEXT_PUBLIC_API_URL;
-    if (isEmpty(form.email)) {
-      setFormError((prev) => ({ ...prev, email: { status: true, message: 'Please fill out this field' } }));
-      return;
-    }
-    if (isEmpty(form.password)) {
-      setFormError((prev) => ({ ...prev, password: { status: true, message: 'Please fill out this field' } }));
-      return;
-    }
+
+    validateLogin(form, setFormError);
 
     try {
       setIsSubmitting(true);
-      const formData = new FormData();
-      formData.append('username', form.email);
-      formData.append('password', form.password);
-      const { data } = await axios.post(`${url}/auth/login`, formData);
-      console.log(data.data);
-      sessionStorage.setItem('daff', data.data.access_token);
-      sessionStorage.setItem(
-        'daff-data',
-        JSON.stringify({ organization: data.data.organization, user: data.data.user }),
-      );
+      const { data } = await axios.post(`${url}/auth/login`, {
+        email: form.email,
+        password: form.password,
+        provider: 'local',
+      });
+      setCookie(data);
       toast({
         title: 'Login Successful',
         description: 'You have successfully logged in',
@@ -82,6 +64,19 @@ const Login = () => {
         email: { status: true, message: error?.response?.data?.message },
         password: { status: true, message: error?.response?.data?.message },
       }));
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    const url = process.env.NEXT_PUBLIC_API_URL;
+    try {
+      setIsSubmitting(true);
+      const { data } = await axios.get(`${url}/google/login`);
+      window.open(data, '_blank');
+    } catch (error: any) {
+      console.log(error);
     } finally {
       setIsSubmitting(false);
     }
@@ -163,17 +158,19 @@ const Login = () => {
               Sign up
             </Link>
           </p>
-          <div className="flex gap-5 justify-center items-center">
+          {/* <div className="flex gap-5 justify-center items-center">
             <hr className="border-gray-300 w-full" />
             <p className="text-center text-gray-500 text-sm">OR</p>
             <hr className="border-gray-300 w-full" />
           </div>
           <Button
+            type="button"
             variant="outline"
+            onClick={handleGoogleLogin}
             className="border-[1px] rounded-lg p-3 font-semibold flex justify-center items-center gap-2"
           >
             <FcGoogle className="text-xl" /> Sign in with Google
-          </Button>
+          </Button> */}
         </div>
       </form>
     </Wrapper>

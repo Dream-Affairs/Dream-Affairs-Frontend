@@ -1,16 +1,23 @@
 'use client';
 import { useEffect, useState } from 'react';
 
+type Org = {
+  organizationId: string;
+  organizationMemberId: string;
+};
+
 const useAuth = () => {
   const [userId, setUserId] = useState('');
-  const [org, setOrg] = useState({});
+  const [org, setOrg] = useState<Org | null>(null);
 
   useEffect(() => {
-    const user_org = sessionStorage.getItem('daff-data');
+    const cookie = document.cookie.split(';').find((c) => c.trim().startsWith('user='));
+    const info = cookie?.split('=')[1];
+    const user_org = info ? JSON.parse(info) : null;
+
     if (user_org) {
-      const object = JSON.parse(user_org);
-      setUserId(object.user);
-      setOrg(object.organization);
+      setUserId(user_org.userId);
+      setOrg({ organizationId: user_org.organizationId, organizationMemberId: user_org.organizationMemberId });
     }
   }, []);
 
