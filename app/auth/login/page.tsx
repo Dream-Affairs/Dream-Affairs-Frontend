@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/use-toast';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { validateLogin } from '../(helpers)/helpers';
+import { setCookie, validateLogin } from '../(helpers)/helpers';
 import { LoginForm, LoginFormError } from '../(helpers)/types';
 
 const Login = () => {
@@ -46,12 +46,7 @@ const Login = () => {
         password: form.password,
         provider: 'local',
       });
-      document.cookie = `token=${data.data.access_token}; path=/;`;
-      document.cookie = `user=${JSON.stringify({
-        userId: data.data.user.id,
-        organizationId: data.data.organization.organization_id,
-        organizationMemberId: data.data.organization.organization_member_id,
-      })}; path=/;`;
+      setCookie(data);
       toast({
         title: 'Login Successful',
         description: 'You have successfully logged in',

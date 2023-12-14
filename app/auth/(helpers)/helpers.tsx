@@ -38,3 +38,12 @@ export const validateLogin = (form: LoginForm, setFormError: React.Dispatch<Reac
     return;
   }
 };
+
+export const setCookie = (data: any) => {
+  document.cookie = `token=${data.data.access_token}; path=/;`;
+  document.cookie = `user=${JSON.stringify({
+    userId: data.data.user.id,
+    organizationId: data.data.organization.organization_id,
+    organizationMemberId: data.data.organization.organization_member_id,
+  })}; path=/;`;
+};

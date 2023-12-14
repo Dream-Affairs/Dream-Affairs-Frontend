@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { DatePicker } from '../../(components)/DatePicker';
 import { Checkbox } from '@/components/ui/checkbox';
-import { isEmpty } from '../../(helpers)/helpers';
+import { isEmpty, userInfo_Token } from '../../(helpers)/helpers';
 import { toast } from '@/components/ui/use-toast';
 import axios from 'axios';
 import { FormTwoProps } from '../../(helpers)/types';
@@ -68,7 +68,7 @@ const Two = ({
 
     try {
       setIsSubmitting(true);
-      const { data } = await axios.post(`${url}/auth/signup`, {
+      await axios.post(`${url}/auth/signup`, {
         email: formOne.email,
         password: formOne.password,
         provider: 'local',
@@ -78,7 +78,6 @@ const Two = ({
         event_date: formTwo.pickedADate ? null : date,
         location: formTwo.location,
       });
-
       toast({
         title: 'Account Created',
         description: 'Please check your email for a verification link',
