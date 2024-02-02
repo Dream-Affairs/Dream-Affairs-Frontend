@@ -68,8 +68,6 @@ function ConfirmSend({ selectedGuests, setSelectedGuests }: Props) {
                 <th className="py-4 px-4 font-medium">Guest Name</th>
                 <th className="py-4 px-4 font-medium">Email</th>
                 <th className="py-4 px-4 font-medium text-center whitespace-nowrap">Plus One?</th>
-                <th className="py-4 px-4 font-medium">Tags</th>
-                {selectedGuests.length > 0 && <th className="py-4 px-4 font-medium text-center">Invite Code</th>}
                 <th className="py-4 px-4 font-medium">Address</th>
               </tr>
             </thead>
@@ -87,10 +85,6 @@ function ConfirmSend({ selectedGuests, setSelectedGuests }: Props) {
                       <td className="py-4 px-4 whitespace-nowrap">{item.fullName}</td>
                       <td className="py-4 px-4">{item.email}</td>
                       <td className="py-4 px-4 text-center capitalize">{item.plusOne}</td>
-                      <td className="py-4 px-4 max-w-[166px] overflow-hidden">
-                        <GuestTags tags={item.tags} />
-                      </td>
-                      <td className="py-4 px-4 text-center">{item.inviteCode}</td>
                       <td className="py-4 px-4 whitespace-nowrap">{item.address}</td>
                     </tr>
                   );

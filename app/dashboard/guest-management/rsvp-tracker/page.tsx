@@ -315,7 +315,6 @@ function RsvpTracker() {
                     <th className="py-4 px-2">Email</th>
                     <th className="py-4 px-2 text-center">Response</th>
                     <th className="py-4 px-2 text-center whitespace-nowrap">Plus One</th>
-                    <th className="py-4 px-2 w-[20%]">Meal Preference</th>
                     <th className="py-4 px-2 w-[18%]">Address</th>
                   </tr>
                 </thead>
@@ -329,11 +328,6 @@ function RsvpTracker() {
                           <StatusTag status={item.response} />
                         </td>
                         <td className="px-2 py-4 capitalize text-center">{item.plusOne ?? 'Null'}</td>
-                        <td className="px-2 py-4  w-[20%] overflow-hidden">
-                          <p className="whitespace-nowrap w-full overflow-hidden text-clip">
-                            {item.mealPreference.join(', ')}
-                          </p>
-                        </td>
                         <td className="px-2 py-4 w-[18%] whitespace-nowrap overflow-hidden">
                           <div>{item.address}</div>
                         </td>
