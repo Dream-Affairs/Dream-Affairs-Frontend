@@ -18,7 +18,7 @@ enum importTypes {
 }
 
 function ImportGuestModal() {
-  const [selectedImport, setSelectedImport] = useState<imports>('');
+  const [selectedImport, setSelectedImport] = useState<imports>(importTypes.CSV);
 
   return (
     <AddGuestModal
@@ -30,7 +30,7 @@ function ImportGuestModal() {
       titleAlign="center"
     >
       <div className="min-h-[362px] guest-modal-border">
-        <button className="absolute">
+        {/* <button className="absolute">
           {selectedImport !== importTypes.DEFAULT && (
             <ArrowLeftIcon
               size={28}
@@ -39,7 +39,7 @@ function ImportGuestModal() {
               className="absolute left-10 -top-12"
             />
           )}
-        </button>
+        </button> */}
         {selectedImport === importTypes.DEFAULT && (
           <div className="text-[#282828] flex flex-col items-center w-fit mx-auto py-6">
             <h3 className="text-xl font-medium text-center mb-10">Select a means to import your guest list</h3>
@@ -50,7 +50,7 @@ function ImportGuestModal() {
                 </p>
                 <span className="text-start flex-1">CSV File</span>
               </Button>
-              <Button className="import-btn hover:bg-[#dbd8dd]" onClick={() => setSelectedImport(importTypes.EXCEL)}>
+              {/* <Button className="import-btn hover:bg-[#dbd8dd]" onClick={() => setSelectedImport(importTypes.EXCEL)}>
                 <div className="flex justify-end w-2/5">
                   <Image src="/assets/icon/excel_icon.png" height={20} width={27} alt="Excel Icon" />
                 </div>
@@ -61,12 +61,12 @@ function ImportGuestModal() {
                   <Image src="/assets/icon/google_sheet_icon.png" height={30} width={24} alt="Google Sheet Icon" />
                 </div>
                 <span className="text-start flex-1">Google Sheets</span>
-              </Button>
+              </Button> */}
             </div>
           </div>
         )}
-        <SpreadsheetImport selectedImport={selectedImport} />
-        <ExcelImport selectedImport={selectedImport} />
+        {/* <SpreadsheetImport selectedImport={selectedImport} />
+        <ExcelImport selectedImport={selectedImport} /> */}
         <CsvImport selectedImport={selectedImport} />
       </div>
     </AddGuestModal>

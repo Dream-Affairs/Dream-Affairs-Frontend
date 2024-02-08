@@ -152,7 +152,7 @@ function AddGuest() {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <div className="flex items-center space-x-2">
               <Label htmlFor="plus_one_tuggle" className="font-medium">
                 Toggle
@@ -176,7 +176,7 @@ function AddGuest() {
                 <Asterisk />
               </div>
             )}
-          </div>
+          </div> */}
         </section>
         {!plusOneEnabled && (
           <div className="py-4 mb-2 px-14">

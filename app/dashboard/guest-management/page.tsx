@@ -49,39 +49,14 @@ const columns: { id: string; name: string; isShown: boolean }[] = [
     isShown: true,
   },
   {
-    id: 'column4',
-    name: 'Invite Code',
-    isShown: true,
-  },
-  {
-    id: 'column5',
-    name: 'Tags',
-    isShown: true,
-  },
-  {
     id: 'column6',
     name: 'Plus one?',
-    isShown: true,
-  },
-  {
-    id: 'column7',
-    name: 'Meal Preferences',
     isShown: true,
   },
   {
     id: 'column8',
     name: 'Gifts',
     isShown: true,
-  },
-  {
-    id: 'column9',
-    name: 'Seat Allocation',
-    isShown: true,
-  },
-  {
-    id: 'column10',
-    name: 'Location',
-    isShown: false,
   },
 ];
 
@@ -155,8 +130,6 @@ const GuestManagement = (props: Props) => {
               Delete Guest
             </Button>
             <ImportGuestModal />
-            <AssignTagsModal tags={tags} selectedGuestNumber={selectedGuest.length} />
-            <ManageTagsModal tags={tags} tagSetter={setTags} />
             <Button size="sm" className="guest-btn">
               <Link href="/dashboard/guest-management/rsvp-tracker" className="flex gap-2">
                 <Track />
@@ -168,10 +141,6 @@ const GuestManagement = (props: Props) => {
                 <Send />
                 Send Invites
               </Link>
-            </Button>
-            <Button size="sm" className="guest-btn">
-              <HashTag />
-              Populate Tables
             </Button>
           </div>
         </div>
@@ -260,22 +229,12 @@ const GuestManagement = (props: Props) => {
                           <StatusTag status={item.rsvpStatus} />
                         </td>
                       )}
-                      {isColumnEnabled('column4') && <td className="py-4 px-2">{item.inviteCode}</td>}
-                      {isColumnEnabled('column5') && (
-                        <td className="py-4 px-2">
-                          <GuestTags tags={item.tags} />
-                        </td>
-                      )}
                       {isColumnEnabled('column6') && (
                         <td className="py-4 px-2 capitalize text-center">{item.plusOne}</td>
-                      )}
-                      {isColumnEnabled('column7') && (
-                        <td className="py-4 px-4 text-sm whitespace-nowrap">{item.mealPreferecences}</td>
                       )}
                       {isColumnEnabled('column8') && (
                         <td className="py-4 px-2 whitespace-nowrap">{item.gift.join(', ')}</td>
                       )}
-                      {isColumnEnabled('column9') && <td className="py-4 px-2 text-center">{item.seatAllocation}</td>}
                     </tr>
                   );
                 })}
